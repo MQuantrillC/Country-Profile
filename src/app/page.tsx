@@ -6,10 +6,23 @@ import { Globe, TrendingUp, Users, MapPin, Thermometer, Package, ShoppingCart, H
 import { fetchCountryStats } from '../utils/worldBank'
 
 interface CountryStats {
-  gdp: { value: number | null; year: string | null };
-  gdpPerCapita: { value: number | null; year: string | null };
-  population: { value: number | null; year: string | null };
-  area: { value: number | null; year: string | null };
+  gdp: number | null;
+  gdpPerCapita: number | null;
+  population: number | null;
+  area: number | null;
+  inflation: number | null;
+  populationGrowth: number | null;
+  urbanPopPct: number | null;
+  ruralPopPct: number | null;
+  fertilityRate: number | null;
+  lifeExpectancy: number | null;
+  co2PerCapita: number | null;
+  forestPct: number | null;
+  literacyRate: number | null;
+  schoolEnrollment: number | null;
+  educationSpendPctGDP: number | null;
+  healthSpendPerCapita: number | null;
+  homicideRate: number | null;
 }
 
 interface Country {
@@ -39,8 +52,6 @@ interface StatCardProps {
   subtext?: string;
   color?: string;
   country: Country;
-  source?: string;
-  year?: string;
 }
 
 interface CountrySelectorProps {
@@ -148,7 +159,7 @@ const countries = [
   },
 ];
 
-const StatCard = ({ icon: Icon, title, value, subtext, color = "blue", country, source, year }: StatCardProps) => {
+const StatCard = ({ icon: Icon, title, value, subtext, color = "blue", country }: StatCardProps) => {
   const colorClasses: Record<string, string> = {
     blue: "bg-blue-500 text-blue-100",
     green: "bg-green-500 text-green-100",
@@ -169,14 +180,7 @@ const StatCard = ({ icon: Icon, title, value, subtext, color = "blue", country, 
       </div>
       <h3 className="text-gray-600 text-sm font-medium mb-1">{title}</h3>
       <p className="text-2xl font-bold text-gray-900 mb-1">{value}</p>
-      {subtext && <p className="text-gray-500 text-sm mb-2">{subtext}</p>}
-      {source && year && (
-        <div className="flex items-center space-x-1 text-xs text-gray-400">
-          <span>Source: {source}</span>
-          <span>•</span>
-          <span>{year}</span>
-        </div>
-      )}
+      {subtext && <p className="text-gray-500 text-sm">{subtext}</p>}
     </div>
   );
 };
@@ -428,65 +432,57 @@ export default function HomePage() {
                 icon={Users}
                 title="Population"
                 value={
-                  country1Stats?.population.value ? formatPopulation(country1Stats.population.value) : (loading ? "Loading..." : "N/A")
+                  country1Stats?.population ? formatPopulation(country1Stats.population) : (loading ? "Loading..." : "N/A")
                 }
                 subtext={selectedCountry1.name}
                 color="blue"
                 country={selectedCountry1}
-                source="World Bank"
-                year={country1Stats?.population.year || undefined}
               />
               <StatCard
                 icon={Users}
                 title="Population"
                 value={
-                  country2Stats?.population.value ? formatPopulation(country2Stats.population.value) : (loading ? "Loading..." : "N/A")
+                  country2Stats?.population ? formatPopulation(country2Stats.population) : (loading ? "Loading..." : "N/A")
                 }
                 subtext={selectedCountry2.name}
                 color="purple"
                 country={selectedCountry2}
-                source="World Bank"
-                year={country2Stats?.population.year || undefined}
               />
               <StatCard
                 icon={MapPin}
                 title="Area"
                 value={
-                  country1Stats?.area.value ? formatArea(country1Stats.area.value) : (loading ? "Loading..." : "N/A")
+                  country1Stats?.area ? formatArea(country1Stats.area) : (loading ? "Loading..." : "N/A")
                 }
                 subtext={selectedCountry1.name}
                 color="green"
                 country={selectedCountry1}
-                source="World Bank"
-                year={country1Stats?.area.year || undefined}
               />
               <StatCard
                 icon={MapPin}
                 title="Area"
                 value={
-                  country2Stats?.area.value ? formatArea(country2Stats.area.value) : (loading ? "Loading..." : "N/A")
+                  country2Stats?.area ? formatArea(country2Stats.area) : (loading ? "Loading..." : "N/A")
                 }
                 subtext={selectedCountry2.name}
                 color="orange"
                 country={selectedCountry2}
-                source="World Bank"
-                year={country2Stats?.area.year || undefined}
               />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <ComparisonBar
                 label="Population Comparison"
-                value1={country1Stats?.population.value || 0}
-                value2={country2Stats?.population.value || 0}
+                value1={country1Stats?.population || 0}
+                value2={country2Stats?.population || 0}
                 country1={selectedCountry1}
                 country2={selectedCountry2}
                 formatter={formatPopulation}
               />
               <ComparisonBar
                 label="Area Comparison"
-                value1={country1Stats?.area.value || 0}
-                value2={country2Stats?.area.value || 0}
+                value1={country1Stats?.area || 0}
+                value2={country2Stats?.area || 0}
                 country1={selectedCountry1}
                 country2={selectedCountry2}
                 formatter={formatArea}
@@ -501,8 +497,6 @@ export default function HomePage() {
                 subtext={selectedCountry1.name}
                 color="yellow"
                 country={selectedCountry1}
-                source="World Bank"
-                year={country1Stats?.population.year || undefined}
               />
               <StatCard
                 icon={Thermometer}
@@ -511,8 +505,6 @@ export default function HomePage() {
                 subtext={selectedCountry2.name}
                 color="red"
                 country={selectedCountry2}
-                source="World Bank"
-                year={country2Stats?.population.year || undefined}
               />
             </div>
           </div>
@@ -525,65 +517,57 @@ export default function HomePage() {
                 icon={BarChart3}
                 title="GDP"
                 value={
-                  country1Stats?.gdp.value ? formatNumber(country1Stats.gdp.value) : (loading ? "Loading..." : "N/A")
+                  country1Stats?.gdp ? formatNumber(country1Stats.gdp) : (loading ? "Loading..." : "N/A")
                 }
                 subtext={selectedCountry1.name}
                 color="blue"
                 country={selectedCountry1}
-                source="World Bank"
-                year={country1Stats?.gdp.year || undefined}
               />
               <StatCard
                 icon={BarChart3}
                 title="GDP"
                 value={
-                  country2Stats?.gdp.value ? formatNumber(country2Stats.gdp.value) : (loading ? "Loading..." : "N/A")
+                  country2Stats?.gdp ? formatNumber(country2Stats.gdp) : (loading ? "Loading..." : "N/A")
                 }
                 subtext={selectedCountry2.name}
                 color="purple"
                 country={selectedCountry2}
-                source="World Bank"
-                year={country2Stats?.gdp.year || undefined}
               />
               <StatCard
                 icon={DollarSign}
                 title="GDP Per Capita"
                 value={
-                  country1Stats?.gdpPerCapita.value ? formatCurrency(country1Stats.gdpPerCapita.value) : (loading ? "Loading..." : "N/A")
+                  country1Stats?.gdpPerCapita ? formatCurrency(country1Stats.gdpPerCapita) : (loading ? "Loading..." : "N/A")
                 }
                 subtext={selectedCountry1.name}
                 color="green"
                 country={selectedCountry1}
-                source="World Bank"
-                year={country1Stats?.gdpPerCapita.year || undefined}
               />
               <StatCard
                 icon={DollarSign}
                 title="GDP Per Capita"
                 value={
-                  country2Stats?.gdpPerCapita.value ? formatCurrency(country2Stats.gdpPerCapita.value) : (loading ? "Loading..." : "N/A")
+                  country2Stats?.gdpPerCapita ? formatCurrency(country2Stats.gdpPerCapita) : (loading ? "Loading..." : "N/A")
                 }
                 subtext={selectedCountry2.name}
                 color="orange"
                 country={selectedCountry2}
-                source="World Bank"
-                year={country2Stats?.gdpPerCapita.year || undefined}
               />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <ComparisonBar
                 label="GDP Comparison"
-                value1={country1Stats?.gdp.value || 0}
-                value2={country2Stats?.gdp.value || 0}
+                value1={country1Stats?.gdp || 0}
+                value2={country2Stats?.gdp || 0}
                 country1={selectedCountry1}
                 country2={selectedCountry2}
                 formatter={formatNumber}
               />
               <ComparisonBar
                 label="GDP Per Capita Comparison"
-                value1={country1Stats?.gdpPerCapita.value || 0}
-                value2={country2Stats?.gdpPerCapita.value || 0}
+                value1={country1Stats?.gdpPerCapita || 0}
+                value2={country2Stats?.gdpPerCapita || 0}
                 country1={selectedCountry1}
                 country2={selectedCountry2}
                 formatter={formatCurrency}
@@ -655,8 +639,6 @@ export default function HomePage() {
                 subtext={selectedCountry1.name}
                 color="red"
                 country={selectedCountry1}
-                source="World Bank"
-                year={country1Stats?.population.year || undefined}
               />
               <StatCard
                 icon={AlertTriangle}
@@ -665,8 +647,6 @@ export default function HomePage() {
                 subtext={selectedCountry2.name}
                 color="orange"
                 country={selectedCountry2}
-                source="World Bank"
-                year={country2Stats?.population.year || undefined}
               />
               <StatCard
                 icon={Activity}
@@ -675,8 +655,6 @@ export default function HomePage() {
                 subtext={selectedCountry1.name}
                 color="purple"
                 country={selectedCountry1}
-                source="World Bank"
-                year={country1Stats?.population.year || undefined}
               />
               <StatCard
                 icon={Activity}
@@ -685,16 +663,14 @@ export default function HomePage() {
                 subtext={selectedCountry2.name}
                 color="indigo"
                 country={selectedCountry2}
-                source="World Bank"
-                year={country2Stats?.population.year || undefined}
               />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <ComparisonBar
                 label="Homicide Rate (per 100,000)"
-                value1={selectedCountry1.data.homicideRate}
-                value2={selectedCountry2.data.homicideRate}
+                value1={selectedCountry1.data.homicideRate || 0}
+                value2={selectedCountry2.data.homicideRate || 0}
                 country1={selectedCountry1}
                 country2={selectedCountry2}
                 formatter={(x) => `${x}/100k`}
@@ -703,8 +679,8 @@ export default function HomePage() {
               />
               <ComparisonBar
                 label="Crime Index"
-                value1={selectedCountry1.data.crimeIndex}
-                value2={selectedCountry2.data.crimeIndex}
+                value1={selectedCountry1.data.crimeIndex || 0}
+                value2={selectedCountry2.data.crimeIndex || 0}
                 country1={selectedCountry1}
                 country2={selectedCountry2}
                 formatter={(x) => x.toString()}

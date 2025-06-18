@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Globe, TrendingUp, Users, MapPin, Thermometer, Package, ShoppingCart, Handshake, AlertTriangle, BarChart3, DollarSign, Activity } from "lucide-react";
+import { Globe, TrendingUp, Users, MapPin, Thermometer, Package, ShoppingCart, Handshake, AlertTriangle, BarChart3, DollarSign, Activity, LucideIcon } from "lucide-react";
 import { fetchCountryStats } from '../utils/worldBank'
 
 interface CountryStats {
@@ -10,6 +10,61 @@ interface CountryStats {
   gdpPerCapita: number | null;
   population: number | null;
   area: number | null;
+}
+
+interface Country {
+  name: string;
+  code: string;
+  flag: string;
+  data: {
+    gdp: number;
+    gdpPerCapita: number;
+    population: number;
+    area: number;
+    avgTemp: string;
+    topExports: string[];
+    topImports: string[];
+    tradingPartners: string[];
+    homicideRate: number;
+    crimeIndex: number;
+    currency: string;
+    continent: string;
+  };
+}
+
+interface StatCardProps {
+  icon: LucideIcon;
+  title: string;
+  value: string;
+  subtext?: string;
+  color?: string;
+  country: Country;
+}
+
+interface CountrySelectorProps {
+  title: string;
+  selectedCountry: Country;
+  onSelect: (country: Country) => void;
+  countries: Country[];
+}
+
+interface ListCardProps {
+  title: string;
+  items: string[];
+  icon: LucideIcon;
+  color: string;
+  country: Country;
+}
+
+interface ComparisonBarProps {
+  label: string;
+  value1: number;
+  value2: number;
+  country1: Country;
+  country2: Country;
+  formatter?: (x: number) => string;
+  color1?: string;
+  color2?: string;
 }
 
 const countries = [
@@ -91,8 +146,8 @@ const countries = [
   },
 ];
 
-const StatCard = ({ icon: Icon, title, value, subtext, color = "blue", country }) => {
-  const colorClasses = {
+const StatCard = ({ icon: Icon, title, value, subtext, color = "blue", country }: StatCardProps) => {
+  const colorClasses: Record<string, string> = {
     blue: "bg-blue-500 text-blue-100",
     green: "bg-green-500 text-green-100",
     purple: "bg-purple-500 text-purple-100",
@@ -117,7 +172,7 @@ const StatCard = ({ icon: Icon, title, value, subtext, color = "blue", country }
   );
 };
 
-const CountrySelector = ({ title, selectedCountry, onSelect, countries }) => (
+const CountrySelector = ({ title, selectedCountry, onSelect, countries }: CountrySelectorProps) => (
   <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
     <h3 className="text-lg font-semibold text-gray-900 mb-4">{title}</h3>
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -148,7 +203,7 @@ const CountrySelector = ({ title, selectedCountry, onSelect, countries }) => (
   </div>
 );
 
-const ListCard = ({ title, items, icon: Icon, color, country }) => (
+const ListCard = ({ title, items, icon: Icon, color, country }: ListCardProps) => (
   <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
     <div className="flex items-center justify-between mb-4">
       <div className="flex items-center space-x-3">
@@ -172,10 +227,10 @@ const ListCard = ({ title, items, icon: Icon, color, country }) => (
   </div>
 );
 
-const ComparisonBar = ({ label, value1, value2, country1, country2, formatter = (x) => x, color1 = "blue", color2 = "purple" }) => {
-  const max = Math.max(value1, value2);
-  const percentage1 = (value1 / max) * 100;
-  const percentage2 = (value2 / max) * 100;
+const ComparisonBar = ({ label, value1, value2, country1, country2, formatter = (x: number) => x.toString(), color1 = "blue", color2 = "purple" }: ComparisonBarProps) => {
+  const max = Math.max(value1 || 0, value2 || 0);
+  const percentage1 = max > 0 ? (value1 / max) * 100 : 0;
+  const percentage2 = max > 0 ? (value2 / max) * 100 : 0;
 
   return (
     <div className="bg-white rounded-lg p-4 shadow-md border border-gray-100">
@@ -222,25 +277,46 @@ export default function HomePage() {
   const [country1Stats, setCountry1Stats] = useState<CountryStats | null>(null);
   const [country2Stats, setCountry2Stats] = useState<CountryStats | null>(null);
   const [activeTab, setActiveTab] = useState('overview');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadData = async () => {
-      const stats1 = await fetchCountryStats(selectedCountry1.code);
-      const stats2 = await fetchCountryStats(selectedCountry2.code);
-      setCountry1Stats(stats1);
-      setCountry2Stats(stats2);
+      setLoading(true);
+      setError(null);
+      
+      try {
+        console.log('Loading data for countries:', selectedCountry1.code, selectedCountry2.code);
+        
+        const [stats1, stats2] = await Promise.all([
+          fetchCountryStats(selectedCountry1.code),
+          fetchCountryStats(selectedCountry2.code)
+        ]);
+        
+        console.log('Loaded stats:', { stats1, stats2 });
+        
+        setCountry1Stats(stats1);
+        setCountry2Stats(stats2);
+      } catch (err) {
+        console.error('Error loading country data:', err);
+        setError('Failed to load country data');
+      } finally {
+        setLoading(false);
+      }
     };
 
     loadData();
   }, [selectedCountry1, selectedCountry2]);
 
-  const formatNumber = (num) => {
-    if (num >= 1000) return `$${(num / 1000).toFixed(2)}T`;
-    if (num >= 1) return `$${num.toFixed(2)}T`;
-    return `$${(num * 1000).toFixed(0)}B`;
+  const formatNumber = (num: number | null): string => {
+    if (!num) return "N/A";
+    if (num >= 1000000000000) return `$${(num / 1000000000000).toFixed(2)}T`;
+    if (num >= 1000000000) return `$${(num / 1000000000).toFixed(2)}B`;
+    return `$${(num / 1000000).toFixed(0)}M`;
   };
 
-  const formatCurrency = (num) => {
+  const formatCurrency = (num: number | null): string => {
+    if (!num) return "N/A";
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
@@ -249,11 +325,13 @@ export default function HomePage() {
     }).format(num);
   };
 
-  const formatPopulation = (num) => {
-    return `${num.toFixed(1)}M`;
+  const formatPopulation = (num: number | null): string => {
+    if (!num) return "N/A";
+    return `${(num / 1000000).toFixed(1)}M`;
   };
 
-  const formatArea = (num) => {
+  const formatArea = (num: number | null): string => {
+    if (!num) return "N/A";
     return `${num.toLocaleString()} km²`;
   };
 
@@ -276,6 +354,16 @@ export default function HomePage() {
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Compare economic indicators, demographics, trade data, and safety metrics between countries around the world
             </p>
+            {loading && (
+              <div className="mt-4 text-blue-600">
+                Loading country data...
+              </div>
+            )}
+            {error && (
+              <div className="mt-4 text-red-600 bg-red-50 p-3 rounded-lg">
+                Error: {error}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -331,7 +419,7 @@ export default function HomePage() {
                 icon={Users}
                 title="Population"
                 value={
-                  country1Stats && country1Stats.population ? formatPopulation(country1Stats.population / 1_000_000) : "Loading..."
+                  country1Stats?.population ? formatPopulation(country1Stats.population) : (loading ? "Loading..." : "N/A")
                 }
                 subtext={selectedCountry1.name}
                 color="blue"
@@ -341,7 +429,7 @@ export default function HomePage() {
                 icon={Users}
                 title="Population"
                 value={
-                  country2Stats && country2Stats.population ? formatPopulation(country2Stats.population / 1_000_000) : "Loading..."
+                  country2Stats?.population ? formatPopulation(country2Stats.population) : (loading ? "Loading..." : "N/A")
                 }
                 subtext={selectedCountry2.name}
                 color="purple"
@@ -351,7 +439,7 @@ export default function HomePage() {
                 icon={MapPin}
                 title="Area"
                 value={
-                  country1Stats && country1Stats.area ? formatArea(country1Stats.area) : "Loading..."
+                  country1Stats?.area ? formatArea(country1Stats.area) : (loading ? "Loading..." : "N/A")
                 }
                 subtext={selectedCountry1.name}
                 color="green"
@@ -361,7 +449,7 @@ export default function HomePage() {
                 icon={MapPin}
                 title="Area"
                 value={
-                  country2Stats && country2Stats.area ? formatArea(country2Stats.area) : "Loading..."
+                  country2Stats?.area ? formatArea(country2Stats.area) : (loading ? "Loading..." : "N/A")
                 }
                 subtext={selectedCountry2.name}
                 color="orange"
@@ -372,16 +460,16 @@ export default function HomePage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <ComparisonBar
                 label="Population Comparison"
-                value1={country1Stats && country1Stats.population ? country1Stats.population / 1_000_000 : 0}
-                value2={country2Stats && country2Stats.population ? country2Stats.population / 1_000_000 : 0}
+                value1={country1Stats?.population || 0}
+                value2={country2Stats?.population || 0}
                 country1={selectedCountry1}
                 country2={selectedCountry2}
                 formatter={formatPopulation}
               />
               <ComparisonBar
                 label="Area Comparison"
-                value1={country1Stats && country1Stats.area ? country1Stats.area : 0}
-                value2={country2Stats && country2Stats.area ? country2Stats.area : 0}
+                value1={country1Stats?.area || 0}
+                value2={country2Stats?.area || 0}
                 country1={selectedCountry1}
                 country2={selectedCountry2}
                 formatter={formatArea}
@@ -416,7 +504,7 @@ export default function HomePage() {
                 icon={BarChart3}
                 title="GDP"
                 value={
-                  country1Stats && country1Stats.gdp ? formatNumber(country1Stats.gdp / 1_000_000_000_000) : "Loading..."
+                  country1Stats?.gdp ? formatNumber(country1Stats.gdp) : (loading ? "Loading..." : "N/A")
                 }
                 subtext={selectedCountry1.name}
                 color="blue"
@@ -426,7 +514,7 @@ export default function HomePage() {
                 icon={BarChart3}
                 title="GDP"
                 value={
-                  country2Stats && country2Stats.gdp ? formatNumber(country2Stats.gdp / 1_000_000_000_000) : "Loading..."
+                  country2Stats?.gdp ? formatNumber(country2Stats.gdp) : (loading ? "Loading..." : "N/A")
                 }
                 subtext={selectedCountry2.name}
                 color="purple"
@@ -436,7 +524,7 @@ export default function HomePage() {
                 icon={DollarSign}
                 title="GDP Per Capita"
                 value={
-                  country1Stats && country1Stats.gdpPerCapita ? formatCurrency(country1Stats.gdpPerCapita) : "Loading..."
+                  country1Stats?.gdpPerCapita ? formatCurrency(country1Stats.gdpPerCapita) : (loading ? "Loading..." : "N/A")
                 }
                 subtext={selectedCountry1.name}
                 color="green"
@@ -446,7 +534,7 @@ export default function HomePage() {
                 icon={DollarSign}
                 title="GDP Per Capita"
                 value={
-                  country2Stats && country2Stats.gdpPerCapita ? formatCurrency(country2Stats.gdpPerCapita) : "Loading..."
+                  country2Stats?.gdpPerCapita ? formatCurrency(country2Stats.gdpPerCapita) : (loading ? "Loading..." : "N/A")
                 }
                 subtext={selectedCountry2.name}
                 color="orange"
@@ -456,17 +544,17 @@ export default function HomePage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <ComparisonBar
-                label="GDP Comparison (Trillions USD)"
-                value1={country1Stats && country1Stats.gdp ? country1Stats.gdp / 1_000_000_000_000 : 0}
-                value2={country2Stats && country2Stats.gdp ? country2Stats.gdp / 1_000_000_000_000 : 0}
+                label="GDP Comparison"
+                value1={country1Stats?.gdp || 0}
+                value2={country2Stats?.gdp || 0}
                 country1={selectedCountry1}
                 country2={selectedCountry2}
                 formatter={formatNumber}
               />
               <ComparisonBar
                 label="GDP Per Capita Comparison"
-                value1={country1Stats && country1Stats.gdpPerCapita ? country1Stats.gdpPerCapita : 0}
-                value2={country2Stats && country2Stats.gdpPerCapita ? country2Stats.gdpPerCapita : 0}
+                value1={country1Stats?.gdpPerCapita || 0}
+                value2={country2Stats?.gdpPerCapita || 0}
                 country1={selectedCountry1}
                 country2={selectedCountry2}
                 formatter={formatCurrency}
@@ -550,7 +638,7 @@ export default function HomePage() {
               <StatCard
                 icon={Activity}
                 title="Crime Index"
-                value={selectedCountry1.data.crimeIndex}
+                value={selectedCountry1.data.crimeIndex.toString()}
                 subtext={selectedCountry1.name}
                 color="purple"
                 country={selectedCountry1}
@@ -558,7 +646,7 @@ export default function HomePage() {
               <StatCard
                 icon={Activity}
                 title="Crime Index"
-                value={selectedCountry2.data.crimeIndex}
+                value={selectedCountry2.data.crimeIndex.toString()}
                 subtext={selectedCountry2.name}
                 color="indigo"
                 country={selectedCountry2}

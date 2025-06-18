@@ -56,7 +56,8 @@ const countryCodeMap: Record<string, string> = {
   }
   
   async function fetchIndicator(code: string, indicator: string) {
-    const url = `https://api.worldbank.org/v2/country/${code}/indicator/${indicator}?format=json&per_page=1`;
+    // Use the Next.js API route instead of calling World Bank directly
+    const url = `/api/worldbank?country=${code}&indicator=${indicator}`;
     try {
       const res = await axios.get(url);
       if (!res.data[1]) {

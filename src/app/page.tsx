@@ -351,6 +351,7 @@ export default function HomePage() {
   const tabs = [
     { id: 'overview', label: 'Overview', icon: Globe },
     { id: 'economy', label: 'Economy', icon: TrendingUp },
+    { id: 'social', label: 'Social & Environment', icon: Users },
     { id: 'trade', label: 'Trade', icon: Package },
     { id: 'safety', label: 'Safety & Crime', icon: AlertTriangle },
   ];
@@ -576,6 +577,64 @@ export default function HomePage() {
           </div>
         )}
 
+        {activeTab === 'social' && (
+          <div className="space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <StatCard
+                icon={Users}
+                title="Population Growth"
+                value={`${country1Stats?.populationGrowth ? (country1Stats.populationGrowth * 100).toFixed(2) : 'N/A'}%`}
+                subtext={selectedCountry1.name}
+                color="blue"
+                country={selectedCountry1}
+              />
+              <StatCard
+                icon={Users}
+                title="Population Growth"
+                value={`${country2Stats?.populationGrowth ? (country2Stats.populationGrowth * 100).toFixed(2) : 'N/A'}%`}
+                subtext={selectedCountry2.name}
+                color="purple"
+                country={selectedCountry2}
+              />
+              <StatCard
+                icon={MapPin}
+                title="Urban Population Percentage"
+                value={`${country1Stats?.urbanPopPct ? country1Stats.urbanPopPct.toFixed(2) : 'N/A'}%`}
+                subtext={selectedCountry1.name}
+                color="green"
+                country={selectedCountry1}
+              />
+              <StatCard
+                icon={MapPin}
+                title="Urban Population Percentage"
+                value={`${country2Stats?.urbanPopPct ? country2Stats.urbanPopPct.toFixed(2) : 'N/A'}%`}
+                subtext={selectedCountry2.name}
+                color="orange"
+                country={selectedCountry2}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <ComparisonBar
+                label="Population Growth Comparison"
+                value1={country1Stats?.populationGrowth || 0}
+                value2={country2Stats?.populationGrowth || 0}
+                country1={selectedCountry1}
+                country2={selectedCountry2}
+                formatter={(x) => `${(x * 100).toFixed(2)}%`}
+              />
+              <ComparisonBar
+                label="Urban Population Percentage Comparison"
+                value1={country1Stats?.urbanPopPct || 0}
+                value2={country2Stats?.urbanPopPct || 0}
+                country1={selectedCountry1}
+                country2={selectedCountry2}
+                formatter={(x) => `${x.toFixed(2)}%`}
+              />
+            </div>
+          </div>
+        )}
+
         {activeTab === 'trade' && (
           <div className="space-y-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -635,7 +694,7 @@ export default function HomePage() {
               <StatCard
                 icon={AlertTriangle}
                 title="Homicide Rate"
-                value={`${selectedCountry1.data.homicideRate}/100k`}
+                value={country1Stats?.homicideRate ? `${country1Stats.homicideRate.toFixed(1)}/100k` : "N/A"}
                 subtext={selectedCountry1.name}
                 color="red"
                 country={selectedCountry1}
@@ -643,23 +702,23 @@ export default function HomePage() {
               <StatCard
                 icon={AlertTriangle}
                 title="Homicide Rate"
-                value={`${selectedCountry2.data.homicideRate}/100k`}
+                value={country2Stats?.homicideRate ? `${country2Stats.homicideRate.toFixed(1)}/100k` : "N/A"}
                 subtext={selectedCountry2.name}
                 color="orange"
                 country={selectedCountry2}
               />
               <StatCard
                 icon={Activity}
-                title="Crime Index"
-                value={selectedCountry1.data.crimeIndex.toString()}
+                title="Life Expectancy"
+                value={country1Stats?.lifeExpectancy ? `${country1Stats.lifeExpectancy.toFixed(1)} years` : "N/A"}
                 subtext={selectedCountry1.name}
                 color="purple"
                 country={selectedCountry1}
               />
               <StatCard
                 icon={Activity}
-                title="Crime Index"
-                value={selectedCountry2.data.crimeIndex.toString()}
+                title="Life Expectancy"
+                value={country2Stats?.lifeExpectancy ? `${country2Stats.lifeExpectancy.toFixed(1)} years` : "N/A"}
                 subtext={selectedCountry2.name}
                 color="indigo"
                 country={selectedCountry2}
@@ -669,28 +728,28 @@ export default function HomePage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <ComparisonBar
                 label="Homicide Rate (per 100,000)"
-                value1={selectedCountry1.data.homicideRate || 0}
-                value2={selectedCountry2.data.homicideRate || 0}
+                value1={country1Stats?.homicideRate || 0}
+                value2={country2Stats?.homicideRate || 0}
                 country1={selectedCountry1}
                 country2={selectedCountry2}
-                formatter={(x) => `${x}/100k`}
+                formatter={(x) => `${x.toFixed(1)}/100k`}
                 color1="red"
                 color2="orange"
               />
               <ComparisonBar
-                label="Crime Index"
-                value1={selectedCountry1.data.crimeIndex || 0}
-                value2={selectedCountry2.data.crimeIndex || 0}
+                label="Life Expectancy"
+                value1={country1Stats?.lifeExpectancy || 0}
+                value2={country2Stats?.lifeExpectancy || 0}
                 country1={selectedCountry1}
                 country2={selectedCountry2}
-                formatter={(x) => x.toString()}
+                formatter={(x) => `${x.toFixed(1)} years`}
                 color1="purple"
                 color2="indigo"
               />
             </div>
 
             <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Safety Interpretation</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Safety & Health Interpretation</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <h4 className="font-medium text-gray-800">Homicide Rate Scale:</h4>
@@ -702,12 +761,12 @@ export default function HomePage() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <h4 className="font-medium text-gray-800">Crime Index Scale:</h4>
+                  <h4 className="font-medium text-gray-800">Life Expectancy Scale:</h4>
                   <div className="text-sm text-gray-600 space-y-1">
-                    <p><span className="inline-block w-3 h-3 bg-green-500 rounded-full mr-2"></span>0-20: Very Low</p>
-                    <p><span className="inline-block w-3 h-3 bg-yellow-500 rounded-full mr-2"></span>20-40: Low</p>
-                    <p><span className="inline-block w-3 h-3 bg-orange-500 rounded-full mr-2"></span>40-60: Moderate</p>
-                    <p><span className="inline-block w-3 h-3 bg-red-500 rounded-full mr-2"></span>60+: High</p>
+                    <p><span className="inline-block w-3 h-3 bg-red-500 rounded-full mr-2"></span>0-60: Low</p>
+                    <p><span className="inline-block w-3 h-3 bg-orange-500 rounded-full mr-2"></span>60-70: Moderate</p>
+                    <p><span className="inline-block w-3 h-3 bg-yellow-500 rounded-full mr-2"></span>70-80: Good</p>
+                    <p><span className="inline-block w-3 h-3 bg-green-500 rounded-full mr-2"></span>80+: Very Good</p>
                   </div>
                 </div>
               </div>

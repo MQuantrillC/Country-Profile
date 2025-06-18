@@ -60,11 +60,22 @@ const countryCodeMap: Record<string, string> = {
     const url = `/api/worldbank?country=${code}&indicator=${indicator}`;
     try {
       const res = await axios.get(url);
-      if (!res.data[1]) {
+      if (!res.data[1] || !Array.isArray(res.data[1]) || res.data[1].length === 0) {
         console.warn(`⚠️ No data for ${code} → ${indicator}`);
         return null;
       }
-      return res.data[1][0].value ?? null;
+      
+      // Find the most recent non-null value
+      const dataArray = res.data[1];
+      for (const entry of dataArray) {
+        if (entry.value !== null && entry.value !== undefined) {
+          console.log(`✅ ${code} ${indicator}: ${entry.value} (${entry.date})`);
+          return entry.value;
+        }
+      }
+      
+      console.warn(`⚠️ No valid data found for ${code} → ${indicator}`);
+      return null;
     } catch (error) {
       console.error(`❌ Failed to fetch ${indicator} for ${code}`, error);
       return null;

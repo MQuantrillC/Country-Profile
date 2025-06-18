@@ -15,10 +15,10 @@ const countryCodeMap: Record<string, string> = {
   };
   
   interface CountryStats {
-    gdp: number | null;
-    gdpPerCapita: number | null;
-    population: number | null;
-    area: number | null;
+    gdp: { value: number | null; year: string | null };
+    gdpPerCapita: { value: number | null; year: string | null };
+    population: { value: number | null; year: string | null };
+    area: { value: number | null; year: string | null };
   }
 
   interface WorldBankDataEntry {
@@ -31,7 +31,7 @@ const countryCodeMap: Record<string, string> = {
     // Convert 2-letter code to 3-letter code for World Bank API
     const wbCode = countryCodeMap[code] || code;
     
-    const fetchIndicator = async (indicator: string): Promise<number | null> => {
+    const fetchIndicator = async (indicator: string): Promise<{ value: number | null; year: string | null }> => {
       try {
         // Correct API path for Next.js App Router
         const url = `/api/worldbank?country=${wbCode}&indicator=${indicator}`;
@@ -55,15 +55,15 @@ const countryCodeMap: Record<string, string> = {
           const dataWithValue = (data[1] as WorldBankDataEntry[]).find((entry) => entry.value !== null && entry.value !== undefined);
           if (dataWithValue) {
             console.log(`Found value for ${indicator}: ${dataWithValue.value} (year: ${dataWithValue.date})`);
-            return dataWithValue.value;
+            return { value: dataWithValue.value, year: dataWithValue.date };
           }
         }
         
         console.warn(`No valid data found for ${indicator}`);
-        return null;
+        return { value: null, year: null };
       } catch (error) {
         console.error(`Failed to fetch ${indicator} for ${wbCode}:`, error);
-        return null;
+        return { value: null, year: null };
       }
     };
   

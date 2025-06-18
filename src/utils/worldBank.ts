@@ -20,6 +20,12 @@ const countryCodeMap: Record<string, string> = {
     population: number | null;
     area: number | null;
   }
+
+  interface WorldBankDataEntry {
+    value: number | null;
+    date: string;
+    [key: string]: unknown;
+  }
   
   export async function fetchCountryStats(code: string): Promise<CountryStats> {
     // Convert 2-letter code to 3-letter code for World Bank API
@@ -46,7 +52,7 @@ const countryCodeMap: Record<string, string> = {
         // The API returns [metadata, data_array]
         if (data && Array.isArray(data) && data.length > 1 && Array.isArray(data[1])) {
           // Find the first entry with a non-null value (most recent year with data)
-          const dataWithValue = data[1].find((entry: any) => entry.value !== null && entry.value !== undefined);
+          const dataWithValue = (data[1] as WorldBankDataEntry[]).find((entry) => entry.value !== null && entry.value !== undefined);
           if (dataWithValue) {
             console.log(`Found value for ${indicator}: ${dataWithValue.value} (year: ${dataWithValue.date})`);
             return dataWithValue.value;

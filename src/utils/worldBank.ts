@@ -181,11 +181,7 @@ interface EnhancedCountryInfo {
   enhancedInfo?: EnhancedCountryInfo;
 }
 
-  interface WorldBankDataEntry {
-    value: number | null;
-    date: string;
-    [key: string]: unknown;
-  }
+
 
   // Fetch REST Countries data
   async function fetchRestCountriesData(countryCode: string): Promise<RestCountriesData | null> {
@@ -343,7 +339,7 @@ interface EnhancedCountryInfo {
         fetchFactbookData(countryCode)
       ]);
       
-      const stats: any = {};
+      const stats: Record<string, DataWithSource> = {};
       worldBankResults.forEach(({ key, data }) => {
         stats[key] = data;
       });

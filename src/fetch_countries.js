@@ -1,5 +1,5 @@
 // Script to fetch all countries from World Bank API
-const https = require('https');
+import https from 'https';
 
 function fetchCountries() {
   const url = 'https://api.worldbank.org/v2/country?format=json&per_page=300';

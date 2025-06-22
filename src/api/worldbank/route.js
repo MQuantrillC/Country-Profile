@@ -44,7 +44,7 @@ export async function GET(request) {
   }
 }
 
-export async function OPTIONS(request) {
+export async function OPTIONS() {
   return new Response(null, {
     status: 200,
     headers: {

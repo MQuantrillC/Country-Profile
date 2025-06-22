@@ -3,7 +3,6 @@ import { NextResponse } from 'next/server';
 // UN Comtrade API configuration
 const COMTRADE_BASE_URL = 'https://comtrade.un.org/api/get';
 const PRIMARY_KEY = 'c22b2717bd254d3590168c68d9d22730';
-const SECONDARY_KEY = 'a314e247c34544c3a633db7686153a7b';
 
 // Country code mapping for UN Comtrade (ISO3 to UN Comtrade codes)
 const COUNTRY_CODE_MAPPING = {
@@ -139,7 +138,6 @@ export async function GET(request) {
 
     // Get current year and previous year for comparison
     const currentYear = new Date().getFullYear() - 1; // Use previous year as current year data might not be complete
-    const previousYear = currentYear - 1;
 
     // Construct API URLs for exports and imports using the correct UN Comtrade format
     const exportsUrl = `${COMTRADE_BASE_URL}?type=C&freq=A&px=HS&ps=${currentYear}&r=${comtradeCountryCode}&p=all&rg=2&cc=TOTAL&fmt=json&subscription-key=${PRIMARY_KEY}`;

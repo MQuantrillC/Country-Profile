@@ -1,0 +1,23 @@
+{
+  "totalRecords": 101254,
+  "countries": 206,
+  "yearRange": {
+    "min": 1990,
+    "max": 2024
+  },
+  "indicators": [
+    "Persons arrested/suspected for intentional homicide",
+    "Victims of intentional homicide",
+    "Victims of intentional homicide – City-level data",
+    "Persons convicted for intentional homicide",
+    "Death due to intentional homicide in prison"
+  ],
+  "regions": [
+    "Asia",
+    "Europe",
+    "Americas",
+    "Africa",
+    "Oceania"
+  ],
+  "lastUpdated": "2025-06-24T02:20:36.592Z"
+}

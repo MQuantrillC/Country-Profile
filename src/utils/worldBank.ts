@@ -3,45 +3,61 @@ import axios from "axios";
 
 // Map 2-letter ISO codes to 3-letter codes for World Bank API
 const countryCodeMap: Record<string, string> = {
-    US: 'USA',
-    PE: 'PER', 
-    GB: 'GBR',
-    JP: 'JPN'
-  };
+  US: 'USA', CN: 'CHN', JP: 'JPN', DE: 'DEU', IN: 'IND', 
+  GB: 'GBR', FR: 'FRA', IT: 'ITA', BR: 'BRA', CA: 'CAN',
+  RU: 'RUS', KR: 'KOR', AU: 'AUS', ES: 'ESP', MX: 'MEX',
+  ID: 'IDN', NL: 'NLD', SA: 'SAU', CH: 'CHE', TR: 'TUR',
+  DK: 'DNK', FI: 'FIN', BE: 'BEL', AT: 'AUT', IE: 'IRL',
+  PT: 'PRT', GR: 'GRC', PL: 'POL', CZ: 'CZE', HU: 'HUN',
+  SK: 'SVK', SI: 'SVN', HR: 'HRV', BG: 'BGR', RO: 'ROU',
+  LT: 'LTU', LV: 'LVA', EE: 'EST', LU: 'LUX', MT: 'MLT',
+  CY: 'CYP', IS: 'ISL', SE: 'SWE', NO: 'NOR', UA: 'UKR',
+  BY: 'BLR', RS: 'SRB', BA: 'BIH', ME: 'MNE', MK: 'MKD',
+  AL: 'ALB', MD: 'MDA', GE: 'GEO', AM: 'ARM', AZ: 'AZE',
+  SG: 'SGP', TH: 'THA', MY: 'MYS', VN: 'VNM', PH: 'PHL',
+  AE: 'ARE', QA: 'QAT', KW: 'KWT', OM: 'OMN', BH: 'BHR',
+  JO: 'JOR', LB: 'LBN', IL: 'ISR', EG: 'EGY', MA: 'MAR',
+  TN: 'TUN', DZ: 'DZA', NG: 'NGA', KE: 'KEN', GH: 'GHA',
+  ET: 'ETH', TZ: 'TZA', UG: 'UGA', RW: 'RWA', SN: 'SEN',
+  CI: 'CIV', CM: 'CMR', MG: 'MDG', MZ: 'MOZ', ZM: 'ZMB',
+  ZW: 'ZWE', BW: 'BWA', NA: 'NAM', ZA: 'ZAF', PK: 'PAK',
+  BD: 'BGD', LK: 'LKA', NP: 'NPL', AF: 'AFG', IR: 'IRN',
+  IQ: 'IRQ', CL: 'CHL', PE: 'PER', AR: 'ARG', CO: 'COL',
+  VE: 'VEN', EC: 'ECU', UY: 'URY', PY: 'PRY', BO: 'BOL'
+};
   
   const indicators = {
     gdp: "NY.GDP.MKTP.CD",
     gdpPerCapita: "NY.GDP.PCAP.CD",
-    population: "SP.POP.TOTL",
-    area: "AG.SRF.TOTL.K2",
-    inflation: "FP.CPI.TOTL.ZG",
-    populationGrowth: "SP.POP.GROW",
-    urbanPopPct: "SP.URB.TOTL.IN.ZS",
-    ruralPopPct: "SP.RUR.TOTL.ZS",
-    fertilityRate: "SP.DYN.TFRT.IN",
-    lifeExpectancy: "SP.DYN.LE00.IN",
-    co2PerCapita: "EN.ATM.CO2E.PC",
-    forestPct: "AG.LND.FRST.ZS",
-    agriculturalLandPct: "AG.LND.AGRI.ZS",
-    literacyRate: "SE.ADT.LITR.ZS",
-    schoolEnrollment: "SE.SEC.NENR",
-    educationSpendPctGDP: "SE.XPD.TOTL.GD.ZS",
-    healthSpendPerCapita: "SH.XPD.CHEX.PC.CD",
-    homicideRate: "VC.IHR.PSRC.P5",
-    // Additional economic and development indicators available in WDI
     gniPerCapita: "NY.GNP.PCAP.CD",
     tradeGDP: "NE.TRD.GNFS.ZS",
+    unemploymentRate: "SL.UEM.TOTL.ZS",
+    publicDebtGDP: "GC.DOD.TOTL.GD.ZS",
+    inflation: "FP.CPI.TOTL.ZG",
     fdiNetInflows: "BX.KLT.DINV.WD.GD.ZS",
+    population: "SP.POP.TOTL",
+    lifeExpectancy: "SP.DYN.LE00.IN",
+    fertilityRate: "SP.DYN.TFRT.IN",
+    urbanPopPct: "SP.URB.TOTL.IN.ZS",
+    ruralPopPct: "SP.RUR.TOTL.ZS",
+    populationGrowth: "SP.POP.GROW",
+    literacyRate: "SE.ADT.LITR.ZS",
+    educationSpendPctGDP: "SE.XPD.TOTL.GD.ZS",
+    schoolEnrollment: "SE.SEC.NENR",
+    healthSpendPerCapita: "SH.XPD.CHEX.PC.CD",
     internetUsers: "IT.NET.USER.ZS",
     electricityAccess: "EG.ELC.ACCS.ZS",
-    unemploymentRate: "SL.UEM.TOTL.ZS",
-    // Infrastructure and development indicators
     mobileSubscriptions: "IT.CEL.SETS.P2",
     improvedWaterAccess: "SH.H2O.BASW.ZS",
     improvedSanitationAccess: "SH.STA.BASS.ZS",
-    energyUsePerCapita: "EG.USE.PCAP.KG.OE",
     researchDevelopmentGDP: "GB.XPD.RSDV.GD.ZS",
-    publicDebtGDP: "GC.DOD.TOTL.GD.ZS"
+    forestPct: "AG.LND.FRST.ZS",
+    agriculturalLandPct: "AG.LND.AGRI.ZS",
+    co2PerCapita: "EN.ATM.CO2E.PC",
+    energyUsePerCapita: "EG.USE.PCAP.KG.OE",
+    homicideRate: "VC.IHR.PSRC.P5",
+    area: "AG.SRF.TOTL.K2",
+    populationDensity: "EN.POP.DNST"
   };
 
   // Store indicator metadata
@@ -236,7 +252,12 @@ interface EnhancedCountryInfo {
     }
 
     try {
-      const response = await axios.get(`https://api.worldbank.org/v2/indicator/${indicator}?format=json`);
+      const response = await axios.get(`https://api.worldbank.org/v2/indicator/${indicator}?format=json`, {
+        timeout: 5000, // 5 second timeout for metadata
+        headers: {
+          'User-Agent': 'Country-Profile-App/1.0'
+        }
+      });
       if (response.data && response.data[1] && response.data[1][0]) {
         const metadata = response.data[1][0];
         indicatorMetadata[indicator] = {
@@ -269,7 +290,12 @@ interface EnhancedCountryInfo {
     const worldBankUrl = `https://api.worldbank.org/v2/country/${worldBankCode}/indicator/${indicator}?format=json&per_page=5&date=2020:2024`;
     
     try {
-      const response = await axios.get(worldBankUrl);
+      const response = await axios.get(worldBankUrl, {
+        timeout: 8000, // 8 second timeout
+        headers: {
+          'User-Agent': 'Country-Profile-App/1.0'
+        }
+      });
       
       if (!response.data || !Array.isArray(response.data) || response.data.length < 2) {
         console.warn(`⚠️ No data structure for ${code} → ${indicator}`);
@@ -346,16 +372,7 @@ interface EnhancedCountryInfo {
 
       console.log('Fetched stats:', stats);
       
-      // Calculate population density if we have both population and area
-      let populationDensity: DataWithSource | null = null;
-      if (stats.population?.value && stats.area?.value) {
-        populationDensity = {
-          value: stats.population.value / stats.area.value, // people per km²
-          year: stats.population.year || stats.area.year,
-          source: 'World Bank (Calculated)',
-          sourceOrganization: 'World Bank Group'
-        };
-      }
+      // Population density is now directly fetched from World Bank API
 
       // Add enhanced country information
       const enhancedInfo: EnhancedCountryInfo = {
@@ -366,7 +383,6 @@ interface EnhancedCountryInfo {
 
       return {
         ...stats,
-        populationDensity,
         enhancedInfo
       } as CountryStats;
     } catch (error) {

@@ -10,7 +10,16 @@ const isoToGecMapping = {
   'EC': 'ec', 'UY': 'uy', 'BO': 'bl', 'PY': 'pa', 'PL': 'pl', 'BE': 'be', 'SE': 'sw', 'AT': 'au',
   'NO': 'no', 'DK': 'da', 'FI': 'fi', 'IE': 'ei', 'PT': 'po', 'GR': 'gr', 'IL': 'is', 'AE': 'ae',
   'IR': 'ir', 'IQ': 'iz', 'JO': 'jo', 'LB': 'le', 'NZ': 'nz', 'UA': 'up', 'KZ': 'kz', 'UZ': 'uz',
-  'AF': 'af', 'MM': 'bm', 'KH': 'cb', 'LA': 'la', 'NP': 'np', 'BT': 'bt'
+  'AF': 'af', 'MM': 'bm', 'KH': 'cb', 'LA': 'la', 'NP': 'np', 'BT': 'bt',
+  // Additional Caribbean and Central America
+  'DO': 'dr', 'JM': 'jm', 'TT': 'td', 'BB': 'bb', 'BS': 'bf', 'BZ': 'bh', 'CR': 'cs', 'SV': 'es', 'GT': 'gt', 'HN': 'ho', 'NI': 'nu', 'PA': 'pm',
+  // Additional European countries
+  'AL': 'al', 'BG': 'bu', 'CZ': 'ez', 'HR': 'hr', 'HU': 'hu', 'RO': 'ro', 'SK': 'lo', 'SI': 'si',
+  'EE': 'en', 'LV': 'lg', 'LT': 'lh', 'MT': 'mt', 'CY': 'cy', 'LU': 'lu', 'IS': 'ic', 'MK': 'mk',
+  'ME': 'mj', 'RS': 'ri', 'BA': 'bk', 'MD': 'md', 'BY': 'bo', 'AM': 'am', 'GE': 'gg', 'AZ': 'aj',
+  // Additional Middle East countries
+  'BH': 'ba', 'QA': 'qa', 'KW': 'ku', 'OM': 'mu', 'YE': 'ym', 'SY': 'sy', 'LY': 'ly', 'TN': 'ts',
+  'DZ': 'ag', 'SD': 'su', 'JM': 'jm'
 };
 
 // Region mapping for factbook URL construction
@@ -29,7 +38,20 @@ const regionMapping = {
   'po': 'europe', 'gr': 'europe', 'is': 'middle-east', 'ae': 'middle-east', 'ir': 'middle-east',
   'iz': 'middle-east', 'jo': 'middle-east', 'le': 'middle-east', 'nz': 'australia-oceania',
   'up': 'europe', 'kz': 'central-asia', 'uz': 'central-asia', 'af': 'south-asia', 'bm': 'east-n-southeast-asia',
-  'cb': 'east-n-southeast-asia', 'la': 'east-n-southeast-asia', 'np': 'south-asia', 'bt': 'south-asia'
+  'cb': 'east-n-southeast-asia', 'la': 'east-n-southeast-asia', 'np': 'south-asia', 'bt': 'south-asia',
+  // Additional European countries
+  'al': 'europe', 'bu': 'europe', 'ez': 'europe', 'hr': 'europe', 'hu': 'europe', 'ro': 'europe', 
+  'lo': 'europe', 'si': 'europe', 'en': 'europe', 'lg': 'europe', 'lh': 'europe', 'mt': 'europe', 
+  'cy': 'europe', 'lu': 'europe', 'ic': 'europe', 'mk': 'europe', 'mj': 'europe', 'ri': 'europe', 
+  'bk': 'europe', 'md': 'europe', 'bo': 'europe', 'am': 'central-asia', 'gg': 'central-asia', 'aj': 'central-asia',
+  // Additional Middle East and Africa countries
+  'ba': 'middle-east', 'qa': 'middle-east', 'ku': 'middle-east', 'mu': 'middle-east', 'ym': 'middle-east', 
+  'sy': 'middle-east', 'ly': 'africa', 'ts': 'africa', 'ag': 'africa', 'su': 'africa', 
+  // Caribbean and Central America regions
+  'dr': 'central-america-n-caribbean', 'jm': 'central-america-n-caribbean', 'td': 'central-america-n-caribbean', 
+  'bb': 'central-america-n-caribbean', 'bf': 'central-america-n-caribbean', 'bh': 'central-america-n-caribbean', 
+  'cs': 'central-america-n-caribbean', 'es': 'central-america-n-caribbean', 'gt': 'central-america-n-caribbean', 
+  'ho': 'central-america-n-caribbean', 'nu': 'central-america-n-caribbean', 'pm': 'central-america-n-caribbean'
 };
 
 function extractValue(obj, path, defaultValue = null) {
@@ -112,7 +134,7 @@ function parseNumber(value) {
   
   // Special handling for military expenditure percentage
   if (str.includes('% of gdp') || str.includes('percent of gdp') || str.includes('%')) {
-    const percentMatch = str.match(/([0-9,\.]+)\s*%/);
+    const percentMatch = str.match(/([-]?[0-9,\.]+)\s*%/);
     if (percentMatch) {
       const num = parseFloat(percentMatch[1].replace(/,/g, ''));
       return isNaN(num) ? null : num;
@@ -121,7 +143,7 @@ function parseNumber(value) {
   
   // Handle special cases for large numbers
   if (str.includes('million')) {
-    const match = str.match(/([0-9,\.]+)\s*million/);
+    const match = str.match(/([-]?[0-9,\.]+)\s*million/);
     if (match) {
       const num = parseFloat(match[1].replace(/,/g, ''));
       return isNaN(num) ? null : num * 1000000;
@@ -129,7 +151,7 @@ function parseNumber(value) {
   }
   
   if (str.includes('billion')) {
-    const match = str.match(/([0-9,\.]+)\s*billion/);
+    const match = str.match(/([-]?[0-9,\.]+)\s*billion/);
     if (match) {
       const num = parseFloat(match[1].replace(/,/g, ''));
       return isNaN(num) ? null : num * 1000000000;
@@ -137,15 +159,15 @@ function parseNumber(value) {
   }
   
   if (str.includes('trillion')) {
-    const match = str.match(/([0-9,\.]+)\s*trillion/);
+    const match = str.match(/([-]?[0-9,\.]+)\s*trillion/);
     if (match) {
       const num = parseFloat(match[1].replace(/,/g, ''));
       return isNaN(num) ? null : num * 1000000000000;
     }
   }
   
-  // Extract the first number from the string
-  const match = str.match(/([0-9,]+\.?[0-9]*)/);
+  // Extract the first number from the string (including negative numbers)
+  const match = str.match(/([-]?[0-9,]+\.?[0-9]*)/);
   if (match) {
     const cleaned = match[1].replace(/,/g, '');
     const parsed = parseFloat(cleaned);
@@ -301,7 +323,95 @@ export async function GET(request) {
       creditRatings: ensureString(extractValue(data, 'Economy.Credit ratings')),
       agriculturalProducts: ensureString(extractValue(data, 'Economy.Agricultural products')),
       industries: ensureString(extractValue(data, 'Economy.Industries')),
-      giniIndex: parseNumber(extractValue(data, 'Economy.Gini Index coefficient - distribution of family income')),
+      publicDebt: (() => {
+        // Extract public debt from Economy section
+        const economySection = data.Economy;
+        if (!economySection) return null;
+        
+        // Try multiple possible field names for Public Debt
+        const possibleFields = [
+          'Public debt',
+          'Debt - external',
+          'Government debt',
+          'National debt',
+          'Central government debt'
+        ];
+        
+        for (const fieldName of possibleFields) {
+          const debtData = economySection[fieldName];
+          if (debtData) {
+            // Handle direct text value
+            if (typeof debtData === 'string') {
+              const parsed = parseNumber(debtData);
+              if (parsed !== null) return parsed;
+            }
+            // Handle object with nested data
+            else if (typeof debtData === 'object') {
+              // Look for year-based nested keys or direct text
+              if (debtData.text) {
+                const parsed = parseNumber(debtData.text);
+                if (parsed !== null) return parsed;
+              }
+              
+              const entries = Object.entries(debtData);
+              for (const [, value] of entries) {
+                if (value && typeof value === 'object' && value.text) {
+                  const parsed = parseNumber(value.text);
+                  if (parsed !== null) return parsed;
+                }
+              }
+            }
+          }
+        }
+        
+        return null;
+      })(),
+      giniIndex: (() => {
+        // Direct access to avoid extractValue's generic object handling
+        const economySection = data.Economy;
+        if (!economySection) return null;
+        
+        // Try multiple possible field names for Gini Index
+        const possibleFields = [
+          'Gini Index coefficient - distribution of family income',
+          'Income distribution - family income',
+          'Distribution of family income - Gini index',
+          'Gini coefficient',
+          'Gini index',
+          'Income inequality'
+        ];
+        
+        for (const fieldName of possibleFields) {
+          const giniData = economySection[fieldName];
+          if (giniData) {
+            // Handle direct text value
+            if (typeof giniData === 'string') {
+              const parsed = parseNumber(giniData);
+              if (parsed !== null) return parsed;
+            }
+            // Handle object with nested data
+            else if (typeof giniData === 'object') {
+              // Check for direct text property
+              if (giniData.text) {
+                const parsed = parseNumber(giniData.text);
+                if (parsed !== null) return parsed;
+              }
+              
+              // Look for year-based nested keys
+              const entries = Object.entries(giniData);
+              for (const [, value] of entries) {
+                if (value && typeof value === 'object' && value.text) {
+                  // Extract the coefficient from text like "40.7 (2022 est.)"
+                  const parsed = parseNumber(value.text);
+                  if (parsed !== null) return parsed;
+                }
+              }
+            }
+          }
+        }
+        
+        return null;
+      })(),
       averageHouseholdExpenditure: ensureString(extractValue(data, 'Economy.Household income or consumption by percentage share')),
       
       // Trade Data
@@ -309,11 +419,57 @@ export async function GET(request) {
       exportPartners: ensureString(extractValue(data, 'Economy.Exports - partners')),
       exportCommodities: ensureString(extractValue(data, 'Economy.Exports - commodities')),
       imports: parseNumber(extractValue(data, 'Economy.Imports')),
+      importPartners: ensureString(extractValue(data, 'Economy.Imports - partners')),
       importCommodities: ensureString(extractValue(data, 'Economy.Imports - commodities')),
-      exchangeRates: ensureString(extractValue(data, 'Economy.Exchange rates')),
+      exchangeRates: ensureString(extractValue(data, 'Economy.Exchange rates 2024') || extractValue(data, 'Economy.Exchange rates')),
+      
+      // Communications & Technology
+      internetUsers: parseNumber(extractValue(data, 'Communications.Internet users.percent of population')),
+      internetCountryCode: ensureString(extractValue(data, 'Communications.Internet country code')),
+      
+      // Transportation & Infrastructure
+      airports: parseNumber(extractValue(data, 'Transportation.Airports')),
+      railways: parseNumber(extractValue(data, 'Transportation.Railways.total')),
+      ports: parseNumber(extractValue(data, 'Transportation.Ports.total ports')),
       
       // Military & Security
-      militaryExpenditure: parseNumber(extractValue(data, 'Military and Security.Military expenditures')),
+      militaryExpenditure: (() => {
+        // Try multiple paths for military expenditure
+        const militarySection = data['Military and Security'];
+        if (!militarySection) return null;
+        
+        const possibleFields = [
+          'Military expenditures',
+          'Military expenditure',
+          'Defense expenditures',
+          'Defense spending'
+        ];
+        
+        for (const fieldName of possibleFields) {
+          const militaryData = militarySection[fieldName];
+          if (militaryData) {
+            if (typeof militaryData === 'string') {
+              const parsed = parseNumber(militaryData);
+              if (parsed !== null) return parsed;
+            } else if (typeof militaryData === 'object') {
+              if (militaryData.text) {
+                const parsed = parseNumber(militaryData.text);
+                if (parsed !== null) return parsed;
+              }
+              
+              const entries = Object.entries(militaryData);
+              for (const [, value] of entries) {
+                if (value && typeof value === 'object' && value.text) {
+                  const parsed = parseNumber(value.text);
+                  if (parsed !== null) return parsed;
+                }
+              }
+            }
+          }
+        }
+        
+        return null;
+      })(),
       refugees: ensureString(extractValue(data, 'Transnational Issues.Refugees and internally displaced persons')),
       
       // Geography (additional data)

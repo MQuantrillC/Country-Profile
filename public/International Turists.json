@@ -1,0 +1,39 @@
+{
+  "chart": {
+    "title": "International tourist trips",
+    "subtitle": "Trips by people who arrive from abroad and stay overnight.",
+    "citation": "UNWTO (2024)",
+    "originalChartUrl": "https://ourworldindata.org/grapher/international-tourist-trips?v=1&csvType=filtered&useColumnShortNames=false",
+    "selection": [
+      "Chile",
+      "Tunisia",
+      "Nepal",
+      "South Asia"
+    ]
+  },
+  "columns": {
+    "Inbound arrivals of tourists": {
+      "titleShort": "Inbound arrivals of tourists",
+      "titleLong": "Inbound arrivals of tourists",
+      "descriptionShort": "Trips by people who arrive from abroad and stay overnight.",
+      "descriptionKey": [
+        "When an individual visits a country multiple times within a year, each visit is counted as a separate arrival.",
+        "Similarly, if a person travels to multiple countries during a single trip, their arrival in each country is recorded individually.",
+        "As a result, the number of arrivals does not necessarily reflect the number of individuals traveling, as one person can generate multiple arrivals.",
+        "Note that before 2006, the US counted same-day trips from Canada only. After 2006, day trips from Mexico were also included."
+      ],
+      "unit": "arrivals",
+      "timespan": "1995-2022",
+      "type": "Numeric",
+      "owidVariableId": 985060,
+      "shortName": "in_tour_arrivals_ovn_vis_tourists",
+      "lastUpdated": "2024-08-17",
+      "nextUpdate": "2025-08-17",
+      "citationShort": "UNWTO (2024) – processed by Our World in Data",
+      "citationLong": "UNWTO (2024) – processed by Our World in Data. “Inbound arrivals of tourists” [dataset]. UNWTO, “145 key tourism statistics” [original data].",
+      "fullMetadata": "https://api.ourworldindata.org/v1/indicators/985060.metadata.json"
+    }
+  },
+  "dateDownloaded": "2025-06-24",
+  "activeFilters": {}
+}

@@ -64,6 +64,57 @@ interface ClimateData {
   year: string;
 }
 
+interface CrimeData {
+  country: string;
+  region: string;
+  subregion: string;
+  year: number;
+  totalArrests?: number | null;
+  arrestsByCitizenship?: {
+    national?: number | null;
+    foreign?: number | null;
+  };
+  arrestsBySex?: {
+    male?: number | null;
+    female?: number | null;
+  };
+  victimData?: {
+    totalVictims?: number | null;
+    maleVictims?: number | null;
+    femaleVictims?: number | null;
+    homicideRate?: number | null;
+  };
+  convictionData?: {
+    totalConvictions?: number | null;
+  };
+  prisonDeaths?: number | null;
+  source: string;
+  unit: string;
+  rawData?: any[];
+}
+
+// Interface for Human Development Index data
+interface HDIData {
+  country: string;
+  countryName?: string;
+  hdi: number | null;
+  source: string;
+  year: string;
+  sourceOrganization: string;
+  description?: string;
+  scale?: string;
+  note?: string;
+}
+
+interface OurWorldInDataMetric {
+  value: number | null;
+  year: string | null;
+  source: string;
+  sourceOrganization: string;
+  unit: string;
+  description: string;
+}
+
 interface FactbookData {
   malePopulation?: number | null;
   femalePopulation?: number | null;
@@ -88,6 +139,7 @@ interface FactbookData {
   creditRatings?: string | null;
   agriculturalProducts?: string | null;
   industries?: string | null;
+  publicDebt?: number | null;
   giniIndex?: number | null;
   averageHouseholdExpenditure?: string | null;
   
@@ -95,8 +147,18 @@ interface FactbookData {
   exportPartners?: string | null;
   exportCommodities?: string | null;
   imports?: number | null;
+  importPartners?: string | null;
   importCommodities?: string | null;
   exchangeRates?: string | null;
+  
+  // Communications & Technology
+  internetUsers?: number | null;
+  internetCountryCode?: string | null;
+  
+  // Transportation & Infrastructure
+  airports?: number | null;
+  railways?: number | null;
+  ports?: number | null;
   
   militaryExpenditure?: number | null;
   refugees?: string | null;
@@ -113,55 +175,53 @@ interface FactbookData {
 
 interface ComtradeData {
   country: string;
-  year: number;
+  year: string;
+  source: string;
+  note: string;
+  
+  // Core trade metrics
   totalExports: {
     value: number;
-    formatted: {
-      value: number;
-      formatted: string;
-      unit: string;
-    };
+    formatted: string;
   };
   totalImports: {
     value: number;
-    formatted: {
-      value: number;
-      formatted: string;
-      unit: string;
-    };
+    formatted: string;
   };
   tradeBalance: {
     value: number;
-    formatted: {
-      value: number;
-      formatted: string;
-      unit: string;
-    };
+    formatted: string;
     status: 'surplus' | 'deficit';
   };
+  
+  // Trading partners
   topExportPartners: Array<{
     country: string;
-    value: number;
-    formatted: {
-      value: number;
-      formatted: string;
-      unit: string;
-    };
-    percentage: string;
+    percentage: number | null;
+    formatted: string;
   }>;
   topImportPartners: Array<{
     country: string;
-    value: number;
-    formatted: {
-      value: number;
-      formatted: string;
-      unit: string;
-    };
-    percentage: string;
+    percentage: number | null;
+    formatted: string;
   }>;
-  source: string;
-  sourceOrganization: string;
-  lastUpdated: string;
+  
+  // Trade commodities
+  topExportCommodities: Array<{
+    commodity: string;
+    description: string;
+  }>;
+  topImportCommodities: Array<{
+    commodity: string;
+    description: string;
+  }>;
+  
+  // Raw data for reference
+  rawData: {
+    exportPartnersText: string;
+    exportCommoditiesText: string;
+    importCommoditiesText: string;
+  };
 }
 
 interface EnhancedCountryInfo {
@@ -169,6 +229,20 @@ interface EnhancedCountryInfo {
   climateData?: ClimateData;
   factbookData?: FactbookData;
   comtradeData?: ComtradeData;
+  crimeData?: CrimeData;
+  hdiData?: HDIData;
+  touristsData?: OurWorldInDataMetric;
+  schoolingYearsData?: OurWorldInDataMetric;
+  taxRevenueData?: OurWorldInDataMetric;
+  extremePovertyData?: OurWorldInDataMetric;
+  migrantsData?: OurWorldInDataMetric;
+  caloricSupplyData?: OurWorldInDataMetric;
+  incomeGroupData?: OurWorldInDataMetric;
+  incomeShareRichest1Data?: OurWorldInDataMetric;
+  incomeSharePoorest50Data?: OurWorldInDataMetric;
+  armedForcesPersonnelData?: OurWorldInDataMetric;
+  terrorismDeathsData?: OurWorldInDataMetric;
+  politicalRegimeData?: OurWorldInDataMetric;
 }
 
 interface CountryStats {
@@ -248,6 +322,8 @@ const CountryDropdown = ({ selectedCountries, onSelect, countries }: CountryDrop
         onSelect([...selectedCountries, country]);
       }
     }
+    // Clear the search term after any selection
+    setSearchTerm('');
   };
 
   const handleRemoveCountry = (countryCode: string) => {
@@ -293,6 +369,17 @@ const CountryDropdown = ({ selectedCountries, onSelect, countries }: CountryDrop
                 placeholder="Search countries..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && filteredCountries.length > 0) {
+                    // Select the first filtered country on Enter
+                    const firstCountry = filteredCountries[0];
+                    const isSelected = selectedCountries.some(c => c.code === firstCountry.code);
+                    const isDisabled = selectedCountries.length >= 5 && !isSelected;
+                    if (!isDisabled) {
+                      handleCountryToggle(firstCountry);
+                    }
+                  }
+                }}
                 className="w-full px-3 py-2 text-sm bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               />
             </div>
@@ -328,6 +415,19 @@ const CountryDropdown = ({ selectedCountries, onSelect, countries }: CountryDrop
 // Helper function to get icon for metric title
 const getMetricIcon = (title: string) => {
   const titleLower = title.toLowerCase();
+  if (titleLower.includes('hdi') || titleLower.includes('human development')) return '🏆';
+  if (titleLower.includes('tourist') || titleLower.includes('tourism')) return '✈️';
+  if (titleLower.includes('schooling') || titleLower.includes('years of school')) return '🎓';
+  if (titleLower.includes('tax revenue')) return '🏛️';
+  if (titleLower.includes('poverty') || titleLower.includes('extreme poverty')) return '⚠️';
+  if (titleLower.includes('migrants') || titleLower.includes('migration')) return '🌐';
+  if (titleLower.includes('caloric') || titleLower.includes('calorie') || titleLower.includes('food supply')) return '🍽️';
+  if (titleLower.includes('income group') || titleLower.includes('world bank income')) return '🏦';
+  if (titleLower.includes('income share') && titleLower.includes('richest')) return '💰';
+  if (titleLower.includes('income share') && titleLower.includes('poorest')) return '🤝';
+  if (titleLower.includes('armed forces') || titleLower.includes('military personnel')) return '🪖';
+  if (titleLower.includes('terrorism') || titleLower.includes('terrorist')) return '⚠️';
+  if (titleLower.includes('political regime') || titleLower.includes('democracy')) return '🏛️';
   if (titleLower.includes('gdp') || titleLower.includes('economy')) return '💰';
   if (titleLower.includes('population')) return '👥';
   if (titleLower.includes('area')) return '🌍';
@@ -350,9 +450,21 @@ const getMetricIcon = (title: string) => {
   return '📈'; // Default icon
 };
 
-// Tooltip definitions for metrics
 const getMetricTooltip = (title: string): string => {
   const tooltips: Record<string, string> = {
+    "Human Development Index (HDI)": "A composite index measuring key dimensions of human development: health (life expectancy), education (schooling), and living standards (income). Scale: 0-1, where higher values indicate higher human development.",
+    "International Tourist Arrivals": "Number of trips by people who arrive from abroad and stay overnight. When an individual visits multiple times within a year, each visit is counted separately.",
+    "Mean Years of Schooling": "Average years of formal education for individuals aged 15-64. This includes primary, secondary, and higher education but does not count years spent repeating grades.",
+    "Tax Revenue as % of GDP": "Direct and indirect taxes as well as social contributions as a percentage of gross domestic product. Includes compulsory payments to government following IMF and OECD definitions.",
+    "Extreme Poverty Rate": "Share of population living below the International Poverty Line of $2.15 per day (2017 PPP). Data is adjusted for inflation and differences in living costs between countries.",
+    "International Migrants": "People living in a given country who were born in another country. This includes all foreign-born residents regardless of citizenship status.",
+    "Daily Caloric Supply": "Daily per capita caloric supply available for human consumption. Measured in kilocalories per day and represents the food available for consumption, not necessarily what is actually consumed.",
+    "World Bank Income Group": "World Bank classification of countries based on Gross National Income (GNI) per capita. Categories include Low income, Lower middle income, Upper middle income, and High income countries.",
+    "Income Share of Richest 1%": "Percentage of total income received by the richest 1% of the population before taxes and transfers. Higher values indicate greater income inequality at the top of the distribution.",
+    "Income Share of Poorest 50%": "Percentage of total income received by the poorest 50% of the population before taxes and transfers. Lower values indicate greater income inequality at the bottom of the distribution.",
+    "Armed Forces Personnel": "Active duty military personnel and paramilitary forces as a percentage of total population. Includes all servicemen and women on full-time duty, including conscripts.",
+    "Terrorism Deaths": "Total number of deaths from terrorist attacks. Data from the Global Terrorism Database which tracks terrorist incidents worldwide.",
+    "Political Regime": "Classification of political systems based on democratic institutions and freedoms. Categories: Closed Autocracy, Electoral Autocracy, Electoral Democracy, and Liberal Democracy.",
     "Total Population": "The total number of people living in the country, including all residents regardless of legal status or citizenship",
     "Area": "Total land and water area of the country in square kilometers",
     "Population Density": "Number of people per square kilometer - calculated by dividing total population by total area",
@@ -383,13 +495,26 @@ const getMetricTooltip = (title: string): string => {
     "Spirits Consumption (liters pure alcohol/year)": "Average liters of pure alcohol from spirits consumed per person per year",
     "Other Alcohols Consumption (liters pure alcohol/year)": "Average liters of pure alcohol from other alcoholic beverages consumed per person per year",
     "Homicide Rate (per 100,000)": "Number of intentional homicides per 100,000 people - a key indicator of violent crime",
+    "Homicide Victims (Total)": "Total number of people who were victims of intentional homicide based on UN crime statistics",
+    "Homicide Arrests (Total)": "Total number of people arrested or suspected for intentional homicide crimes",
+    "Male Arrests": "Number of male individuals arrested or suspected for intentional homicide",
+    "Female Arrests": "Number of female individuals arrested or suspected for intentional homicide", 
+    "Male Victims": "Number of male victims of intentional homicide",
+    "Female Victims": "Number of female victims of intentional homicide",
+    "Prison Deaths": "Number of deaths due to intentional homicide that occurred in prison facilities",
     "Average Temperature": "Mean annual temperature across the country in degrees Celsius",
     "Hot Days (>30°C)": "Average number of days per year with maximum temperature above 30°C (86°F)",
     "Very Hot Days (>35°C)": "Average number of days per year with maximum temperature above 35°C (95°F)",
     "Cold Days (<0°C)": "Average number of days per year with minimum temperature below 0°C (32°F)",
     "Total Exports": "Total value of goods and services exported by the country in US dollars",
     "Total Imports": "Total value of goods and services imported by the country in US dollars",
-    "Trade Balance": "Difference between total exports and imports - positive indicates trade surplus, negative indicates trade deficit"
+    "Trade Balance": "Difference between total exports and imports - positive indicates trade surplus, negative indicates trade deficit",
+    "Gini Index": "Measure of income inequality - 0 means perfect equality, 100 means perfect inequality",
+    "Airports": "Total number of airports in the country (including all types: international, domestic, military, etc.)",
+          "Railways (km)": "Total length of railway lines in kilometers",
+      "Ports": "Total number of ports in the country (including seaports, river ports, and lake ports)",
+      "Exchange Rates (2024)": "Currency exchange rate to US Dollar for the most recent year available"
+  
   };
   
   return tooltips[title] || "No description available for this metric";
@@ -423,7 +548,9 @@ const MetricTable = ({ title, countries, getValue, getSource, formatValue, loadi
     <div id={`metric-${metricId}`} className="mb-8 scroll-mt-24 transition-all duration-300">
       <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center">
         <span className="text-base mr-2 opacity-70">{getMetricIcon(title)}</span>
-        {title}
+        <span className="text-gray-900 dark:text-white">
+          {title}
+        </span>
         <div className="group relative ml-2">
           <HelpCircle 
             size={16} 
@@ -531,10 +658,12 @@ export default function HomePage() {
   const [selectedCountries, setSelectedCountries] = useState<Country[]>([countries[0]]);
   const [countryStats, setCountryStats] = useState<Record<string, CountryStats>>({});
   const [loading, setLoading] = useState(false);
+  const [loadingStates, setLoadingStates] = useState<Record<string, Record<string, boolean>>>({});
   const [error, setError] = useState<string | null>(null);
   const [darkMode, setDarkMode] = useState(false);
   const [countryInfoExpanded, setCountryInfoExpanded] = useState(false);
   const [selectedCountryInfo, setSelectedCountryInfo] = useState<string | null>(null);
+  const [selectedTradeCountry, setSelectedTradeCountry] = useState<string | null>(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [showStickyNav, setShowStickyNav] = useState(false);
   const [activeSection, setActiveSection] = useState('overview');
@@ -548,8 +677,8 @@ export default function HomePage() {
       'Population Density',
       'Urban Population %',
       'Rural Population %',
-      'Fertility Rate',
-      'Net Migration Rate'
+      'Net Migration Rate (per 1,000 people)',
+      'International Migrants'
     ],
     economy: [
       'GDP',
@@ -558,31 +687,54 @@ export default function HomePage() {
       'Trade as % of GDP',
       'Unemployment Rate',
       'Public Debt % of GDP',
-      'Military Expenditure % of GDP'
+      'Military Expenditure % of GDP',
+      'Gini Index',
+      'Tax Revenue as % of GDP',
+      'Internet Users %',
+      'Electricity Access %'
     ],
     social: [
+      'Human Development Index (HDI)',
       'Life Expectancy',
+      'Fertility Rate (births per woman)',
       'Literacy Rate',
       'Education Spending % of GDP',
-      'Internet Users %',
-      'Electricity Access %',
+      'Mean Years of Schooling',
+      'Extreme Poverty Rate',
+      'Daily Caloric Supply',
+      'Income Share of Richest 1%',
+      'Income Share of Poorest 50%',
+      'Armed Forces Personnel',
       'Forest Coverage %',
       'Agricultural Land %',
-      'Alcohol Consumption (Total)',
-      'Tobacco Use (Total, Male, Female)',
-      'Beer/Wine/Spirits/Other Consumption'
+      'Alcohol Consumption (liters pure alcohol/year)',
+      'Beer Consumption (liters pure alcohol/year)',
+      'Wine Consumption (liters pure alcohol/year)',
+      'Spirits Consumption (liters pure alcohol/year)',
+      'Other Alcohols Consumption (liters pure alcohol/year)',
+      'Tobacco Use (%)',
+      'Tobacco Use - Male (%)',
+      'Tobacco Use - Female (%)'
     ],
     trade: [
       'Total Exports',
       'Total Imports',
       'Trade Balance',
-      'Export Partners',
-      'Import Partners',
-      'Export Commodities',
-      'Import Commodities'
+      'International Tourist Arrivals',
+      'Airports',
+      'Railways (km)',
+      'Ports'
     ],
     safety: [
-      'Homicide Rate'
+      'Homicide Rate (per 100,000)',
+      'Homicide Victims (Total)',
+      'Homicide Arrests (Total)',
+      'Male Arrests',
+      'Female Arrests',
+      'Male Victims',
+      'Female Victims',
+      'Prison Deaths',
+      'Terrorism Deaths'
     ],
     climate: [
       'Average Temperature',
@@ -620,24 +772,24 @@ export default function HomePage() {
     // Initialize dark mode from localStorage or system preference
     if (typeof window !== 'undefined') {
       const savedTheme = localStorage.getItem('darkMode');
-      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const shouldUseDark = savedTheme !== null ? savedTheme === 'true' : systemPrefersDark;
-      setDarkMode(shouldUseDark);
-      document.documentElement.classList.toggle('dark', shouldUseDark);
+              const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldUseDark = savedTheme !== null ? savedTheme === 'true' : systemPrefersDark;
+        setDarkMode(shouldUseDark);
+        document.documentElement.classList.toggle('dark', shouldUseDark);
     }
   }, []);
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      document.documentElement.classList.toggle('dark', darkMode);
-      localStorage.setItem('darkMode', darkMode.toString());
-    }
-  }, [darkMode]);
+      useEffect(() => {
+      if (typeof window !== 'undefined') {
+        document.documentElement.classList.toggle('dark', darkMode);
+        localStorage.setItem('darkMode', darkMode.toString());
+      }
+    }, [darkMode]);
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      setShowScrollTop(scrollY > 400);
+              setShowScrollTop(scrollY > 400);
       
       // Show sticky nav when scrolled past initial navigation
       setShowStickyNav(scrollY > 600);
@@ -676,11 +828,45 @@ export default function HomePage() {
   }, [countryInfoExpanded, selectedCountries, selectedCountryInfo]);
 
   useEffect(() => {
+    // Auto-select first country for trade data when countries are selected
+    if (selectedCountries.length > 0 && !selectedTradeCountry) {
+      setSelectedTradeCountry(selectedCountries[0].code);
+    }
+  }, [selectedCountries, selectedTradeCountry]);
+
+  useEffect(() => {
     const loadData = async () => {
       if (selectedCountries.length === 0) return;
 
       setLoading(true);
       setError(null);
+
+      // Initialize loading states for all countries and metrics
+      const initialLoadingStates: Record<string, Record<string, boolean>> = {};
+      selectedCountries.forEach(country => {
+        initialLoadingStates[country.code] = {
+          worldBank: true,
+          restCountries: true,
+          factbook: true,
+          climate: true,
+          comtrade: true,
+          crime: true,
+          hdi: true,
+          tourists: true,
+          schoolingYears: true,
+          taxRevenue: true,
+          extremePoverty: true,
+          migrants: true,
+          caloricSupply: true,
+          incomeGroup: true,
+          incomeShareRichest1: true,
+          incomeSharePoorest50: true,
+          armedForcesPersonnel: true,
+          terrorismDeaths: true,
+          politicalRegime: true
+        };
+      });
+      setLoadingStates(initialLoadingStates);
 
       try {
         console.log('Loading data for countries:', selectedCountries.map(c => c.name));
@@ -689,30 +875,61 @@ export default function HomePage() {
           console.log(`Fetching data for ${country.name} (${country.code})`);
           
           try {
-            // Fetch all data sources in parallel
-            const [worldBankResponse, restCountriesResponse, factbookResponse, climateResponse, comtradeResponse] = await Promise.all([
-              fetch('/api/worldbank', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  country: country.code
-                })
-              }),
-              fetch(`/api/restcountries?country=${country.code}`),
-              fetch(`/api/factbook?country=${country.code}`),
-              fetch(`/api/climate?country=${country.code}`),
-              fetch(`/api/comtrade?country=${country.code}`)
+            // Helper function to fetch data and update loading state
+            const fetchWithLoading = async (url: string, metricName: string) => {
+              try {
+                const response = await fetch(url);
+                const data = response.ok ? await response.json() : null;
+                setMetricLoading(country.code, metricName, false);
+                return data;
+              } catch (error) {
+                setMetricLoading(country.code, metricName, false);
+                return null;
+              }
+            };
+
+            // Fetch all data sources in parallel with individual loading tracking
+            const [worldBankData, restCountriesData, factbookData, climateData, comtradeData, crimeData, hdiData, touristsData, schoolingYearsData, taxRevenueData, extremePovertyData, migrantsData, caloricSupplyData, incomeGroupData, incomeShareRichest1Data, incomeSharePoorest50Data, armedForcesPersonnelData, terrorismDeathsData, politicalRegimeData] = await Promise.all([
+              (async () => {
+                try {
+                  const response = await fetch('/api/worldbank', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      country: country.code
+                    })
+                  });
+                  const data = response.ok ? await response.json() : null;
+                  setMetricLoading(country.code, 'worldBank', false);
+                  return data;
+                } catch (error) {
+                  setMetricLoading(country.code, 'worldBank', false);
+                  return null;
+                }
+              })(),
+              fetchWithLoading(`/api/restcountries?country=${country.code}`, 'restCountries'),
+              fetchWithLoading(`/api/factbook?country=${country.code}`, 'factbook'),
+              fetchWithLoading(`/api/climate?country=${country.code}`, 'climate'),
+              fetchWithLoading(`/api/comtrade?country=${country.code}`, 'comtrade'),
+              fetchWithLoading(`/api/crime?country=${country.code}`, 'crime'),
+              fetchWithLoading(`/api/hdi?country=${country.code}`, 'hdi'),
+              fetchWithLoading(`/api/ourworldindata?country=${country.code}&metric=tourists`, 'tourists'),
+              fetchWithLoading(`/api/ourworldindata?country=${country.code}&metric=schoolingYears`, 'schoolingYears'),
+              fetchWithLoading(`/api/ourworldindata?country=${country.code}&metric=taxRevenue`, 'taxRevenue'),
+              fetchWithLoading(`/api/ourworldindata?country=${country.code}&metric=extremePoverty`, 'extremePoverty'),
+              fetchWithLoading(`/api/ourworldindata?country=${country.code}&metric=migrants`, 'migrants'),
+              fetchWithLoading(`/api/ourworldindata?country=${country.code}&metric=caloricSupply`, 'caloricSupply'),
+              fetchWithLoading(`/api/ourworldindata?country=${country.code}&metric=incomeGroup`, 'incomeGroup'),
+              fetchWithLoading(`/api/ourworldindata?country=${country.code}&metric=incomeShareRichest1`, 'incomeShareRichest1'),
+              fetchWithLoading(`/api/ourworldindata?country=${country.code}&metric=incomeSharePoorest50`, 'incomeSharePoorest50'),
+              fetchWithLoading(`/api/ourworldindata?country=${country.code}&metric=armedForcesPersonnel`, 'armedForcesPersonnel'),
+              fetchWithLoading(`/api/ourworldindata?country=${country.code}&metric=terrorismDeaths`, 'terrorismDeaths'),
+              fetchWithLoading(`/api/ourworldindata?country=${country.code}&metric=politicalRegime`, 'politicalRegime')
             ]);
 
-            const [worldBankData, restCountriesData, factbookData, climateData, comtradeData] = await Promise.all([
-              worldBankResponse.ok ? worldBankResponse.json() : null,
-              restCountriesResponse.ok ? restCountriesResponse.json() : null,
-              factbookResponse.ok ? factbookResponse.json() : null,
-              climateResponse.ok ? climateResponse.json() : null,
-              comtradeResponse.ok ? comtradeResponse.json() : null
-            ]);
+
 
             // Debug logs
             console.log(`REST Countries data for ${country.name}:`, restCountriesData);
@@ -791,7 +1008,21 @@ export default function HomePage() {
                  restCountriesData: processedRestCountriesData,
                  factbookData,
                  climateData: finalClimateData,
-                 comtradeData
+                 comtradeData,
+                 crimeData,
+                 hdiData,
+                 touristsData,
+                 schoolingYearsData,
+                 taxRevenueData,
+                 extremePovertyData,
+                 migrantsData,
+                 caloricSupplyData,
+                 incomeGroupData,
+                 incomeShareRichest1Data,
+                 incomeSharePoorest50Data,
+                 armedForcesPersonnelData,
+                 terrorismDeathsData,
+                 politicalRegimeData
                }
              };
 
@@ -827,7 +1058,7 @@ export default function HomePage() {
 
   const formatNumber = (num: number | null): string => {
     if (num === null || num === undefined) return "N/A";
-    return new Intl.NumberFormat('en-US').format(num);
+    return new Intl.NumberFormat('en-US').format(Math.round(num));
   };
 
   const formatCurrency = (num: number | null): string => {
@@ -916,6 +1147,24 @@ export default function HomePage() {
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Helper function to check if a specific metric is loading for any country
+  const isMetricLoading = (metricName: string): boolean => {
+    return selectedCountries.some(country => 
+      loadingStates[country.code]?.[metricName] === true
+    );
+  };
+
+  // Helper function to set loading state for specific metric and country
+  const setMetricLoading = (countryCode: string, metricName: string, isLoading: boolean) => {
+    setLoadingStates(prev => ({
+      ...prev,
+      [countryCode]: {
+        ...prev[countryCode],
+        [metricName]: isLoading
+      }
+    }));
   };
 
   return (
@@ -1284,14 +1533,26 @@ export default function HomePage() {
                           
                           <div className="space-y-2">
                             <h5 className="font-semibold text-gray-900 dark:text-white flex items-center">
+                              <Globe className="mr-2" size={16} />
+                              Internet Country Code
+                            </h5>
+                            <p className="text-gray-700 dark:text-gray-300">
+                              {factbook?.internetCountryCode || 'N/A'}
+                              {factbook?.internetCountryCode && (
+                                <span className="text-xs text-gray-500 dark:text-gray-400 block">
+                                  Top-level domain
+                                </span>
+                              )}
+                            </p>
+                          </div>
+                          
+                          <div className="space-y-2">
+                            <h5 className="font-semibold text-gray-900 dark:text-white flex items-center">
                               <Users className="mr-2" size={16} />
                               Population
                             </h5>
                             <p className="text-gray-700 dark:text-gray-300">
                               {totalPopulation ? formatPopulation(totalPopulation) : 'N/A'}
-                              <span className="text-xs text-gray-500 dark:text-gray-400 block">
-                                Source: {factbook?.source || 'N/A'} ({factbook?.year || 'N/A'})
-                              </span>
                             </p>
                           </div>
                           
@@ -1302,9 +1563,6 @@ export default function HomePage() {
                             </h5>
                             <p className="text-gray-700 dark:text-gray-300">
                               {factbook?.area ? formatArea(factbook.area) : 'N/A'}
-                              <span className="text-xs text-gray-500 dark:text-gray-400 block">
-                                Source: {factbook?.source || 'N/A'} ({factbook?.year || 'N/A'})
-                              </span>
                             </p>
                           </div>
 
@@ -1316,9 +1574,6 @@ export default function HomePage() {
                             <p className="text-gray-700 dark:text-gray-300">
                               {totalPopulation && factbook?.area ? 
                                 formatPopulationDensity(totalPopulation / factbook.area) : 'N/A'}
-                              <span className="text-xs text-gray-500 dark:text-gray-400 block">
-                                Source: {factbook?.source || 'N/A'} ({factbook?.year || 'N/A'})
-                              </span>
                             </p>
                           </div>
                         </div>
@@ -1401,12 +1656,30 @@ export default function HomePage() {
                       )}
 
                       {/* Government & Politics */}
-                      {(factbook?.etymology || factbook?.suffrage) && (
+                      {(factbook?.etymology || factbook?.suffrage || stats?.enhancedInfo?.politicalRegimeData) && (
                         <div>
                           <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 border-b border-gray-200 dark:border-gray-600 pb-2">
                             Government & Politics
                           </h4>
                           <div className="space-y-4">
+                            {stats?.enhancedInfo?.politicalRegimeData && (
+                              <div className="space-y-2">
+                                <h5 className="font-semibold text-gray-900 dark:text-white flex items-center">
+                                  🏛️ Political Regime
+                                </h5>
+                                <p className="text-gray-700 dark:text-gray-300">
+                                  {(() => {
+                                    const value = stats.enhancedInfo.politicalRegimeData.value;
+                                    if (value === 0) return 'Closed Autocracy';
+                                    if (value === 1) return 'Electoral Autocracy';
+                                    if (value === 2) return 'Electoral Democracy';
+                                    if (value === 3) return 'Liberal Democracy';
+                                    return stats.enhancedInfo.politicalRegimeData.value || 'N/A';
+                                  })()}
+                                </p>
+                              </div>
+                            )}
+                            
                             {factbook?.etymology && (
                               <div className="space-y-2">
                                 <h5 className="font-semibold text-gray-900 dark:text-white">Etymology</h5>
@@ -1453,12 +1726,24 @@ export default function HomePage() {
                       )}
 
                       {/* Economic Information */}
-                      {(factbook?.industries || factbook?.agriculturalProducts) && (
+                      {(factbook?.industries || factbook?.agriculturalProducts || stats?.enhancedInfo?.incomeGroupData) && (
                         <div>
                           <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 border-b border-gray-200 dark:border-gray-600 pb-2">
                             Economic Information
                           </h4>
                           <div className="space-y-4">
+                            {stats?.enhancedInfo?.incomeGroupData && (
+                              <div className="space-y-2">
+                                <h5 className="font-semibold text-gray-900 dark:text-white flex items-center">
+                                  <DollarSign className="mr-2" size={16} />
+                                  World Bank Income Group
+                                </h5>
+                                <p className="text-gray-700 dark:text-gray-300">
+                                  {stats.enhancedInfo.incomeGroupData.value || 'N/A'}
+                                </p>
+                              </div>
+                            )}
+                            
                             {factbook?.industries && (
                               <div className="space-y-2">
                                 <h5 className="font-semibold text-gray-900 dark:text-white">Industries</h5>
@@ -1475,6 +1760,81 @@ export default function HomePage() {
                           </div>
                         </div>
                       )}
+
+                      {/* Sources Section */}
+                      <div className="border-t border-gray-200 dark:border-gray-600 pt-6">
+                        <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                          <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center mr-2">
+                            <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 4a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1V8zm8 0a1 1 0 011-1h4a1 1 0 011 1v2a1 1 0 01-1 1h-4a1 1 0 01-1-1V8zm0 4a1 1 0 011-1h4a1 1 0 011 1v2a1 1 0 01-1 1h-4a1 1 0 01-1-1v-2z" clipRule="evenodd" />
+                            </svg>
+                          </div>
+                          Data Sources
+                        </h4>
+                        <div className="bg-gray-50 dark:bg-gray-700/30 rounded-lg p-4">
+                          <div className="space-y-3">
+                            {/* Rest Countries API */}
+                            {restData && (
+                              <div className="flex items-start space-x-3">
+                                <div className="w-2 h-2 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
+                                <div>
+                                  <p className="text-sm text-gray-700 dark:text-gray-300">
+                                    <span className="font-medium">REST Countries API</span>
+                                  </p>
+                                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                    Open-source API providing country information including capitals, currencies, languages, and geographic data
+                                  </p>
+                                </div>
+                              </div>
+                            )}
+                            
+                            {/* CIA World Factbook Source */}
+                            {factbook && (
+                              <div className="flex items-start space-x-3">
+                                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                                <div>
+                                  <p className="text-sm text-gray-700 dark:text-gray-300">
+                                    <span className="font-medium">{factbook.source}</span> ({factbook.year})
+                                  </p>
+                                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                    CIA World Factbook - Comprehensive country demographic and geographic data
+                                  </p>
+                                </div>
+                              </div>
+                            )}
+                            
+                            {/* Political Regime Source */}
+                            {stats?.enhancedInfo?.politicalRegimeData && (
+                              <div className="flex items-start space-x-3">
+                                <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                                <div>
+                                  <p className="text-sm text-gray-700 dark:text-gray-300">
+                                    <span className="font-medium">{stats.enhancedInfo.politicalRegimeData.source}</span> ({stats.enhancedInfo.politicalRegimeData.year})
+                                  </p>
+                                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                    {stats.enhancedInfo.politicalRegimeData.sourceOrganization} - Democratic institutions and governance classification
+                                  </p>
+                                </div>
+                              </div>
+                            )}
+                            
+                            {/* World Bank Income Group Source */}
+                            {stats?.enhancedInfo?.incomeGroupData && (
+                              <div className="flex items-start space-x-3">
+                                <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2 flex-shrink-0"></div>
+                                <div>
+                                  <p className="text-sm text-gray-700 dark:text-gray-300">
+                                    <span className="font-medium">{stats.enhancedInfo.incomeGroupData.source}</span> ({stats.enhancedInfo.incomeGroupData.year})
+                                  </p>
+                                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                    {stats.enhancedInfo.incomeGroupData.sourceOrganization} - Country income classification based on GNI per capita
+                                  </p>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   );
                 })()}
@@ -1575,7 +1935,7 @@ export default function HomePage() {
                 <MetricTable
                   title="Urban Population %"
                   countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.urbanPopPct?.value || null}
+                  getValue={(country) => countryStats[country.code]?.urbanPopPct?.value ?? null}
                   getSource={(country) => {
                     const stats = countryStats[country.code];
                     return stats?.urbanPopPct ? {
@@ -1591,7 +1951,7 @@ export default function HomePage() {
                 <MetricTable
                   title="Rural Population %"
                   countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.ruralPopPct?.value || null}
+                  getValue={(country) => countryStats[country.code]?.ruralPopPct?.value ?? null}
                   getSource={(country) => {
                     const stats = countryStats[country.code];
                     return stats?.ruralPopPct ? {
@@ -1604,28 +1964,14 @@ export default function HomePage() {
                   loading={loading}
                 />
 
-                <MetricTable
-                  title="Fertility Rate (births per woman)"
-                  countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.fertilityRate?.value || null}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.fertilityRate ? {
-                      source: stats.fertilityRate.source,
-                      year: stats.fertilityRate.year || undefined,
-                      sourceOrganization: stats.fertilityRate.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)} births/woman`}
-                  loading={loading}
-                />
+
 
                 <MetricTable
                   title="Net Migration Rate (per 1,000 people)"
                   countries={selectedCountries}
                   getValue={(country) => {
                     const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.factbookData?.netMigrationRate || null;
+                    return stats?.enhancedInfo?.factbookData?.netMigrationRate ?? null;
                   }}
                   getSource={(country) => {
                     const stats = countryStats[country.code];
@@ -1638,6 +1984,37 @@ export default function HomePage() {
                   }}
                   formatValue={(value) => `${value.toFixed(1)}/1000`}
                   loading={loading}
+                />
+
+                <MetricTable
+                  title="International Migrants"
+                  countries={selectedCountries}
+                  getValue={(country) => {
+                    const stats = countryStats[country.code];
+                    return stats?.enhancedInfo?.migrantsData?.value ?? null;
+                  }}
+                  getSource={(country) => {
+                    const stats = countryStats[country.code];
+                    const migrants = stats?.enhancedInfo?.migrantsData;
+                    return migrants ? {
+                      source: migrants.source,
+                      year: migrants.year || undefined,
+                      sourceOrganization: migrants.sourceOrganization
+                    } : null;
+                  }}
+                  formatValue={(value) => {
+                    // Values from Our World in Data are already in millions
+                    if (value >= 1000000000) {
+                      return `${(value / 1000000000).toFixed(1)}B`;
+                    } else if (value >= 1000000) {
+                      return `${(value / 1000000).toFixed(1)}M`;
+                    } else if (value >= 1000) {
+                      return `${(value / 1000).toFixed(1)}K`;
+                    } else {
+                      return `${value.toFixed(1)}M`;
+                    }
+                  }}
+                  loading={isMetricLoading('migrants')}
                 />
               </div>
             </section>
@@ -1660,7 +2037,7 @@ export default function HomePage() {
                 <MetricTable
                   title="GDP"
                   countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.gdp?.value || null}
+                  getValue={(country) => countryStats[country.code]?.gdp?.value ?? null}
                   getSource={(country) => {
                     const stats = countryStats[country.code];
                     return stats?.gdp ? {
@@ -1670,13 +2047,13 @@ export default function HomePage() {
                     } : null;
                   }}
                   formatValue={(value) => formatNumber(value)}
-                  loading={loading}
+                  loading={isMetricLoading('worldBank')}
                 />
 
                 <MetricTable
                   title="GDP Per Capita"
                   countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.gdpPerCapita?.value || null}
+                  getValue={(country) => countryStats[country.code]?.gdpPerCapita?.value ?? null}
                   getSource={(country) => {
                     const stats = countryStats[country.code];
                     return stats?.gdpPerCapita ? {
@@ -1686,13 +2063,13 @@ export default function HomePage() {
                     } : null;
                   }}
                   formatValue={formatCurrency}
-                  loading={loading}
+                  loading={isMetricLoading('worldBank')}
                 />
 
                 <MetricTable
                   title="GNI Per Capita"
                   countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.gniPerCapita?.value || null}
+                  getValue={(country) => countryStats[country.code]?.gniPerCapita?.value ?? null}
                   getSource={(country) => {
                     const stats = countryStats[country.code];
                     return stats?.gniPerCapita ? {
@@ -1708,7 +2085,7 @@ export default function HomePage() {
                 <MetricTable
                   title="Trade as % of GDP"
                   countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.tradeGDP?.value || null}
+                  getValue={(country) => countryStats[country.code]?.tradeGDP?.value ?? null}
                   getSource={(country) => {
                     const stats = countryStats[country.code];
                     return stats?.tradeGDP ? {
@@ -1724,7 +2101,7 @@ export default function HomePage() {
                 <MetricTable
                   title="Unemployment Rate"
                   countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.unemploymentRate?.value || null}
+                  getValue={(country) => countryStats[country.code]?.unemploymentRate?.value ?? null}
                   getSource={(country) => {
                     const stats = countryStats[country.code];
                     return stats?.unemploymentRate ? {
@@ -1740,17 +2117,31 @@ export default function HomePage() {
                 <MetricTable
                   title="Public Debt % of GDP"
                   countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.publicDebtGDP?.value || null}
+                  getValue={(country) => {
+                    const stats = countryStats[country.code];
+                    const factbook = stats?.enhancedInfo?.factbookData;
+                    return factbook?.publicDebt ?? stats?.publicDebtGDP?.value ?? null;
+                  }}
                   getSource={(country) => {
                     const stats = countryStats[country.code];
-                    return stats?.publicDebtGDP ? {
-                      source: stats.publicDebtGDP.source,
-                      year: stats.publicDebtGDP.year || undefined,
-                      sourceOrganization: stats.publicDebtGDP.sourceOrganization
-                    } : null;
+                    const factbook = stats?.enhancedInfo?.factbookData;
+                    if (factbook?.publicDebt !== null && factbook?.publicDebt !== undefined) {
+                      return {
+                        source: factbook.source,
+                        year: factbook.year,
+                        sourceOrganization: "CIA World Factbook"
+                      };
+                    } else if (stats?.publicDebtGDP) {
+                      return {
+                        source: stats.publicDebtGDP.source,
+                        year: stats.publicDebtGDP.year || undefined,
+                        sourceOrganization: stats.publicDebtGDP.sourceOrganization
+                      };
+                    }
+                    return null;
                   }}
                   formatValue={(value) => `${value.toFixed(1)}%`}
-                  loading={loading}
+                  loading={isMetricLoading('factbook')}
                 />
 
                 <MetricTable
@@ -1758,7 +2149,7 @@ export default function HomePage() {
                   countries={selectedCountries}
                   getValue={(country) => {
                     const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.factbookData?.militaryExpenditure || null;
+                    return stats?.enhancedInfo?.factbookData?.militaryExpenditure ?? null;
                   }}
                   getSource={(country) => {
                     const stats = countryStats[country.code];
@@ -1767,6 +2158,78 @@ export default function HomePage() {
                       source: factbook.source,
                       year: factbook.year,
                       sourceOrganization: "CIA World Factbook"
+                    } : null;
+                  }}
+                  formatValue={(value) => `${value.toFixed(1)}%`}
+                  loading={loading}
+                />
+
+                <MetricTable
+                  title="Gini Index"
+                  countries={selectedCountries}
+                  getValue={(country) => {
+                    const stats = countryStats[country.code];
+                    return stats?.enhancedInfo?.factbookData?.giniIndex ?? null;
+                  }}
+                  getSource={(country) => {
+                    const stats = countryStats[country.code];
+                    const factbook = stats?.enhancedInfo?.factbookData;
+                    return factbook ? {
+                      source: factbook.source,
+                      year: factbook.year,
+                      sourceOrganization: "CIA World Factbook"
+                    } : null;
+                  }}
+                  formatValue={(value) => `${value.toFixed(1)}`}
+                  loading={loading}
+                />
+
+                <MetricTable
+                  title="Tax Revenue as % of GDP"
+                  countries={selectedCountries}
+                  getValue={(country) => {
+                    const stats = countryStats[country.code];
+                    return stats?.enhancedInfo?.taxRevenueData?.value ?? null;
+                  }}
+                  getSource={(country) => {
+                    const stats = countryStats[country.code];
+                    const taxRevenue = stats?.enhancedInfo?.taxRevenueData;
+                    return taxRevenue ? {
+                      source: taxRevenue.source,
+                      year: taxRevenue.year || undefined,
+                      sourceOrganization: taxRevenue.sourceOrganization
+                    } : null;
+                  }}
+                  formatValue={(value) => `${value.toFixed(1)}%`}
+                  loading={loading}
+                />
+
+                <MetricTable
+                  title="Internet Users %"
+                  countries={selectedCountries}
+                  getValue={(country) => countryStats[country.code]?.internetUsers?.value ?? null}
+                  getSource={(country) => {
+                    const stats = countryStats[country.code];
+                    return stats?.internetUsers ? {
+                      source: stats.internetUsers.source,
+                      year: stats.internetUsers.year || undefined,
+                      sourceOrganization: stats.internetUsers.sourceOrganization
+                    } : null;
+                  }}
+                  formatValue={(value) => `${value.toFixed(1)}%`}
+                  loading={loading}
+                />
+
+                <MetricTable
+                  title="Electricity Access %"
+                  countries={selectedCountries}
+                  getValue={(country) => countryStats[country.code]?.electricityAccess?.value ?? null}
+                  getSource={(country) => {
+                    const stats = countryStats[country.code];
+                    return stats?.electricityAccess ? {
+                      source: stats.electricityAccess.source,
+                      year: stats.electricityAccess.year || undefined,
+                      sourceOrganization: stats.electricityAccess.sourceOrganization
                     } : null;
                   }}
                   formatValue={(value) => `${value.toFixed(1)}%`}
@@ -1791,9 +2254,29 @@ export default function HomePage() {
               
               <div className="space-y-8">
                 <MetricTable
+                  title="Human Development Index (HDI)"
+                  countries={selectedCountries}
+                  getValue={(country) => {
+                    const stats = countryStats[country.code];
+                    return stats?.enhancedInfo?.hdiData?.hdi ?? null;
+                  }}
+                  getSource={(country) => {
+                    const stats = countryStats[country.code];
+                    const hdi = stats?.enhancedInfo?.hdiData;
+                    return hdi ? {
+                      source: hdi.source,
+                      year: hdi.year,
+                      sourceOrganization: hdi.sourceOrganization
+                    } : null;
+                  }}
+                  formatValue={(value) => `${value.toFixed(3)}`}
+                  loading={loading}
+                />
+
+                <MetricTable
                   title="Life Expectancy"
                   countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.lifeExpectancy?.value || null}
+                  getValue={(country) => countryStats[country.code]?.lifeExpectancy?.value ?? null}
                   getSource={(country) => {
                     const stats = countryStats[country.code];
                     return stats?.lifeExpectancy ? {
@@ -1807,12 +2290,28 @@ export default function HomePage() {
                 />
 
                 <MetricTable
+                  title="Fertility Rate (births per woman)"
+                  countries={selectedCountries}
+                  getValue={(country) => countryStats[country.code]?.fertilityRate?.value ?? null}
+                  getSource={(country) => {
+                    const stats = countryStats[country.code];
+                    return stats?.fertilityRate ? {
+                      source: stats.fertilityRate.source,
+                      year: stats.fertilityRate.year || undefined,
+                      sourceOrganization: stats.fertilityRate.sourceOrganization
+                    } : null;
+                  }}
+                  formatValue={(value) => `${value.toFixed(1)} births/woman`}
+                  loading={loading}
+                />
+
+                <MetricTable
                   title="Literacy Rate"
                   countries={selectedCountries}
                   getValue={(country) => {
                     const stats = countryStats[country.code];
                     const factbook = stats?.enhancedInfo?.factbookData;
-                    return factbook?.literacyRate || stats?.literacyRate?.value || null;
+                    return factbook?.literacyRate ?? stats?.literacyRate?.value ?? null;
                   }}
                   getSource={(country) => {
                     const stats = countryStats[country.code];
@@ -1839,7 +2338,7 @@ export default function HomePage() {
                 <MetricTable
                   title="Education Spending % of GDP"
                   countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.educationSpendPctGDP?.value || null}
+                  getValue={(country) => countryStats[country.code]?.educationSpendPctGDP?.value ?? null}
                   getSource={(country) => {
                     const stats = countryStats[country.code];
                     return stats?.educationSpendPctGDP ? {
@@ -1853,15 +2352,39 @@ export default function HomePage() {
                 />
 
                 <MetricTable
-                  title="Internet Users %"
+                  title="Mean Years of Schooling"
                   countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.internetUsers?.value || null}
+                  getValue={(country) => {
+                    const stats = countryStats[country.code];
+                    return stats?.enhancedInfo?.schoolingYearsData?.value ?? null;
+                  }}
                   getSource={(country) => {
                     const stats = countryStats[country.code];
-                    return stats?.internetUsers ? {
-                      source: stats.internetUsers.source,
-                      year: stats.internetUsers.year || undefined,
-                      sourceOrganization: stats.internetUsers.sourceOrganization
+                    const schooling = stats?.enhancedInfo?.schoolingYearsData;
+                    return schooling ? {
+                      source: schooling.source,
+                      year: schooling.year || undefined,
+                      sourceOrganization: schooling.sourceOrganization
+                    } : null;
+                  }}
+                  formatValue={(value) => `${value.toFixed(1)} years`}
+                  loading={loading}
+                />
+
+                <MetricTable
+                  title="Extreme Poverty Rate"
+                  countries={selectedCountries}
+                  getValue={(country) => {
+                    const stats = countryStats[country.code];
+                    return stats?.enhancedInfo?.extremePovertyData?.value ?? null;
+                  }}
+                  getSource={(country) => {
+                    const stats = countryStats[country.code];
+                    const poverty = stats?.enhancedInfo?.extremePovertyData;
+                    return poverty ? {
+                      source: poverty.source,
+                      year: poverty.year || undefined,
+                      sourceOrganization: poverty.sourceOrganization
                     } : null;
                   }}
                   formatValue={(value) => `${value.toFixed(1)}%`}
@@ -1869,25 +2392,91 @@ export default function HomePage() {
                 />
 
                 <MetricTable
-                  title="Electricity Access %"
+                  title="Daily Caloric Supply"
                   countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.electricityAccess?.value || null}
+                  getValue={(country) => {
+                    const stats = countryStats[country.code];
+                    return stats?.enhancedInfo?.caloricSupplyData?.value ?? null;
+                  }}
                   getSource={(country) => {
                     const stats = countryStats[country.code];
-                    return stats?.electricityAccess ? {
-                      source: stats.electricityAccess.source,
-                      year: stats.electricityAccess.year || undefined,
-                      sourceOrganization: stats.electricityAccess.sourceOrganization
+                    const caloric = stats?.enhancedInfo?.caloricSupplyData;
+                    return caloric ? {
+                      source: caloric.source,
+                      year: caloric.year || undefined,
+                      sourceOrganization: caloric.sourceOrganization
+                    } : null;
+                  }}
+                  formatValue={(value) => `${value.toLocaleString()} kcal/day`}
+                  loading={loading}
+                />
+
+                <MetricTable
+                  title="Income Share of Richest 1%"
+                  countries={selectedCountries}
+                  getValue={(country) => {
+                    const stats = countryStats[country.code];
+                    return stats?.enhancedInfo?.incomeShareRichest1Data?.value ?? null;
+                  }}
+                  getSource={(country) => {
+                    const stats = countryStats[country.code];
+                    const income = stats?.enhancedInfo?.incomeShareRichest1Data;
+                    return income ? {
+                      source: income.source,
+                      year: income.year || undefined,
+                      sourceOrganization: income.sourceOrganization
                     } : null;
                   }}
                   formatValue={(value) => `${value.toFixed(1)}%`}
                   loading={loading}
                 />
+
+                <MetricTable
+                  title="Income Share of Poorest 50%"
+                  countries={selectedCountries}
+                  getValue={(country) => {
+                    const stats = countryStats[country.code];
+                    return stats?.enhancedInfo?.incomeSharePoorest50Data?.value ?? null;
+                  }}
+                  getSource={(country) => {
+                    const stats = countryStats[country.code];
+                    const income = stats?.enhancedInfo?.incomeSharePoorest50Data;
+                    return income ? {
+                      source: income.source,
+                      year: income.year || undefined,
+                      sourceOrganization: income.sourceOrganization
+                    } : null;
+                  }}
+                  formatValue={(value) => `${value.toFixed(1)}%`}
+                  loading={loading}
+                />
+
+                <MetricTable
+                  title="Armed Forces Personnel"
+                  countries={selectedCountries}
+                  getValue={(country) => {
+                    const stats = countryStats[country.code];
+                    return stats?.enhancedInfo?.armedForcesPersonnelData?.value ?? null;
+                  }}
+                  getSource={(country) => {
+                    const stats = countryStats[country.code];
+                    const armed = stats?.enhancedInfo?.armedForcesPersonnelData;
+                    return armed ? {
+                      source: armed.source,
+                      year: armed.year || undefined,
+                      sourceOrganization: armed.sourceOrganization
+                    } : null;
+                  }}
+                  formatValue={(value) => `${value.toFixed(2)}%`}
+                  loading={loading}
+                />
+
+
 
                 <MetricTable
                   title="Forest Coverage %"
                   countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.forestPct?.value || null}
+                  getValue={(country) => countryStats[country.code]?.forestPct?.value ?? null}
                   getSource={(country) => {
                     const stats = countryStats[country.code];
                     return stats?.forestPct ? {
@@ -1903,7 +2492,7 @@ export default function HomePage() {
                 <MetricTable
                   title="Agricultural Land %"
                   countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.agriculturalLandPct?.value || null}
+                  getValue={(country) => countryStats[country.code]?.agriculturalLandPct?.value ?? null}
                   getSource={(country) => {
                     const stats = countryStats[country.code];
                     return stats?.agriculturalLandPct ? {
@@ -1934,69 +2523,6 @@ export default function HomePage() {
                     } : null;
                   }}
                   formatValue={(value) => `${value.toFixed(1)} liters`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Tobacco Use (%)"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return parseTobaccoUse(factbook?.tobaccoUse);
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return factbook ? {
-                      source: factbook.source,
-                      year: factbook.year,
-                      sourceOrganization: "CIA World Factbook"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)}%`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Tobacco Use - Male (%)"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return parseTobaccoUseMale(factbook?.tobaccoUse);
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return factbook ? {
-                      source: factbook.source,
-                      year: factbook.year,
-                      sourceOrganization: "CIA World Factbook"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)}%`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Tobacco Use - Female (%)"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return parseTobaccoUseFemale(factbook?.tobaccoUse);
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return factbook ? {
-                      source: factbook.source,
-                      year: factbook.year,
-                      sourceOrganization: "CIA World Factbook"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)}%`}
                   loading={loading}
                 />
 
@@ -2083,6 +2609,71 @@ export default function HomePage() {
                   formatValue={(value) => `${value.toFixed(1)} liters`}
                   loading={loading}
                 />
+
+                <MetricTable
+                  title="Tobacco Use (%)"
+                  countries={selectedCountries}
+                  getValue={(country) => {
+                    const stats = countryStats[country.code];
+                    const factbook = stats?.enhancedInfo?.factbookData;
+                    return parseTobaccoUse(factbook?.tobaccoUse);
+                  }}
+                  getSource={(country) => {
+                    const stats = countryStats[country.code];
+                    const factbook = stats?.enhancedInfo?.factbookData;
+                    return factbook ? {
+                      source: factbook.source,
+                      year: factbook.year,
+                      sourceOrganization: "CIA World Factbook"
+                    } : null;
+                  }}
+                  formatValue={(value) => `${value.toFixed(1)}%`}
+                  loading={loading}
+                />
+
+                <MetricTable
+                  title="Male Tobacco Use (%)"
+                  countries={selectedCountries}
+                  getValue={(country) => {
+                    const stats = countryStats[country.code];
+                    const factbook = stats?.enhancedInfo?.factbookData;
+                    return parseTobaccoUseMale(factbook?.tobaccoUse);
+                  }}
+                  getSource={(country) => {
+                    const stats = countryStats[country.code];
+                    const factbook = stats?.enhancedInfo?.factbookData;
+                    return factbook ? {
+                      source: factbook.source,
+                      year: factbook.year,
+                      sourceOrganization: "CIA World Factbook"
+                    } : null;
+                  }}
+                  formatValue={(value) => `${value.toFixed(1)}%`}
+                  loading={loading}
+                />
+
+                <MetricTable
+                  title="Female Tobacco Use (%)"
+                  countries={selectedCountries}
+                  getValue={(country) => {
+                    const stats = countryStats[country.code];
+                    const factbook = stats?.enhancedInfo?.factbookData;
+                    return parseTobaccoUseFemale(factbook?.tobaccoUse);
+                  }}
+                  getSource={(country) => {
+                    const stats = countryStats[country.code];
+                    const factbook = stats?.enhancedInfo?.factbookData;
+                    return factbook ? {
+                      source: factbook.source,
+                      year: factbook.year,
+                      sourceOrganization: "CIA World Factbook"
+                    } : null;
+                  }}
+                  formatValue={(value) => `${value.toFixed(1)}%`}
+                  loading={loading}
+                />
+
+
               </div>
             </section>
 
@@ -2096,12 +2687,11 @@ export default function HomePage() {
                   </h2>
                 </div>
                 <p className="text-lg text-gray-600 dark:text-gray-400 ml-16 font-light">
-                  Import and export analysis with partner countries and trade values
+                  Comprehensive trade analysis including goods & services, commodity breakdowns, transport modes, and trends
                 </p>
               </div>
               
               <div className="space-y-8">
-                {/* Trade Metrics Tables */}
                 <MetricTable
                   title="Total Exports"
                   countries={selectedCountries}
@@ -2114,8 +2704,8 @@ export default function HomePage() {
                     const comtrade = stats?.enhancedInfo?.comtradeData;
                     return comtrade ? {
                       source: comtrade.source,
-                      year: comtrade.year?.toString(),
-                      sourceOrganization: comtrade.sourceOrganization
+                      year: comtrade.year,
+                      sourceOrganization: comtrade.note
                     } : null;
                   }}
                   formatValue={(value) => {
@@ -2142,8 +2732,8 @@ export default function HomePage() {
                     const comtrade = stats?.enhancedInfo?.comtradeData;
                     return comtrade ? {
                       source: comtrade.source,
-                      year: comtrade.year?.toString(),
-                      sourceOrganization: comtrade.sourceOrganization
+                      year: comtrade.year,
+                      sourceOrganization: comtrade.note
                     } : null;
                   }}
                   formatValue={(value) => {
@@ -2170,8 +2760,8 @@ export default function HomePage() {
                     const comtrade = stats?.enhancedInfo?.comtradeData;
                     return comtrade ? {
                       source: comtrade.source,
-                      year: comtrade.year?.toString(),
-                      sourceOrganization: comtrade.sourceOrganization
+                      year: comtrade.year,
+                      sourceOrganization: comtrade.note
                     } : null;
                   }}
                   formatValue={(value) => {
@@ -2188,20 +2778,175 @@ export default function HomePage() {
                   loading={loading}
                 />
 
-                {/* Detailed Trade Partners */}
-                {selectedCountries.map((country) => {
-                  const stats = countryStats[country.code];
+                <MetricTable
+                  title="International Tourist Arrivals"
+                  countries={selectedCountries}
+                  getValue={(country) => {
+                    const stats = countryStats[country.code];
+                    return stats?.enhancedInfo?.touristsData?.value ?? null;
+                  }}
+                  getSource={(country) => {
+                    const stats = countryStats[country.code];
+                    const tourists = stats?.enhancedInfo?.touristsData;
+                    return tourists ? {
+                      source: tourists.source,
+                      year: tourists.year || undefined,
+                      sourceOrganization: tourists.sourceOrganization
+                    } : null;
+                  }}
+                  formatValue={(value) => {
+                    // Values from Our World in Data are already in millions
+                    if (value >= 1000000000) {
+                      return `${(value / 1000000000).toFixed(1)}B arrivals`;
+                    } else if (value >= 1000000) {
+                      return `${(value / 1000000).toFixed(1)}M arrivals`;
+                    } else if (value >= 1000) {
+                      return `${(value / 1000).toFixed(1)}K arrivals`;
+                    } else {
+                      return `${value.toFixed(1)}M arrivals`;
+                    }
+                  }}
+                  loading={loading}
+                />
+
+                <MetricTable
+                  title="Airports"
+                  countries={selectedCountries}
+                  getValue={(country) => {
+                    const stats = countryStats[country.code];
+                    return stats?.enhancedInfo?.factbookData?.airports || null;
+                  }}
+                  getSource={(country) => {
+                    const stats = countryStats[country.code];
+                    const factbook = stats?.enhancedInfo?.factbookData;
+                    return factbook ? {
+                      source: factbook.source,
+                      year: factbook.year,
+                      sourceOrganization: "CIA World Factbook"
+                    } : null;
+                  }}
+                  formatValue={(value) => `${value.toLocaleString()}`}
+                  loading={loading}
+                />
+
+                <MetricTable
+                  title="Railways (km)"
+                  countries={selectedCountries}
+                  getValue={(country) => {
+                    const stats = countryStats[country.code];
+                    return stats?.enhancedInfo?.factbookData?.railways || null;
+                  }}
+                  getSource={(country) => {
+                    const stats = countryStats[country.code];
+                    const factbook = stats?.enhancedInfo?.factbookData;
+                    return factbook ? {
+                      source: factbook.source,
+                      year: factbook.year,
+                      sourceOrganization: "CIA World Factbook"
+                    } : null;
+                  }}
+                  formatValue={(value) => `${value.toLocaleString()} km`}
+                  loading={loading}
+                />
+
+                <MetricTable
+                  title="Ports"
+                  countries={selectedCountries}
+                  getValue={(country) => {
+                    const stats = countryStats[country.code];
+                    return stats?.enhancedInfo?.factbookData?.ports || null;
+                  }}
+                  getSource={(country) => {
+                    const stats = countryStats[country.code];
+                    const factbook = stats?.enhancedInfo?.factbookData;
+                    return factbook ? {
+                      source: factbook.source,
+                      year: factbook.year,
+                      sourceOrganization: "CIA World Factbook"
+                    } : null;
+                  }}
+                  formatValue={(value) => `${value.toLocaleString()}`}
+                  loading={loading}
+                />
+
+                {/* Country Selection for Trade Data */}
+                {selectedCountries.length > 0 && (
+                  <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 p-6">
+                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                      Select a country to view detailed trade information:
+                    </h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+                      {selectedCountries.map((country) => {
+                        const isSelected = selectedTradeCountry === country.code;
+                        return (
+                          <button
+                            key={country.code}
+                            onClick={() => setSelectedTradeCountry(country.code)}
+                            className={`
+                              relative flex items-center space-x-3 p-4 rounded-xl border-2 transition-all duration-200 
+                              ${isSelected 
+                                ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 shadow-lg transform scale-105' 
+                                : 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-500 hover:shadow-md'
+                              }
+                            `}
+                          >
+                            {/* Selection Indicator */}
+                            <div className={`
+                              flex-shrink-0 w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all duration-200
+                              ${isSelected 
+                                ? 'border-blue-500 bg-blue-500' 
+                                : 'border-gray-300 dark:border-gray-500 bg-transparent'
+                              }
+                            `}>
+                              {isSelected && (
+                                <div className="w-2 h-2 rounded-full bg-white"></div>
+                              )}
+                            </div>
+                            
+                            {/* Country Info */}
+                            <div className="flex items-center space-x-3 flex-1 min-w-0">
+                              <span className="text-2xl emoji flex-shrink-0">{country.flag}</span>
+                              <span className={`
+                                text-sm font-medium truncate transition-colors duration-200
+                                ${isSelected 
+                                  ? 'text-blue-700 dark:text-blue-300' 
+                                  : 'text-gray-900 dark:text-white'
+                                }
+                              `}>
+                                {country.name}
+                              </span>
+                            </div>
+                            
+                            {/* Selected Badge */}
+                            {isSelected && (
+                              <div className="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                                <svg className="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                </svg>
+                              </div>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* Detailed Trade Data Display */}
+                {selectedTradeCountry && (() => {
+                  const stats = countryStats[selectedTradeCountry];
                   const factbook = stats?.enhancedInfo?.factbookData;
                   const comtrade = stats?.enhancedInfo?.comtradeData;
+                  const selectedCountry = selectedCountries.find(c => c.code === selectedTradeCountry);
                   
                   return (
-                    <div key={country.code} className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden">
+                    <div key={selectedTradeCountry} className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden">
                       {/* Country Header */}
                       <div className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 px-6 py-4 border-b border-gray-200 dark:border-gray-600">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center">
-                            <span className="text-2xl mr-3 emoji">{country.flag}</span>
-                            <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{country.name}</h3>
+                            <span className="text-2xl mr-3 emoji">{selectedCountry?.flag}</span>
+                            <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{selectedCountry?.name}</h3>
                           </div>
                           {comtrade && (
                             <div className="text-sm text-gray-600 dark:text-gray-400">
@@ -2218,13 +2963,13 @@ export default function HomePage() {
                             <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg border border-green-200 dark:border-green-800">
                               <h4 className="text-sm font-semibold text-green-800 dark:text-green-300 mb-2">Total Exports</h4>
                               <p className="text-2xl font-bold text-green-900 dark:text-green-100">
-                                {comtrade.totalExports?.formatted?.formatted || 'N/A'}
+                                {comtrade.totalExports?.formatted || 'N/A'}
                               </p>
                             </div>
                             <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
                               <h4 className="text-sm font-semibold text-blue-800 dark:text-blue-300 mb-2">Total Imports</h4>
                               <p className="text-2xl font-bold text-blue-900 dark:text-blue-100">
-                                {comtrade.totalImports?.formatted?.formatted || 'N/A'}
+                                {comtrade.totalImports?.formatted || 'N/A'}
                               </p>
                             </div>
                             <div className={`p-4 rounded-lg border ${
@@ -2245,13 +2990,70 @@ export default function HomePage() {
                                   : 'text-red-900 dark:text-red-100'
                               }`}>
                                 {comtrade.tradeBalance?.status === 'surplus' ? '+' : '-'}
-                                {comtrade.tradeBalance?.formatted?.formatted || 'N/A'}
+                                {comtrade.tradeBalance?.formatted || 'N/A'}
                               </p>
                             </div>
                           </div>
                         )}
 
-                        {/* Trade Partners and Commodities Grid */}
+                        {/* Trade Commodities Section */}
+                        {((comtrade?.topExportCommodities && comtrade.topExportCommodities.length > 0) || (comtrade?.topImportCommodities && comtrade.topImportCommodities.length > 0)) && (
+                          <div className="mb-8">
+                            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                              <span className="text-base mr-2">📦</span>
+                              Trade Commodities
+                            </h4>
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                              {/* Export Commodities */}
+                              {comtrade?.topExportCommodities && comtrade.topExportCommodities.length > 0 && (
+                                <div>
+                                  <h5 className="text-md font-semibold text-gray-800 dark:text-gray-200 mb-3">
+                                    🚢 Main Export Commodities
+                                  </h5>
+                                  <div className="space-y-2">
+                                    {comtrade.topExportCommodities.map((commodity, index) => (
+                                      <div key={index} className="p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+                                        <div className="flex items-center">
+                                          <span className="w-5 h-5 bg-green-500 text-white text-xs font-bold rounded-full flex items-center justify-center mr-3">
+                                            {index + 1}
+                                          </span>
+                                          <span className="text-gray-900 dark:text-white font-medium">
+                                            {commodity.commodity}
+                                          </span>
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                              
+                              {/* Import Commodities */}
+                              {comtrade?.topImportCommodities && comtrade.topImportCommodities.length > 0 && (
+                                <div>
+                                  <h5 className="text-md font-semibold text-gray-800 dark:text-gray-200 mb-3">
+                                    🛒 Main Import Commodities
+                                  </h5>
+                                  <div className="space-y-2">
+                                    {comtrade.topImportCommodities.map((commodity, index) => (
+                                      <div key={index} className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                                        <div className="flex items-center">
+                                          <span className="w-5 h-5 bg-blue-500 text-white text-xs font-bold rounded-full flex items-center justify-center mr-3">
+                                            {index + 1}
+                                          </span>
+                                          <span className="text-gray-900 dark:text-white font-medium">
+                                            {commodity.commodity}
+                                          </span>
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Trade Partners and Traditional Commodities Grid */}
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                           {/* Top Export Partners */}
                           {comtrade?.topExportPartners && comtrade.topExportPartners.length > 0 && (
@@ -2271,7 +3073,7 @@ export default function HomePage() {
                                     </div>
                                     <div className="text-right">
                                       <div className="font-semibold text-gray-900 dark:text-white">
-                                        {partner.formatted?.formatted || 'N/A'}
+                                        {partner.formatted || 'N/A'}
                                       </div>
                                       <div className="text-sm text-gray-500 dark:text-gray-400">
                                         {partner.percentage}%
@@ -2301,7 +3103,7 @@ export default function HomePage() {
                                     </div>
                                     <div className="text-right">
                                       <div className="font-semibold text-gray-900 dark:text-white">
-                                        {partner.formatted?.formatted || 'N/A'}
+                                        {partner.formatted || 'N/A'}
                                       </div>
                                       <div className="text-sm text-gray-500 dark:text-gray-400">
                                         {partner.percentage}%
@@ -2313,12 +3115,12 @@ export default function HomePage() {
                             </div>
                           )}
 
-                          {/* Export Commodities */}
+                          {/* Export Commodities from CIA Factbook */}
                           {factbook?.exportCommodities && (
                             <div>
                               <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
                                 <span className="text-base mr-2">🚢</span>
-                                Export Commodities
+                                Export Commodities (CIA Factbook)
                               </h4>
                               <ul className="text-gray-700 dark:text-gray-300 text-sm space-y-2">
                                 {factbook.exportCommodities.split(',').map((commodity, index) => (
@@ -2331,12 +3133,12 @@ export default function HomePage() {
                             </div>
                           )}
 
-                          {/* Import Commodities */}
+                          {/* Import Commodities from CIA Factbook */}
                           {factbook?.importCommodities && (
                             <div>
                               <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
                                 <span className="text-base mr-2">📦</span>
-                                Import Commodities
+                                Import Commodities (CIA Factbook)
                               </h4>
                               <ul className="text-gray-700 dark:text-gray-300 text-sm space-y-2">
                                 {factbook.importCommodities.split(',').map((commodity, index) => (
@@ -2349,7 +3151,7 @@ export default function HomePage() {
                             </div>
                           )}
                         </div>
-                        
+
                         {/* Show message if no data */}
                         {!comtrade && !factbook?.exportCommodities && !factbook?.importCommodities && (
                           <div className="text-center py-8 text-gray-500 dark:text-gray-400">
@@ -2366,7 +3168,7 @@ export default function HomePage() {
                       </div>
                     </div>
                   );
-                })}
+                })()}
               </div>
             </section>
 
@@ -2388,7 +3190,7 @@ export default function HomePage() {
                 <MetricTable
                   title="Homicide Rate (per 100,000)"
                   countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.homicideRate?.value || null}
+                  getValue={(country) => countryStats[country.code]?.homicideRate?.value ?? null}
                   getSource={(country) => {
                     const stats = countryStats[country.code];
                     return stats?.homicideRate ? {
@@ -2398,6 +3200,170 @@ export default function HomePage() {
                     } : null;
                   }}
                   formatValue={(value) => `${value.toFixed(1)}/100k`}
+                  loading={loading}
+                />
+
+                <MetricTable
+                  title="Homicide Victims (Total)"
+                  countries={selectedCountries}
+                  getValue={(country) => {
+                    const stats = countryStats[country.code];
+                    return stats?.enhancedInfo?.crimeData?.victimData?.totalVictims || null;
+                  }}
+                  getSource={(country) => {
+                    const stats = countryStats[country.code];
+                    const crime = stats?.enhancedInfo?.crimeData;
+                    return crime ? {
+                      source: crime.source,
+                      year: crime.year.toString(),
+                      sourceOrganization: "UN Office on Drugs and Crime"
+                    } : null;
+                  }}
+                  formatValue={(value) => `${value.toLocaleString()} victims`}
+                  loading={loading}
+                />
+
+                <MetricTable
+                  title="Homicide Arrests (Total)"
+                  countries={selectedCountries}
+                  getValue={(country) => {
+                    const stats = countryStats[country.code];
+                    return stats?.enhancedInfo?.crimeData?.totalArrests || null;
+                  }}
+                  getSource={(country) => {
+                    const stats = countryStats[country.code];
+                    const crime = stats?.enhancedInfo?.crimeData;
+                    return crime ? {
+                      source: crime.source,
+                      year: crime.year.toString(),
+                      sourceOrganization: "UN Office on Drugs and Crime"
+                    } : null;
+                  }}
+                  formatValue={(value) => `${value.toLocaleString()} arrests`}
+                  loading={loading}
+                />
+
+
+
+                <MetricTable
+                  title="Male Arrests"
+                  countries={selectedCountries}
+                  getValue={(country) => {
+                    const stats = countryStats[country.code];
+                    return stats?.enhancedInfo?.crimeData?.arrestsBySex?.male || null;
+                  }}
+                  getSource={(country) => {
+                    const stats = countryStats[country.code];
+                    const crime = stats?.enhancedInfo?.crimeData;
+                    return crime ? {
+                      source: crime.source,
+                      year: crime.year.toString(),
+                      sourceOrganization: "UN Office on Drugs and Crime"
+                    } : null;
+                  }}
+                  formatValue={(value) => `${value.toLocaleString()} arrests`}
+                  loading={loading}
+                />
+
+                <MetricTable
+                  title="Female Arrests"
+                  countries={selectedCountries}
+                  getValue={(country) => {
+                    const stats = countryStats[country.code];
+                    return stats?.enhancedInfo?.crimeData?.arrestsBySex?.female || null;
+                  }}
+                  getSource={(country) => {
+                    const stats = countryStats[country.code];
+                    const crime = stats?.enhancedInfo?.crimeData;
+                    return crime ? {
+                      source: crime.source,
+                      year: crime.year.toString(),
+                      sourceOrganization: "UN Office on Drugs and Crime"
+                    } : null;
+                  }}
+                  formatValue={(value) => `${value.toLocaleString()} arrests`}
+                  loading={loading}
+                />
+
+
+
+                <MetricTable
+                  title="Male Victims"
+                  countries={selectedCountries}
+                  getValue={(country) => {
+                    const stats = countryStats[country.code];
+                    return stats?.enhancedInfo?.crimeData?.victimData?.maleVictims || null;
+                  }}
+                  getSource={(country) => {
+                    const stats = countryStats[country.code];
+                    const crime = stats?.enhancedInfo?.crimeData;
+                    return crime ? {
+                      source: crime.source,
+                      year: crime.year.toString(),
+                      sourceOrganization: "UN Office on Drugs and Crime"
+                    } : null;
+                  }}
+                  formatValue={(value) => `${value.toLocaleString()} victims`}
+                  loading={loading}
+                />
+
+                <MetricTable
+                  title="Female Victims"
+                  countries={selectedCountries}
+                  getValue={(country) => {
+                    const stats = countryStats[country.code];
+                    return stats?.enhancedInfo?.crimeData?.victimData?.femaleVictims || null;
+                  }}
+                  getSource={(country) => {
+                    const stats = countryStats[country.code];
+                    const crime = stats?.enhancedInfo?.crimeData;
+                    return crime ? {
+                      source: crime.source,
+                      year: crime.year.toString(),
+                      sourceOrganization: "UN Office on Drugs and Crime"
+                    } : null;
+                  }}
+                  formatValue={(value) => `${value.toLocaleString()} victims`}
+                  loading={loading}
+                />
+
+                <MetricTable
+                  title="Prison Deaths"
+                  countries={selectedCountries}
+                  getValue={(country) => {
+                    const stats = countryStats[country.code];
+                    return stats?.enhancedInfo?.crimeData?.prisonDeaths || null;
+                  }}
+                  getSource={(country) => {
+                    const stats = countryStats[country.code];
+                    const crime = stats?.enhancedInfo?.crimeData;
+                    return crime ? {
+                      source: crime.source,
+                      year: crime.year.toString(),
+                      sourceOrganization: "UN Office on Drugs and Crime"
+                    } : null;
+                  }}
+                  formatValue={(value) => `${value.toLocaleString()} deaths`}
+                  loading={loading}
+                />
+
+                <MetricTable
+                  title="Terrorism Deaths"
+                  countries={selectedCountries}
+                  getValue={(country) => {
+                    const stats = countryStats[country.code];
+                    return stats?.enhancedInfo?.terrorismDeathsData?.value ?? null;
+                  }}
+                  getSource={(country) => {
+                    const stats = countryStats[country.code];
+                    const terrorism = stats?.enhancedInfo?.terrorismDeathsData;
+                    return terrorism ? {
+                      source: terrorism.source,
+                      year: terrorism.year || undefined,
+                      sourceOrganization: terrorism.sourceOrganization
+                    } : null;
+                  }}
+                  formatValue={(value) => `${Math.round(value)} deaths`}
                   loading={loading}
                 />
               </div>
@@ -2515,6 +3481,14 @@ export default function HomePage() {
                       <li>• World Bank Open Data</li>
                       <li>• REST Countries API</li>
                       <li>• World Bank Climate Change Knowledge Portal</li>
+                      <li>• UN Office on Drugs and Crime (UNODC)</li>
+                      <li>• UN Crime Trend Survey (CTS)</li>
+                      <li>• UNDP Human Development Report (2025)</li>
+                      <li>• UN World Tourism Organization (UNWTO) 2024</li>
+                      <li>• Barro and Lee Educational Attainment Dataset</li>
+                      <li>• UNU-WIDER Government Revenue Dataset 2023</li>
+                      <li>• World Bank Poverty and Inequality Platform 2024</li>
+                      <li>• UN Department of Economic and Social Affairs 2024</li>
                     </ul>
                   </div>
                   <div>

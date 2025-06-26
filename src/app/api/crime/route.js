@@ -152,7 +152,7 @@ function getCachedCrimeData() {
   return crimeDataCache;
 }
 
-function processCountryCrimeData(countryData, countryCode) {
+function processCountryCrimeData(countryData) {
   if (!countryData || !countryData.data) {
     return null;
   }
@@ -424,7 +424,7 @@ export async function GET(request) {
         }, { status: 404 });
       }
       
-      const processedData = processCountryCrimeData(countryData, countryCode);
+      const processedData = processCountryCrimeData(countryData);
       
       return NextResponse.json(processedData);
     }
@@ -456,7 +456,7 @@ export async function GET(request) {
   }
 }
 
-export async function POST(request) {
+export async function POST() {
   return NextResponse.json({ 
     error: 'Method not allowed',
     message: 'Use GET to retrieve crime data' 

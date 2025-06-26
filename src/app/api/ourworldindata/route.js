@@ -155,7 +155,6 @@ function parseCSVForCountry(countryCode) {
     const csvContent = fs.readFileSync(csvPath, 'utf-8');
     
     const lines = csvContent.split('\n');
-    const header = lines[0]; // Country,Year,Income share of the poorest 50% (before tax) (World Inequality Database)
     
     // Convert country code to country name for matching
     const countryName = CODE_TO_COUNTRY[countryCode.toUpperCase()];

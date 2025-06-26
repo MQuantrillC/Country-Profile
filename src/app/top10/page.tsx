@@ -13,7 +13,6 @@ import {
   BarChart3,
   Globe,
   RefreshCw,
-  Clock,
   Zap,
   Database
 } from 'lucide-react';
@@ -114,7 +113,7 @@ export default function Top10Page() {
 
     // Create all API calls in parallel for maximum speed (skip calculated metrics)
     const apiMetrics = worldBankMetrics.filter(metric => metric.id !== 'ruralPopPct');
-    const allPromises = apiMetrics.map(async (metric, index) => {
+    const allPromises = apiMetrics.map(async (metric) => {
       try {
         setLoadingState(prev => ({ ...prev, currentMetric: metric.title }));
         
@@ -233,7 +232,7 @@ export default function Top10Page() {
 
         const rankings: CountryRanking[] = [];
         
-        data.data.forEach((entry: any) => {
+        data.data.forEach((entry: { countryId: string; countryName?: string; value?: number; year?: string }) => {
           let matchingCountry = null;
           
           // Method 1: Try direct 3-letter to 2-letter mapping
@@ -253,7 +252,7 @@ export default function Top10Page() {
           // Method 3: Try exact name match
           if (!matchingCountry && entry.countryName) {
             matchingCountry = countries.find(c => 
-              c.name.toLowerCase() === entry.countryName.toLowerCase()
+              c.name.toLowerCase() === entry.countryName!.toLowerCase()
             );
           }
           
@@ -261,7 +260,7 @@ export default function Top10Page() {
           if (!matchingCountry && entry.countryName && entry.countryName.length > 5) {
             matchingCountry = countries.find(c => {
               const countryLower = c.name.toLowerCase();
-              const entryLower = entry.countryName.toLowerCase();
+              const entryLower = entry.countryName!.toLowerCase();
               
               // Must be substantial match to avoid false positives
               return countryLower.includes(entryLower) || entryLower.includes(countryLower);
@@ -274,7 +273,7 @@ export default function Top10Page() {
               code: matchingCountry.code,
               flag: matchingCountry.flag,
               value: entry.value,
-              year: entry.year,
+              year: entry.year || 'N/A',
               source: 'World Bank'
             });
           } else if (!matchingCountry && entry.countryName) {

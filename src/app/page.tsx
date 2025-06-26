@@ -90,7 +90,7 @@ interface CrimeData {
   prisonDeaths?: number | null;
   source: string;
   unit: string;
-  rawData?: any[];
+  rawData?: unknown[];
 }
 
 // Interface for Human Development Index data
@@ -882,7 +882,7 @@ export default function HomePage() {
                 const data = response.ok ? await response.json() : null;
                 setMetricLoading(country.code, metricName, false);
                 return data;
-              } catch (error) {
+                              } catch {
                 setMetricLoading(country.code, metricName, false);
                 return null;
               }
@@ -904,7 +904,7 @@ export default function HomePage() {
                   const data = response.ok ? await response.json() : null;
                   setMetricLoading(country.code, 'worldBank', false);
                   return data;
-                } catch (error) {
+                } catch {
                   setMetricLoading(country.code, 'worldBank', false);
                   return null;
                 }

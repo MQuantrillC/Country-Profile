@@ -67,7 +67,9 @@ const countryNameToCode = {
   'Peru': 'PE',
   'Dominican Republic': 'DO',
   'Algeria': 'DZ',
-  'Suriname': 'SR'
+  'Suriname': 'SR',
+  'Mongolia': 'MN',
+  'Belize': 'BZ'
 };
 
 // Sample HDI values for the countries (2023 UNDP data)
@@ -137,7 +139,9 @@ const hdiValues = {
   'Peru': 0.762,
   'Dominican Republic': 0.767,
   'Algeria': 0.745,
-  'Suriname': 0.730
+  'Suriname': 0.730,
+  'Mongolia': 0.739,
+  'Belize': 0.683
 };
 
 export async function GET(request) {

@@ -128,6 +128,8 @@ const OWID_COUNTRY_MAPPING = {
   'Palestine': 'PS',
   'Cambodia': 'KH',
   'Albania': 'AL',
+  'Mongolia': 'MN',
+  'Suriname': 'SR',
   // Caribbean and Central America
   'Dominican Republic': 'DO',
   'Jamaica': 'JM',

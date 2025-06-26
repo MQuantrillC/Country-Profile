@@ -236,26 +236,21 @@ export async function GET(request) {
       rawData: results
     };
     
-    // If all values are null, check if we're hitting rate limits and provide fallback
-    const hasAnyData = processedData.averageTemperature !== null || 
-                      processedData.hotDays30 !== null || 
-                      processedData.hotDays35 !== null || 
-                      processedData.coldDays !== null;
+    // Check if we're hitting rate limits or have no data and provide fallback
+    const hasAnyRealData = processedData.averageTemperature !== null;
     
-    if (!hasAnyData) {
-      // Check if we're hitting rate limits (429 errors, empty data arrays, or errors)
-      const hasRateLimitErrors = Object.values(results).some(result => 
-        (result.error && (result.error.includes('429') || result.error.includes('Failed to fetch'))) ||
-        (result.data && Array.isArray(result.data) && result.data.length === 0) ||
-        (result.metadata && result.metadata.status === 'success' && result.data && result.data.length === 0)
-      );
-      
-      console.log('No climate data found, checking for rate limits or API issues...');
+    // Check if we're hitting rate limits (429 errors, empty data arrays, or errors)
+    const hasRateLimitErrors = Object.values(results).some(result => 
+      (result.error && (result.error.includes('429') || result.error.includes('Failed to fetch'))) ||
+      (result.data && Array.isArray(result.data) && result.data.length === 0) ||
+      (result.metadata && result.metadata.status === 'success' && result.data && result.data.length === 0)
+    );
+    
+    if (!hasAnyRealData || hasRateLimitErrors) {
+      console.log('No climate data found or rate limited, using fallback for', country);
       console.log('Rate limit errors detected:', hasRateLimitErrors);
-      console.log('Sample result:', JSON.stringify(Object.values(results)[0], null, 2));
       
-      // If no data available (likely due to API issues), use fallback
-      console.log('Using fallback climate data for', country);
+      // Use fallback data when API is unavailable
       const fallbackData = getFallbackClimateData(country);
       if (fallbackData) {
         return NextResponse.json(fallbackData);
@@ -412,6 +407,7 @@ function getFallbackClimateData(countryCode) {
     'UG': { averageTemperature: 21.8, hotDays30: 140, hotDays35: 45, coldDays: 0 },
     'DZ': { averageTemperature: 17.7, hotDays30: 95, hotDays35: 45, coldDays: 5 },
     'SR': { averageTemperature: 27.0, hotDays30: 365, hotDays35: 200, coldDays: 0 },
+    'MN': { averageTemperature: -0.4, hotDays30: 15, hotDays35: 2, coldDays: 180 },
     'MA': { averageTemperature: 17.8, hotDays30: 85, hotDays35: 30, coldDays: 8 },
     'TN': { averageTemperature: 19.8, hotDays30: 110, hotDays35: 50, coldDays: 2 },
     

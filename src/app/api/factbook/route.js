@@ -10,7 +10,7 @@ const isoToGecMapping = {
   'EC': 'ec', 'UY': 'uy', 'BO': 'bl', 'PY': 'pa', 'PL': 'pl', 'BE': 'be', 'SE': 'sw', 'AT': 'au',
   'NO': 'no', 'DK': 'da', 'FI': 'fi', 'IE': 'ei', 'PT': 'po', 'GR': 'gr', 'IL': 'is', 'AE': 'ae',
   'IR': 'ir', 'IQ': 'iz', 'JO': 'jo', 'LB': 'le', 'NZ': 'nz', 'UA': 'up', 'KZ': 'kz', 'UZ': 'uz',
-  'AF': 'af', 'MM': 'bm', 'KH': 'cb', 'LA': 'la', 'NP': 'np', 'BT': 'bt',
+  'AF': 'af', 'MM': 'bm', 'KH': 'cb', 'LA': 'la', 'NP': 'np', 'BT': 'bt', 'MN': 'mg',
   // Additional Caribbean and Central America
   'DO': 'dr', 'JM': 'jm', 'TT': 'td', 'BB': 'bb', 'BS': 'bf', 'BZ': 'bh', 'CR': 'cs', 'SV': 'es', 'GT': 'gt', 'HN': 'ho', 'NI': 'nu', 'PA': 'pm',
   // Additional European countries
@@ -37,8 +37,8 @@ const regionMapping = {
   'sw': 'europe', 'au': 'europe', 'no': 'europe', 'da': 'europe', 'fi': 'europe', 'ei': 'europe',
   'po': 'europe', 'gr': 'europe', 'is': 'middle-east', 'ae': 'middle-east', 'ir': 'middle-east',
   'iz': 'middle-east', 'jo': 'middle-east', 'le': 'middle-east', 'nz': 'australia-oceania',
-  'up': 'europe', 'kz': 'central-asia', 'uz': 'central-asia', 'af': 'south-asia', 'bm': 'east-n-southeast-asia',
-  'cb': 'east-n-southeast-asia', 'la': 'east-n-southeast-asia', 'np': 'south-asia', 'bt': 'south-asia',
+  'up': 'europe', 'kz': 'central-asia', 'uz': 'central-asia',   'af': 'south-asia', 'bm': 'east-n-southeast-asia',
+  'cb': 'east-n-southeast-asia', 'la': 'east-n-southeast-asia', 'np': 'south-asia', 'bt': 'south-asia', 'mg': 'east-n-southeast-asia',
   // Additional European countries
   'al': 'europe', 'bu': 'europe', 'ez': 'europe', 'hr': 'europe', 'hu': 'europe', 'ro': 'europe', 
   'lo': 'europe', 'si': 'europe', 'en': 'europe', 'lg': 'europe', 'lh': 'europe', 'mt': 'europe', 

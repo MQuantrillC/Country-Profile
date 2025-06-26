@@ -3075,9 +3075,6 @@ export default function HomePage() {
                                       <div className="font-semibold text-gray-900 dark:text-white">
                                         {partner.formatted || 'N/A'}
                                       </div>
-                                      <div className="text-sm text-gray-500 dark:text-gray-400">
-                                        {partner.percentage}%
-                                      </div>
                                     </div>
                                   </div>
                                 ))}
@@ -3104,9 +3101,6 @@ export default function HomePage() {
                                     <div className="text-right">
                                       <div className="font-semibold text-gray-900 dark:text-white">
                                         {partner.formatted || 'N/A'}
-                                      </div>
-                                      <div className="text-sm text-gray-500 dark:text-gray-400">
-                                        {partner.percentage}%
                                       </div>
                                     </div>
                                   </div>

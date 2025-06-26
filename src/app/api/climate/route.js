@@ -230,9 +230,9 @@ export async function GET(request) {
       source: 'World Bank Climate Change Knowledge Portal',
       year: '1991-2020',
       averageTemperature: extractClimateValue(results.tas),
-      hotDays30: extractClimateValue(results.hd30),
-      hotDays35: extractClimateValue(results.hd35),
-      coldDays: extractClimateValue(results.fd),
+      hotDays30: extractClimateValue(results.hd30) ?? 0, // Default to 0 if null
+      hotDays35: extractClimateValue(results.hd35) ?? 0, // Default to 0 if null
+      coldDays: extractClimateValue(results.fd) ?? 0, // Default to 0 if null
       rawData: results
     };
     
@@ -287,7 +287,9 @@ function extractClimateValue(apiResponse) {
       // Get the most recent value or average
       const values = apiResponse.data.map(item => item.value).filter(v => v !== null && v !== undefined);
       if (values.length > 0) {
-        return values[values.length - 1]; // Get latest value
+        const value = values[values.length - 1]; // Get latest value
+        // For hot days metrics, return 0 instead of null if the value is 0
+        return value;
       }
     }
     
@@ -409,6 +411,7 @@ function getFallbackClimateData(countryCode) {
     'TZ': { averageTemperature: 21.1, hotDays30: 130, hotDays35: 40, coldDays: 0 },
     'UG': { averageTemperature: 21.8, hotDays30: 140, hotDays35: 45, coldDays: 0 },
     'DZ': { averageTemperature: 17.7, hotDays30: 95, hotDays35: 45, coldDays: 5 },
+    'SR': { averageTemperature: 27.0, hotDays30: 365, hotDays35: 200, coldDays: 0 },
     'MA': { averageTemperature: 17.8, hotDays30: 85, hotDays35: 30, coldDays: 8 },
     'TN': { averageTemperature: 19.8, hotDays30: 110, hotDays35: 50, coldDays: 2 },
     

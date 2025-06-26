@@ -65,7 +65,9 @@ const countryNameToCode = {
   'Qatar': 'QA',
   'Colombia': 'CO',
   'Peru': 'PE',
-  'Dominican Republic': 'DO'
+  'Dominican Republic': 'DO',
+  'Algeria': 'DZ',
+  'Suriname': 'SR'
 };
 
 // Sample HDI values for the countries (2023 UNDP data)
@@ -133,7 +135,9 @@ const hdiValues = {
   'Qatar': 0.855,
   'Colombia': 0.752,
   'Peru': 0.762,
-  'Dominican Republic': 0.767
+  'Dominican Republic': 0.767,
+  'Algeria': 0.745,
+  'Suriname': 0.730
 };
 
 export async function GET(request) {

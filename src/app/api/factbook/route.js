@@ -19,7 +19,7 @@ const isoToGecMapping = {
   'ME': 'mj', 'RS': 'ri', 'BA': 'bk', 'MD': 'md', 'BY': 'bo', 'AM': 'am', 'GE': 'gg', 'AZ': 'aj',
   // Additional Middle East countries
   'BH': 'ba', 'QA': 'qa', 'KW': 'ku', 'OM': 'mu', 'YE': 'ym', 'SY': 'sy', 'LY': 'ly', 'TN': 'ts',
-  'DZ': 'ag', 'SD': 'su', 'JM': 'jm'
+  'DZ': 'ag', 'SD': 'su', 'JM': 'jm', 'SR': 'ns'
 };
 
 // Region mapping for factbook URL construction
@@ -51,7 +51,8 @@ const regionMapping = {
   'dr': 'central-america-n-caribbean', 'jm': 'central-america-n-caribbean', 'td': 'central-america-n-caribbean', 
   'bb': 'central-america-n-caribbean', 'bf': 'central-america-n-caribbean', 'bh': 'central-america-n-caribbean', 
   'cs': 'central-america-n-caribbean', 'es': 'central-america-n-caribbean', 'gt': 'central-america-n-caribbean', 
-  'ho': 'central-america-n-caribbean', 'nu': 'central-america-n-caribbean', 'pm': 'central-america-n-caribbean'
+  'ho': 'central-america-n-caribbean', 'nu': 'central-america-n-caribbean', 'pm': 'central-america-n-caribbean',
+  'ns': 'south-america'
 };
 
 function extractValue(obj, path, defaultValue = null) {

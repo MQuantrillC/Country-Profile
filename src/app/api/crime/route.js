@@ -394,7 +394,11 @@ const COUNTRY_CODE_MAPPING = {
   'ID': 'IDN',
   'TR': 'TUR',
   // Middle East
-  'QA': 'QAT'
+  'QA': 'QAT',
+  // Africa
+  'DZ': 'DZA',
+  // South America
+  'SR': 'SUR'
 };
 
 export async function GET(request) {

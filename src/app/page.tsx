@@ -1414,7 +1414,8 @@ export default function HomePage() {
                   </h2>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <div className="flex space-x-2">
+                  {/* Desktop view: Show flags and country names */}
+                  <div className="hidden sm:flex space-x-2">
                     {selectedCountries.slice(0, 3).map((country) => (
                       <div key={country.code} className="flex items-center space-x-1">
                         <img 
@@ -1433,6 +1434,24 @@ export default function HomePage() {
                       </span>
                     )}
                   </div>
+                  
+                  {/* Mobile view: Show flags only */}
+                  <div className="sm:hidden flex space-x-1">
+                    {selectedCountries.slice(0, 5).map((country) => (
+                      <img 
+                        key={country.code}
+                        src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
+                        alt={`${country.name} flag`}
+                        className="w-4 h-auto"
+                      />
+                    ))}
+                    {selectedCountries.length > 5 && (
+                      <span className="text-xs text-gray-500 dark:text-gray-400 ml-1">
+                        +{selectedCountries.length - 5}
+                      </span>
+                    )}
+                  </div>
+                  
                   <div className={`transform transition-transform duration-200 ${countryInfoExpanded ? 'rotate-180' : ''}`}>
                     ▼
                   </div>

@@ -332,13 +332,17 @@ const CountryDropdown = ({ selectedCountries, onSelect, countries }: CountryDrop
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 border border-gray-200 dark:border-gray-700">
-        <div className="flex flex-wrap gap-2 mb-4">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-3 sm:p-4 border border-gray-200 dark:border-gray-700">
+        <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4">
           {selectedCountries.map((country) => (
-            <div key={country.code} className="flex items-center bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-2 rounded-lg">
-              <span className="mr-2 emoji">{country.flag}</span>
-              <span className="text-sm font-medium">{country.name}</span>
-              <button onClick={() => handleRemoveCountry(country.code)} className="ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200">
+            <div key={country.code} className="flex items-center bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg">
+              <img 
+                src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
+                alt={`${country.name} flag`}
+                className="w-4 h-auto sm:w-5 mr-1.5 sm:mr-2"
+              />
+              <span className="text-xs sm:text-sm font-medium">{country.name}</span>
+              <button onClick={() => handleRemoveCountry(country.code)} className="ml-1.5 sm:ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 text-sm sm:text-base">
                 ×
               </button>
             </div>
@@ -351,8 +355,8 @@ const CountryDropdown = ({ selectedCountries, onSelect, countries }: CountryDrop
             if (!isOpen) {
               setTimeout(() => searchInputRef.current?.focus(), 100);
             }
-          }} className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200">
-            <span className="text-gray-700 dark:text-gray-300">
+          }} className="w-full flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200">
+            <span className="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
               {selectedCountries.length === 0 ? "Select countries to compare (max 5)" : `Add more countries (${selectedCountries.length}/5)`}
             </span>
             <span className={`transform transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}>▼</span>
@@ -362,7 +366,7 @@ const CountryDropdown = ({ selectedCountries, onSelect, countries }: CountryDrop
         {isOpen && (
           <div className="absolute z-50 w-full mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl">
             {/* Search Input */}
-            <div className="p-3 border-b border-gray-200 dark:border-gray-600">
+            <div className="p-2 sm:p-3 border-b border-gray-200 dark:border-gray-600">
               <input
                 ref={searchInputRef}
                 type="text"
@@ -380,14 +384,14 @@ const CountryDropdown = ({ selectedCountries, onSelect, countries }: CountryDrop
                     }
                   }
                 }}
-                className="w-full px-3 py-2 text-sm bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                className="w-full px-2 sm:px-3 py-2 text-xs sm:text-sm bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               />
             </div>
             
             {/* Countries List */}
             <div className="max-h-48 overflow-y-auto">
               {filteredCountries.length === 0 ? (
-                <div className="px-4 py-3 text-gray-500 dark:text-gray-400 text-center">
+                <div className="px-3 sm:px-4 py-3 text-gray-500 dark:text-gray-400 text-center text-xs sm:text-sm">
                   No countries found
                 </div>
               ) : (
@@ -396,9 +400,13 @@ const CountryDropdown = ({ selectedCountries, onSelect, countries }: CountryDrop
               const isDisabled = selectedCountries.length >= 5 && !isSelected;
               
               return (
-                <button key={country.code} onClick={() => !isDisabled && handleCountryToggle(country)} disabled={isDisabled} className={`w-full flex items-center px-4 py-3 text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 ${isSelected ? 'bg-blue-50 dark:bg-blue-900/30' : ''} ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}>
-                  <span className="mr-3 text-lg emoji">{country.flag}</span>
-                  <span className="text-gray-900 dark:text-white">{country.name}</span>
+                <button key={country.code} onClick={() => !isDisabled && handleCountryToggle(country)} disabled={isDisabled} className={`w-full flex items-center px-3 sm:px-4 py-2.5 sm:py-3 text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 ${isSelected ? 'bg-blue-50 dark:bg-blue-900/30' : ''} ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                  <img 
+                    src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
+                    alt={`${country.name} flag`}
+                    className="w-4 h-auto sm:w-5 mr-2 sm:mr-3"
+                  />
+                  <span className="text-xs sm:text-sm text-gray-900 dark:text-white">{country.name}</span>
                     {isSelected && <span className="ml-auto text-blue-600 dark:text-blue-400">✓</span>}
                   </button>
                 );
@@ -520,13 +528,15 @@ const getMetricTooltip = (title: string): string => {
   return tooltips[title] || "No description available for this metric";
 };
 
-const MetricTable = ({ title, countries, getValue, getSource, formatValue, loading }: {
+const MetricTable = ({ title, countries, getValue, getSource, formatValue, loading, activeTooltip, toggleTooltip }: {
   title: string;
   countries: Country[];
   getValue: (country: Country) => number | null;
   getSource?: (country: Country) => { source?: string; year?: string; sourceOrganization?: string } | null;
   formatValue: (value: number) => string;
   loading?: boolean;
+  activeTooltip?: string | null;
+  toggleTooltip?: (tooltipId: string) => void;
 }) => {
   // Create a unique ID from the title
   const metricId = title.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
@@ -546,104 +556,119 @@ const MetricTable = ({ title, countries, getValue, getSource, formatValue, loadi
 
   return (
     <div id={`metric-${metricId}`} className="mb-8 scroll-mt-24 transition-all duration-300">
-      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center">
-        <span className="text-base mr-2 opacity-70">{getMetricIcon(title)}</span>
+      <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center">
+        <span className="text-sm sm:text-base mr-2 opacity-70">{getMetricIcon(title)}</span>
         <span className="text-gray-900 dark:text-white">
           {title}
         </span>
-        <div className="group relative ml-2">
+        <div className="group relative ml-2 tooltip-container">
           <HelpCircle 
-            size={16} 
-            className="text-gray-400 dark:text-gray-500 hover:text-blue-500 dark:hover:text-blue-400 cursor-help transition-colors duration-200" 
+            size={14} 
+            className="text-gray-400 dark:text-gray-500 hover:text-blue-500 dark:hover:text-blue-400 cursor-pointer transition-colors duration-200" 
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleTooltip?.(`tooltip-${metricId}`);
+            }}
           />
-          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 dark:bg-gray-700 text-white text-sm rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10 w-64 text-center">
+          <div className={`absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 dark:bg-gray-700 text-white text-xs sm:text-sm rounded-lg shadow-lg transition-opacity duration-200 z-10 w-48 sm:w-64 text-center ${
+            activeTooltip === `tooltip-${metricId}` 
+              ? 'opacity-100 pointer-events-auto' 
+              : 'opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto'
+          }`}>
             {getMetricTooltip(title)}
             <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900 dark:border-t-gray-700"></div>
           </div>
         </div>
       </h3>
       <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
-        <table className="w-full">
-          <thead>
-            <tr className="border-b border-gray-200 dark:border-gray-600">
-              <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700">
-                Country
-              </th>
-              <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700">
-                Value
-              </th>
-              {showComparison && (
-                <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700">
-                  Comparison
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[500px]">
+            <thead>
+              <tr className="border-b border-gray-200 dark:border-gray-600">
+                <th className="px-3 sm:px-4 py-3 text-left text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700">
+                  Country
                 </th>
-              )}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-100 dark:divide-gray-600">
-            {data.map(({ country, value }) => (
-              <tr 
-                key={country.code} 
-                className="hover:bg-gray-50/50 dark:hover:bg-gray-700/30 transition-colors duration-150"
-              >
-                <td className="px-4 py-4">
-                  <div className="flex items-center space-x-3">
-                    <span className="text-lg emoji">{country.flag}</span>
-                    <span className="text-sm font-medium text-gray-900 dark:text-white">
-                      {country.name}
-                    </span>
-                  </div>
-                </td>
-                <td className="px-4 py-4">
-                  <span className={`text-sm font-medium ${
-                    value !== null ? 'text-gray-900 dark:text-white' : 'text-gray-400 dark:text-gray-500'
-                  }`}>
-                    {loading ? (
-                      <span className="flex items-center">
-                        <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-blue-500 mr-2"></div>
-                        Loading...
-                      </span>
-                    ) : value !== null ? formatValue(value) : "N/A"}
-                  </span>
-                </td>
+                <th className="px-3 sm:px-4 py-3 text-left text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700">
+                  Value
+                </th>
                 {showComparison && (
-                  <td className="px-4 py-4">
-                    {value !== null && value > 0 && maxValue > 0 ? (
-                      <div className="flex items-center space-x-3">
-                        <div className="flex-1 bg-gray-200 dark:bg-gray-600 rounded-full h-3 max-w-[140px]">
-                          <div 
-                            className="bg-gradient-to-r from-blue-500 to-blue-600 h-3 rounded-full transition-all duration-500 ease-out shadow-sm" 
-                            style={{ width: `${Math.max(8, (value / maxValue) * 100)}%` }}
-                          ></div>
-                        </div>
-                        <span className="text-xs text-gray-500 dark:text-gray-400 font-medium min-w-[35px] text-right">
-                          {((value / maxValue) * 100).toFixed(0)}%
-                        </span>
-                      </div>
-                    ) : (
-                      <span className="text-xs text-gray-400 italic">—</span>
-                    )}
-                  </td>
+                  <th className="px-3 sm:px-4 py-3 text-left text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700">
+                    Comparison
+                  </th>
                 )}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-gray-100 dark:divide-gray-600">
+              {data.map(({ country, value }) => (
+                <tr 
+                  key={country.code} 
+                  className="hover:bg-gray-50/50 dark:hover:bg-gray-700/30 transition-colors duration-150"
+                >
+                  <td className="px-3 sm:px-4 py-3 sm:py-4">
+                    <div className="flex items-center space-x-2 sm:space-x-3">
+                      <img 
+                          src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
+                          alt={`${country.name} flag`}
+                          className="w-4 h-auto sm:w-5 mr-1 sm:mr-2"
+                        />
+                      <span className="text-xs sm:text-sm font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                        {country.name}
+                      </span>
+                    </div>
+                  </td>
+                  <td className="px-3 sm:px-4 py-3 sm:py-4">
+                    <span className={`text-xs sm:text-sm font-medium ${
+                      value !== null ? 'text-gray-900 dark:text-white' : 'text-gray-400 dark:text-gray-500'
+                    }`}>
+                      {loading ? (
+                        <span className="flex items-center">
+                          <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-blue-500 mr-2"></div>
+                          <span className="hidden sm:inline">Loading...</span>
+                          <span className="sm:hidden">...</span>
+                        </span>
+                      ) : value !== null ? formatValue(value) : "N/A"}
+                    </span>
+                  </td>
+                  {showComparison && (
+                    <td className="px-3 sm:px-4 py-3 sm:py-4">
+                      {value !== null && value > 0 && maxValue > 0 ? (
+                        <div className="flex items-center space-x-2 sm:space-x-3">
+                          <div className="flex-1 bg-gray-200 dark:bg-gray-600 rounded-full h-2 sm:h-3 max-w-[100px] sm:max-w-[140px]">
+                            <div 
+                              className="bg-gradient-to-r from-blue-500 to-blue-600 h-2 sm:h-3 rounded-full transition-all duration-500 ease-out shadow-sm" 
+                              style={{ width: `${Math.max(8, (value / maxValue) * 100)}%` }}
+                            ></div>
+                          </div>
+                          <span className="text-xs text-gray-500 dark:text-gray-400 font-medium min-w-[25px] sm:min-w-[35px] text-right">
+                            {((value / maxValue) * 100).toFixed(0)}%
+                          </span>
+                        </div>
+                      ) : (
+                        <span className="text-xs text-gray-400 italic">—</span>
+                      )}
+                    </td>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
       
       {/* Source information below the table */}
       {source && (
-        <div className="mt-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-          <div className="flex flex-wrap items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
+        <div className="mt-3 p-2 sm:p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+          <div className="flex flex-wrap items-center gap-1 sm:gap-2 text-xs text-gray-600 dark:text-gray-400">
             <span className="font-medium text-gray-700 dark:text-gray-300">
               Source:
             </span>
             {source.source && source.year && (
-              <span className="bg-white dark:bg-gray-700 px-2 py-1 rounded border border-gray-300 dark:border-gray-600">
+              <span className="bg-white dark:bg-gray-700 px-1.5 sm:px-2 py-1 rounded border border-gray-300 dark:border-gray-600 text-xs">
                 {source.source} ({source.year})
               </span>
             )}
             {source.sourceOrganization && (
-              <span className="text-gray-500 dark:text-gray-400">
+              <span className="text-gray-500 dark:text-gray-400 text-xs">
                 • {source.sourceOrganization}
               </span>
             )}
@@ -668,6 +693,7 @@ export default function HomePage() {
   const [showStickyNav, setShowStickyNav] = useState(false);
   const [activeSection, setActiveSection] = useState('overview');
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
+  const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
 
   // Define metrics for each section
   const sectionMetrics = {
@@ -833,6 +859,20 @@ export default function HomePage() {
       setSelectedTradeCountry(selectedCountries[0].code);
     }
   }, [selectedCountries, selectedTradeCountry]);
+
+  // Handle tooltip clicks and outside clicks
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      // Check if click is outside tooltip or help icon
+      if (!target.closest('.tooltip-container')) {
+        setActiveTooltip(null);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, []);
 
   useEffect(() => {
     const loadData = async () => {
@@ -1167,19 +1207,24 @@ export default function HomePage() {
     }));
   };
 
+  const toggleTooltip = (tooltipId: string) => {
+    setActiveTooltip(activeTooltip === tooltipId ? null : tooltipId);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Header */}
       <div className="bg-white dark:bg-gray-800 shadow-lg border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8">
           <div className="text-center relative">
-            <div className="absolute top-0 right-0 flex items-center space-x-2">
+            <div className="absolute top-0 right-0 flex items-center space-x-1 sm:space-x-2">
               <Link
                 href="/top10"
-                className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200 text-sm font-medium"
+                className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200 text-xs sm:text-sm font-medium"
               >
-                <BarChart3 className="w-4 h-4" />
-                <span>Top 10 Rankings</span>
+                <BarChart3 className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">Top 10 Rankings</span>
+                <span className="sm:hidden">Top 10</span>
               </Link>
               <button
                 onClick={() => setDarkMode(!darkMode)}
@@ -1187,26 +1232,26 @@ export default function HomePage() {
                 aria-label="Toggle dark mode"
               >
                 {darkMode ? (
-                  <Sun className="w-5 h-5 text-yellow-500" />
+                  <Sun className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500" />
                 ) : (
-                  <Moon className="w-5 h-5 text-gray-600" />
+                  <Moon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
                 )}
               </button>
             </div>
             
-            <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4 pr-20 sm:pr-0">
               Country Profile Comparison
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto px-4 sm:px-0">
               Compare economic indicators, demographics, trade data, and safety metrics between countries around the world
             </p>
             {loading && (
-              <div className="mt-4 text-blue-600 dark:text-blue-400">
+              <div className="mt-4 text-blue-600 dark:text-blue-400 text-sm sm:text-base">
                 Loading country data...
               </div>
             )}
             {error && (
-              <div className="mt-4 text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 p-3 rounded-lg">
+              <div className="mt-4 text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 p-3 rounded-lg text-sm sm:text-base">
                 Error: {error}
               </div>
             )}
@@ -1372,7 +1417,11 @@ export default function HomePage() {
                   <div className="flex space-x-2">
                     {selectedCountries.slice(0, 3).map((country) => (
                       <div key={country.code} className="flex items-center space-x-1">
-                        <span className="text-xl emoji">{country.flag}</span>
+                        <img 
+                          src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
+                          alt={`${country.name} flag`}
+                          className="w-5 h-auto mr-1"
+                        />
                         <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                           {country.name}
                         </span>
@@ -1398,7 +1447,7 @@ export default function HomePage() {
                   <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                     Select a country to view detailed information:
                   </h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3">
                     {selectedCountries.map((country) => {
                       const isSelected = selectedCountryInfo === country.code;
                       return (
@@ -1406,7 +1455,7 @@ export default function HomePage() {
                           key={country.code}
                           onClick={() => setSelectedCountryInfo(country.code)}
                           className={`
-                            relative flex items-center space-x-3 p-4 rounded-xl border-2 transition-all duration-200 
+                            relative flex items-center space-x-2 sm:space-x-3 p-3 sm:p-4 rounded-xl border-2 transition-all duration-200 
                             ${isSelected 
                               ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 shadow-lg transform scale-105' 
                               : 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-500 hover:shadow-md'
@@ -1415,22 +1464,26 @@ export default function HomePage() {
                         >
                           {/* Selection Indicator */}
                           <div className={`
-                            flex-shrink-0 w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all duration-200
+                            flex-shrink-0 w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 flex items-center justify-center transition-all duration-200
                             ${isSelected 
                               ? 'border-blue-500 bg-blue-500' 
                               : 'border-gray-300 dark:border-gray-500 bg-transparent'
                             }
                           `}>
                             {isSelected && (
-                              <div className="w-2 h-2 rounded-full bg-white"></div>
+                              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-white"></div>
                             )}
                           </div>
                           
                           {/* Country Info */}
-                          <div className="flex items-center space-x-3 flex-1 min-w-0">
-                            <span className="text-2xl emoji flex-shrink-0">{country.flag}</span>
+                          <div className="flex items-center space-x-2 sm:space-x-3 flex-1 min-w-0">
+                            <img 
+                              src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
+                              alt={`${country.name} flag`}
+                              className="w-5 h-auto sm:w-6"
+                            />
                             <span className={`
-                              text-sm font-medium truncate transition-colors duration-200
+                              text-xs sm:text-sm font-medium truncate transition-colors duration-200
                               ${isSelected 
                                 ? 'text-blue-700 dark:text-blue-300' 
                                 : 'text-gray-900 dark:text-white'
@@ -1442,8 +1495,8 @@ export default function HomePage() {
                           
                           {/* Selected Badge */}
                           {isSelected && (
-                            <div className="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
-                              <svg className="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <div className="absolute -top-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                              <svg className="w-2 h-2 sm:w-2.5 sm:h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                               </svg>
                             </div>
@@ -1466,7 +1519,11 @@ export default function HomePage() {
                   return (
                     <div className="space-y-6">
                       <div className="flex items-center space-x-3 mb-6">
-                        <span className="text-3xl emoji">{selectedCountry?.flag}</span>
+                        <img 
+                          src={`https://flagcdn.com/w40/${selectedCountry?.code.toLowerCase()}.png`}
+                          alt={`${selectedCountry?.name} flag`}
+                          className="w-8 h-auto"
+                        />
                         <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{selectedCountry?.name}</h3>
                       </div>
                       
@@ -1475,30 +1532,30 @@ export default function HomePage() {
                         <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 border-b border-gray-200 dark:border-gray-600 pb-2">
                           Basic Information
                         </h4>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                           <div className="space-y-2">
-                            <h5 className="font-semibold text-gray-900 dark:text-white flex items-center">
-                              <Globe className="mr-2" size={16} />
+                            <h5 className="font-semibold text-gray-900 dark:text-white flex items-center text-sm sm:text-base">
+                              <Globe className="mr-2" size={14} />
                               Region
                             </h5>
-                            <p className="text-gray-700 dark:text-gray-300">
+                            <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
                               {restData?.region || 'N/A'} {restData?.subregion && `/ ${restData.subregion}`}
                             </p>
                           </div>
                           
                           <div className="space-y-2">
-                            <h5 className="font-semibold text-gray-900 dark:text-white flex items-center">
-                              <MapPin className="mr-2" size={16} />
+                            <h5 className="font-semibold text-gray-900 dark:text-white flex items-center text-sm sm:text-base">
+                              <MapPin className="mr-2" size={14} />
                               Capital
                             </h5>
-                            <p className="text-gray-700 dark:text-gray-300">
+                            <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
                               {restData?.capital?.join(', ') || 'N/A'}
                             </p>
                           </div>
                           
                           <div className="space-y-2">
-                            <h5 className="font-semibold text-gray-900 dark:text-white flex items-center">
-                              <Globe className="mr-2" size={16} />
+                            <h5 className="font-semibold text-gray-900 dark:text-white flex items-center text-sm sm:text-base">
+                              <Globe className="mr-2" size={14} />
                               View on Map
                             </h5>
                             {restData?.googleMaps ? (
@@ -1506,25 +1563,26 @@ export default function HomePage() {
                                 href={restData.googleMaps} 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center px-3 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 transition-colors duration-200"
+                                className="inline-flex items-center px-2 sm:px-3 py-2 text-xs sm:text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 transition-colors duration-200"
                               >
-                                <Globe className="mr-2" size={14} />
-                                Open in Google Maps
+                                <Globe className="mr-1 sm:mr-2" size={12} />
+                                <span className="hidden sm:inline">Open in Google Maps</span>
+                                <span className="sm:hidden">Google Maps</span>
                                 <svg className="ml-1 w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                 </svg>
                               </a>
                             ) : (
-                              <p className="text-gray-500 dark:text-gray-400 text-sm">Map link not available</p>
+                              <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm">Map link not available</p>
                             )}
                           </div>
                           
                           <div className="space-y-2">
-                            <h5 className="font-semibold text-gray-900 dark:text-white flex items-center">
-                              <DollarSign className="mr-2" size={16} />
+                            <h5 className="font-semibold text-gray-900 dark:text-white flex items-center text-sm sm:text-base">
+                              <DollarSign className="mr-2" size={14} />
                               Currency
                             </h5>
-                            <p className="text-gray-700 dark:text-gray-300">
+                            <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
                               {restData?.currencies ? Object.entries(restData.currencies).map(([code, currency]) => 
                                 `${currency.name} (${code})`
                               ).join(', ') : 'N/A'}
@@ -1532,11 +1590,11 @@ export default function HomePage() {
                           </div>
                           
                           <div className="space-y-2">
-                            <h5 className="font-semibold text-gray-900 dark:text-white flex items-center">
-                              <Globe className="mr-2" size={16} />
+                            <h5 className="font-semibold text-gray-900 dark:text-white flex items-center text-sm sm:text-base">
+                              <Globe className="mr-2" size={14} />
                               Internet Country Code
                             </h5>
-                            <p className="text-gray-700 dark:text-gray-300">
+                            <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
                               {factbook?.internetCountryCode || 'N/A'}
                               {factbook?.internetCountryCode && (
                                 <span className="text-xs text-gray-500 dark:text-gray-400 block">
@@ -1887,6 +1945,8 @@ export default function HomePage() {
                   }}
                   formatValue={formatPopulation}
                   loading={loading}
+                  activeTooltip={activeTooltip}
+                  toggleTooltip={toggleTooltip}
                 />
 
                 <MetricTable
@@ -1907,6 +1967,8 @@ export default function HomePage() {
                   }}
                   formatValue={formatArea}
                   loading={loading}
+                  activeTooltip={activeTooltip}
+                  toggleTooltip={toggleTooltip}
                 />
 
                 <MetricTable
@@ -2905,7 +2967,11 @@ export default function HomePage() {
                             
                             {/* Country Info */}
                             <div className="flex items-center space-x-3 flex-1 min-w-0">
-                              <span className="text-2xl emoji flex-shrink-0">{country.flag}</span>
+                              <img 
+                                src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
+                                alt={`${country.name} flag`}
+                                className="w-5 h-auto mr-3"
+                              />
                               <span className={`
                                 text-sm font-medium truncate transition-colors duration-200
                                 ${isSelected 

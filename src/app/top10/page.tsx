@@ -91,7 +91,9 @@ export default function Top10Page() {
     currentMetric: '',
     failed: []
   });
-  const [showTopPerformers, setShowTopPerformers] = useState(true);
+  const [showHighest, setShowHighest] = useState(true);
+  const [showSidebar, setShowSidebar] = useState(true);
+  const [showMetricDropdown, setShowMetricDropdown] = useState(true);
 
   const categories = ['All', ...Array.from(new Set(worldBankMetrics.map(m => m.category)))];
 
@@ -232,10 +234,103 @@ export default function Top10Page() {
 
         const rankings: CountryRanking[] = [];
         
+        // Debug raw World Bank data for problematic metrics
+        if (metric.id === 'gdp' || metric.id === 'gdpPerCapita' || metric.id === 'population') {
+          let minValue;
+          if (metric.id === 'gdp') minValue = 500000000000; // $500B for GDP
+          else if (metric.id === 'gdpPerCapita') minValue = 10000; // $10k for GDP per capita  
+          else minValue = 50000000; // 50M for population
+          
+          console.log(`🔍 Raw World Bank ${metric.title} data (top 20 by value):`);
+          const topRawEntries = data.data
+            .filter((entry: any) => entry.value && entry.value > minValue)
+            .sort((a: any, b: any) => b.value - a.value)
+            .slice(0, 20);
+          
+          topRawEntries.forEach((entry: any, index: number) => {
+            if (metric.id === 'gdp') {
+              const gdpTrillions = (entry.value / 1000000000000).toFixed(2);
+              console.log(`  ${index + 1}. ${entry.countryName} (${entry.countryId}): $${gdpTrillions}T`);
+            } else if (metric.id === 'population') {
+              const populationM = (entry.value / 1000000).toFixed(1);
+              console.log(`  ${index + 1}. ${entry.countryName} (${entry.countryId}): ${populationM}M`);
+            } else {
+              console.log(`  ${index + 1}. ${entry.countryName} (${entry.countryId}): $${entry.value.toLocaleString()}`);
+            }
+          });
+          
+          // Look for ALL Pakistan entries (not just first one)
+          const pakistanRawEntries = data.data.filter((entry: any) => 
+            entry.countryId === 'PAK' || entry.countryName?.includes('Pakistan')
+          );
+          console.log(`🔍 ALL Pakistan entries found (${pakistanRawEntries.length} total):`);
+          pakistanRawEntries.forEach((entry: any, index: number) => {
+            if (metric.id === 'gdp') {
+              console.log(`  ${index + 1}. ${entry.countryName} (${entry.countryId}): $${(entry.value / 1000000000).toFixed(1)}B (${entry.year})`);
+            } else if (metric.id === 'population') {
+              const populationM = (entry.value / 1000000).toFixed(1);
+              console.log(`  ${index + 1}. ${entry.countryName} (${entry.countryId}): ${populationM}M (${entry.year})`);
+            } else {
+              console.log(`  ${index + 1}. ${entry.countryName} (${entry.countryId}): $${entry.value.toLocaleString()} (${entry.year})`);
+            }
+          });
+          
+          // Look for China entries specifically
+          const chinaRawEntries = data.data.filter((entry: any) => 
+            entry.countryId === 'CHN' || entry.countryId === 'HKG' || entry.countryId === 'MAC' ||
+            entry.countryName?.includes('China')
+          );
+          console.log('🔍 Raw China entries:');
+          chinaRawEntries.forEach((entry: any) => {
+            if (metric.id === 'gdp') {
+              const gdpTrillions = (entry.value / 1000000000000).toFixed(2);
+              console.log(`  - ${entry.countryName} (${entry.countryId}): $${gdpTrillions}T`);
+            } else if (metric.id === 'population') {
+              const populationM = (entry.value / 1000000).toFixed(1);
+              console.log(`  - ${entry.countryName} (${entry.countryId}): ${populationM}M`);
+            } else {
+              console.log(`  - ${entry.countryName} (${entry.countryId}): $${entry.value.toLocaleString()}`);
+            }
+          });
+        }
+        
         data.data.forEach((entry: { countryId: string; countryName?: string; value?: number; year?: string }) => {
           let matchingCountry = null;
           
-          // Method 1: Try direct 3-letter to 2-letter mapping
+          // Skip World Bank regional aggregates and groups - these contain country names but aren't actual countries
+          const isRegionalAggregate = entry.countryName && (
+            // World Bank regional/income groups
+            entry.countryName.includes('income') ||
+            entry.countryName.includes('IDA & IBRD') ||
+            entry.countryName.includes('OECD') ||
+            entry.countryName.includes('World') ||
+            entry.countryName.includes('demographic dividend') ||
+            entry.countryName.includes('Arab World') ||
+            entry.countryName.includes('Sub-Saharan Africa') ||
+            entry.countryName.includes('Latin America') ||
+            entry.countryName.includes('South Asia') ||
+            entry.countryName.includes('East Asia') ||
+            entry.countryName.includes('Europe & Central Asia') ||
+            entry.countryName.includes('Middle East, North Africa') ||
+            entry.countryName.includes('Caribbean') ||
+            entry.countryName.includes('Pacific') ||
+            entry.countryName.includes('excluding') ||
+            entry.countryName.includes('total') ||
+            // Specific aggregates that contain country names
+            entry.countryName.includes(', ') && entry.countryName.includes(' & ') ||
+            // Multi-character country IDs indicate aggregates
+            entry.countryId && entry.countryId.length > 3
+          );
+          
+          if (isRegionalAggregate) {
+            // Log regional aggregates that might be confusing
+            if (metric.id === 'gdp' || metric.id === 'population') {
+              console.log(`🚫 Skipping regional aggregate: ${entry.countryName} (${entry.countryId})`);
+            }
+            return; // Skip this entry entirely
+          }
+          
+          // Method 1: Try direct 3-letter to 2-letter mapping (most reliable)
           const twoLetterCode = countryCodeMap[entry.countryId];
           if (twoLetterCode) {
             matchingCountry = countries.find(c => c.code === twoLetterCode);
@@ -256,18 +351,59 @@ export default function Top10Page() {
             );
           }
           
-          // Method 4: Try partial name match (restrictive)
+          // Method 4: Handle China specifically to avoid SAR confusion
+          if (!matchingCountry && entry.countryName) {
+            // For China, prioritize exact "China" match over SAR regions
+            if (entry.countryName === 'China' || entry.countryId === 'CHN') {
+              matchingCountry = countries.find(c => c.code === 'CN');
+            }
+            // For Hong Kong SAR, map to HK
+            else if (entry.countryName === 'Hong Kong SAR, China' || entry.countryId === 'HKG') {
+              matchingCountry = countries.find(c => c.code === 'HK');
+            }
+            // For Macao SAR, map to MO
+            else if (entry.countryName === 'Macao SAR, China' || entry.countryId === 'MAC') {
+              matchingCountry = countries.find(c => c.code === 'MO');
+            }
+          }
+          
+          // Method 5: Try partial name match (very restrictive to avoid false positives)
           if (!matchingCountry && entry.countryName && entry.countryName.length > 5) {
-            matchingCountry = countries.find(c => {
-              const countryLower = c.name.toLowerCase();
-              const entryLower = entry.countryName!.toLowerCase();
-              
-              // Must be substantial match to avoid false positives
-              return countryLower.includes(entryLower) || entryLower.includes(countryLower);
-            });
+            // Skip partial matching for entries that might be aggregates or contain multiple country names
+            if (!entry.countryName.includes('China') && 
+                !entry.countryName.includes(',') && 
+                !entry.countryName.includes('&') &&
+                !entry.countryName.includes(' and ')) {
+              matchingCountry = countries.find(c => {
+                const countryLower = c.name.toLowerCase();
+                const entryLower = entry.countryName!.toLowerCase();
+                
+                // Must be substantial match to avoid false positives
+                return countryLower.includes(entryLower) || entryLower.includes(countryLower);
+              });
+            }
           }
 
           if (matchingCountry && typeof entry.value === 'number' && entry.value > 0) {
+            // Debug specific countries during problematic metrics processing
+            if ((metric.id === 'gdp' || metric.id === 'gdpPerCapita' || metric.id === 'population') && (
+              entry.countryName?.includes('Pakistan') || 
+              entry.countryName?.includes('China') || 
+              entry.countryId === 'PAK' || 
+              entry.countryId === 'CHN' || 
+              entry.countryId === 'HKG' || 
+              entry.countryId === 'MAC'
+            )) {
+              if (metric.id === 'gdp') {
+                console.log(`🔍 Mapping: ${entry.countryName} (${entry.countryId}) → ${matchingCountry.name} (${matchingCountry.code}): $${(entry.value / 1000000000).toFixed(1)}B (${entry.year})`);
+              } else if (metric.id === 'population') {
+                const populationM = (entry.value / 1000000).toFixed(1);
+                console.log(`🔍 Mapping: ${entry.countryName} (${entry.countryId}) → ${matchingCountry.name} (${matchingCountry.code}): ${populationM}M (${entry.year})`);
+              } else {
+                console.log(`🔍 Mapping: ${entry.countryName} (${entry.countryId}) → ${matchingCountry.name} (${matchingCountry.code}): $${entry.value.toLocaleString()} (${entry.year})`);
+              }
+            }
+            
             rankings.push({
               name: matchingCountry.name,
               code: matchingCountry.code,
@@ -287,23 +423,95 @@ export default function Top10Page() {
         // Ensure we have valid data and sort properly
         const validRankings = rankings.filter(r => r.value && r.value > 0);
         
-        // Sort and get top 10 with proper numerical sorting
-        const sortedRankings = validRankings
-          .sort((a, b) => {
-            // Ensure proper numerical comparison
-            const valueA = Number(a.value);
-            const valueB = Number(b.value);
-            return metric.higherIsBetter ? valueB - valueA : valueA - valueB;
-          })
-          .slice(0, 10);
-
-        // Debug for GDP metric
-        if (metric.id === 'gdp') {
-          console.log(`🔍 GDP Debug - Found ${validRankings.length} valid countries total:`);
-          console.log('Top 10 by GDP:');
+        // Deduplicate by country code - keep the entry with the highest value for each country
+        const deduplicatedRankings = validRankings.reduce((acc: CountryRanking[], current) => {
+          const existingIndex = acc.findIndex(r => r.code === current.code);
+          
+          if (existingIndex === -1) {
+            // New country, add it
+            acc.push(current);
+          } else {
+            // Country exists, keep the one with higher value (or more recent year if values are equal)
+            const existing = acc[existingIndex];
+            const shouldReplace = current.value > existing.value || 
+              (current.value === existing.value && parseInt(current.year) > parseInt(existing.year));
+            
+            if (shouldReplace) {
+              // Debug duplicate detection
+              if (metric.id === 'gdp' || metric.id === 'population') {
+                console.log(`🔍 Duplicate detected for ${current.name} (${current.code}):`);
+                console.log(`  Existing: ${existing.value} (${existing.year})`);
+                console.log(`  New: ${current.value} (${current.year})`);
+                console.log(`  Keeping: ${shouldReplace ? 'new' : 'existing'}`);
+              }
+              acc[existingIndex] = current;
+            }
+          }
+          
+          return acc;
+        }, []);
+        
+        // Store the full, deduplicated list in the cache, NOT just the top 10
+        const sortedRankings = deduplicatedRankings.sort((a, b) => b.value - a.value); // Default sort for consistency
+        
+        // Debug for problematic metrics
+        if (metric.id === 'gdp' || metric.id === 'gdpPerCapita' || metric.id === 'population') {
+          console.log(`🔍 ${metric.title} Debug - Found ${validRankings.length} valid countries total, ${deduplicatedRankings.length} after deduplication.`);
+          console.log(`Top 10 by ${metric.title}:`);
           sortedRankings.forEach((country, index) => {
-            const gdpTrillions = country.value / 1000000000000;
-            console.log(`${index + 1}. ${country.name} (${country.code}): $${gdpTrillions.toFixed(2)}T`);
+            if (metric.id === 'gdp') {
+              const gdpTrillions = country.value / 1000000000000;
+              console.log(`${index + 1}. ${country.name} (${country.code}): $${gdpTrillions.toFixed(2)}T (${country.year})`);
+            } else if (metric.id === 'population') {
+              const populationM = (country.value / 1000000).toFixed(1);
+              console.log(`${index + 1}. ${country.name} (${country.code}): ${populationM}M (${country.year})`);
+            } else {
+              console.log(`${index + 1}. ${country.name} (${country.code}): $${country.value.toLocaleString()} (${country.year})`);
+            }
+          });
+          
+          // Debug Pakistan specifically - check for duplicates in validRankings
+          const pakistanEntries = validRankings.filter(r => r.name === 'Pakistan' || r.code === 'PK');
+          console.log(`🔍 Pakistan entries found: ${pakistanEntries.length}`);
+          pakistanEntries.forEach((entry, index) => {
+            if (metric.id === 'gdp') {
+              console.log(`  ${index + 1}. Pakistan GDP: $${(entry.value / 1000000000).toFixed(1)}B (${entry.year})`);
+            } else if (metric.id === 'population') {
+              const populationM = (entry.value / 1000000).toFixed(1);
+              console.log(`  ${index + 1}. Pakistan Population: ${populationM}M (${entry.year})`);
+            } else {
+              console.log(`  ${index + 1}. Pakistan GDP Per Capita: $${entry.value.toLocaleString()} (${entry.year})`);
+            }
+          });
+          
+          // Show final Pakistan entry after deduplication
+          const finalPakistanEntry = deduplicatedRankings.find(r => r.name === 'Pakistan' || r.code === 'PK');
+          if (finalPakistanEntry) {
+            if (metric.id === 'gdp') {
+              console.log(`🔍 Final Pakistan GDP after deduplication: $${(finalPakistanEntry.value / 1000000000).toFixed(1)}B (${finalPakistanEntry.year})`);
+            } else if (metric.id === 'population') {
+              const populationM = (finalPakistanEntry.value / 1000000).toFixed(1);
+              console.log(`🔍 Final Pakistan Population after deduplication: ${populationM}M (${finalPakistanEntry.year})`);
+            } else {
+              console.log(`🔍 Final Pakistan GDP Per Capita after deduplication: $${finalPakistanEntry.value.toLocaleString()} (${finalPakistanEntry.year})`);
+            }
+          }
+          
+          // Debug China entries
+          const chinaEntries = validRankings.filter(r => 
+            r.name.includes('China') || r.code === 'CN' || r.code === 'HK' || r.code === 'MO'
+          );
+          console.log('🔍 China-related entries:');
+          chinaEntries.forEach(entry => {
+            if (metric.id === 'gdp') {
+              const gdpTrillions = entry.value / 1000000000000;
+              console.log(`  - ${entry.name} (${entry.code}): $${gdpTrillions.toFixed(2)}T (${entry.year})`);
+            } else if (metric.id === 'population') {
+              const populationM = (entry.value / 1000000).toFixed(1);
+              console.log(`  - ${entry.name} (${entry.code}): ${populationM}M (${entry.year})`);
+            } else {
+              console.log(`  - ${entry.name} (${entry.code}): $${entry.value.toLocaleString()} (${entry.year})`);
+            }
           });
         }
 
@@ -401,16 +609,46 @@ export default function Top10Page() {
 
   // Get current rankings (instant after initial load)
   const getCurrentRankings = (): CountryRanking[] => {
-    const rankings = bulkCache[selectedMetric.id] || [];
+    if (!selectedMetric || !bulkCache[selectedMetric.id]) {
+      return Array.from({ length: 10 }, (_, i) => ({
+        name: 'Loading...',
+        code: `LC${i}`,
+        flag: '...',
+        value: 0,
+        year: '...',
+        source: '...'
+      }));
+    }
+
+    const currentData = bulkCache[selectedMetric.id];
     
-    // Debug logging to track metric switching
-    console.log(`Getting rankings for ${selectedMetric.title}: ${rankings.length} countries`);
-    
-    // Ensure we return a fresh copy to prevent mutation issues
-    return [...rankings];
+    // Sort the full dataset based on the selected view (highest or lowest)
+    const sortedData = [...currentData].sort((a, b) => {
+      if (a.value === null || a.value === undefined) return 1;
+      if (b.value === null || b.value === undefined) return -1;
+
+      // When showing HIGHEST:
+      // - If higher is better, sort descending (B-A) to get the largest values at the top.
+      // - If lower is better, sort ascending (A-B) to get the smallest values at the top.
+      if (showHighest) {
+        return selectedMetric.higherIsBetter ? b.value - a.value : a.value - b.value;
+      } 
+      // When showing LOWEST:
+      // - If higher is better, sort ascending (A-B) to get the smallest values at the top.
+      // - If lower is better, sort descending (B-A) to get the largest values at the top.
+      else {
+        return selectedMetric.higherIsBetter ? a.value - b.value : b.value - a.value;
+      }
+    });
+
+    // Then slice the top 10 from the sorted list
+    return sortedData.slice(0, 10);
   };
 
   const formatValue = (value: number, unit: string) => {
+    if (value === null || value === undefined) {
+      return 'N/A';
+    }
     if (unit === 'USD' && value > 1000000000000) {
       return `$${(value / 1000000000000).toFixed(1)}T`;
     } else if (unit === 'USD' && value > 1000000000) {
@@ -456,49 +694,48 @@ export default function Top10Page() {
 
   const getRankIcon = (rank: number) => {
     switch (rank) {
-      case 1: return <Trophy className="text-yellow-500" size={24} />;
-      case 2: return <Medal className="text-gray-400" size={24} />;
-      case 3: return <Award className="text-amber-600" size={24} />;
-      default: return <span className="text-2xl font-bold text-gray-500">#{rank}</span>;
+      case 1: return <Trophy className="text-yellow-400" size={24} />;
+      case 2: return <Medal className="text-slate-400" size={24} />;
+      case 3: return <Award className="text-orange-500" size={24} />;
+      default: return <span className="text-xl font-bold text-gray-500">{rank}</span>;
     }
   };
 
   const currentRankings = getCurrentRankings();
-  const displayedRankings = showTopPerformers ? currentRankings : [...currentRankings].reverse();
-  const titlePrefix = showTopPerformers ? 'Top 10' : 'Bottom 10';
   const loadingProgress = loadingState.totalMetrics > 0 ? (loadingState.loadedMetrics / loadingState.totalMetrics) * 100 : 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="flex flex-col min-h-screen bg-gray-900 text-white font-sans">
       {/* Header */}
-      <div className="bg-white dark:bg-gray-800 shadow-lg border-b border-gray-200 dark:border-gray-700">
+      <header className="sticky top-0 z-30 w-full p-4 bg-gray-900/70 backdrop-blur-md border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-center space-x-2 sm:space-x-4">
               <Link 
                 href="/"
                 className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 transition-colors duration-200"
               >
                 <ArrowLeft size={20} />
-                <span>Back to Comparison</span>
+                <span className="hidden sm:inline">Back to Comparison</span>
+                <span className="sm:hidden">Back</span>
               </Link>
               <div className="h-6 w-px bg-gray-300 dark:bg-gray-600"></div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center">
-                <BarChart3 className="mr-3 text-blue-600" size={32} />
-                World Bank Rankings
-                <span className="ml-3 text-lg bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 px-3 py-1 rounded-full">
-                  ⚡ Ultra-Fast
-                </span>
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white flex items-center">
+                <BarChart3 className="mr-2 sm:mr-3 text-blue-600" size={24} />
+                <span className="hidden sm:inline">World Bank Rankings</span>
+                <span className="sm:hidden">Rankings</span>
               </h1>
             </div>
-            <button
-              onClick={loadAllWorldBankData}
-              disabled={loadingState.isLoading}
-              className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-4 py-2 rounded-lg transition-colors duration-200"
-            >
-              <RefreshCw size={16} className={loadingState.isLoading ? 'animate-spin' : ''} />
-              <span>Refresh All Data</span>
-            </button>
+            <div className="flex items-center space-x-2 w-full sm:w-auto">
+              <button
+                onClick={loadAllWorldBankData}
+                disabled={loadingState.isLoading}
+                className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-3 sm:px-4 py-2 rounded-lg transition-colors duration-200"
+              >
+                <RefreshCw size={16} className={loadingState.isLoading ? 'animate-spin' : ''} />
+                <span className="text-sm">Refresh</span>
+              </button>
+            </div>
           </div>
 
           {/* Ultra-fast loading indicator */}
@@ -508,7 +745,7 @@ export default function Top10Page() {
                 <div className="flex items-center space-x-3">
                   <Zap className="text-blue-500 animate-pulse" size={20} />
                   <span className="font-semibold text-blue-700 dark:text-blue-300">
-                    Ultra-Fast Bulk Loading: {loadingState.loadedMetrics}/{loadingState.totalMetrics} metrics
+                    Loading data: {loadingState.loadedMetrics}/{loadingState.totalMetrics} metrics
                   </span>
                 </div>
                 <span className="text-sm text-blue-600 dark:text-blue-400">
@@ -537,114 +774,140 @@ export default function Top10Page() {
                 <span className="font-semibold text-green-700 dark:text-green-300">
                   ✅ All data loaded! {worldBankMetrics.length - loadingState.failed.length}/{worldBankMetrics.length} metrics available
                 </span>
-                <span className="text-sm bg-green-100 dark:bg-green-800 text-green-700 dark:text-green-300 px-2 py-1 rounded-full">
-                  Instant switching enabled ⚡
-                </span>
+
               </div>
             </div>
           )}
         </div>
-      </div>
+      </header>
 
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Sidebar - Metric Selection */}
           <div className="lg:col-span-1">
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 sticky top-8">
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
-                <Filter className="mr-2" size={20} />
-                Select Metric ({worldBankMetrics.length} available)
-              </h2>
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6 sticky top-8">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white flex items-center">
+                  <Filter className="mr-2" size={20} />
+                  <span className="hidden sm:inline">Select Metric ({worldBankMetrics.length} available)</span>
+                  <span className="sm:hidden">Metrics ({worldBankMetrics.length})</span>
+                </h2>
+                <button
+                  onClick={() => setShowMetricDropdown(!showMetricDropdown)}
+                  className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-transform duration-200"
+                  style={{ transform: showMetricDropdown ? 'rotate(180deg)' : 'rotate(0deg)' }}
+                >
+                  ▼
+                </button>
+              </div>
               
-              {/* Search */}
-              <div className="mb-4">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
-                  <input
-                    type="text"
-                    placeholder="Search metrics..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                  />
+              {/* Current Selection Display */}
+              <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-sm font-medium text-blue-700 dark:text-blue-300">Current:</span>
+                    <span className="text-sm text-blue-800 dark:text-blue-200">{selectedMetric.title}</span>
+                  </div>
+                  <span className="text-xs text-blue-600 dark:text-blue-400">{selectedMetric.category}</span>
                 </div>
               </div>
 
-              {/* Category Filter */}
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Category
-                </label>
-                <select
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                >
-                  {categories.map(category => (
-                    <option key={category} value={category}>{category}</option>
-                  ))}
-                </select>
-              </div>
+              {/* Collapsible Metric Selection */}
+              <div className={`transition-all duration-300 overflow-hidden ${showMetricDropdown ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'}`}>
+                {/* Search */}
+                <div className="mb-4">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
+                    <input
+                      type="text"
+                      placeholder="Search metrics..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                    />
+                  </div>
+                </div>
 
-              {/* Metric List */}
-              <div className="space-y-2 max-h-96 overflow-y-auto">
-                {filteredMetrics.map(metric => {
-                  const hasData = bulkCache[metric.id] && bulkCache[metric.id].length > 0;
-                  const isLoaded = !loadingState.isLoading;
-                  const isFailed = loadingState.failed.includes(metric.id);
-                  
-                  return (
-                    <button
-                      key={metric.id}
-                      onClick={() => {
-                        console.log(`Switching to metric: ${metric.title} (${metric.id})`);
-                        setSelectedMetric(metric);
-                        // Reset show top performers to ensure consistent behavior
-                        setShowTopPerformers(true);
-                      }}
-                      disabled={!isLoaded}
-                      className={`w-full text-left p-3 rounded-lg transition-all duration-200 ${
-                        selectedMetric.id === metric.id
-                          ? 'bg-blue-100 dark:bg-blue-900 border-2 border-blue-500 text-blue-700 dark:text-blue-300'
-                          : isLoaded
-                          ? 'bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 border-2 border-transparent text-gray-700 dark:text-gray-300'
-                          : 'bg-gray-100 dark:bg-gray-800 border-2 border-transparent text-gray-400 dark:text-gray-500 cursor-not-allowed'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="font-medium">{metric.title}</div>
-                        <div className="flex items-center space-x-1">
-                          <span className="text-lg">🏦</span>
+                {/* Category Filter */}
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Category
+                  </label>
+                  <select
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  >
+                    {categories.map(category => (
+                      <option key={category} value={category}>{category}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Metric List */}
+                <div className="space-y-2 max-h-96 overflow-y-auto">
+                  {filteredMetrics.map(metric => {
+                    const hasData = bulkCache[metric.id] && bulkCache[metric.id].length > 0;
+                    const isLoaded = !loadingState.isLoading;
+                    const isFailed = loadingState.failed.includes(metric.id);
+                    
+                    return (
+                      <button
+                        key={metric.id}
+                        onClick={() => {
+                          console.log(`Switching to metric: ${metric.title} (${metric.id})`);
+                          setSelectedMetric(metric);
+                          // Reset show top performers to ensure consistent behavior
+                          setShowHighest(true);
+                          // Auto-collapse dropdown after selection on mobile
+                          if (window.innerWidth < 1024) {
+                            setShowMetricDropdown(false);
+                          }
+                        }}
+                        disabled={!isLoaded}
+                        className={`w-full text-left p-2 sm:p-3 rounded-lg transition-all duration-200 ${
+                          selectedMetric.id === metric.id
+                            ? 'bg-blue-100 dark:bg-blue-900 border-2 border-blue-500 text-blue-700 dark:text-blue-300'
+                            : isLoaded
+                            ? 'bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 border-2 border-transparent text-gray-700 dark:text-gray-300'
+                            : 'bg-gray-100 dark:bg-gray-800 border-2 border-transparent text-gray-400 dark:text-gray-500 cursor-not-allowed'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="font-medium text-sm sm:text-base truncate pr-2">{metric.title}</div>
+                          <div className="flex items-center space-x-1 flex-shrink-0">
+                            <span className="text-base sm:text-lg">🏦</span>
+                            {isLoaded && hasData && (
+                              <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                            )}
+                            {isLoaded && isFailed && (
+                              <span className="w-2 h-2 bg-red-500 rounded-full"></span>
+                            )}
+                            {!isLoaded && (
+                              <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                            )}
+                          </div>
+                        </div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                          {metric.category} • {metric.unit}
                           {isLoaded && hasData && (
-                            <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                            <span className="ml-2 text-green-600 dark:text-green-400">✓ Loaded</span>
                           )}
                           {isLoaded && isFailed && (
-                            <span className="w-2 h-2 bg-red-500 rounded-full"></span>
-                          )}
-                          {!isLoaded && (
-                            <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                            <span className="ml-2 text-red-600 dark:text-red-400">✗ Failed</span>
                           )}
                         </div>
-                      </div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                        {metric.category} • {metric.unit}
-                        {isLoaded && hasData && (
-                          <span className="ml-2 text-green-600 dark:text-green-400">✓ Loaded</span>
-                        )}
-                        {isLoaded && isFailed && (
-                          <span className="ml-2 text-red-600 dark:text-red-400">✗ Failed</span>
-                        )}
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-              
-              {filteredMetrics.length === 0 && (
-                <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                  No metrics found matching your search.
+                      </button>
+                    );
+                  })}
                 </div>
-              )}
+                
+                {filteredMetrics.length === 0 && (
+                  <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                    No metrics found matching your search.
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
@@ -652,14 +915,14 @@ export default function Top10Page() {
           <div className="lg:col-span-3">
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
               {/* Header */}
-              <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h2 className="text-2xl font-bold mb-2">
-                      {titlePrefix} Countries: {selectedMetric.title}
+              <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  <div className="flex-1">
+                    <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2">
+                      {showHighest ? 'Top 10 Highest' : 'Top 10 Lowest'}: {selectedMetric.title}
                     </h2>
-                    <p className="text-blue-100 mb-4">{selectedMetric.description}</p>
-                    <div className="flex items-center space-x-4">
+                    <p className="text-blue-100 mb-4 text-sm sm:text-base">{selectedMetric.description}</p>
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
                       <div className="flex items-center space-x-2">
                         <Globe size={16} />
                         <span className="text-sm">🏦 World Bank</span>
@@ -667,22 +930,16 @@ export default function Top10Page() {
                       <div className="flex items-center space-x-2">
                         <span className="text-sm">{countries.length} countries analyzed</span>
                       </div>
-                      {!loadingState.isLoading && (
-                        <div className="flex items-center space-x-1 bg-green-500/20 px-2 py-1 rounded-full">
-                          <Zap size={12} />
-                          <span className="text-xs">Instant</span>
-                        </div>
-                      )}
                     </div>
                   </div>
-                  <div className="flex flex-col space-y-2">
+                  <div className="flex flex-col space-y-2 w-full sm:w-auto">
                     <button
-                      onClick={() => setShowTopPerformers(!showTopPerformers)}
-                      className="flex items-center space-x-2 bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition-colors duration-200"
+                      onClick={() => setShowHighest(!showHighest)}
+                      className="flex items-center justify-center space-x-2 bg-white/20 hover:bg-white/30 px-3 sm:px-4 py-2 rounded-lg transition-colors duration-200"
                     >
-                      {showTopPerformers ? <TrendingUp size={16} /> : <TrendingDown size={16} />}
+                      {showHighest ? <TrendingDown size={16} /> : <TrendingUp size={16} />}
                       <span className="text-sm">
-                        {showTopPerformers ? 'Show Lowest' : 'Show Highest'}
+                        {showHighest ? 'Show Lowest 10' : 'Show Highest 10'}
                       </span>
                     </button>
                   </div>
@@ -690,99 +947,75 @@ export default function Top10Page() {
               </div>
 
               {/* Rankings List */}
-              <div className="p-6">
+              <div className="p-4 sm:p-6">
                 {loadingState.isLoading ? (
                   <div className="flex flex-col items-center justify-center py-12 space-y-4">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
                     <div className="text-center">
-                      <div className="text-gray-600 dark:text-gray-400 mb-2">
+                      <div className="text-gray-600 dark:text-gray-400 mb-2 text-sm sm:text-base">
                         Loading all World Bank metrics in parallel...
                       </div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
-                        ⚡ Ultra-fast bulk loading: {loadingState.loadedMetrics}/{loadingState.totalMetrics} complete
+                      <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                        Bulk loading: {loadingState.loadedMetrics}/{loadingState.totalMetrics} complete
                       </div>
                     </div>
                   </div>
                 ) : currentRankings.length === 0 ? (
                   <div className="text-center py-12">
-                    <div className="text-gray-500 dark:text-gray-400 mb-2">
+                    <div className="text-gray-500 dark:text-gray-400 mb-2 text-sm sm:text-base">
                       No data available for this metric
                     </div>
-                    <div className="text-sm text-gray-400 dark:text-gray-500">
+                    <div className="text-xs sm:text-sm text-gray-400 dark:text-gray-500">
                       This metric may not have sufficient data in the World Bank database
                     </div>
                   </div>
                 ) : (
-                  <div className="space-y-4" key={`${selectedMetric.id}-${showTopPerformers}`}>
-                    {displayedRankings.map((country, index) => {
-                      const rank = showTopPerformers ? index + 1 : 10 - index;
-                      return (
-                        <div
-                          key={`${selectedMetric.id}-${country.code}-${index}`}
-                          className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200"
-                        >
-                          <div className="flex items-center space-x-4">
-                            <div className="flex items-center justify-center w-12 h-12">
-                              {getRankIcon(rank)}
-                            </div>
-                            <div className="flex items-center space-x-3">
-                              <span className="text-2xl">{country.flag}</span>
-                              <div>
-                                <h3 className="font-semibold text-gray-900 dark:text-white">
-                                  {country.name}
-                                </h3>
-                                <p className="text-sm text-gray-500 dark:text-gray-400">
-                                  {country.code} • {country.source}
+                  <div className="relative box-content py-2">
+                    <div className="space-y-2 sm:space-y-3" key={`${selectedMetric.id}-${showHighest}`}>
+                      {currentRankings.map((country, index) => {
+                        return (
+                          <div
+                            key={country.code}
+                            className="p-3 sm:p-4 rounded-lg bg-gray-800/50 hover:bg-gray-700/60 border border-transparent hover:border-indigo-500/50 transition-all duration-200"
+                          >
+                            <div className="flex items-center gap-2 sm:gap-4">
+                              <div className="flex-none w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center text-base sm:text-lg font-bold">
+                                {getRankIcon(index + 1)}
+                              </div>
+                              <div className="flex-shrink-0">
+                                <img
+                                  className="h-6 w-8 sm:h-8 sm:w-12 rounded-sm object-cover"
+                                  src={`https://flagcdn.com/w160/${country.code.toLowerCase()}.png`}
+                                  alt={`${country.name} flag`}
+                                />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm sm:text-base font-semibold text-white truncate">{country.name}</p>
+                                <p className="text-xs sm:text-sm text-gray-400 hidden sm:block">
+                                  Source: {country.source} ({country.year})
+                                </p>
+                                <p className="text-xs text-gray-400 sm:hidden">
+                                  {country.year}
+                                </p>
+                              </div>
+                              <div className="flex-shrink-0 text-right">
+                                <p className="text-sm sm:text-base font-bold text-white">
+                                  {formatValue(country.value, selectedMetric.unit)}
                                 </p>
                               </div>
                             </div>
                           </div>
-                          <div className="text-right">
-                            <div className="text-xl font-bold text-gray-900 dark:text-white">
-                              {formatValue(country.value, selectedMetric.unit)}
-                            </div>
-                            <div className="text-sm text-gray-500 dark:text-gray-400">
-                              {country.year}
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
                   </div>
                 )}
               </div>
-            </div>
 
-            {/* Metric Info */}
-            <div className="mt-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                About {selectedMetric.title}
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
-                <div>
-                  <span className="font-medium text-gray-700 dark:text-gray-300">Category:</span>
-                  <span className="ml-2 text-gray-600 dark:text-gray-400">{selectedMetric.category}</span>
-                </div>
-                <div>
-                  <span className="font-medium text-gray-700 dark:text-gray-300">Unit:</span>
-                  <span className="ml-2 text-gray-600 dark:text-gray-400">{selectedMetric.unit}</span>
-                </div>
-                <div>
-                  <span className="font-medium text-gray-700 dark:text-gray-300">Performance:</span>
-                  <span className="ml-2 text-gray-600 dark:text-gray-400">
-                    {selectedMetric.higherIsBetter ? 'Higher is better' : 'Lower is better'}
-                  </span>
-                </div>
-                <div>
-                  <span className="font-medium text-gray-700 dark:text-gray-300">Data Source:</span>
-                  <span className="ml-2 text-gray-600 dark:text-gray-400">
-                    🏦 World Bank
-                  </span>
-                </div>
+              {/* Footer */}
+              <div className="text-xs text-gray-500 mt-4 text-center px-4 sm:px-6 pb-4">
+                {currentRankings.length > 0 && <p>Latest data from {currentRankings[0].year} via {currentRankings[0].source}. All values are for the most recent year available per country.</p>}
               </div>
-              <p className="mt-3 text-gray-600 dark:text-gray-400">
-                {selectedMetric.description}
-              </p>
             </div>
           </div>
         </div>

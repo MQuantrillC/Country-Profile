@@ -105,18 +105,24 @@ export async function GET(request) {
       }, { status: 500 });
     }
 
-    // Debug for GDP metric
-    if (metric === 'gdp') {
-      console.log('🔍 World Bank API Response for GDP (first 15 entries):');
+    // Debug for problematic metrics
+    if (metric === 'gdp' || metric === 'population') {
+      console.log(`🔍 Processing ${metric} data - ${response.data[1]?.length || 0} total entries from World Bank API`);
+      
       if (response.data[1] && Array.isArray(response.data[1])) {
-        const topEntries = response.data[1]
-          .filter(entry => entry.value !== null && entry.value > 100000000000) // > $100B
-          .sort((a, b) => b.value - a.value)
-          .slice(0, 15);
-        
-        topEntries.forEach((entry, index) => {
-          const gdpTrillions = (entry.value / 1000000000000).toFixed(2);
-          console.log(`${index + 1}. ${entry.country?.value} (${entry.country?.id}): $${gdpTrillions}T`);
+        // Debug Pakistan entries to verify filtering is working
+        const pakistanEntries = response.data[1].filter(entry => 
+          entry.country?.id === 'PAK' || entry.country?.value?.includes('Pakistan')
+        );
+        console.log(`🔍 Found ${pakistanEntries.length} Pakistan-related entries (will filter out aggregates):`);
+        pakistanEntries.forEach((entry) => {
+          const unit = metric === 'gdp' ? '$' : '';
+          const suffix = metric === 'gdp' ? 'B' : 'M';
+          const displayValue = metric === 'gdp' ? 
+            (entry.value / 1e9).toFixed(1) : 
+            (entry.value / 1e6).toFixed(1);
+          const isAggregate = entry.country.value.includes('Middle East') || entry.country.id.length > 3;
+          console.log(`  ${isAggregate ? '🚫 FILTERED' : '✅ KEPT'} ${entry.country.value} (${entry.country.id}): ${unit}${displayValue}${suffix}`);
         });
       }
     }
@@ -164,6 +170,33 @@ export async function GET(request) {
       
       dataArray.forEach(entry => {
         if (entry.value !== null && entry.value !== undefined && entry.country?.id) {
+          // Filter out World Bank regional aggregates at the API level too
+          const isRegionalAggregate = entry.country?.value && (
+            entry.country.value.includes('income') ||
+            entry.country.value.includes('IDA & IBRD') ||
+            entry.country.value.includes('OECD') ||
+            entry.country.value.includes('World') ||
+            entry.country.value.includes('demographic dividend') ||
+            entry.country.value.includes('Arab World') ||
+            entry.country.value.includes('Sub-Saharan Africa') ||
+            entry.country.value.includes('Latin America') ||
+            entry.country.value.includes('South Asia') ||
+            entry.country.value.includes('East Asia') ||
+            entry.country.value.includes('Europe & Central Asia') ||
+            entry.country.value.includes('Middle East, North Africa') ||
+            entry.country.value.includes('Caribbean') ||
+            entry.country.value.includes('Pacific') ||
+            entry.country.value.includes('excluding') ||
+            entry.country.value.includes('total') ||
+            entry.country.value.includes(', ') && entry.country.value.includes(' & ') ||
+            entry.country.id.length > 3
+          );
+          
+          if (isRegionalAggregate) {
+            // Skip regional aggregates
+            return;
+          }
+          
           const countryCode = entry.country.id;
           const existingEntry = countryDataMap.get(countryCode);
           

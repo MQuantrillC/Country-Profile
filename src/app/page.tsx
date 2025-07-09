@@ -679,6 +679,25 @@ const MetricTable = ({ title, countries, getValue, getSource, formatValue, loadi
   );
 };
 
+const CollapsibleInfoSection = ({ title, children, isExpanded, onToggle, titleClassName }: { title: React.ReactNode, children: React.ReactNode, isExpanded: boolean, onToggle: () => void, titleClassName?: string }) => {
+  return (
+    <div>
+      <button
+        onClick={onToggle}
+        className="w-full text-left sm:pointer-events-none"
+      >
+        <h4 className={`text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-4 border-b border-gray-200 dark:border-gray-600 pb-2 flex justify-between items-center ${titleClassName}`}>
+          <span>{title}</span>
+          <span className="sm:hidden transform transition-transform duration-200">{isExpanded ? '▲' : '▼'}</span>
+        </h4>
+      </button>
+      <div className={`sm:block ${isExpanded ? 'block' : 'hidden'}`}>
+        {children}
+      </div>
+    </div>
+  );
+};
+
 export default function HomePage() {
   const [selectedCountries, setSelectedCountries] = useState<Country[]>([countries[0]]);
   const [countryStats, setCountryStats] = useState<Record<string, CountryStats>>({});
@@ -694,6 +713,16 @@ export default function HomePage() {
   const [activeSection, setActiveSection] = useState('overview');
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
+  const [infoSectionsExpanded, setInfoSectionsExpanded] = useState<Record<string, boolean>>({
+    basic: true,
+    demographics: true,
+    geography: true,
+    government: true,
+    languages: true,
+    economy: true,
+    sources: true,
+  });
+  const [isMobileNavOpen, setMobileNavOpen] = useState(false);
 
   // Define metrics for each section
   const sectionMetrics = {
@@ -1211,6 +1240,23 @@ export default function HomePage() {
     setActiveTooltip(activeTooltip === tooltipId ? null : tooltipId);
   };
 
+  const toggleInfoSection = (section: string) => {
+    setInfoSectionsExpanded(prev => ({ ...prev, [section]: !prev[section] }));
+  };
+
+  useEffect(() => {
+    const isMobile = window.innerWidth < 640;
+    setInfoSectionsExpanded({
+      basic: !isMobile,
+      demographics: !isMobile,
+      geography: !isMobile,
+      government: !isMobile,
+      languages: !isMobile,
+      economy: !isMobile,
+      sources: !isMobile,
+    });
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Header */}
@@ -1409,7 +1455,7 @@ export default function HomePage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
                   <MapPin className="text-blue-500" size={24} />
-                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                  <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white">
                     Country Information
                   </h2>
                 </div>
@@ -1547,10 +1593,7 @@ export default function HomePage() {
                       </div>
                       
                       {/* Basic Information */}
-                      <div>
-                        <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 border-b border-gray-200 dark:border-gray-600 pb-2">
-                          Basic Information
-                        </h4>
+                      <CollapsibleInfoSection title="Basic Information" isExpanded={infoSectionsExpanded.basic} onToggle={() => toggleInfoSection('basic')}>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                           <div className="space-y-2">
                             <h5 className="font-semibold text-gray-900 dark:text-white flex items-center text-sm sm:text-base">
@@ -1654,14 +1697,11 @@ export default function HomePage() {
                             </p>
                           </div>
                         </div>
-                      </div>
+                      </CollapsibleInfoSection>
 
                       {/* Demographics */}
                       {(factbook?.malePopulation || factbook?.femalePopulation || factbook?.ethnicGroups || factbook?.religions) && (
-                        <div>
-                          <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 border-b border-gray-200 dark:border-gray-600 pb-2">
-                            Demographics
-                          </h4>
+                        <CollapsibleInfoSection title="Demographics" isExpanded={infoSectionsExpanded.demographics} onToggle={() => toggleInfoSection('demographics')}>
                           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {factbook?.malePopulation && (
                               <div className="space-y-2">
@@ -1698,15 +1738,12 @@ export default function HomePage() {
                               </div>
                             )}
                           </div>
-                        </div>
+                        </CollapsibleInfoSection>
                       )}
 
                       {/* Geography & Climate */}
                       {(factbook?.location || factbook?.climate || factbook?.naturalResources) && (
-                        <div>
-                          <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 border-b border-gray-200 dark:border-gray-600 pb-2">
-                            Geography & Climate
-                          </h4>
+                        <CollapsibleInfoSection title="Geography & Climate" isExpanded={infoSectionsExpanded.geography} onToggle={() => toggleInfoSection('geography')}>
                           <div className="space-y-4">
                             {factbook?.location && (
                               <div className="space-y-2">
@@ -1729,15 +1766,12 @@ export default function HomePage() {
                               </div>
                             )}
                           </div>
-                        </div>
+                        </CollapsibleInfoSection>
                       )}
 
                       {/* Government & Politics */}
                       {(factbook?.etymology || factbook?.suffrage || stats?.enhancedInfo?.politicalRegimeData) && (
-                        <div>
-                          <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 border-b border-gray-200 dark:border-gray-600 pb-2">
-                            Government & Politics
-                          </h4>
+                        <CollapsibleInfoSection title="Government & Politics" isExpanded={infoSectionsExpanded.government} onToggle={() => toggleInfoSection('government')}>
                           <div className="space-y-4">
                             {stats?.enhancedInfo?.politicalRegimeData && (
                               <div className="space-y-2">
@@ -1771,15 +1805,12 @@ export default function HomePage() {
                               </div>
                             )}
                           </div>
-                        </div>
+                        </CollapsibleInfoSection>
                       )}
 
                       {/* Languages & Timezones */}
                       {(restData?.languages || restData?.timezones) && (
-                        <div>
-                          <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 border-b border-gray-200 dark:border-gray-600 pb-2">
-                            Languages & Timezones
-                          </h4>
+                        <CollapsibleInfoSection title="Languages & Timezones" isExpanded={infoSectionsExpanded.languages} onToggle={() => toggleInfoSection('languages')}>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {restData?.languages && (
                               <div className="space-y-2">
@@ -1799,15 +1830,12 @@ export default function HomePage() {
                               </div>
                             )}
                           </div>
-                        </div>
+                        </CollapsibleInfoSection>
                       )}
 
                       {/* Economic Information */}
                       {(factbook?.industries || factbook?.agriculturalProducts || stats?.enhancedInfo?.incomeGroupData) && (
-                        <div>
-                          <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 border-b border-gray-200 dark:border-gray-600 pb-2">
-                            Economic Information
-                          </h4>
+                        <CollapsibleInfoSection title="Economic Information" isExpanded={infoSectionsExpanded.economy} onToggle={() => toggleInfoSection('economy')}>
                           <div className="space-y-4">
                             {stats?.enhancedInfo?.incomeGroupData && (
                               <div className="space-y-2">
@@ -1835,82 +1863,90 @@ export default function HomePage() {
                               </div>
                             )}
                           </div>
-                        </div>
+                        </CollapsibleInfoSection>
                       )}
 
                       {/* Sources Section */}
                       <div className="border-t border-gray-200 dark:border-gray-600 pt-6">
-                        <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
-                          <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center mr-2">
-                            <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 4a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1V8zm8 0a1 1 0 011-1h4a1 1 0 011 1v2a1 1 0 01-1 1h-4a1 1 0 01-1-1V8zm0 4a1 1 0 011-1h4a1 1 0 011 1v2a1 1 0 01-1 1h-4a1 1 0 01-1-1v-2z" clipRule="evenodd" />
-                            </svg>
+                        <CollapsibleInfoSection 
+                          title={
+                            <span className="flex items-center">
+                              <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center mr-2">
+                                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 4a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1V8zm8 0a1 1 0 011-1h4a1 1 0 011 1v2a1 1 0 01-1 1h-4a1 1 0 01-1-1V8zm0 4a1 1 0 011-1h4a1 1 0 011 1v2a1 1 0 01-1 1h-4a1 1 0 01-1-1v-2z" clipRule="evenodd" />
+                                </svg>
+                              </div>
+                              Data Sources
+                            </span>
+                          } 
+                          isExpanded={infoSectionsExpanded.sources} 
+                          onToggle={() => toggleInfoSection('sources')}
+                          titleClassName="border-none"
+                        >
+                          <div className="bg-gray-50 dark:bg-gray-700/30 rounded-lg p-4">
+                            <div className="space-y-3">
+                              {/* Rest Countries API */}
+                              {restData && (
+                                <div className="flex items-start space-x-3">
+                                  <div className="w-2 h-2 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
+                                  <div>
+                                    <p className="text-sm text-gray-700 dark:text-gray-300">
+                                      <span className="font-medium">REST Countries API</span>
+                                    </p>
+                                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                      Open-source API providing country information including capitals, currencies, languages, and geographic data
+                                    </p>
+                                  </div>
+                                </div>
+                              )}
+                              
+                              {/* CIA World Factbook Source */}
+                              {factbook && (
+                                <div className="flex items-start space-x-3">
+                                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                                  <div>
+                                    <p className="text-sm text-gray-700 dark:text-gray-300">
+                                      <span className="font-medium">{factbook.source}</span> ({factbook.year})
+                                    </p>
+                                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                      CIA World Factbook - Comprehensive country demographic and geographic data
+                                    </p>
+                                  </div>
+                                </div>
+                              )}
+                              
+                              {/* Political Regime Source */}
+                              {stats?.enhancedInfo?.politicalRegimeData && (
+                                <div className="flex items-start space-x-3">
+                                  <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                                  <div>
+                                    <p className="text-sm text-gray-700 dark:text-gray-300">
+                                      <span className="font-medium">{stats.enhancedInfo.politicalRegimeData.source}</span> ({stats.enhancedInfo.politicalRegimeData.year})
+                                    </p>
+                                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                      {stats.enhancedInfo.politicalRegimeData.sourceOrganization} - Democratic institutions and governance classification
+                                    </p>
+                                  </div>
+                                </div>
+                              )}
+                              
+                              {/* World Bank Income Group Source */}
+                              {stats?.enhancedInfo?.incomeGroupData && (
+                                <div className="flex items-start space-x-3">
+                                  <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2 flex-shrink-0"></div>
+                                  <div>
+                                    <p className="text-sm text-gray-700 dark:text-gray-300">
+                                      <span className="font-medium">{stats.enhancedInfo.incomeGroupData.source}</span> ({stats.enhancedInfo.incomeGroupData.year})
+                                    </p>
+                                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                      {stats.enhancedInfo.incomeGroupData.sourceOrganization} - Country income classification based on GNI per capita
+                                    </p>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
                           </div>
-                          Data Sources
-                        </h4>
-                        <div className="bg-gray-50 dark:bg-gray-700/30 rounded-lg p-4">
-                          <div className="space-y-3">
-                            {/* Rest Countries API */}
-                            {restData && (
-                              <div className="flex items-start space-x-3">
-                                <div className="w-2 h-2 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                                <div>
-                                  <p className="text-sm text-gray-700 dark:text-gray-300">
-                                    <span className="font-medium">REST Countries API</span>
-                                  </p>
-                                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                                    Open-source API providing country information including capitals, currencies, languages, and geographic data
-                                  </p>
-                                </div>
-                              </div>
-                            )}
-                            
-                            {/* CIA World Factbook Source */}
-                            {factbook && (
-                              <div className="flex items-start space-x-3">
-                                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                                <div>
-                                  <p className="text-sm text-gray-700 dark:text-gray-300">
-                                    <span className="font-medium">{factbook.source}</span> ({factbook.year})
-                                  </p>
-                                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                                    CIA World Factbook - Comprehensive country demographic and geographic data
-                                  </p>
-                                </div>
-                              </div>
-                            )}
-                            
-                            {/* Political Regime Source */}
-                            {stats?.enhancedInfo?.politicalRegimeData && (
-                              <div className="flex items-start space-x-3">
-                                <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                                <div>
-                                  <p className="text-sm text-gray-700 dark:text-gray-300">
-                                    <span className="font-medium">{stats.enhancedInfo.politicalRegimeData.source}</span> ({stats.enhancedInfo.politicalRegimeData.year})
-                                  </p>
-                                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                                    {stats.enhancedInfo.politicalRegimeData.sourceOrganization} - Democratic institutions and governance classification
-                                  </p>
-                                </div>
-                              </div>
-                            )}
-                            
-                            {/* World Bank Income Group Source */}
-                            {stats?.enhancedInfo?.incomeGroupData && (
-                              <div className="flex items-start space-x-3">
-                                <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2 flex-shrink-0"></div>
-                                <div>
-                                  <p className="text-sm text-gray-700 dark:text-gray-300">
-                                    <span className="font-medium">{stats.enhancedInfo.incomeGroupData.source}</span> ({stats.enhancedInfo.incomeGroupData.year})
-                                  </p>
-                                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                                    {stats.enhancedInfo.incomeGroupData.sourceOrganization} - Country income classification based on GNI per capita
-                                  </p>
-                                </div>
-                              </div>
-                            )}
-                          </div>
-                        </div>
+                        </CollapsibleInfoSection>
                       </div>
                     </div>
                   );

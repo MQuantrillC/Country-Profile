@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { BarChart3, ChevronDown, ChevronUp, ArrowRight, Info, TrendingUp, Users, Package, AlertTriangle, Thermometer, Globe, Sun, Moon, ArrowUp, HelpCircle, Trophy, Medal, Award, TrendingDown, ArrowLeft, RefreshCw, Zap, Database, Filter, Search } from 'lucide-react';
-import { countries, Country } from '@/utils/countries';
+import { BarChart3, TrendingUp, Globe, Trophy, Medal, Award, TrendingDown, ArrowLeft, RefreshCw, Zap, Database, Filter, Search } from 'lucide-react';
+import { countries } from '@/utils/countries';
 
 interface CountryRanking {
   name: string;

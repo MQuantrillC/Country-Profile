@@ -1,23 +1,10 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { 
-  Trophy, 
-  Medal, 
-  Award,
-  TrendingUp,
-  TrendingDown,
-  ArrowLeft,
-  Filter,
-  Search,
-  BarChart3,
-  Globe,
-  RefreshCw,
-  Zap,
-  Database
-} from 'lucide-react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
-import { countries } from '../../utils/countries';
+import Image from 'next/image';
+import { BarChart3, ChevronDown, ChevronUp, ArrowRight, Info, TrendingUp, Users, Package, AlertTriangle, Thermometer, Globe, Sun, Moon, ArrowUp, HelpCircle, Trophy, Medal, Award, TrendingDown, ArrowLeft, RefreshCw, Zap, Database, Filter, Search } from 'lucide-react';
+import { countries, Country } from '@/utils/countries';
 
 interface CountryRanking {
   name: string;
@@ -989,10 +976,12 @@ export default function Top10Page() {
                                 {getRankIcon(index + 1)}
                               </div>
                               <div className="flex-shrink-0">
-                                <img
-                                  className="h-6 w-8 sm:h-8 sm:w-12 rounded-sm object-cover"
+                                <Image
                                   src={`https://flagcdn.com/w160/${country.code.toLowerCase()}.png`}
                                   alt={`${country.name} flag`}
+                                  width={64}
+                                  height={40}
+                                  className="h-6 w-8 sm:h-8 sm:w-12 rounded-sm object-cover"
                                 />
                               </div>
                               <div className="flex-1 min-w-0">

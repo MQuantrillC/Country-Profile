@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { 
   BarChart3, 
   DollarSign, 
@@ -336,9 +337,11 @@ const CountryDropdown = ({ selectedCountries, onSelect, countries }: CountryDrop
         <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4">
           {selectedCountries.map((country) => (
             <div key={country.code} className="flex items-center bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg">
-              <img 
+              <Image 
                 src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
                 alt={`${country.name} flag`}
+                width={20}
+                height={15}
                 className="w-4 h-auto sm:w-5 mr-1.5 sm:mr-2"
               />
               <span className="text-xs sm:text-sm font-medium">{country.name}</span>
@@ -401,9 +404,11 @@ const CountryDropdown = ({ selectedCountries, onSelect, countries }: CountryDrop
               
               return (
                 <button key={country.code} onClick={() => !isDisabled && handleCountryToggle(country)} disabled={isDisabled} className={`w-full flex items-center px-3 sm:px-4 py-2.5 sm:py-3 text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 ${isSelected ? 'bg-blue-50 dark:bg-blue-900/30' : ''} ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}>
-                  <img 
+                  <Image 
                     src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
                     alt={`${country.name} flag`}
+                    width={20}
+                    height={15}
                     className="w-4 h-auto sm:w-5 mr-2 sm:mr-3"
                   />
                   <span className="text-xs sm:text-sm text-gray-900 dark:text-white">{country.name}</span>
@@ -606,9 +611,11 @@ const MetricTable = ({ title, countries, getValue, getSource, formatValue, loadi
                 >
                   <td className="px-3 sm:px-4 py-3 sm:py-4">
                     <div className="flex items-center space-x-2 sm:space-x-3">
-                      <img 
+                      <Image 
                           src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
                           alt={`${country.name} flag`}
+                          width={20}
+                          height={15}
                           className="w-4 h-auto sm:w-5 mr-1 sm:mr-2"
                         />
                       <span className="text-xs sm:text-sm font-medium text-gray-900 dark:text-white whitespace-nowrap">
@@ -722,7 +729,6 @@ export default function HomePage() {
     economy: true,
     sources: true,
   });
-  const [isMobileNavOpen, setMobileNavOpen] = useState(false);
 
   // Define metrics for each section
   const sectionMetrics = {
@@ -1464,9 +1470,11 @@ export default function HomePage() {
                   <div className="hidden sm:flex space-x-2">
                     {selectedCountries.slice(0, 3).map((country) => (
                       <div key={country.code} className="flex items-center space-x-1">
-                        <img 
+                        <Image 
                           src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
                           alt={`${country.name} flag`}
+                          width={20}
+                          height={15}
                           className="w-5 h-auto mr-1"
                         />
                         <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -1484,10 +1492,12 @@ export default function HomePage() {
                   {/* Mobile view: Show flags only */}
                   <div className="sm:hidden flex space-x-1">
                     {selectedCountries.slice(0, 5).map((country) => (
-                      <img 
+                      <Image 
                         key={country.code}
                         src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
                         alt={`${country.name} flag`}
+                        width={16}
+                        height={12}
                         className="w-4 h-auto"
                       />
                     ))}
@@ -1542,9 +1552,11 @@ export default function HomePage() {
                           
                           {/* Country Info */}
                           <div className="flex items-center space-x-2 sm:space-x-3 flex-1 min-w-0">
-                            <img 
+                            <Image 
                               src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
                               alt={`${country.name} flag`}
+                              width={24}
+                              height={18}
                               className="w-5 h-auto sm:w-6"
                             />
                             <span className={`
@@ -1584,9 +1596,11 @@ export default function HomePage() {
                   return (
                     <div className="space-y-6">
                       <div className="flex items-center space-x-3 mb-6">
-                        <img 
+                        <Image 
                           src={`https://flagcdn.com/w40/${selectedCountry?.code.toLowerCase()}.png`}
                           alt={`${selectedCountry?.name} flag`}
+                          width={32}
+                          height={24}
                           className="w-8 h-auto"
                         />
                         <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{selectedCountry?.name}</h3>
@@ -3022,9 +3036,11 @@ export default function HomePage() {
                             
                             {/* Country Info */}
                             <div className="flex items-center space-x-3 flex-1 min-w-0">
-                              <img 
+                              <Image 
                                 src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
                                 alt={`${country.name} flag`}
+                                width={20}
+                                height={15}
                                 className="w-5 h-auto mr-3"
                               />
                               <span className={`

@@ -79,6 +79,13 @@ interface LoadingState {
   failed: string[];
 }
 
+interface WorldBankEntry {
+  countryId: string;
+  countryName?: string;
+  value?: number;
+  year?: string;
+}
+
 export default function Top10Page() {
   const [selectedMetric, setSelectedMetric] = useState<MetricDefinition>(worldBankMetrics[0]);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
@@ -92,7 +99,6 @@ export default function Top10Page() {
     failed: []
   });
   const [showHighest, setShowHighest] = useState(true);
-  const [showSidebar, setShowSidebar] = useState(true);
   const [showMetricDropdown, setShowMetricDropdown] = useState(true);
 
   const categories = ['All', ...Array.from(new Set(worldBankMetrics.map(m => m.category)))];
@@ -243,58 +249,58 @@ export default function Top10Page() {
           
           console.log(`🔍 Raw World Bank ${metric.title} data (top 20 by value):`);
           const topRawEntries = data.data
-            .filter((entry: any) => entry.value && entry.value > minValue)
-            .sort((a: any, b: any) => b.value - a.value)
+            .filter((entry: WorldBankEntry) => entry.value && entry.value > minValue)
+            .sort((a: WorldBankEntry, b: WorldBankEntry) => (b.value || 0) - (a.value || 0))
             .slice(0, 20);
           
-          topRawEntries.forEach((entry: any, index: number) => {
+          topRawEntries.forEach((entry: WorldBankEntry, index: number) => {
             if (metric.id === 'gdp') {
-              const gdpTrillions = (entry.value / 1000000000000).toFixed(2);
+              const gdpTrillions = ((entry.value || 0) / 1000000000000).toFixed(2);
               console.log(`  ${index + 1}. ${entry.countryName} (${entry.countryId}): $${gdpTrillions}T`);
             } else if (metric.id === 'population') {
-              const populationM = (entry.value / 1000000).toFixed(1);
+              const populationM = ((entry.value || 0) / 1000000).toFixed(1);
               console.log(`  ${index + 1}. ${entry.countryName} (${entry.countryId}): ${populationM}M`);
             } else {
-              console.log(`  ${index + 1}. ${entry.countryName} (${entry.countryId}): $${entry.value.toLocaleString()}`);
+              console.log(`  ${index + 1}. ${entry.countryName} (${entry.countryId}): $${(entry.value || 0).toLocaleString()}`);
             }
           });
           
           // Look for ALL Pakistan entries (not just first one)
-          const pakistanRawEntries = data.data.filter((entry: any) => 
+          const pakistanRawEntries = data.data.filter((entry: WorldBankEntry) => 
             entry.countryId === 'PAK' || entry.countryName?.includes('Pakistan')
           );
           console.log(`🔍 ALL Pakistan entries found (${pakistanRawEntries.length} total):`);
-          pakistanRawEntries.forEach((entry: any, index: number) => {
+          pakistanRawEntries.forEach((entry: WorldBankEntry, index: number) => {
             if (metric.id === 'gdp') {
-              console.log(`  ${index + 1}. ${entry.countryName} (${entry.countryId}): $${(entry.value / 1000000000).toFixed(1)}B (${entry.year})`);
+              console.log(`  ${index + 1}. ${entry.countryName} (${entry.countryId}): $${((entry.value || 0) / 1000000000).toFixed(1)}B (${entry.year})`);
             } else if (metric.id === 'population') {
-              const populationM = (entry.value / 1000000).toFixed(1);
+              const populationM = ((entry.value || 0) / 1000000).toFixed(1);
               console.log(`  ${index + 1}. ${entry.countryName} (${entry.countryId}): ${populationM}M (${entry.year})`);
             } else {
-              console.log(`  ${index + 1}. ${entry.countryName} (${entry.countryId}): $${entry.value.toLocaleString()} (${entry.year})`);
+              console.log(`  ${index + 1}. ${entry.countryName} (${entry.countryId}): $${(entry.value || 0).toLocaleString()} (${entry.year})`);
             }
           });
           
           // Look for China entries specifically
-          const chinaRawEntries = data.data.filter((entry: any) => 
+          const chinaRawEntries = data.data.filter((entry: WorldBankEntry) => 
             entry.countryId === 'CHN' || entry.countryId === 'HKG' || entry.countryId === 'MAC' ||
             entry.countryName?.includes('China')
           );
           console.log('🔍 Raw China entries:');
-          chinaRawEntries.forEach((entry: any) => {
+          chinaRawEntries.forEach((entry: WorldBankEntry) => {
             if (metric.id === 'gdp') {
-              const gdpTrillions = (entry.value / 1000000000000).toFixed(2);
+              const gdpTrillions = ((entry.value || 0) / 1000000000000).toFixed(2);
               console.log(`  - ${entry.countryName} (${entry.countryId}): $${gdpTrillions}T`);
             } else if (metric.id === 'population') {
-              const populationM = (entry.value / 1000000).toFixed(1);
+              const populationM = ((entry.value || 0) / 1000000).toFixed(1);
               console.log(`  - ${entry.countryName} (${entry.countryId}): ${populationM}M`);
             } else {
-              console.log(`  - ${entry.countryName} (${entry.countryId}): $${entry.value.toLocaleString()}`);
+              console.log(`  - ${entry.countryName} (${entry.countryId}): $${(entry.value || 0).toLocaleString()}`);
             }
           });
         }
         
-        data.data.forEach((entry: { countryId: string; countryName?: string; value?: number; year?: string }) => {
+        data.data.forEach((entry: WorldBankEntry) => {
           let matchingCountry = null;
           
           // Skip World Bank regional aggregates and groups - these contain country names but aren't actual countries

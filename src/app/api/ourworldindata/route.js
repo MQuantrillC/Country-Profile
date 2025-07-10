@@ -130,6 +130,9 @@ const OWID_COUNTRY_MAPPING = {
   'Albania': 'AL',
   'Mongolia': 'MN',
   'Suriname': 'SR',
+  'Armenia': 'AM',
+  'Azerbaijan': 'AZ',
+  'Georgia': 'GE',
   // Caribbean and Central America
   'Dominican Republic': 'DO',
   'Jamaica': 'JM',

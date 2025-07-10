@@ -43,7 +43,7 @@ const regionMapping = {
   'al': 'europe', 'bu': 'europe', 'ez': 'europe', 'hr': 'europe', 'hu': 'europe', 'ro': 'europe', 
   'lo': 'europe', 'si': 'europe', 'en': 'europe', 'lg': 'europe', 'lh': 'europe', 'mt': 'europe', 
   'cy': 'europe', 'lu': 'europe', 'ic': 'europe', 'mk': 'europe', 'mj': 'europe', 'ri': 'europe', 
-  'bk': 'europe', 'md': 'europe', 'bo': 'europe', 'am': 'central-asia', 'gg': 'central-asia', 'aj': 'central-asia',
+  'bk': 'europe', 'md': 'europe', 'bo': 'europe', 'am': 'middle-east', 'gg': 'central-asia', 'aj': 'central-asia',
   // Additional Middle East and Africa countries
   'ba': 'middle-east', 'qa': 'middle-east', 'ku': 'middle-east', 'mu': 'middle-east', 'ym': 'middle-east', 
   'sy': 'middle-east', 'ly': 'africa', 'ts': 'africa', 'ag': 'africa', 'su': 'africa', 

@@ -587,17 +587,17 @@ const MetricTable = ({ title, countries, getValue, getSource, formatValue, loadi
       </h3>
       <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[500px]">
+          <table className="w-full min-w-[320px] sm:min-w-[500px]">
             <thead>
               <tr className="border-b border-gray-200 dark:border-gray-600">
-                <th className="px-3 sm:px-4 py-3 text-left text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700">
+                <th className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 text-left text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700">
                   Country
                 </th>
-                <th className="px-3 sm:px-4 py-3 text-left text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700">
+                <th className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 text-left text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700">
                   Value
                 </th>
                 {showComparison && (
-                  <th className="px-3 sm:px-4 py-3 text-left text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700">
+                  <th className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 text-left text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700">
                     Comparison
                   </th>
                 )}
@@ -609,8 +609,8 @@ const MetricTable = ({ title, countries, getValue, getSource, formatValue, loadi
                   key={country.code} 
                   className="hover:bg-gray-50/50 dark:hover:bg-gray-700/30 transition-colors duration-150"
                 >
-                  <td className="px-3 sm:px-4 py-3 sm:py-4">
-                    <div className="flex items-center space-x-2 sm:space-x-3">
+                  <td className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4">
+                    <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-3">
                       <Image 
                           src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
                           alt={`${country.name} flag`}
@@ -623,7 +623,7 @@ const MetricTable = ({ title, countries, getValue, getSource, formatValue, loadi
                       </span>
                     </div>
                   </td>
-                  <td className="px-3 sm:px-4 py-3 sm:py-4">
+                  <td className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4">
                     <span className={`text-xs sm:text-sm font-medium ${
                       value !== null ? 'text-gray-900 dark:text-white' : 'text-gray-400 dark:text-gray-500'
                     }`}>
@@ -637,16 +637,16 @@ const MetricTable = ({ title, countries, getValue, getSource, formatValue, loadi
                     </span>
                   </td>
                   {showComparison && (
-                    <td className="px-3 sm:px-4 py-3 sm:py-4">
+                    <td className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4">
                       {value !== null && value > 0 && maxValue > 0 ? (
-                        <div className="flex items-center space-x-2 sm:space-x-3">
-                          <div className="flex-1 bg-gray-200 dark:bg-gray-600 rounded-full h-2 sm:h-3 max-w-[100px] sm:max-w-[140px]">
+                        <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-3">
+                          <div className="flex-1 bg-gray-200 dark:bg-gray-600 rounded-full h-2 sm:h-3 max-w-[60px] sm:max-w-[100px] md:max-w-[140px]">
                             <div 
                               className="bg-gradient-to-r from-blue-500 to-blue-600 h-2 sm:h-3 rounded-full transition-all duration-500 ease-out shadow-sm" 
                               style={{ width: `${Math.max(8, (value / maxValue) * 100)}%` }}
                             ></div>
                           </div>
-                          <span className="text-xs text-gray-500 dark:text-gray-400 font-medium min-w-[25px] sm:min-w-[35px] text-right">
+                          <span className="text-xs text-gray-500 dark:text-gray-400 font-medium min-w-[20px] sm:min-w-[25px] md:min-w-[35px] text-right">
                             {((value / maxValue) * 100).toFixed(0)}%
                           </span>
                         </div>
@@ -1461,7 +1461,7 @@ export default function HomePage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
                   <MapPin className="text-blue-500" size={24} />
-                  <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white">
+                  <h2 className="text-sm sm:text-lg md:text-xl font-semibold text-gray-900 dark:text-white">
                     Country Information
                   </h2>
                 </div>

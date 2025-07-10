@@ -375,6 +375,9 @@ const COUNTRY_CODE_MAPPING = {
   'MD': 'MDA',
   'BY': 'BLR',
   'UA': 'UKR',
+  'AM': 'ARM',
+  'AZ': 'AZE',
+  'GE': 'GEO',
   // Latin America
   'AR': 'ARG',
   'CL': 'CHL',

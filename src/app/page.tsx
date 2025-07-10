@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faGlobe, faMoneyBillWave, faUsers, faChartLine, faShieldAlt, faSun, faBook,
+  faGlobe, faMoneyBillWave, faUsers, faChartLine, faShieldAlt, faSun,
   faLandmark, faBalanceScale, faCar, faPlane, faShip, faRulerVertical,
   faTemperatureHigh, faSnowflake, faUserFriends, faArrowRight, faMale, faFemale,
   faBaby, faBookReader, faGraduationCap, faHandHoldingUsd, faChartPie, faPercentage,
@@ -1042,7 +1042,7 @@ const CompactSectionTable = ({
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100 dark:divide-gray-600">
-                  {metrics.map((metric, index) => {
+                  {metrics.map((metric) => {
                     const metricId = `${sectionId}-${metric.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '')}`;
                     const maxValue = metricMaxValues[metric];
                     
@@ -1079,6 +1079,7 @@ const CompactSectionTable = ({
                           </div>
                         </td>
                         {countries.map(country => {
+                          // eslint-disable-next-line @typescript-eslint/no-unused-vars
                           const { value, source } = getMetricValue(metric, country);
                           const percentage = value && maxValue > 0 ? (value / maxValue) * 100 : 0;
                           
@@ -1162,11 +1163,12 @@ const CompactSectionTable = ({
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const MetricTable = ({ title, countries, getValue, getSource, formatValue, loading, activeTooltip, toggleTooltip }: {
   title: string;
   countries: Country[];
   getValue: (country: Country) => number | null;
-  getSource?: (country: Country) => { source?: string; year?: string; sourceOrganization?: string } | null;
+  getSource: (country: Country) => string | null;
   formatValue: (value: number) => string;
   loading?: boolean;
   activeTooltip?: string | null;
@@ -1183,10 +1185,6 @@ const MetricTable = ({ title, countries, getValue, getSource, formatValue, loadi
 
   const maxValue = Math.max(...data.map(d => d.value || 0));
   const showComparison = countries.length > 1 && data.some(d => d.value !== null && d.value > 0);
-
-  // Get source info from the first country that has data
-  const sourceInfo = getSource ? countries.find(country => getValue(country) !== null) : null;
-  const source = sourceInfo && getSource ? getSource(sourceInfo) : null;
 
   return (
     <div id={`metric-${metricId}`} className="mb-8 scroll-mt-24 transition-all duration-300">
@@ -1290,27 +1288,6 @@ const MetricTable = ({ title, countries, getValue, getSource, formatValue, loadi
           </table>
         </div>
       </div>
-      
-      {/* Source information below the table */}
-      {source && (
-        <div className="mt-3 p-2 sm:p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-          <div className="flex flex-wrap items-center gap-1 sm:gap-2 text-xs text-gray-600 dark:text-gray-400">
-            <span className="font-medium text-gray-700 dark:text-gray-300">
-              Source:
-            </span>
-            {source.source && source.year && (
-              <span className="bg-white dark:bg-gray-700 px-1.5 sm:px-2 py-1 rounded border border-gray-300 dark:border-gray-600 text-xs">
-                {source.source} ({source.year})
-              </span>
-            )}
-            {source.sourceOrganization && (
-              <span className="text-gray-500 dark:text-gray-400 text-xs">
-                • {source.sourceOrganization}
-              </span>
-            )}
-          </div>
-        </div>
-      )}
     </div>
   );
 };
@@ -1853,11 +1830,13 @@ export default function HomePage() {
     loadData();
   }, [selectedCountries]);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const formatNumber = (num: number | null): string => {
     if (num === null || isNaN(num)) return 'N/A';
     return num.toLocaleString();
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const formatCurrency = (num: number | null): string => {
     if (num === null || isNaN(num)) return 'N/A';
     return `$${num.toLocaleString()}`;
@@ -1893,6 +1872,7 @@ export default function HomePage() {
   };
 
   // Helper function to check if a specific metric is loading for any country
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const isMetricLoading = (metricName: string): boolean => {
     return selectedCountries.some(country => 
       loadingStates[country.code]?.[metricName] === true
@@ -2804,6 +2784,7 @@ export default function HomePage() {
                 {/* Detailed Trade Data Display */}
                 {selectedTradeCountry && (() => {
                   const stats = countryStats[selectedTradeCountry];
+                  // eslint-disable-next-line @typescript-eslint/no-unused-vars
                   const factbook = stats?.enhancedInfo?.factbookData;
                   const comtrade = stats?.enhancedInfo?.comtradeData;
                   const selectedCountry = selectedCountries.find(c => c.code === selectedTradeCountry);

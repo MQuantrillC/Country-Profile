@@ -760,7 +760,7 @@ const CompactSectionTable = ({
       case 'Alcohol Consumption (liters pure alcohol/year)':
         return { value: parseAlcoholConsumption(stats.enhancedInfo?.factbookData?.alcoholConsumption), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.alcoholConsumption ? `${stats.enhancedInfo.factbookData.alcoholConsumption}` : 'N/A' };
       case 'Beer Consumption (liters pure alcohol/year)':
-        return { value: parseTobaccoUseFemale(stats.enhancedInfo?.factbookData?.tobaccoUse), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.tobaccoUse ? `${stats.enhancedInfo.factbookData.tobaccoUse}` : 'N/A' };
+        return { value: parseAlcoholBeer(stats.enhancedInfo?.factbookData?.alcoholConsumption), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.alcoholConsumption ? `${stats.enhancedInfo.factbookData.alcoholConsumption}` : 'N/A' };
       case 'Wine Consumption (liters pure alcohol/year)':
         return { value: parseAlcoholWine(stats.enhancedInfo?.factbookData?.alcoholConsumption), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.alcoholConsumption ? `${stats.enhancedInfo.factbookData.alcoholConsumption}` : 'N/A' };
       case 'Spirits Consumption (liters pure alcohol/year)':

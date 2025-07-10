@@ -1425,7 +1425,7 @@ export default function HomePage() {
   });
 
   // Define metrics for each section
-  const sectionMetrics = {
+  const sectionMetrics: Record<string, string[]> = {
     overview: [
       'Total Population',
       'Area',
@@ -1519,7 +1519,7 @@ export default function HomePage() {
 
   const getSectionForMetric = (metricTitle: string) => {
     for (const sectionId in sectionMetrics) {
-      if ((sectionMetrics as any)[sectionId].includes(metricTitle)) {
+      if (sectionMetrics[sectionId].includes(metricTitle)) {
         return sectionId;
       }
     }

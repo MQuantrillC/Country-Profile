@@ -18,8 +18,18 @@ import {
   Sun,
   Moon,
   ArrowUp,
-  HelpCircle
+  HelpCircle,
+  ChevronDown
 } from 'lucide-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faGlobe, faMoneyBillWave, faUsers, faChartLine, faShieldAlt, faSun, faBook,
+  faLandmark, faBalanceScale, faCar, faPlane, faShip, faRulerVertical,
+  faTemperatureHigh, faSnowflake, faUserFriends, faArrowRight, faMale, faFemale,
+  faBaby, faBookReader, faGraduationCap, faHandHoldingUsd, faChartPie, faPercentage,
+  faMapMarkedAlt, faWeightHanging, faGavel, faWineGlass, faSmoking, faSkullCrossbones,
+  faExchangeAlt, faSignInAlt, faSignOutAlt, faTree, faTractor, faBeer, faGlassWhiskey
+} from '@fortawesome/free-solid-svg-icons';
 import { countries, type Country } from '../utils/countries';
 
 // Define sections outside component to avoid dependency issues
@@ -427,40 +437,80 @@ const CountryDropdown = ({ selectedCountries, onSelect, countries }: CountryDrop
 
 // Helper function to get icon for metric title
 const getMetricIcon = (title: string) => {
-  const titleLower = title.toLowerCase();
-  if (titleLower.includes('hdi') || titleLower.includes('human development')) return '🏆';
-  if (titleLower.includes('tourist') || titleLower.includes('tourism')) return '✈️';
-  if (titleLower.includes('schooling') || titleLower.includes('years of school')) return '🎓';
-  if (titleLower.includes('tax revenue')) return '🏛️';
-  if (titleLower.includes('poverty') || titleLower.includes('extreme poverty')) return '⚠️';
-  if (titleLower.includes('migrants') || titleLower.includes('migration')) return '🌐';
-  if (titleLower.includes('caloric') || titleLower.includes('calorie') || titleLower.includes('food supply')) return '🍽️';
-  if (titleLower.includes('income group') || titleLower.includes('world bank income')) return '🏦';
-  if (titleLower.includes('income share') && titleLower.includes('richest')) return '💰';
-  if (titleLower.includes('income share') && titleLower.includes('poorest')) return '🤝';
-  if (titleLower.includes('armed forces') || titleLower.includes('military personnel')) return '🪖';
-  if (titleLower.includes('terrorism') || titleLower.includes('terrorist')) return '⚠️';
-  if (titleLower.includes('political regime') || titleLower.includes('democracy')) return '🏛️';
-  if (titleLower.includes('gdp') || titleLower.includes('economy')) return '💰';
-  if (titleLower.includes('population')) return '👥';
-  if (titleLower.includes('area')) return '🌍';
-  if (titleLower.includes('life') || titleLower.includes('health')) return '❤️';
-  if (titleLower.includes('education') || titleLower.includes('literacy')) return '📚';
-  if (titleLower.includes('trade') || titleLower.includes('export') || titleLower.includes('import')) return '🚢';
-  if (titleLower.includes('climate') || titleLower.includes('temperature') || titleLower.includes('co2')) return '🌡️';
-  if (titleLower.includes('forest') || titleLower.includes('environment')) return '🌲';
-  if (titleLower.includes('internet') || titleLower.includes('mobile') || titleLower.includes('technology')) return '📱';
-  if (titleLower.includes('water') || titleLower.includes('sanitation')) return '💧';
-  if (titleLower.includes('energy')) return '⚡';
-  if (titleLower.includes('debt') || titleLower.includes('inflation')) return '📊';
-  if (titleLower.includes('research') || titleLower.includes('development')) return '🔬';
-  if (titleLower.includes('unemployment') || titleLower.includes('employment')) return '💼';
-  if (titleLower.includes('homicide') || titleLower.includes('crime') || titleLower.includes('safety')) return '🛡️';
-  if (titleLower.includes('urban') || titleLower.includes('rural')) return '🏙️';
-  if (titleLower.includes('fertility') || titleLower.includes('birth')) return '👶';
-  if (titleLower.includes('migration')) return '🌏';
-  if (titleLower.includes('electricity')) return '💡';
-  return '📈'; // Default icon
+  switch (title) {
+    // Overview
+    case 'Total Population': return <FontAwesomeIcon icon={faUsers} />;
+    case 'Area': return <FontAwesomeIcon icon={faMapMarkedAlt} />;
+    case 'Population Density': return <FontAwesomeIcon icon={faUserFriends} />;
+    case 'Urban Population %': return <FontAwesomeIcon icon={faLandmark} />;
+    case 'Rural Population %': return <FontAwesomeIcon icon={faRulerVertical} />;
+    case 'Net Migration Rate (per 1,000 people)': return <FontAwesomeIcon icon={faArrowRight} />;
+    case 'International Migrants': return <FontAwesomeIcon icon={faGlobe} />;
+    
+    // Economy
+    case 'GDP': return <FontAwesomeIcon icon={faMoneyBillWave} />;
+    case 'GDP Per Capita': return <FontAwesomeIcon icon={faHandHoldingUsd} />;
+    case 'GNI Per Capita': return <FontAwesomeIcon icon={faHandHoldingUsd} />;
+    case 'Trade as % of GDP': return <FontAwesomeIcon icon={faChartPie} />;
+    case 'Unemployment Rate': return <FontAwesomeIcon icon={faPercentage} />;
+    case 'Public Debt % of GDP': return <FontAwesomeIcon icon={faBalanceScale} />;
+    case 'Military Expenditure % of GDP': return <FontAwesomeIcon icon={faShieldAlt} />;
+    case 'Gini Index': return <FontAwesomeIcon icon={faWeightHanging} />;
+    case 'Tax Revenue as % of GDP': return <FontAwesomeIcon icon={faLandmark} />;
+    case 'Internet Users %': return <FontAwesomeIcon icon={faGlobe} />;
+    case 'Electricity Access %': return <FontAwesomeIcon icon={faSun} />;
+    
+    // Social
+    case 'Human Development Index (HDI)': return <FontAwesomeIcon icon={faChartLine} />;
+    case 'Life Expectancy': return <FontAwesomeIcon icon={faChartLine} />;
+    case 'Fertility Rate (births per woman)': return <FontAwesomeIcon icon={faBaby} />;
+    case 'Literacy Rate': return <FontAwesomeIcon icon={faBookReader} />;
+    case 'Education Spending % of GDP': return <FontAwesomeIcon icon={faGraduationCap} />;
+    case 'Mean Years of Schooling': return <FontAwesomeIcon icon={faGraduationCap} />;
+    case 'Extreme Poverty Rate': return <FontAwesomeIcon icon={faUsers} />;
+    case 'Daily Caloric Supply': return <FontAwesomeIcon icon={faUsers} />;
+    case 'Income Share of Richest 1%': return <FontAwesomeIcon icon={faUsers} />;
+    case 'Income Share of Poorest 50%': return <FontAwesomeIcon icon={faUsers} />;
+    case 'Armed Forces Personnel': return <FontAwesomeIcon icon={faShieldAlt} />;
+    case 'Forest Coverage %': return <FontAwesomeIcon icon={faTree} />;
+    case 'Agricultural Land %': return <FontAwesomeIcon icon={faTractor} />;
+    case 'Alcohol Consumption (liters pure alcohol/year)': return <FontAwesomeIcon icon={faWineGlass} />;
+    case 'Beer Consumption (liters pure alcohol/year)': return <FontAwesomeIcon icon={faBeer} />;
+    case 'Wine Consumption (liters pure alcohol/year)': return <FontAwesomeIcon icon={faWineGlass} />;
+    case 'Spirits Consumption (liters pure alcohol/year)': return <FontAwesomeIcon icon={faGlassWhiskey} />;
+    case 'Other Alcohols Consumption (liters pure alcohol/year)': return <FontAwesomeIcon icon={faWineGlass} />;
+    case 'Tobacco Use (%)': return <FontAwesomeIcon icon={faSmoking} />;
+    case 'Tobacco Use - Male (%)': return <FontAwesomeIcon icon={faMale} />;
+    case 'Tobacco Use - Female (%)': return <FontAwesomeIcon icon={faFemale} />;
+    
+    // Safety
+    case 'Homicide Rate (per 100,000)': return <FontAwesomeIcon icon={faSkullCrossbones} />;
+    case 'Homicide Victims (Total)': return <FontAwesomeIcon icon={faUsers} />;
+    case 'Homicide Arrests (Total)': return <FontAwesomeIcon icon={faGavel} />;
+    case 'Male Arrests': return <FontAwesomeIcon icon={faMale} />;
+    case 'Female Arrests': return <FontAwesomeIcon icon={faFemale} />;
+    case 'Male Victims': return <FontAwesomeIcon icon={faMale} />;
+    case 'Female Victims': return <FontAwesomeIcon icon={faFemale} />;
+    case 'Prison Deaths': return <FontAwesomeIcon icon={faSkullCrossbones} />;
+    case 'Terrorism Deaths': return <FontAwesomeIcon icon={faSkullCrossbones} />;
+    
+    // Trade
+    case 'Total Exports': return <FontAwesomeIcon icon={faSignOutAlt} />;
+    case 'Total Imports': return <FontAwesomeIcon icon={faSignInAlt} />;
+    case 'Trade Balance': return <FontAwesomeIcon icon={faExchangeAlt} />;
+    case 'International Tourist Arrivals': return <FontAwesomeIcon icon={faPlane} />;
+    case 'Airports': return <FontAwesomeIcon icon={faPlane} />;
+    case 'Railways (km)': return <FontAwesomeIcon icon={faCar} />;
+    case 'Ports': return <FontAwesomeIcon icon={faShip} />;
+
+    // Climate
+    case 'Average Temperature': return <FontAwesomeIcon icon={faTemperatureHigh} />;
+    case 'Hot Days (>30°C)': return <FontAwesomeIcon icon={faSun} />;
+    case 'Very Hot Days (>35°C)': return <FontAwesomeIcon icon={faSun} />;
+    case 'Cold Days (<0°C)': return <FontAwesomeIcon icon={faSnowflake} />;
+
+    default: return <FontAwesomeIcon icon={faChartLine} />;
+  }
 };
 
 const getMetricTooltip = (title: string): string => {
@@ -531,6 +581,585 @@ const getMetricTooltip = (title: string): string => {
   };
   
   return tooltips[title] || "No description available for this metric";
+};
+
+// Source color mapping for visual indicators
+const sourceColors = {
+  'World Bank': '#3B82F6',        // Blue
+  'Our World in Data': '#10B981', // Green
+  'CIA World Factbook': '#F59E0B', // Amber
+  'RestCountries': '#8B5CF6',     // Purple
+  'Climate API': '#EF4444',       // Red
+  'UN Comtrade': '#6366F1',       // Indigo
+  'CTS/NSO': '#EC4899',          // Pink
+  'UN HDI': '#14B8A6',           // Teal
+  'UN DESA': '#0891B2',          // Cyan
+  'UNU-WIDER': '#65A30D',         // Lime
+  'Barro-Lee': '#BE185D',         // Fuchsia
+  'FAO': '#FB923C',               // Orange
+  'WID': '#D946EF',               // Violet
+  'UNWTO': '#4F46E5',              // Indigo
+  'GTD': '#DC2626',               // Red
+  'Default': '#6B7280'           // Gray
+};
+
+// Function to get source color based on source organization
+const getSourceColor = (source: string | undefined): string => {
+  if (!source) return sourceColors.Default;
+  
+  if (source.includes('Climate')) return sourceColors['Climate API'];
+  if (source.includes('World Bank')) return sourceColors['World Bank'];
+  if (source.includes('UN DESA')) return sourceColors['UN DESA'];
+  if (source.includes('UNU-WIDER')) return sourceColors['UNU-WIDER'];
+  if (source.includes('Barro-Lee')) return sourceColors['Barro-Lee'];
+  if (source.includes('FAO')) return sourceColors['FAO'];
+  if (source.includes('World Inequality Database')) return sourceColors['WID'];
+  if (source.includes('UNWTO')) return sourceColors['UNWTO'];
+  if (source.includes('Global Terrorism Database')) return sourceColors['GTD'];
+  if (source.includes('Our World in Data')) return sourceColors['Our World in Data'];
+  if (source.includes('CIA') || source.includes('Factbook')) return sourceColors['CIA World Factbook'];
+  if (source.includes('RestCountries')) return sourceColors['RestCountries'];
+  if (source.includes('Comtrade')) return sourceColors['UN Comtrade'];
+  if (source.includes('CTS') || source.includes('NSO')) return sourceColors['CTS/NSO'];
+  if (source.includes('HDI') || source.includes('UNDP')) return sourceColors['UN HDI'];
+  
+  return sourceColors.Default;
+};
+
+// Compact Section Table Component
+const CompactSectionTable = ({ 
+  sectionId,
+  title, 
+  metrics, 
+  countries, 
+  countryStats, 
+  loading, 
+  activeTooltip, 
+  toggleTooltip,
+  isExpanded,
+  onToggle 
+}: {
+  sectionId: string;
+  title: string;
+  metrics: string[];
+  countries: Country[];
+  countryStats: Record<string, CountryStats>;
+  loading: boolean;
+  activeTooltip: string | null;
+  toggleTooltip: (tooltipId: string) => void;
+  isExpanded: boolean;
+  onToggle: () => void;
+}) => {
+  const [showSources, setShowSources] = useState(false);
+  const [showAsPercentage, setShowAsPercentage] = useState(false);
+  
+  const getWorldBankMetricValue = (data: DataWithSource | undefined | null, format: (value: number) => string) => {
+    return {
+      value: data?.value ?? null,
+      source: 'World Bank Open Data',
+      sourceDetail: data?.source ?? null,
+      formatted: data?.value ? format(data.value) : 'N/A'
+    };
+  };
+
+  // Get value function for each metric
+  const getMetricValue = (metric: string, country: Country): { value: number | null; source: string | null; sourceDetail: string | null; formatted: string } => {
+    const stats = countryStats[country.code];
+    if (!stats) return { value: null, source: null, sourceDetail: null, formatted: 'N/A' };
+
+    switch (metric) {
+      // Overview metrics
+      case 'Total Population':
+        return getWorldBankMetricValue(stats.population, v => `${v.toLocaleString()} people`);
+      case 'Area':
+        return getWorldBankMetricValue(stats.area, v => `${v.toLocaleString()} km²`);
+      case 'Population Density':
+        return getWorldBankMetricValue(stats.populationDensity, v => `${v.toFixed(1)} people/km²`);
+      case 'Urban Population %':
+        return getWorldBankMetricValue(stats.urbanPopPct, v => `${v.toFixed(1)}%`);
+      case 'Rural Population %':
+        return getWorldBankMetricValue(stats.ruralPopPct, v => `${v.toFixed(1)}%`);
+      case 'Net Migration Rate (per 1,000 people)':
+        return { value: stats.enhancedInfo?.factbookData?.netMigrationRate ?? null, source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.netMigrationRate ? `${stats.enhancedInfo.factbookData.netMigrationRate.toFixed(1)}/1000` : 'N/A' };
+      case 'International Migrants':
+        return { value: stats.enhancedInfo?.migrantsData?.value ?? null, source: 'UN DESA', sourceDetail: stats.enhancedInfo?.migrantsData?.source ?? null, formatted: stats.enhancedInfo?.migrantsData?.value ? `${stats.enhancedInfo.migrantsData.value.toLocaleString()} people` : 'N/A' };
+      
+      // Economy metrics
+      case 'GDP':
+        return getWorldBankMetricValue(stats.gdp, v => `$${(v).toLocaleString('en-US', { maximumFractionDigits: 1, minimumFractionDigits: 1 })}B`);
+      case 'GDP Per Capita':
+        return getWorldBankMetricValue(stats.gdpPerCapita, v => `$${v.toLocaleString()}`);
+      case 'GNI Per Capita':
+        return getWorldBankMetricValue(stats.gniPerCapita, v => `$${v.toLocaleString()}`);
+      case 'Trade as % of GDP':
+        return getWorldBankMetricValue(stats.tradeGDP, v => `${v.toFixed(1)}%`);
+      case 'Unemployment Rate':
+        return getWorldBankMetricValue(stats.unemploymentRate, v => `${v.toFixed(1)}%`);
+      case 'Public Debt % of GDP': {
+        const wbData = stats.publicDebtGDP;
+        if (wbData?.value != null) {
+          return getWorldBankMetricValue(wbData, v => `${v.toFixed(1)}%`);
+        }
+        const fbValue = stats.enhancedInfo?.factbookData?.publicDebt;
+        return {
+          value: fbValue ?? null,
+          source: fbValue != null ? 'CIA World Factbook' : null,
+          sourceDetail: fbValue != null ? 'CIA World Factbook' : null,
+          formatted: fbValue != null ? `${fbValue.toFixed(1)}%` : 'N/A'
+        };
+      }
+      case 'Military Expenditure % of GDP':
+        return { value: stats.enhancedInfo?.factbookData?.militaryExpenditure ?? null, source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.militaryExpenditure ? `${stats.enhancedInfo.factbookData.militaryExpenditure.toFixed(1)}%` : 'N/A' };
+      case 'Gini Index':
+        return { value: stats.enhancedInfo?.factbookData?.giniIndex ?? null, source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.giniIndex ? `${stats.enhancedInfo.factbookData.giniIndex.toFixed(1)}` : 'N/A' };
+      case 'Tax Revenue as % of GDP':
+        return { value: stats.enhancedInfo?.taxRevenueData?.value ?? null, source: 'UNU-WIDER', sourceDetail: stats.enhancedInfo?.taxRevenueData?.source ?? null, formatted: stats.enhancedInfo?.taxRevenueData?.value ? `${stats.enhancedInfo.taxRevenueData.value.toFixed(1)}%` : 'N/A' };
+      case 'Internet Users %':
+        return getWorldBankMetricValue(stats.internetUsers, v => `${v.toFixed(1)}%`);
+      case 'Electricity Access %':
+        return getWorldBankMetricValue(stats.electricityAccess, v => `${v.toFixed(1)}%`);
+      
+      // Social metrics
+      case 'Human Development Index (HDI)':
+        return { value: stats.enhancedInfo?.hdiData?.hdi ?? null, source: 'UN HDI', sourceDetail: stats.enhancedInfo?.hdiData?.source ?? null, formatted: stats.enhancedInfo?.hdiData?.hdi ? `${stats.enhancedInfo.hdiData.hdi.toFixed(3)}` : 'N/A' };
+      case 'Life Expectancy':
+        return getWorldBankMetricValue(stats.lifeExpectancy, v => `${v.toFixed(1)} years`);
+      case 'Fertility Rate (births per woman)':
+        return getWorldBankMetricValue(stats.fertilityRate, v => `${v.toFixed(1)} births/woman`);
+      case 'Literacy Rate': {
+        const wbData = stats.literacyRate;
+        if (wbData?.value != null) {
+          return getWorldBankMetricValue(wbData, v => `${v.toFixed(1)}%`);
+        }
+        const fbValue = stats.enhancedInfo?.factbookData?.literacyRate;
+        return {
+          value: fbValue ?? null,
+          source: fbValue != null ? 'CIA World Factbook' : null,
+          sourceDetail: fbValue != null ? 'CIA World Factbook' : null,
+          formatted: fbValue != null ? `${fbValue.toFixed(1)}%` : 'N/A'
+        };
+      }
+      case 'Education Spending % of GDP':
+        return getWorldBankMetricValue(stats.educationSpendPctGDP, v => `${v.toFixed(1)}%`);
+      case 'Mean Years of Schooling':
+        return { value: stats.enhancedInfo?.schoolingYearsData?.value ?? null, source: 'Barro-Lee', sourceDetail: stats.enhancedInfo?.schoolingYearsData?.source ?? null, formatted: stats.enhancedInfo?.schoolingYearsData?.value ? `${stats.enhancedInfo.schoolingYearsData.value.toFixed(1)} years` : 'N/A' };
+      case 'Extreme Poverty Rate':
+        return { value: stats.enhancedInfo?.extremePovertyData?.value ?? null, source: 'Our World in Data', sourceDetail: stats.enhancedInfo?.extremePovertyData?.source ?? null, formatted: stats.enhancedInfo?.extremePovertyData?.value ? `${stats.enhancedInfo.extremePovertyData.value.toFixed(1)}%` : 'N/A' };
+      case 'Daily Caloric Supply':
+        return { value: stats.enhancedInfo?.caloricSupplyData?.value ?? null, source: 'FAO', sourceDetail: stats.enhancedInfo?.caloricSupplyData?.source ?? null, formatted: stats.enhancedInfo?.caloricSupplyData?.value ? `${stats.enhancedInfo.caloricSupplyData.value.toLocaleString()} kcal` : 'N/A' };
+      case 'Income Share of Richest 1%':
+        return { value: stats.enhancedInfo?.incomeShareRichest1Data?.value ?? null, source: 'World Inequality Database', sourceDetail: stats.enhancedInfo?.incomeShareRichest1Data?.source ?? null, formatted: stats.enhancedInfo?.incomeShareRichest1Data?.value ? `${stats.enhancedInfo.incomeShareRichest1Data.value.toFixed(1)}%` : 'N/A' };
+      case 'Income Share of Poorest 50%':
+        return { value: stats.enhancedInfo?.incomeSharePoorest50Data?.value ?? null, source: 'World Inequality Database', sourceDetail: stats.enhancedInfo?.incomeSharePoorest50Data?.source ?? null, formatted: stats.enhancedInfo?.incomeSharePoorest50Data?.value ? `${stats.enhancedInfo.incomeSharePoorest50Data.value.toFixed(1)}%` : 'N/A' };
+      case 'Armed Forces Personnel':
+        return { value: stats.enhancedInfo?.armedForcesPersonnelData?.value ?? null, source: 'Our World in Data', sourceDetail: stats.enhancedInfo?.armedForcesPersonnelData?.source ?? null, formatted: stats.enhancedInfo?.armedForcesPersonnelData?.value != null ? `${stats.enhancedInfo.armedForcesPersonnelData.value.toFixed(1)}%` : 'N/A' };
+      case 'Forest Coverage %':
+        return getWorldBankMetricValue(stats.forestPct, v => `${v.toFixed(1)}%`);
+      case 'Agricultural Land %':
+        return getWorldBankMetricValue(stats.agriculturalLandPct, v => `${v.toFixed(1)}%`);
+      case 'Alcohol Consumption (liters pure alcohol/year)':
+        return { value: parseAlcoholConsumption(stats.enhancedInfo?.factbookData?.alcoholConsumption), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.alcoholConsumption ? `${stats.enhancedInfo.factbookData.alcoholConsumption}` : 'N/A' };
+      case 'Beer Consumption (liters pure alcohol/year)':
+        return { value: parseTobaccoUseFemale(stats.enhancedInfo?.factbookData?.tobaccoUse), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.tobaccoUse ? `${stats.enhancedInfo.factbookData.tobaccoUse}` : 'N/A' };
+      case 'Wine Consumption (liters pure alcohol/year)':
+        return { value: parseAlcoholWine(stats.enhancedInfo?.factbookData?.alcoholConsumption), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.alcoholConsumption ? `${stats.enhancedInfo.factbookData.alcoholConsumption}` : 'N/A' };
+      case 'Spirits Consumption (liters pure alcohol/year)':
+        return { value: parseAlcoholSpirits(stats.enhancedInfo?.factbookData?.alcoholConsumption), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.alcoholConsumption ? `${stats.enhancedInfo.factbookData.alcoholConsumption}` : 'N/A' };
+      case 'Other Alcohols Consumption (liters pure alcohol/year)':
+        return { value: parseAlcoholOther(stats.enhancedInfo?.factbookData?.alcoholConsumption), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.alcoholConsumption ? `${stats.enhancedInfo.factbookData.alcoholConsumption}` : 'N/A' };
+      case 'Tobacco Use (%)':
+        return { value: parseTobaccoUse(stats.enhancedInfo?.factbookData?.tobaccoUse), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.tobaccoUse ? `${stats.enhancedInfo.factbookData.tobaccoUse}` : 'N/A' };
+      case 'Tobacco Use - Male (%)':
+        return { value: parseTobaccoUseMale(stats.enhancedInfo?.factbookData?.tobaccoUse), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.tobaccoUse ? `${stats.enhancedInfo.factbookData.tobaccoUse}` : 'N/A' };
+      case 'Tobacco Use - Female (%)':
+        return { value: parseTobaccoUseFemale(stats.enhancedInfo?.factbookData?.tobaccoUse), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.tobaccoUse ? `${stats.enhancedInfo.factbookData.tobaccoUse}` : 'N/A' };
+      
+      // Safety metrics
+      case 'Homicide Rate (per 100,000)':
+        return getWorldBankMetricValue(stats.homicideRate, v => v.toFixed(1));
+      case 'Homicide Victims (Total)':
+        return { value: stats.enhancedInfo?.crimeData?.victimData?.totalVictims ?? null, source: 'CTS/NSO', sourceDetail: stats.enhancedInfo?.crimeData?.source ?? null, formatted: stats.enhancedInfo?.crimeData?.victimData?.totalVictims ? `${stats.enhancedInfo.crimeData.victimData.totalVictims.toLocaleString()} people` : 'N/A' };
+      case 'Homicide Arrests (Total)':
+        return { value: stats.enhancedInfo?.crimeData?.totalArrests ?? null, source: 'CTS/NSO', sourceDetail: stats.enhancedInfo?.crimeData?.source ?? null, formatted: stats.enhancedInfo?.crimeData?.totalArrests ? `${stats.enhancedInfo.crimeData.totalArrests.toLocaleString()} people` : 'N/A' };
+      case 'Male Arrests':
+        return { value: stats.enhancedInfo?.crimeData?.arrestsBySex?.male ?? null, source: 'CTS/NSO', sourceDetail: stats.enhancedInfo?.crimeData?.source ?? null, formatted: stats.enhancedInfo?.crimeData?.arrestsBySex?.male ? `${stats.enhancedInfo.crimeData.arrestsBySex.male.toLocaleString()} people` : 'N/A' };
+      case 'Female Arrests':
+        return { value: stats.enhancedInfo?.crimeData?.arrestsBySex?.female ?? null, source: 'CTS/NSO', sourceDetail: stats.enhancedInfo?.crimeData?.source ?? null, formatted: stats.enhancedInfo?.crimeData?.arrestsBySex?.female ? `${stats.enhancedInfo.crimeData.arrestsBySex.female.toLocaleString()} people` : 'N/A' };
+      case 'Male Victims':
+        return { value: stats.enhancedInfo?.crimeData?.victimData?.maleVictims ?? null, source: 'CTS/NSO', sourceDetail: stats.enhancedInfo?.crimeData?.source ?? null, formatted: stats.enhancedInfo?.crimeData?.victimData?.maleVictims ? `${stats.enhancedInfo.crimeData.victimData.maleVictims.toLocaleString()} people` : 'N/A' };
+      case 'Female Victims':
+        return { value: stats.enhancedInfo?.crimeData?.victimData?.femaleVictims ?? null, source: 'CTS/NSO', sourceDetail: stats.enhancedInfo?.crimeData?.source ?? null, formatted: stats.enhancedInfo?.crimeData?.victimData?.femaleVictims ? `${stats.enhancedInfo.crimeData.victimData.femaleVictims.toLocaleString()} people` : 'N/A' };
+      case 'Prison Deaths':
+        return { value: stats.enhancedInfo?.crimeData?.prisonDeaths ?? null, source: 'CTS/NSO', sourceDetail: stats.enhancedInfo?.crimeData?.source ?? null, formatted: stats.enhancedInfo?.crimeData?.prisonDeaths ? `${stats.enhancedInfo.crimeData.prisonDeaths.toLocaleString()} deaths` : 'N/A' };
+      case 'Terrorism Deaths':
+        return { value: stats.enhancedInfo?.terrorismDeathsData?.value ?? null, source: 'Global Terrorism Database', sourceDetail: stats.enhancedInfo?.terrorismDeathsData?.source ?? null, formatted: stats.enhancedInfo?.terrorismDeathsData?.value ? `${stats.enhancedInfo.terrorismDeathsData.value.toLocaleString()} deaths` : 'N/A' };
+      
+      // Climate metrics
+      case 'Average Temperature':
+        return { value: stats.enhancedInfo?.climateData?.averageTemperature ?? null, source: 'World Bank Climate Knowledge Portal', sourceDetail: stats.enhancedInfo?.climateData?.source ?? null, formatted: stats.enhancedInfo?.climateData?.averageTemperature ? `${stats.enhancedInfo.climateData.averageTemperature.toFixed(1)}°C` : 'N/A' };
+      case 'Hot Days (>30°C)':
+        return { value: stats.enhancedInfo?.climateData?.hotDays30 ?? null, source: 'World Bank Climate Knowledge Portal', sourceDetail: stats.enhancedInfo?.climateData?.source ?? null, formatted: stats.enhancedInfo?.climateData?.hotDays30 ? `${stats.enhancedInfo.climateData.hotDays30.toFixed(0)} days` : 'N/A' };
+      case 'Very Hot Days (>35°C)':
+        return { value: stats.enhancedInfo?.climateData?.hotDays35 ?? null, source: 'World Bank Climate Knowledge Portal', sourceDetail: stats.enhancedInfo?.climateData?.source ?? null, formatted: stats.enhancedInfo?.climateData?.hotDays35 ? `${stats.enhancedInfo.climateData.hotDays35.toFixed(0)} days` : 'N/A' };
+      case 'Cold Days (<0°C)':
+        return { value: stats.enhancedInfo?.climateData?.coldDays ?? null, source: 'World Bank Climate Knowledge Portal', sourceDetail: stats.enhancedInfo?.climateData?.source ?? null, formatted: stats.enhancedInfo?.climateData?.coldDays ? `${stats.enhancedInfo.climateData.coldDays.toFixed(0)} days` : 'N/A' };
+      
+      // Trade metrics
+      case 'Total Exports':
+        return { value: stats.enhancedInfo?.comtradeData?.totalExports?.value ?? null, source: 'UN Comtrade', sourceDetail: stats.enhancedInfo?.comtradeData?.source ?? null, formatted: stats.enhancedInfo?.comtradeData?.totalExports?.value ? `$${(stats.enhancedInfo.comtradeData.totalExports.value).toLocaleString('en-US', { maximumFractionDigits: 1, minimumFractionDigits: 1 })}B` : 'N/A' };
+      case 'Total Imports':
+        return { value: stats.enhancedInfo?.comtradeData?.totalImports?.value ?? null, source: 'UN Comtrade', sourceDetail: stats.enhancedInfo?.comtradeData?.source ?? null, formatted: stats.enhancedInfo?.comtradeData?.totalImports?.value ? `$${(stats.enhancedInfo.comtradeData.totalImports.value).toLocaleString('en-US', { maximumFractionDigits: 1, minimumFractionDigits: 1 })}B` : 'N/A' };
+      case 'Trade Balance':
+        const tradeBalanceValue = stats.enhancedInfo?.comtradeData?.tradeBalance?.value;
+        const formattedTradeBalance = tradeBalanceValue != null ? `${(Math.abs(tradeBalanceValue)).toLocaleString('en-US', { maximumFractionDigits: 1, minimumFractionDigits: 1 })}B` : 'N/A';
+        return { value: tradeBalanceValue ?? null, source: 'UN Comtrade', sourceDetail: stats.enhancedInfo?.comtradeData?.source ?? null, formatted: tradeBalanceValue != null ? `${tradeBalanceValue >= 0 ? '+' : '-'}$${formattedTradeBalance}` : 'N/A' };
+      case 'International Tourist Arrivals':
+        return { value: stats.enhancedInfo?.touristsData?.value ?? null, source: 'UNWTO', sourceDetail: stats.enhancedInfo?.touristsData?.source ?? null, formatted: stats.enhancedInfo?.touristsData?.value ? `${stats.enhancedInfo.touristsData.value.toLocaleString()} trips` : 'N/A' };
+      case 'Airports':
+        return { value: stats.enhancedInfo?.factbookData?.airports ?? null, source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.airports ? `${stats.enhancedInfo.factbookData.airports.toLocaleString()} airports` : 'N/A' };
+      case 'Railways (km)':
+        return { value: stats.enhancedInfo?.factbookData?.railways ?? null, source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.railways ? `${stats.enhancedInfo.factbookData.railways.toLocaleString()} km` : 'N/A' };
+      case 'Ports':
+        return { value: stats.enhancedInfo?.factbookData?.ports ?? null, source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.ports ? `${stats.enhancedInfo.factbookData.ports.toLocaleString()} ports` : 'N/A' };
+      
+      default:
+        return { value: null, source: null, sourceDetail: null, formatted: 'N/A' };
+    }
+  };
+
+  const formatMetricValue = (metric: string, value: number | null): string => {
+    if (value === null) return 'N/A';
+    
+    switch (metric) {
+      // Overview metrics
+      case 'Total Population':
+        return value >= 1000000 ? `${(value / 1000000).toFixed(1)}M` : `${value.toLocaleString()}`;
+      case 'Area':
+        return `${value.toLocaleString()} km²`;
+      case 'Population Density':
+        return `${value.toFixed(1)}/km²`;
+      case 'Urban Population %':
+      case 'Rural Population %':
+        return `${value.toFixed(1)}%`;
+      case 'Net Migration Rate (per 1,000 people)':
+        return `${value.toFixed(1)}/1000`;
+      case 'International Migrants':
+        return value >= 1000000 ? `${(value / 1000000).toFixed(1)}M` : `${value.toLocaleString()}`;
+      
+      // Economy metrics
+      case 'GDP':
+        if (value >= 1000000000) {
+          return `$${(value / 1000000000).toLocaleString('en-US', { maximumFractionDigits: 1, minimumFractionDigits: 1 })}B`;
+        }
+        return `$${(value / 1000000).toLocaleString('en-US', { maximumFractionDigits: 1, minimumFractionDigits: 1 })}M`;
+      case 'GDP Per Capita':
+      case 'GNI Per Capita':
+        return `$${value.toLocaleString()}`;
+      case 'Trade as % of GDP':
+      case 'Unemployment Rate':
+      case 'Public Debt % of GDP':
+      case 'Military Expenditure % of GDP':
+      case 'Tax Revenue as % of GDP':
+      case 'Internet Users %':
+      case 'Electricity Access %':
+      case 'Education Spending % of GDP':
+      case 'Forest Coverage %':
+      case 'Agricultural Land %':
+      case 'Extreme Poverty Rate':
+      case 'Income Share of Richest 1%':
+      case 'Income Share of Poorest 50%':
+      case 'Tobacco Use (%)':
+        return `${value.toFixed(1)}%`;
+      case 'Gini Index':
+        return value.toFixed(1);
+      
+      // Social metrics
+      case 'Human Development Index (HDI)':
+        return value.toFixed(3);
+      case 'Life Expectancy':
+        return `${value.toFixed(1)} years`;
+      case 'Fertility Rate (births per woman)':
+        return `${value.toFixed(1)} births/woman`;
+      case 'Literacy Rate':
+        return `${value.toFixed(1)}%`;
+      case 'Mean Years of Schooling':
+        return `${value.toFixed(1)} years`;
+      case 'Daily Caloric Supply':
+        return `${value.toLocaleString()} kcal`;
+      case 'Armed Forces Personnel':
+        return `${value.toFixed(1)}%`;
+      case 'Alcohol Consumption (liters pure alcohol/year)':
+      case 'Beer Consumption (liters pure alcohol/year)':
+      case 'Wine Consumption (liters pure alcohol/year)':
+      case 'Spirits Consumption (liters pure alcohol/year)':
+      case 'Other Alcohols Consumption (liters pure alcohol/year)':
+        return `${value.toFixed(1)}L`;
+      case 'Tobacco Use - Male (%)':
+      case 'Tobacco Use - Female (%)':
+        return `${value.toFixed(1)}%`;
+      
+      // Safety metrics
+      case 'Homicide Rate (per 100,000)':
+        return value.toFixed(1);
+      case 'Homicide Victims (Total)':
+      case 'Homicide Arrests (Total)':
+      case 'Male Arrests':
+      case 'Female Arrests':
+      case 'Male Victims':
+      case 'Female Victims':
+      case 'Prison Deaths':
+        return value.toLocaleString();
+      case 'Terrorism Deaths':
+        return value.toLocaleString();
+      
+      // Climate metrics
+      case 'Average Temperature':
+        return `${value.toFixed(1)}°C`;
+      case 'Hot Days (>30°C)':
+      case 'Very Hot Days (>35°C)':
+      case 'Cold Days (<0°C)':
+        return `${value.toFixed(0)} days`;
+      
+      // Trade metrics
+      case 'Total Exports':
+      case 'Total Imports':
+        if (value >= 1000000000) {
+          return `$${(value / 1000000000).toLocaleString('en-US', { maximumFractionDigits: 1, minimumFractionDigits: 1 })}B`;
+        }
+        return `$${(value / 1000000).toLocaleString('en-US', { maximumFractionDigits: 1, minimumFractionDigits: 1 })}M`;
+      case 'Trade Balance':
+        const tradeBalanceValue = value;
+        if (tradeBalanceValue === null) return 'N/A';
+        const formattedValue = (Math.abs(tradeBalanceValue / 1e9)).toLocaleString('en-US', { maximumFractionDigits: 1, minimumFractionDigits: 1 });
+        return tradeBalanceValue >= 0 ? `+$${formattedValue}B` : `-$${formattedValue}B`;
+      case 'International Tourist Arrivals':
+        return value >= 1000000 ? `${(value / 1000000).toFixed(1)}M` : `${value.toLocaleString()}`;
+      case 'Airports':
+      case 'Ports':
+        return value.toLocaleString();
+      case 'Railways (km)':
+        return `${value.toLocaleString()} km`;
+      
+      default:
+        return value.toLocaleString();
+    }
+  };
+
+  // Calculate max values for comparison bars
+  const metricMaxValues = metrics.reduce((acc, metric) => {
+    const values = countries.map(country => getMetricValue(metric, country).value).filter(v => v !== null) as number[];
+    acc[metric] = Math.max(...values, 0);
+    return acc;
+  }, {} as Record<string, number>);
+
+  // Get unique sources used in this section
+  const sectionSources = new Map<string, Set<string>>();
+  metrics.forEach(metric => {
+    countries.forEach(country => {
+      const { source, sourceDetail } = getMetricValue(metric, country);
+      if (source && sourceDetail) {
+        if (!sectionSources.has(source)) {
+          sectionSources.set(source, new Set<string>());
+        }
+        sectionSources.get(source)!.add(sourceDetail);
+      } else if (source) {
+        if (!sectionSources.has(source)) {
+          sectionSources.set(source, new Set<string>());
+        }
+      }
+    });
+  });
+
+  return (
+    <div id={sectionId} className="mb-12 scroll-mt-24">
+      <button
+        onClick={onToggle}
+        className="w-full text-left mb-6 group"
+      >
+        <div className="flex items-center justify-between">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
+            {title}
+          </h2>
+          <div className={`transform transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}>
+            <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
+      </button>
+
+      {isExpanded && (
+        <div>
+          <div className="flex justify-end items-center mb-4">
+              <span className="text-sm text-gray-600 dark:text-gray-400 mr-3">Display as:</span>
+              <div className="inline-flex rounded-md shadow-sm" role="group">
+                  <button
+                      type="button"
+                      onClick={() => setShowAsPercentage(false)}
+                      className={`px-4 py-2 text-sm font-medium rounded-l-lg border transition-colors ${
+                          !showAsPercentage
+                              ? 'bg-blue-600 text-white border-blue-600 z-10 ring-2 ring-blue-300'
+                              : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700'
+                      }`}
+                  >
+                      Raw Value
+                  </button>
+                  <button
+                      type="button"
+                      onClick={() => setShowAsPercentage(true)}
+                      className={`px-4 py-2 text-sm font-medium rounded-r-lg border transition-colors ${
+                          showAsPercentage
+                              ? 'bg-blue-600 text-white border-blue-600 z-10 ring-2 ring-blue-300'
+                              : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700'
+                      }`}
+                  >
+                      % of Highest
+                  </button>
+              </div>
+          </div>
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-gray-200 dark:border-gray-600">
+                    <th className="px-4 sm:px-6 py-3 text-left text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 min-w-[200px]">
+                      Metric
+                    </th>
+                    {countries.map(country => (
+                      <th key={country.code} className="px-3 sm:px-4 py-3 text-center text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 min-w-[140px]">
+                        <div className="flex flex-col items-center space-y-1">
+                          <Image 
+                            src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
+                            alt={`${country.name} flag`}
+                            width={20}
+                            height={15}
+                            className="w-5 h-auto"
+                          />
+                          <span className="text-xs font-medium truncate max-w-[120px]">{country.name}</span>
+                        </div>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100 dark:divide-gray-600">
+                  {metrics.map((metric, index) => {
+                    const metricId = `${sectionId}-${metric.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '')}`;
+                    const maxValue = metricMaxValues[metric];
+                    
+                    return (
+                      <tr key={metric} id={metricId} className="hover:bg-gray-50/50 dark:hover:bg-gray-700/30 transition-colors duration-150">
+                        <td className="px-4 sm:px-6 py-3 sm:py-4">
+                          <div className="flex items-center space-x-3">
+                            <div 
+                              className="w-2 h-2 rounded-full flex-shrink-0"
+                              style={{ backgroundColor: getSourceColor(countries.find(c => getMetricValue(metric, c).source)?.code ? getMetricValue(metric, countries.find(c => getMetricValue(metric, c).source)!).source || undefined : undefined) }}
+                            />
+                            <div className="flex items-center space-x-2">
+                              <span className="text-sm sm:text-base mr-2 opacity-70">{getMetricIcon(metric)}</span>
+                              <span className="text-sm sm:text-base font-medium text-gray-900 dark:text-white">{metric}</span>
+                              <div className="group relative tooltip-container">
+                                <HelpCircle 
+                                  size={14} 
+                                  className="text-gray-400 dark:text-gray-500 hover:text-blue-500 dark:hover:text-blue-400 cursor-pointer transition-colors duration-200" 
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    toggleTooltip(`tooltip-${metricId}`);
+                                  }}
+                                />
+                                <div className={`absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 dark:bg-gray-700 text-white text-xs sm:text-sm rounded-lg shadow-lg transition-opacity duration-200 z-10 w-48 sm:w-64 text-center ${
+                                  activeTooltip === `tooltip-${metricId}` 
+                                    ? 'opacity-100 pointer-events-auto' 
+                                    : 'opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto'
+                                }`}>
+                                  {getMetricTooltip(metric)}
+                                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900 dark:border-t-gray-700"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        {countries.map(country => {
+                          const { value, source } = getMetricValue(metric, country);
+                          const percentage = value && maxValue > 0 ? (value / maxValue) * 100 : 0;
+                          
+                          return (
+                            <td key={country.code} className="px-3 sm:px-4 py-3 sm:py-4">
+                              <div className="flex flex-col items-center space-y-2">
+                                <span className={`text-xs sm:text-sm font-medium text-center ${
+                                  value !== null ? 'text-gray-900 dark:text-white' : 'text-gray-400 dark:text-gray-500'
+                                }`}>
+                                  {loading ? (
+                                    <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-blue-500"></div>
+                                  ) : showAsPercentage ? (
+                                    value !== null ? `${percentage.toFixed(1)}%` : 'N/A'
+                                  ) : (
+                                    formatMetricValue(metric, value)
+                                  )}
+                                </span>
+                                {value !== null && value > 0 && maxValue > 0 && countries.length > 1 && (
+                                  <div className="w-full max-w-[100px] bg-gray-200 dark:bg-gray-600 rounded-full h-1.5">
+                                    <div 
+                                      className="bg-gradient-to-r from-blue-500 to-blue-600 h-1.5 rounded-full transition-all duration-500 ease-out" 
+                                      style={{ width: `${Math.max(4, percentage)}%` }}
+                                    />
+                                  </div>
+                                )}
+                              </div>
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+            
+            {/* Section Sources */}
+            {isExpanded && sectionSources.size > 0 && (
+              <div className="px-4 sm:px-6 py-3 bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+                <button
+                  onClick={() => setShowSources(!showSources)}
+                  className="w-full flex justify-between items-center text-left text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                >
+                  <span>{showSources ? 'Hide' : 'Show'} Sources ({sectionSources.size})</span>
+                  <ChevronDown
+                    className={`w-4 h-4 transform transition-transform duration-200 ${
+                      showSources ? 'rotate-180' : ''
+                    }`}
+                  />
+                </button>
+                {showSources && (
+                  <div className="mt-3 space-y-3">
+                  {Array.from(sectionSources.entries()).map(([organization, details]) => (
+                      <div key={organization} className="flex items-start space-x-2">
+                      <div 
+                          className="w-2 h-2 rounded-full flex-shrink-0 mt-1.5" 
+                        style={{ backgroundColor: getSourceColor(organization) }}
+                      />
+                        <div className="text-xs">
+                          <span className="font-semibold text-gray-800 dark:text-gray-200">{organization}</span>
+                          {details.size > 0 && (
+                          <ul className="list-disc list-inside mt-1 space-y-1">
+                            {Array.from(details).map((detail, index) => (
+                                <li key={index} className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                                  {detail}
+                                </li>
+                            ))}
+                          </ul>
+                          )}
+                        </div>
+                    </div>
+                  ))}
+                </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 
 const MetricTable = ({ title, countries, getValue, getSource, formatValue, loading, activeTooltip, toggleTooltip }: {
@@ -705,6 +1334,54 @@ const CollapsibleInfoSection = ({ title, children, isExpanded, onToggle, titleCl
   );
 };
 
+const parseAlcoholConsumption = (text: string | null | undefined): number | null => {
+  if (!text) return null;
+  const match = text.match(/total: ([\d.]+) liters of pure alcohol/);
+  return match ? parseFloat(match[1]) : null;
+};
+
+const parseTobaccoUse = (text: string | null | undefined): number | null => {
+  if (!text) return null;
+  const match = text.match(/total: ([\d.]+)%/);
+  return match ? parseFloat(match[1]) : null;
+};
+
+const parseTobaccoUseMale = (text: string | null | undefined): number | null => {
+  if (!text) return null;
+  const match = text.match(/male: ([\d.]+)%/);
+  return match ? parseFloat(match[1]) : null;
+};
+
+const parseTobaccoUseFemale = (text: string | null | undefined): number | null => {
+  if (!text) return null;
+  const match = text.match(/female: ([\d.]+)%/);
+  return match ? parseFloat(match[1]) : null;
+};
+
+const parseAlcoholBeer = (text: string | null | undefined): number | null => {
+  if (!text) return null;
+  const match = text.match(/beer: ([\d.]+) liters of pure alcohol/);
+  return match ? parseFloat(match[1]) : null;
+};
+
+const parseAlcoholWine = (text: string | null | undefined): number | null => {
+  if (!text) return null;
+  const match = text.match(/wine: ([\d.]+) liters of pure alcohol/);
+  return match ? parseFloat(match[1]) : null;
+};
+
+const parseAlcoholSpirits = (text: string | null | undefined): number | null => {
+  if (!text) return null;
+  const match = text.match(/spirits: ([\d.]+) liters of pure alcohol/);
+  return match ? parseFloat(match[1]) : null;
+};
+
+const parseAlcoholOther = (text: string | null | undefined): number | null => {
+  if (!text) return null;
+  const match = text.match(/other alcohols: ([\d.]+) liters of pure alcohol/);
+  return match ? parseFloat(match[1]) : null;
+};
+
 export default function HomePage() {
   const [selectedCountries, setSelectedCountries] = useState<Country[]>([countries[0]]);
   const [countryStats, setCountryStats] = useState<Record<string, CountryStats>>({});
@@ -718,7 +1395,24 @@ export default function HomePage() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [showStickyNav, setShowStickyNav] = useState(false);
   const [activeSection, setActiveSection] = useState('overview');
-  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
+  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
+    overview: false,
+    economy: false,
+    social: false,
+    trade: false,
+    safety: false,
+    climate: false,
+    sources: false
+  });
+  const [contentSectionsExpanded, setContentSectionsExpanded] = useState<Record<string, boolean>>({
+    overview: true,
+    economy: true,
+    social: true,
+    trade: true,
+    safety: true,
+    climate: true,
+    sources: true
+  });
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
   const [infoSectionsExpanded, setInfoSectionsExpanded] = useState<Record<string, boolean>>({
     basic: true,
@@ -816,17 +1510,45 @@ export default function HomePage() {
     }));
   };
 
-  const scrollToMetric = (metricTitle: string) => {
-    const metricId = metricTitle.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
-    const element = document.getElementById(`metric-${metricId}`);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      // Add a brief highlight effect
-      element.classList.add('ring-2', 'ring-blue-500', 'ring-opacity-50');
-      setTimeout(() => {
-        element.classList.remove('ring-2', 'ring-blue-500', 'ring-opacity-50');
-      }, 2000);
+  const toggleContentSectionExpansion = (sectionId: string) => {
+    setContentSectionsExpanded(prev => ({
+      ...prev,
+      [sectionId]: !prev[sectionId]
+    }));
+  };
+
+  const getSectionForMetric = (metricTitle: string) => {
+    for (const sectionId in sectionMetrics) {
+      if ((sectionMetrics as any)[sectionId].includes(metricTitle)) {
+        return sectionId;
+      }
     }
+    return null;
+  };
+
+  const scrollToMetric = (metricTitle: string) => {
+    const sectionId = getSectionForMetric(metricTitle);
+    if (!sectionId) return;
+
+    // Expand the section if it is collapsed
+    if (!contentSectionsExpanded[sectionId]) {
+      toggleContentSectionExpansion(sectionId);
+    }
+
+    const metricId = `${sectionId}-${metricTitle.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '')}`;
+
+    // Use a timeout to allow the section to expand before scrolling
+    setTimeout(() => {
+      const element = document.getElementById(metricId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // Add a brief highlight effect
+        element.classList.add('ring-2', 'ring-blue-500', 'dark:ring-blue-400', 'ring-opacity-50', 'transition-all', 'duration-300');
+        setTimeout(() => {
+          element.classList.remove('ring-2', 'ring-blue-500', 'dark:ring-blue-400', 'ring-opacity-50');
+        }, 2000);
+      }
+    }, 150);
   };
 
   useEffect(() => {
@@ -1132,85 +1854,31 @@ export default function HomePage() {
   }, [selectedCountries]);
 
   const formatNumber = (num: number | null): string => {
-    if (num === null || num === undefined) return "N/A";
-    return new Intl.NumberFormat('en-US').format(Math.round(num));
+    if (num === null || isNaN(num)) return 'N/A';
+    return num.toLocaleString();
   };
 
   const formatCurrency = (num: number | null): string => {
-    if (num === null || num === undefined) return "N/A";
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(num);
+    if (num === null || isNaN(num)) return 'N/A';
+    return `$${num.toLocaleString()}`;
   };
 
   const formatPopulation = (num: number | null): string => {
-    if (num === null || num === undefined) return "N/A";
-    return new Intl.NumberFormat('en-US').format(num);
+    if (num === null || isNaN(num)) return 'N/A';
+    if (num >= 1_000_000_000) return `${(num / 1_000_000_000).toFixed(2)}B`;
+    if (num >= 1_000_000) return `${(num / 1_000_000).toFixed(2)}M`;
+    if (num >= 1_000) return `${(num / 1_000).toFixed(2)}K`;
+    return num.toString();
   };
 
   const formatArea = (num: number | null): string => {
-    if (num === null || num === undefined) return "N/A";
+    if (num === null || isNaN(num)) return 'N/A';
     return `${num.toLocaleString()} km²`;
   };
 
   const formatPopulationDensity = (num: number | null): string => {
-    if (num === null || num === undefined) return "N/A";
+    if (num === null || isNaN(num)) return 'N/A';
     return `${num.toFixed(1)} people/km²`;
-  };
-
-  // Parse alcohol consumption total from string like "total: 8.93 liters of pure alcohol (2019 est.); ..."
-  const parseAlcoholConsumption = (text: string | null | undefined): number | null => {
-    if (!text) return null;
-    const match = text.match(/total:\s*([0-9.]+)\s*liters/i);
-    return match ? parseFloat(match[1]) : null;
-  };
-
-  // Parse tobacco use total from string like "total: 22.1% (2025 est.); ..."
-  const parseTobaccoUse = (text: string | null | undefined): number | null => {
-    if (!text) return null;
-    const match = text.match(/total:\s*([0-9.]+)%/i);
-    return match ? parseFloat(match[1]) : null;
-  };
-
-  // Parse tobacco use by gender
-  const parseTobaccoUseMale = (text: string | null | undefined): number | null => {
-    if (!text) return null;
-    const match = text.match(/male:\s*([0-9.]+)%/i);
-    return match ? parseFloat(match[1]) : null;
-  };
-
-  const parseTobaccoUseFemale = (text: string | null | undefined): number | null => {
-    if (!text) return null;
-    const match = text.match(/female:\s*([0-9.]+)%/i);
-    return match ? parseFloat(match[1]) : null;
-  };
-
-  // Parse detailed alcohol consumption by type
-  const parseAlcoholBeer = (text: string | null | undefined): number | null => {
-    if (!text) return null;
-    const match = text.match(/beer:\s*([0-9.]+)\s*liters/i);
-    return match ? parseFloat(match[1]) : null;
-  };
-
-  const parseAlcoholWine = (text: string | null | undefined): number | null => {
-    if (!text) return null;
-    const match = text.match(/wine:\s*([0-9.]+)\s*liters/i);
-    return match ? parseFloat(match[1]) : null;
-  };
-
-  const parseAlcoholSpirits = (text: string | null | undefined): number | null => {
-    if (!text) return null;
-    const match = text.match(/spirits:\s*([0-9.]+)\s*liters/i);
-    return match ? parseFloat(match[1]) : null;
-  };
-
-  const parseAlcoholOther = (text: string | null | undefined): number | null => {
-    if (!text) return null;
-    const match = text.match(/other alcohols?:\s*([0-9.]+)\s*liters/i);
-    return match ? parseFloat(match[1]) : null;
   };
 
   const scrollToSection = (sectionId: string) => {
@@ -1262,6 +1930,12 @@ export default function HomePage() {
       sources: !isMobile,
     });
   }, []);
+
+  const handleCountrySelect = (newSelected: Country[]) => {
+    setSelectedCountries(newSelected);
+    setSelectedCountryInfo(null);
+    setSelectedTradeCountry(null);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -1316,7 +1990,7 @@ export default function HomePage() {
         <div className="mb-8">
           <CountryDropdown
             selectedCountries={selectedCountries}
-            onSelect={setSelectedCountries}
+            onSelect={handleCountrySelect}
             countries={countries}
           />
         </div>
@@ -1885,11 +2559,7 @@ export default function HomePage() {
                         <CollapsibleInfoSection 
                           title={
                             <span className="flex items-center">
-                              <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center mr-2">
-                                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 4a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1V8zm8 0a1 1 0 011-1h4a1 1 0 011 1v2a1 1 0 01-1 1h-4a1 1 0 01-1-1V8zm0 4a1 1 0 011-1h4a1 1 0 011 1v2a1 1 0 01-1 1h-4a1 1 0 01-1-1v-2z" clipRule="evenodd" />
-                                </svg>
-                              </div>
+                              <BookOpen className="mr-2" size={16} />
                               Data Sources
                             </span>
                           } 
@@ -1902,7 +2572,10 @@ export default function HomePage() {
                               {/* Rest Countries API */}
                               {restData && (
                                 <div className="flex items-start space-x-3">
-                                  <div className="w-2 h-2 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
+                                  <div 
+                                    className="w-2 h-2 rounded-full mt-2 flex-shrink-0"
+                                    style={{ backgroundColor: getSourceColor('RestCountries') }}
+                                  ></div>
                                   <div>
                                     <p className="text-sm text-gray-700 dark:text-gray-300">
                                       <span className="font-medium">REST Countries API</span>
@@ -1917,7 +2590,10 @@ export default function HomePage() {
                               {/* CIA World Factbook Source */}
                               {factbook && (
                                 <div className="flex items-start space-x-3">
-                                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                                  <div 
+                                    className="w-2 h-2 rounded-full mt-2 flex-shrink-0"
+                                    style={{ backgroundColor: getSourceColor(factbook.source) }}
+                                  ></div>
                                   <div>
                                     <p className="text-sm text-gray-700 dark:text-gray-300">
                                       <span className="font-medium">{factbook.source}</span> ({factbook.year})
@@ -1932,7 +2608,10 @@ export default function HomePage() {
                               {/* Political Regime Source */}
                               {stats?.enhancedInfo?.politicalRegimeData && (
                                 <div className="flex items-start space-x-3">
-                                  <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                                  <div 
+                                    className="w-2 h-2 rounded-full mt-2 flex-shrink-0"
+                                    style={{ backgroundColor: getSourceColor(stats.enhancedInfo.politicalRegimeData.source) }}
+                                  ></div>
                                   <div>
                                     <p className="text-sm text-gray-700 dark:text-gray-300">
                                       <span className="font-medium">{stats.enhancedInfo.politicalRegimeData.source}</span> ({stats.enhancedInfo.politicalRegimeData.year})
@@ -1947,7 +2626,10 @@ export default function HomePage() {
                               {/* World Bank Income Group Source */}
                               {stats?.enhancedInfo?.incomeGroupData && (
                                 <div className="flex items-start space-x-3">
-                                  <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2 flex-shrink-0"></div>
+                                  <div 
+                                    className="w-2 h-2 rounded-full mt-2 flex-shrink-0"
+                                    style={{ backgroundColor: getSourceColor(stats.enhancedInfo.incomeGroupData.source) }}
+                                  ></div>
                                   <div>
                                     <p className="text-sm text-gray-700 dark:text-gray-300">
                                       <span className="font-medium">{stats.enhancedInfo.incomeGroupData.source}</span> ({stats.enhancedInfo.incomeGroupData.year})
@@ -1980,1026 +2662,76 @@ export default function HomePage() {
         ) : (
           <div className="space-y-16">
             {/* Overview Section */}
-            <section id="overview" className="scroll-mt-8">
-              <div className="mb-12 relative">
-                <div className="flex items-center mb-3">
-                  <div className="w-12 h-1 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full mr-4"></div>
-                  <h2 className="text-5xl font-bold text-gray-900 dark:text-white tracking-tight">
-                    Overview
-                  </h2>
-                </div>
-                <p className="text-lg text-gray-600 dark:text-gray-400 ml-16 font-light">
-                  Essential demographic and geographic insights
-                </p>
-              </div>
-              
-              <div className="space-y-8">
-                <MetricTable
-                  title="Total Population"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return factbook?.malePopulation && factbook?.femalePopulation ? 
-                      factbook.malePopulation + factbook.femalePopulation : null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return factbook ? {
-                      source: factbook.source,
-                      year: factbook.year,
-                      sourceOrganization: "CIA World Factbook"
-                    } : null;
-                  }}
-                  formatValue={formatPopulation}
-                  loading={loading}
-                  activeTooltip={activeTooltip}
-                  toggleTooltip={toggleTooltip}
-                />
-
-                <MetricTable
-                  title="Area"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.factbookData?.area || null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return factbook ? {
-                      source: factbook.source,
-                      year: factbook.year,
-                      sourceOrganization: "CIA World Factbook"
-                    } : null;
-                  }}
-                  formatValue={formatArea}
-                  loading={loading}
-                  activeTooltip={activeTooltip}
-                  toggleTooltip={toggleTooltip}
-                />
-
-                <MetricTable
-                  title="Population Density"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    const totalPopulation = factbook?.malePopulation && factbook?.femalePopulation ? 
-                      factbook.malePopulation + factbook.femalePopulation : null;
-                    return totalPopulation && factbook?.area ? totalPopulation / factbook.area : null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return factbook ? {
-                      source: factbook.source,
-                      year: factbook.year,
-                      sourceOrganization: "CIA World Factbook"
-                    } : null;
-                  }}
-                  formatValue={formatPopulationDensity}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Urban Population %"
-                  countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.urbanPopPct?.value ?? null}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.urbanPopPct ? {
-                      source: stats.urbanPopPct.source,
-                      year: stats.urbanPopPct.year || undefined,
-                      sourceOrganization: stats.urbanPopPct.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)}%`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Rural Population %"
-                  countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.ruralPopPct?.value ?? null}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.ruralPopPct ? {
-                      source: stats.ruralPopPct.source,
-                      year: stats.ruralPopPct.year || undefined,
-                      sourceOrganization: stats.ruralPopPct.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)}%`}
-                  loading={loading}
-                />
-
-
-
-                <MetricTable
-                  title="Net Migration Rate (per 1,000 people)"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.factbookData?.netMigrationRate ?? null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return factbook ? {
-                      source: factbook.source,
-                      year: factbook.year,
-                      sourceOrganization: "CIA World Factbook"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)}/1000`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="International Migrants"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.migrantsData?.value ?? null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const migrants = stats?.enhancedInfo?.migrantsData;
-                    return migrants ? {
-                      source: migrants.source,
-                      year: migrants.year || undefined,
-                      sourceOrganization: migrants.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={(value) => {
-                    // Values from Our World in Data are already in millions
-                    if (value >= 1000000000) {
-                      return `${(value / 1000000000).toFixed(1)}B`;
-                    } else if (value >= 1000000) {
-                      return `${(value / 1000000).toFixed(1)}M`;
-                    } else if (value >= 1000) {
-                      return `${(value / 1000).toFixed(1)}K`;
-                    } else {
-                      return `${value.toFixed(1)}M`;
-                    }
-                  }}
-                  loading={isMetricLoading('migrants')}
-                />
-              </div>
-            </section>
+            <CompactSectionTable
+              sectionId="overview"
+              title="Overview"
+              metrics={sectionMetrics.overview}
+              countries={selectedCountries}
+              countryStats={countryStats}
+              loading={loading}
+              activeTooltip={activeTooltip}
+              toggleTooltip={toggleTooltip}
+              isExpanded={contentSectionsExpanded.overview}
+              onToggle={() => toggleContentSectionExpansion('overview')}
+            />
 
             {/* Economy & Development Section */}
-            <section id="economy" className="scroll-mt-8">
-              <div className="mb-12 relative">
-                <div className="flex items-center mb-3">
-                  <div className="w-12 h-1 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full mr-4"></div>
-                  <h2 className="text-5xl font-bold text-gray-900 dark:text-white tracking-tight">
-                    Economy & Development
-                  </h2>
-                </div>
-                <p className="text-lg text-gray-600 dark:text-gray-400 ml-16 font-light">
-                  Financial performance and growth indicators
-                </p>
-              </div>
-              
-              <div className="space-y-8">
-                <MetricTable
-                  title="GDP"
-                  countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.gdp?.value ?? null}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.gdp ? {
-                      source: stats.gdp.source,
-                      year: stats.gdp.year || undefined,
-                      sourceOrganization: stats.gdp.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={(value) => formatNumber(value)}
-                  loading={isMetricLoading('worldBank')}
-                />
-
-                <MetricTable
-                  title="GDP Per Capita"
-                  countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.gdpPerCapita?.value ?? null}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.gdpPerCapita ? {
-                      source: stats.gdpPerCapita.source,
-                      year: stats.gdpPerCapita.year || undefined,
-                      sourceOrganization: stats.gdpPerCapita.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={formatCurrency}
-                  loading={isMetricLoading('worldBank')}
-                />
-
-                <MetricTable
-                  title="GNI Per Capita"
-                  countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.gniPerCapita?.value ?? null}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.gniPerCapita ? {
-                      source: stats.gniPerCapita.source,
-                      year: stats.gniPerCapita.year || undefined,
-                      sourceOrganization: stats.gniPerCapita.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={formatCurrency}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Trade as % of GDP"
-                  countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.tradeGDP?.value ?? null}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.tradeGDP ? {
-                      source: stats.tradeGDP.source,
-                      year: stats.tradeGDP.year || undefined,
-                      sourceOrganization: stats.tradeGDP.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)}%`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Unemployment Rate"
-                  countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.unemploymentRate?.value ?? null}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.unemploymentRate ? {
-                      source: stats.unemploymentRate.source,
-                      year: stats.unemploymentRate.year || undefined,
-                      sourceOrganization: stats.unemploymentRate.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)}%`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Public Debt % of GDP"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return factbook?.publicDebt ?? stats?.publicDebtGDP?.value ?? null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    if (factbook?.publicDebt !== null && factbook?.publicDebt !== undefined) {
-                      return {
-                        source: factbook.source,
-                        year: factbook.year,
-                        sourceOrganization: "CIA World Factbook"
-                      };
-                    } else if (stats?.publicDebtGDP) {
-                      return {
-                        source: stats.publicDebtGDP.source,
-                        year: stats.publicDebtGDP.year || undefined,
-                        sourceOrganization: stats.publicDebtGDP.sourceOrganization
-                      };
-                    }
-                    return null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)}%`}
-                  loading={isMetricLoading('factbook')}
-                />
-
-                <MetricTable
-                  title="Military Expenditure % of GDP"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.factbookData?.militaryExpenditure ?? null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return factbook ? {
-                      source: factbook.source,
-                      year: factbook.year,
-                      sourceOrganization: "CIA World Factbook"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)}%`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Gini Index"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.factbookData?.giniIndex ?? null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return factbook ? {
-                      source: factbook.source,
-                      year: factbook.year,
-                      sourceOrganization: "CIA World Factbook"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)}`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Tax Revenue as % of GDP"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.taxRevenueData?.value ?? null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const taxRevenue = stats?.enhancedInfo?.taxRevenueData;
-                    return taxRevenue ? {
-                      source: taxRevenue.source,
-                      year: taxRevenue.year || undefined,
-                      sourceOrganization: taxRevenue.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)}%`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Internet Users %"
-                  countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.internetUsers?.value ?? null}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.internetUsers ? {
-                      source: stats.internetUsers.source,
-                      year: stats.internetUsers.year || undefined,
-                      sourceOrganization: stats.internetUsers.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)}%`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Electricity Access %"
-                  countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.electricityAccess?.value ?? null}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.electricityAccess ? {
-                      source: stats.electricityAccess.source,
-                      year: stats.electricityAccess.year || undefined,
-                      sourceOrganization: stats.electricityAccess.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)}%`}
-                  loading={loading}
-                />
-              </div>
-            </section>
+            <CompactSectionTable
+              sectionId="economy"
+              title="Economy & Development"
+              metrics={sectionMetrics.economy}
+              countries={selectedCountries}
+              countryStats={countryStats}
+              loading={loading}
+              activeTooltip={activeTooltip}
+              toggleTooltip={toggleTooltip}
+              isExpanded={contentSectionsExpanded.economy}
+              onToggle={() => toggleContentSectionExpansion('economy')}
+            />
 
             {/* Social & Environment Section */}
-            <section id="social" className="scroll-mt-8">
-              <div className="mb-12 relative">
-                <div className="flex items-center mb-3">
-                  <div className="w-12 h-1 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-full mr-4"></div>
-                  <h2 className="text-5xl font-bold text-gray-900 dark:text-white tracking-tight">
-                    Social & Environment
-                  </h2>
-                </div>
-                <p className="text-lg text-gray-600 dark:text-gray-400 ml-16 font-light">
-                  Quality of life and sustainability metrics
-                </p>
-              </div>
-              
-              <div className="space-y-8">
-                <MetricTable
-                  title="Human Development Index (HDI)"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.hdiData?.hdi ?? null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const hdi = stats?.enhancedInfo?.hdiData;
-                    return hdi ? {
-                      source: hdi.source,
-                      year: hdi.year,
-                      sourceOrganization: hdi.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(3)}`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Life Expectancy"
-                  countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.lifeExpectancy?.value ?? null}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.lifeExpectancy ? {
-                      source: stats.lifeExpectancy.source,
-                      year: stats.lifeExpectancy.year || undefined,
-                      sourceOrganization: stats.lifeExpectancy.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)} years`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Fertility Rate (births per woman)"
-                  countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.fertilityRate?.value ?? null}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.fertilityRate ? {
-                      source: stats.fertilityRate.source,
-                      year: stats.fertilityRate.year || undefined,
-                      sourceOrganization: stats.fertilityRate.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)} births/woman`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Literacy Rate"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return factbook?.literacyRate ?? stats?.literacyRate?.value ?? null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    if (factbook?.literacyRate) {
-                      return {
-                        source: factbook.source,
-                        year: factbook.year,
-                        sourceOrganization: "CIA World Factbook"
-                      };
-                    } else if (stats?.literacyRate) {
-                      return {
-                        source: stats.literacyRate.source,
-                        year: stats.literacyRate.year || undefined,
-                        sourceOrganization: stats.literacyRate.sourceOrganization
-                      };
-                    }
-                    return null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)}%`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Education Spending % of GDP"
-                  countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.educationSpendPctGDP?.value ?? null}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.educationSpendPctGDP ? {
-                      source: stats.educationSpendPctGDP.source,
-                      year: stats.educationSpendPctGDP.year || undefined,
-                      sourceOrganization: stats.educationSpendPctGDP.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)}%`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Mean Years of Schooling"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.schoolingYearsData?.value ?? null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const schooling = stats?.enhancedInfo?.schoolingYearsData;
-                    return schooling ? {
-                      source: schooling.source,
-                      year: schooling.year || undefined,
-                      sourceOrganization: schooling.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)} years`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Extreme Poverty Rate"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.extremePovertyData?.value ?? null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const poverty = stats?.enhancedInfo?.extremePovertyData;
-                    return poverty ? {
-                      source: poverty.source,
-                      year: poverty.year || undefined,
-                      sourceOrganization: poverty.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)}%`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Daily Caloric Supply"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.caloricSupplyData?.value ?? null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const caloric = stats?.enhancedInfo?.caloricSupplyData;
-                    return caloric ? {
-                      source: caloric.source,
-                      year: caloric.year || undefined,
-                      sourceOrganization: caloric.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toLocaleString()} kcal/day`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Income Share of Richest 1%"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.incomeShareRichest1Data?.value ?? null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const income = stats?.enhancedInfo?.incomeShareRichest1Data;
-                    return income ? {
-                      source: income.source,
-                      year: income.year || undefined,
-                      sourceOrganization: income.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)}%`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Income Share of Poorest 50%"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.incomeSharePoorest50Data?.value ?? null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const income = stats?.enhancedInfo?.incomeSharePoorest50Data;
-                    return income ? {
-                      source: income.source,
-                      year: income.year || undefined,
-                      sourceOrganization: income.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)}%`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Armed Forces Personnel"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.armedForcesPersonnelData?.value ?? null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const armed = stats?.enhancedInfo?.armedForcesPersonnelData;
-                    return armed ? {
-                      source: armed.source,
-                      year: armed.year || undefined,
-                      sourceOrganization: armed.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(2)}%`}
-                  loading={loading}
-                />
-
-
-
-                <MetricTable
-                  title="Forest Coverage %"
-                  countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.forestPct?.value ?? null}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.forestPct ? {
-                      source: stats.forestPct.source,
-                      year: stats.forestPct.year || undefined,
-                      sourceOrganization: stats.forestPct.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)}%`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Agricultural Land %"
-                  countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.agriculturalLandPct?.value ?? null}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.agriculturalLandPct ? {
-                      source: stats.agriculturalLandPct.source,
-                      year: stats.agriculturalLandPct.year || undefined,
-                      sourceOrganization: stats.agriculturalLandPct.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)}%`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Alcohol Consumption (liters pure alcohol/year)"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return parseAlcoholConsumption(factbook?.alcoholConsumption);
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return factbook ? {
-                      source: factbook.source,
-                      year: factbook.year,
-                      sourceOrganization: "CIA World Factbook"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)} liters`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Beer Consumption (liters pure alcohol/year)"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return parseAlcoholBeer(factbook?.alcoholConsumption);
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return factbook ? {
-                      source: factbook.source,
-                      year: factbook.year,
-                      sourceOrganization: "CIA World Factbook"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)} liters`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Wine Consumption (liters pure alcohol/year)"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return parseAlcoholWine(factbook?.alcoholConsumption);
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return factbook ? {
-                      source: factbook.source,
-                      year: factbook.year,
-                      sourceOrganization: "CIA World Factbook"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)} liters`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Spirits Consumption (liters pure alcohol/year)"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return parseAlcoholSpirits(factbook?.alcoholConsumption);
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return factbook ? {
-                      source: factbook.source,
-                      year: factbook.year,
-                      sourceOrganization: "CIA World Factbook"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)} liters`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Other Alcohols Consumption (liters pure alcohol/year)"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return parseAlcoholOther(factbook?.alcoholConsumption);
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return factbook ? {
-                      source: factbook.source,
-                      year: factbook.year,
-                      sourceOrganization: "CIA World Factbook"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)} liters`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Tobacco Use (%)"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return parseTobaccoUse(factbook?.tobaccoUse);
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return factbook ? {
-                      source: factbook.source,
-                      year: factbook.year,
-                      sourceOrganization: "CIA World Factbook"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)}%`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Male Tobacco Use (%)"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return parseTobaccoUseMale(factbook?.tobaccoUse);
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return factbook ? {
-                      source: factbook.source,
-                      year: factbook.year,
-                      sourceOrganization: "CIA World Factbook"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)}%`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Female Tobacco Use (%)"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return parseTobaccoUseFemale(factbook?.tobaccoUse);
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return factbook ? {
-                      source: factbook.source,
-                      year: factbook.year,
-                      sourceOrganization: "CIA World Factbook"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)}%`}
-                  loading={loading}
-                />
-
-
-              </div>
-            </section>
+            <CompactSectionTable
+              sectionId="social"
+              title="Social & Environment"
+              metrics={sectionMetrics.social}
+              countries={selectedCountries}
+              countryStats={countryStats}
+              loading={loading}
+              activeTooltip={activeTooltip}
+              toggleTooltip={toggleTooltip}
+              isExpanded={contentSectionsExpanded.social}
+              onToggle={() => toggleContentSectionExpansion('social')}
+            />
 
             {/* Trade Section */}
-            <section id="trade" className="scroll-mt-8">
+            <CompactSectionTable
+              sectionId="trade"
+              title="Trade"
+              metrics={sectionMetrics.trade}
+              countries={selectedCountries}
+              countryStats={countryStats}
+              loading={loading}
+              activeTooltip={activeTooltip}
+              toggleTooltip={toggleTooltip}
+              isExpanded={contentSectionsExpanded.trade}
+              onToggle={() => toggleContentSectionExpansion('trade')}
+            />
+
+            {/* Detailed Trade Dashboard */}
+            <section id="trade-details" className="scroll-mt-8">
               <div className="mb-12 relative">
                 <div className="flex items-center mb-3">
                   <div className="w-12 h-1 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full mr-4"></div>
                   <h2 className="text-5xl font-bold text-gray-900 dark:text-white tracking-tight">
-                    Trade
+                    Trade Dashboard
                   </h2>
                 </div>
                 <p className="text-lg text-gray-600 dark:text-gray-400 ml-16 font-light">
-                  Comprehensive trade analysis including goods & services, commodity breakdowns, transport modes, and trends
+                  Detailed trade analysis including partners, commodities, and export/import breakdowns
                 </p>
               </div>
               
               <div className="space-y-8">
-                <MetricTable
-                  title="Total Exports"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.comtradeData?.totalExports?.value || null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const comtrade = stats?.enhancedInfo?.comtradeData;
-                    return comtrade ? {
-                      source: comtrade.source,
-                      year: comtrade.year,
-                      sourceOrganization: comtrade.note
-                    } : null;
-                  }}
-                  formatValue={(value) => {
-                    if (value >= 1000000000) {
-                      return `$${(value / 1000000000).toFixed(1)}B`;
-                    } else if (value >= 1000000) {
-                      return `$${(value / 1000000).toFixed(1)}M`;
-                    } else {
-                      return `$${value.toLocaleString()}`;
-                    }
-                  }}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Total Imports"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.comtradeData?.totalImports?.value || null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const comtrade = stats?.enhancedInfo?.comtradeData;
-                    return comtrade ? {
-                      source: comtrade.source,
-                      year: comtrade.year,
-                      sourceOrganization: comtrade.note
-                    } : null;
-                  }}
-                  formatValue={(value) => {
-                    if (value >= 1000000000) {
-                      return `$${(value / 1000000000).toFixed(1)}B`;
-                    } else if (value >= 1000000) {
-                      return `$${(value / 1000000).toFixed(1)}M`;
-                    } else {
-                      return `$${value.toLocaleString()}`;
-                    }
-                  }}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Trade Balance"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.comtradeData?.tradeBalance?.value || null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const comtrade = stats?.enhancedInfo?.comtradeData;
-                    return comtrade ? {
-                      source: comtrade.source,
-                      year: comtrade.year,
-                      sourceOrganization: comtrade.note
-                    } : null;
-                  }}
-                  formatValue={(value) => {
-                    const absValue = Math.abs(value);
-                    const status = value >= 0 ? 'Surplus' : 'Deficit';
-                    if (absValue >= 1000000000) {
-                      return `${status}: $${(absValue / 1000000000).toFixed(1)}B`;
-                    } else if (absValue >= 1000000) {
-                      return `${status}: $${(absValue / 1000000).toFixed(1)}M`;
-                    } else {
-                      return `${status}: $${absValue.toLocaleString()}`;
-                    }
-                  }}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="International Tourist Arrivals"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.touristsData?.value ?? null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const tourists = stats?.enhancedInfo?.touristsData;
-                    return tourists ? {
-                      source: tourists.source,
-                      year: tourists.year || undefined,
-                      sourceOrganization: tourists.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={(value) => {
-                    // Values from Our World in Data are already in millions
-                    if (value >= 1000000000) {
-                      return `${(value / 1000000000).toFixed(1)}B arrivals`;
-                    } else if (value >= 1000000) {
-                      return `${(value / 1000000).toFixed(1)}M arrivals`;
-                    } else if (value >= 1000) {
-                      return `${(value / 1000).toFixed(1)}K arrivals`;
-                    } else {
-                      return `${value.toFixed(1)}M arrivals`;
-                    }
-                  }}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Airports"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.factbookData?.airports || null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return factbook ? {
-                      source: factbook.source,
-                      year: factbook.year,
-                      sourceOrganization: "CIA World Factbook"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toLocaleString()}`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Railways (km)"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.factbookData?.railways || null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return factbook ? {
-                      source: factbook.source,
-                      year: factbook.year,
-                      sourceOrganization: "CIA World Factbook"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toLocaleString()} km`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Ports"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.factbookData?.ports || null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const factbook = stats?.enhancedInfo?.factbookData;
-                    return factbook ? {
-                      source: factbook.source,
-                      year: factbook.year,
-                      sourceOrganization: "CIA World Factbook"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toLocaleString()}`}
-                  loading={loading}
-                />
-
                 {/* Country Selection for Trade Data */}
                 {selectedCountries.length > 0 && (
                   <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 p-6">
@@ -3082,7 +2814,13 @@ export default function HomePage() {
                       <div className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 px-6 py-4 border-b border-gray-200 dark:border-gray-600">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center">
-                            <span className="text-2xl mr-3 emoji">{selectedCountry?.flag}</span>
+                            <Image 
+                              src={`https://flagcdn.com/w40/${selectedCountry?.code.toLowerCase()}.png`}
+                              alt={`${selectedCountry?.name} flag`}
+                              width={24}
+                              height={18}
+                              className="w-6 h-auto mr-3"
+                            />
                             <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{selectedCountry?.name}</h3>
                           </div>
                           {comtrade && (
@@ -3245,46 +2983,10 @@ export default function HomePage() {
                               </div>
                             </div>
                           )}
-
-                          {/* Export Commodities from CIA Factbook */}
-                          {factbook?.exportCommodities && (
-                            <div>
-                              <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
-                                <span className="text-base mr-2">🚢</span>
-                                Export Commodities (CIA Factbook)
-                              </h4>
-                              <ul className="text-gray-700 dark:text-gray-300 text-sm space-y-2">
-                                {factbook.exportCommodities.split(',').map((commodity, index) => (
-                                  <li key={index} className="flex items-start">
-                                    <span className="text-blue-500 mr-2 font-bold">•</span>
-                                    <span>{commodity.trim()}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
-
-                          {/* Import Commodities from CIA Factbook */}
-                          {factbook?.importCommodities && (
-                            <div>
-                              <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
-                                <span className="text-base mr-2">📦</span>
-                                Import Commodities (CIA Factbook)
-                              </h4>
-                              <ul className="text-gray-700 dark:text-gray-300 text-sm space-y-2">
-                                {factbook.importCommodities.split(',').map((commodity, index) => (
-                                  <li key={index} className="flex items-start">
-                                    <span className="text-green-500 mr-2 font-bold">•</span>
-                                    <span>{commodity.trim()}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
                         </div>
 
                         {/* Show message if no data */}
-                        {!comtrade && !factbook?.exportCommodities && !factbook?.importCommodities && (
+                        {!comtrade && (
                           <div className="text-center py-8 text-gray-500 dark:text-gray-400">
                             {loading ? (
                               <span className="flex items-center justify-center">
@@ -3304,332 +3006,142 @@ export default function HomePage() {
             </section>
 
             {/* Safety & Crime Section */}
-            <section id="safety" className="scroll-mt-8">
-              <div className="mb-12 relative">
-                <div className="flex items-center mb-3">
-                  <div className="w-12 h-1 bg-gradient-to-r from-violet-500 to-violet-600 rounded-full mr-4"></div>
-                  <h2 className="text-5xl font-bold text-gray-900 dark:text-white tracking-tight">
-                    Safety & Crime
-                  </h2>
-                </div>
-                <p className="text-lg text-gray-600 dark:text-gray-400 ml-16 font-light">
-                  Security and crime rate analysis
-                </p>
-              </div>
-              
-              <div className="space-y-8">
-                <MetricTable
-                  title="Homicide Rate (per 100,000)"
-                  countries={selectedCountries}
-                  getValue={(country) => countryStats[country.code]?.homicideRate?.value ?? null}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.homicideRate ? {
-                      source: stats.homicideRate.source,
-                      year: stats.homicideRate.year || undefined,
-                      sourceOrganization: stats.homicideRate.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)}/100k`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Homicide Victims (Total)"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.crimeData?.victimData?.totalVictims || null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const crime = stats?.enhancedInfo?.crimeData;
-                    return crime ? {
-                      source: crime.source,
-                      year: crime.year.toString(),
-                      sourceOrganization: "UN Office on Drugs and Crime"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toLocaleString()} victims`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Homicide Arrests (Total)"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.crimeData?.totalArrests || null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const crime = stats?.enhancedInfo?.crimeData;
-                    return crime ? {
-                      source: crime.source,
-                      year: crime.year.toString(),
-                      sourceOrganization: "UN Office on Drugs and Crime"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toLocaleString()} arrests`}
-                  loading={loading}
-                />
-
-
-
-                <MetricTable
-                  title="Male Arrests"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.crimeData?.arrestsBySex?.male || null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const crime = stats?.enhancedInfo?.crimeData;
-                    return crime ? {
-                      source: crime.source,
-                      year: crime.year.toString(),
-                      sourceOrganization: "UN Office on Drugs and Crime"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toLocaleString()} arrests`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Female Arrests"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.crimeData?.arrestsBySex?.female || null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const crime = stats?.enhancedInfo?.crimeData;
-                    return crime ? {
-                      source: crime.source,
-                      year: crime.year.toString(),
-                      sourceOrganization: "UN Office on Drugs and Crime"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toLocaleString()} arrests`}
-                  loading={loading}
-                />
-
-
-
-                <MetricTable
-                  title="Male Victims"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.crimeData?.victimData?.maleVictims || null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const crime = stats?.enhancedInfo?.crimeData;
-                    return crime ? {
-                      source: crime.source,
-                      year: crime.year.toString(),
-                      sourceOrganization: "UN Office on Drugs and Crime"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toLocaleString()} victims`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Female Victims"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.crimeData?.victimData?.femaleVictims || null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const crime = stats?.enhancedInfo?.crimeData;
-                    return crime ? {
-                      source: crime.source,
-                      year: crime.year.toString(),
-                      sourceOrganization: "UN Office on Drugs and Crime"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toLocaleString()} victims`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Prison Deaths"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.crimeData?.prisonDeaths || null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const crime = stats?.enhancedInfo?.crimeData;
-                    return crime ? {
-                      source: crime.source,
-                      year: crime.year.toString(),
-                      sourceOrganization: "UN Office on Drugs and Crime"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toLocaleString()} deaths`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Terrorism Deaths"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.terrorismDeathsData?.value ?? null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const terrorism = stats?.enhancedInfo?.terrorismDeathsData;
-                    return terrorism ? {
-                      source: terrorism.source,
-                      year: terrorism.year || undefined,
-                      sourceOrganization: terrorism.sourceOrganization
-                    } : null;
-                  }}
-                  formatValue={(value) => `${Math.round(value)} deaths`}
-                  loading={loading}
-                />
-              </div>
-            </section>
+            <CompactSectionTable
+              sectionId="safety"
+              title="Safety & Crime"
+              metrics={sectionMetrics.safety}
+              countries={selectedCountries}
+              countryStats={countryStats}
+              loading={loading}
+              activeTooltip={activeTooltip}
+              toggleTooltip={toggleTooltip}
+              isExpanded={contentSectionsExpanded.safety}
+              onToggle={() => toggleContentSectionExpansion('safety')}
+            />
 
             {/* Climate Section */}
-            <section id="climate" className="scroll-mt-8">
-              <div className="mb-12 relative">
-                <div className="flex items-center mb-3">
-                  <div className="w-12 h-1 bg-gradient-to-r from-purple-600 to-purple-700 rounded-full mr-4"></div>
-                  <h2 className="text-5xl font-bold text-gray-900 dark:text-white tracking-tight">
-                    Climate
-                  </h2>
-                </div>
-                <p className="text-lg text-gray-600 dark:text-gray-400 ml-16 font-light">
-                  Temperature patterns and weather data
-                </p>
-              </div>
-              
-              <div className="space-y-8">
-                <MetricTable
-                  title="Average Temperature"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.climateData?.averageTemperature || null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const climate = stats?.enhancedInfo?.climateData;
-                    return climate ? {
-                      source: climate.source,
-                      year: climate.year,
-                      sourceOrganization: "World Bank Climate Change Knowledge Portal"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value.toFixed(1)}°C`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Hot Days (>30°C)"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.climateData?.hotDays30 || null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const climate = stats?.enhancedInfo?.climateData;
-                    return climate ? {
-                      source: climate.source,
-                      year: climate.year,
-                      sourceOrganization: "World Bank Climate Change Knowledge Portal"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value} days/year`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Very Hot Days (>35°C)"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.climateData?.hotDays35 || null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const climate = stats?.enhancedInfo?.climateData;
-                    return climate ? {
-                      source: climate.source,
-                      year: climate.year,
-                      sourceOrganization: "World Bank Climate Change Knowledge Portal"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value} days/year`}
-                  loading={loading}
-                />
-
-                <MetricTable
-                  title="Cold Days (<0°C)"
-                  countries={selectedCountries}
-                  getValue={(country) => {
-                    const stats = countryStats[country.code];
-                    return stats?.enhancedInfo?.climateData?.coldDays || null;
-                  }}
-                  getSource={(country) => {
-                    const stats = countryStats[country.code];
-                    const climate = stats?.enhancedInfo?.climateData;
-                    return climate ? {
-                      source: climate.source,
-                      year: climate.year,
-                      sourceOrganization: "World Bank Climate Change Knowledge Portal"
-                    } : null;
-                  }}
-                  formatValue={(value) => `${value} days/year`}
-                  loading={loading}
-                />
-              </div>
-            </section>
+            <CompactSectionTable
+              sectionId="climate"
+              title="Climate"
+              metrics={sectionMetrics.climate}
+              countries={selectedCountries}
+              countryStats={countryStats}
+              loading={loading}
+              activeTooltip={activeTooltip}
+              toggleTooltip={toggleTooltip}
+              isExpanded={contentSectionsExpanded.climate}
+              onToggle={() => toggleContentSectionExpansion('climate')}
+            />
 
             {/* Sources Section */}
             <section id="sources" className="scroll-mt-8">
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 border-b border-gray-200 dark:border-gray-700 pb-4">
-                Sources
-              </h2>
-              
-              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-100 dark:border-gray-700">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Data Sources</h3>
-                    <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
-                      <li>• CIA World Factbook (2024)</li>
-                      <li>• World Bank Open Data</li>
-                      <li>• REST Countries API</li>
-                      <li>• World Bank Climate Change Knowledge Portal</li>
-                      <li>• UN Office on Drugs and Crime (UNODC)</li>
-                      <li>• UN Crime Trend Survey (CTS)</li>
-                      <li>• UNDP Human Development Report (2025)</li>
-                      <li>• UN World Tourism Organization (UNWTO) 2024</li>
-                      <li>• Barro and Lee Educational Attainment Dataset</li>
-                      <li>• UNU-WIDER Government Revenue Dataset 2023</li>
-                      <li>• World Bank Poverty and Inequality Platform 2024</li>
-                      <li>• UN Department of Economic and Social Affairs 2024</li>
-                    </ul>
+              <div className="mb-12">
+                <button
+                  onClick={() => toggleSectionExpansion('sources')}
+                  className="w-full text-left group"
+                >
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
+                      Sources
+                    </h2>
+                    <div className={`transform transition-transform duration-200 ${expandedSections.sources ? 'rotate-180' : ''}`}>
+                      <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Last Updated</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                      Data is fetched in real-time from official sources
-                    </p>
+                </button>
+              </div>
+              
+              {expandedSections.sources && (
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-100 dark:border-gray-700">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                        Data Sources
+                      </h3>
+                      <div className="space-y-2">
+                        <div className="flex items-center text-sm">
+                          <div className="w-3 h-3 rounded-full mr-3 flex-shrink-0" style={{ backgroundColor: sourceColors['World Bank'] }}></div>
+                          <span className="text-gray-700 dark:text-gray-300">World Bank Open Data</span>
+                        </div>
+                        <div className="flex items-center text-sm">
+                          <div className="w-3 h-3 rounded-full mr-3 flex-shrink-0" style={{ backgroundColor: sourceColors['CIA World Factbook'] }}></div>
+                          <span className="text-gray-700 dark:text-gray-300">CIA World Factbook</span>
+                        </div>
+                        <div className="flex items-center text-sm">
+                          <div className="w-3 h-3 rounded-full mr-3 flex-shrink-0" style={{ backgroundColor: sourceColors['Our World in Data'] }}></div>
+                          <span className="text-gray-700 dark:text-gray-300">Our World in Data</span>
+                        </div>
+                        <div className="flex items-center text-sm">
+                          <div className="w-3 h-3 rounded-full mr-3 flex-shrink-0" style={{ backgroundColor: sourceColors['CTS/NSO'] }}></div>
+                          <span className="text-gray-700 dark:text-gray-300">UN Office on Drugs and Crime</span>
+                        </div>
+                        <div className="flex items-center text-sm">
+                          <div className="w-3 h-3 rounded-full mr-3 flex-shrink-0" style={{ backgroundColor: sourceColors['Climate API'] }}></div>
+                          <span className="text-gray-700 dark:text-gray-300">World Bank Climate Knowledge Portal</span>
+                        </div>
+                        <div className="flex items-center text-sm">
+                          <div className="w-3 h-3 rounded-full mr-3 flex-shrink-0" style={{ backgroundColor: sourceColors['RestCountries'] }}></div>
+                          <span className="text-gray-700 dark:text-gray-300">REST Countries API</span>
+                        </div>
+                        <div className="flex items-center text-sm">
+                          <div className="w-3 h-3 rounded-full mr-3 flex-shrink-0" style={{ backgroundColor: sourceColors['UN HDI'] }}></div>
+                          <span className="text-gray-700 dark:text-gray-300">UNDP Human Development Report</span>
+                        </div>
+                        <div className="flex items-center text-sm">
+                          <div className="w-3 h-3 rounded-full mr-3 flex-shrink-0" style={{ backgroundColor: sourceColors['UN Comtrade'] }}></div>
+                          <span className="text-gray-700 dark:text-gray-300">UN Comtrade Database</span>
+                        </div>
+                        <div className="flex items-center text-sm">
+                          <div className="w-3 h-3 rounded-full mr-3 flex-shrink-0" style={{ backgroundColor: sourceColors['UN DESA'] }}></div>
+                          <span className="text-gray-700 dark:text-gray-300">UN Department of Economic and Social Affairs</span>
+                        </div>
+                        <div className="flex items-center text-sm">
+                          <div className="w-3 h-3 rounded-full mr-3 flex-shrink-0" style={{ backgroundColor: sourceColors['UNU-WIDER'] }}></div>
+                          <span className="text-gray-700 dark:text-gray-300">UNU-WIDER Government Revenue Dataset</span>
+                        </div>
+                        <div className="flex items-center text-sm">
+                          <div className="w-3 h-3 rounded-full mr-3 flex-shrink-0" style={{ backgroundColor: sourceColors['Barro-Lee'] }}></div>
+                          <span className="text-gray-700 dark:text-gray-300">Barro-Lee & Lee-Lee Educational Attainment</span>
+                        </div>
+                        <div className="flex items-center text-sm">
+                          <div className="w-3 h-3 rounded-full mr-3 flex-shrink-0" style={{ backgroundColor: sourceColors['FAO'] }}></div>
+                          <span className="text-gray-700 dark:text-gray-300">Food and Agriculture Organization (FAO)</span>
+                        </div>
+                        <div className="flex items-center text-sm">
+                          <div className="w-3 h-3 rounded-full mr-3 flex-shrink-0" style={{ backgroundColor: sourceColors['WID'] }}></div>
+                          <span className="text-gray-700 dark:text-gray-300">World Inequality Database</span>
+                        </div>
+                        <div className="flex items-center text-sm">
+                          <div className="w-3 h-3 rounded-full mr-3 flex-shrink-0" style={{ backgroundColor: sourceColors['UNWTO'] }}></div>
+                          <span className="text-gray-700 dark:text-gray-300">UN World Tourism Organization</span>
+                        </div>
+                        <div className="flex items-center text-sm">
+                          <div className="w-3 h-3 rounded-full mr-3 flex-shrink-0" style={{ backgroundColor: sourceColors['GTD'] }}></div>
+                          <span className="text-gray-700 dark:text-gray-300">Global Terrorism Database</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Update Information</h3>
+                      <div className="space-y-3">
+                        <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                          <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                            <span className="font-medium">Real-time Data:</span> Most metrics are fetched directly from official APIs
+                          </p>
+                          <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                            <span className="font-medium">Data Accuracy:</span> Values represent the latest available data from each source
+                          </p>
+                          <p className="text-sm text-gray-600 dark:text-gray-400">
+                            <span className="font-medium">Source Indicators:</span> Color dots next to each metric indicate the data source
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </section>
           </div>
         )}

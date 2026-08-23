@@ -10,7 +10,6 @@ import {
   latestByIndicator,
   isErrorEnvelope,
   observationsFrom,
-  MAX_INDICATORS_PER_REQUEST,
   type WorldBankObservation,
 } from '../../../lib/worldBankQuery';
 
@@ -35,6 +34,17 @@ export const revalidate = 86400;
  * while mrv=5 covers all 14.
  */
 const MOST_RECENT_YEARS = 5;
+
+/**
+ * Indicators per request.
+ *
+ * Deliberately smaller than the profile route's limit. These queries span every
+ * country, so all 14 indicators in one request returns ~5.7 MB - over Next's 2 MB
+ * fetch-cache ceiling, which made the cache silently do nothing and refetched the
+ * lot on every revalidation. Five indicators per request keeps the largest
+ * response near 1.5 MB, so all three are cached.
+ */
+const RANKINGS_BATCH_SIZE = 5;
 
 function rankingsUrl(indicators: string[]): string {
   const params = new URLSearchParams({
@@ -73,10 +83,7 @@ async function fetchBatch(indicators: string[]): Promise<WorldBankObservation[] 
 
 export async function GET() {
   const fetched = rankingMetrics.filter((m) => m.indicator);
-  const batches = chunk(
-    fetched.map((m) => m.indicator as string),
-    MAX_INDICATORS_PER_REQUEST
-  );
+  const batches = chunk(fetched.map((m) => m.indicator as string), RANKINGS_BATCH_SIZE);
 
   const results = await Promise.all(
     batches.map(async (batch) => {

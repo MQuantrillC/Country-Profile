@@ -41,8 +41,27 @@ describe('GET /api/rankings', () => {
 
     await GET();
 
-    // 14 fetched indicators fit in one batch; the page used to make 14 requests.
-    expect(fetchMock.mock.calls.length).toBe(1);
+    // 14 indicators in batches of 5. Deliberately not one request: an
+    // all-countries query for all 14 returns ~5.7 MB, over Next's 2 MB
+    // fetch-cache ceiling, so it would never be cached. The page previously made
+    // 14 requests and cached none of them.
+    expect(fetchMock.mock.calls.length).toBe(3);
+  });
+
+  it('keeps every batch small enough for Next to cache the response', async () => {
+    const batchSizes: number[] = [];
+    vi.stubGlobal('fetch', vi.fn(async (url: string) => {
+      batchSizes.push(
+        decodeURIComponent(url.split('/indicator/')[1].split('?')[0]).split(';').length
+      );
+      return ok([]);
+    }));
+
+    await GET();
+
+    // Measured against the live API: 5 indicators peaks at ~1.45 MB, 7 exceeds 2 MB.
+    expect(batchSizes.length).toBeGreaterThan(0);
+    for (const size of batchSizes) expect(size).toBeLessThanOrEqual(5);
   });
 
   it('returns an entry for a country the World Bank has data for', async () => {

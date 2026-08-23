@@ -1,155 +1,44 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
+import fs from 'fs/promises';
 import path from 'path';
+import { toIso3 } from '../../../lib/countries';
 
-// In-memory cache for crime data
-let crimeDataCache = null;
-let cacheTimestamp = null;
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+// UNODC figures are published annually; nothing here changes between requests.
+export const revalidate = 86400;
 
-function loadCrimeData() {
+// Per-country files are written by scripts/convert-crime-data.js.
+const CRIME_DIR = path.join(process.cwd(), 'src/data/crime');
+
+// Parsed country files, kept for the life of the process. Each is a few hundred kB
+// at most, and the data is static, so there is nothing to expire. The previous
+// version parsed a single 31 MB file into memory and re-read it every 5 minutes.
+const countryCache = new Map();
+let indexCache = null;
+
+async function readJson(file) {
   try {
-    const dataPath = path.join(process.cwd(), 'src/data/crime-data-grouped.json');
-    
-    if (fs.existsSync(dataPath)) {
-      const data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
-      return data;
-    }
-    
-    // Fallback to sample data if JSON file doesn't exist
-    return getSampleCrimeData();
-    
-  } catch (error) {
-    console.error('Error loading crime data:', error);
-    return getSampleCrimeData();
+    return JSON.parse(await fs.readFile(file, 'utf8'));
+  } catch {
+    return null;
   }
 }
 
-function getSampleCrimeData() {
-  // Sample data based on the structure you showed
-  return {
-    "ARM": {
-      "country": "Armenia",
-      "region": "Asia",
-      "subregion": "Western Asia",
-      "data": [
-        {
-          "indicator": "Persons arrested by citizenship",
-          "dimension": "National citizens",
-          "category": "",
-          "sex": "Male",
-          "age": "Total",
-          "year": 2013,
-          "unit": "Counts",
-          "value": 35,
-          "source": "CTS"
-        }
-      ]
-    },
-    "CHE": {
-      "country": "Switzerland",
-      "region": "Europe",
-      "subregion": "Western Europe",
-      "data": [
-        {
-          "indicator": "Persons arrested by citizenship",
-          "dimension": "National citizens",
-          "category": "",
-          "sex": "Male",
-          "age": "Total",
-          "year": 2013,
-          "unit": "Counts",
-          "value": 28,
-          "source": "CTS"
-        }
-      ]
-    },
-    "COL": {
-      "country": "Colombia",
-      "region": "Americas",
-      "subregion": "Latin America",
-      "data": [
-        {
-          "indicator": "Persons arrested by citizenship",
-          "dimension": "National citizens",
-          "category": "",
-          "sex": "Male",
-          "age": "Total",
-          "year": 2013,
-          "unit": "Counts",
-          "value": 15053,
-          "source": "CTS"
-        }
-      ]
-    },
-    "CZE": {
-      "country": "Czechia",
-      "region": "Europe",
-      "subregion": "Eastern Europe",
-      "data": [
-        {
-          "indicator": "Persons arrested by citizenship",
-          "dimension": "National citizens",
-          "category": "",
-          "sex": "Male",
-          "age": "Total",
-          "year": 2013,
-          "unit": "Counts",
-          "value": 69,
-          "source": "CTS"
-        }
-      ]
-    },
-    "DEU": {
-      "country": "Germany",
-      "region": "Europe",
-      "subregion": "Western Europe",
-      "data": [
-        {
-          "indicator": "Persons arrested by citizenship",
-          "dimension": "National citizens",
-          "category": "",
-          "sex": "Male",
-          "age": "Total",
-          "year": 2013,
-          "unit": "Counts",
-          "value": 455,
-          "source": "CTS"
-        }
-      ]
-    },
-    "FIN": {
-      "country": "Finland",
-      "region": "Europe",
-      "subregion": "Northern Europe",
-      "data": [
-        {
-          "indicator": "Persons arrested by citizenship",
-          "dimension": "National citizens",
-          "category": "",
-          "sex": "Male",
-          "age": "Total",
-          "year": 2013,
-          "unit": "Counts",
-          "value": 70,
-          "source": "CTS"
-        }
-      ]
-    }
-  };
+async function loadIndex() {
+  if (!indexCache) {
+    indexCache = await readJson(path.join(CRIME_DIR, 'index.json'));
+  }
+  return indexCache;
 }
 
-function getCachedCrimeData() {
-  const now = Date.now();
-  
-  if (crimeDataCache && cacheTimestamp && (now - cacheTimestamp) < CACHE_DURATION) {
-    return crimeDataCache;
-  }
-  
-  crimeDataCache = loadCrimeData();
-  cacheTimestamp = now;
-  
-  return crimeDataCache;
+async function loadCountry(iso3) {
+  if (countryCache.has(iso3)) return countryCache.get(iso3);
+
+  // Guard against path traversal: only ever read a three-letter uppercase code.
+  if (!/^[A-Z]{3}$/.test(iso3)) return null;
+
+  const data = await readJson(path.join(CRIME_DIR, `${iso3}.json`));
+  countryCache.set(iso3, data);
+  return data;
 }
 
 function processCountryCrimeData(countryData) {
@@ -318,154 +207,46 @@ function processCountryCrimeData(countryData) {
     prisonDeathsYear: prisonDeathLatestYear,
     source: (arrestData[0] || victimData[0] || convictionData[0] || prisonDeathData[0])?.source || 'CTS',
     unit: (arrestData[0] || victimData[0] || convictionData[0] || prisonDeathData[0])?.unit || 'Counts',
-    rawData: data
+    // `rawData: data` used to be returned here - every observation for the country,
+    // up to half a megabyte per response, which nothing in the UI ever read.
   };
 }
 
-// Country code mapping for crime data
-const COUNTRY_CODE_MAPPING = {
-  'US': 'USA',
-  'GB': 'GBR_E_W', // UK data is split by region, use England & Wales as primary
-  'JP': 'JPN',
-  'DE': 'DEU',
-  'FR': 'FRA',
-  'IT': 'ITA',
-  'ES': 'ESP',
-  'CN': 'CHN',
-  'IN': 'IND',
-  'BR': 'BRA',
-  'CA': 'CAN',
-  'AU': 'AUS',
-  'RU': 'RUS',
-  'MX': 'MEX',
-  'KR': 'KOR',
-  'NL': 'NLD',
-  'BE': 'BEL',
-  'CH': 'CHE',
-  'AT': 'AUT',
-  'SE': 'SWE',
-  'NO': 'NOR',
-  'DK': 'DNK',
-  'FI': 'FIN',
-  'PL': 'POL',
-  'CZ': 'CZE',
-  'HU': 'HUN',
-  'GR': 'GRC',
-  'PT': 'PRT',
-  'IE': 'IRL',
-  'SK': 'SVK',
-  'SI': 'SVN',
-  'HR': 'HRV',
-  'BG': 'BGR',
-  'RO': 'ROU',
-  'LT': 'LTU',
-  'LV': 'LVA',
-  'EE': 'EST',
-  // Additional countries
-  'LU': 'LUX',
-  'AL': 'ALB',
-  'BH': 'BHR',
-  'IS': 'ISL',
-  'MT': 'MLT',
-  'CY': 'CYP',
-  'MK': 'MKD',
-  'ME': 'MNE',
-  'RS': 'SRB',
-  'BA': 'BIH',
-  'MD': 'MDA',
-  'BY': 'BLR',
-  'UA': 'UKR',
-  'AM': 'ARM',
-  'AZ': 'AZE',
-  'GE': 'GEO',
-  // Latin America
-  'AR': 'ARG',
-  'CL': 'CHL',
-  'PE': 'PER',
-  'CO': 'COL',
-  'VE': 'VEN',
-  'EC': 'ECU',
-  'BO': 'BOL',
-  'PY': 'PRY',
-  'UY': 'URY',
-  // Asia-Pacific
-  'TH': 'THA',
-  'VN': 'VNM',
-  'MY': 'MYS',
-  'SG': 'SGP',
-  'PH': 'PHL',
-  'ID': 'IDN',
-  'TR': 'TUR',
-  // Middle East
-  'QA': 'QAT',
-  // Africa
-  'DZ': 'DZA',
-  // South America
-  'SR': 'SUR'
-};
-
 export async function GET(request) {
-  try {
-    const { searchParams } = new URL(request.url);
-    const country = searchParams.get('country');
-    
-    const crimeData = getCachedCrimeData();
-    
-    if (country) {
-      let countryCode = country.toUpperCase();
-      
-      // Check if we need to map the country code
-      if (COUNTRY_CODE_MAPPING[countryCode]) {
-        countryCode = COUNTRY_CODE_MAPPING[countryCode];
-      }
-      
-      const countryData = crimeData[countryCode];
-      
-      if (!countryData) {
-        return NextResponse.json({
-          error: 'Country not found',
-          country: countryCode,
-          originalCode: country.toUpperCase(),
-          availableCountries: Object.keys(crimeData).slice(0, 20), // Show first 20 for debugging
-          suggestion: `Try one of: ${Object.keys(crimeData).filter(c => c.includes(country.toUpperCase())).join(', ')}`
-        }, { status: 404 });
-      }
-      
-      const processedData = processCountryCrimeData(countryData);
-      
-      return NextResponse.json(processedData);
-    }
-    
-    // Return summary of all available countries
-    const summary = {
-      totalCountries: Object.keys(crimeData).length,
-      availableCountries: Object.keys(crimeData).map(code => ({
-        code: code,
-        name: crimeData[code].country,
-        region: crimeData[code].region
-      })),
-      dataStructure: {
-        endpoints: [
-          'GET /api/crime - Get all countries summary',
-          'GET /api/crime?country=US - Get specific country data'
-        ]
-      }
-    };
-    
-    return NextResponse.json(summary);
-    
-  } catch (error) {
-    console.error('Crime API Error:', error);
-    return NextResponse.json({ 
-      error: 'Internal server error',
-      message: error.message 
-    }, { status: 500 });
-  }
-}
+  const { searchParams } = new URL(request.url);
+  const country = searchParams.get('country');
 
-export async function POST() {
-  return NextResponse.json({ 
-    error: 'Method not allowed',
-    message: 'Use GET to retrieve crime data' 
-  }, { status: 405 });
-} 
+  // No country: report what the dataset covers, straight from the index.
+  if (!country) {
+    const index = await loadIndex();
+    if (!index) {
+      return NextResponse.json(
+        { error: 'Crime dataset has not been generated. Run: npm run convert-crime-data' },
+        { status: 503 }
+      );
+    }
+    return NextResponse.json({
+      totalCountries: index.countries.length,
+      totalRecords: index.totalRecords,
+      yearRange: index.yearRange,
+      availableCountries: index.countries,
+    });
+  }
+
+  // The shared table knows every ISO2 -> ISO3 pair, so the dataset's full
+  // 170-country coverage is reachable instead of the 71 the old hand-written
+  // map happened to list.
+  const iso3 = toIso3(country) ?? country.toUpperCase();
+  const countryData = await loadCountry(iso3);
+
+  if (!countryData) {
+    return NextResponse.json(
+      { error: `No UNODC crime data is published for ${country.toUpperCase()}`, code: iso3 },
+      { status: 404 }
+    );
+  }
+
+  return NextResponse.json(processCountryCrimeData(countryData), {
+    headers: { 'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=604800' },
+  });
+}

@@ -1,35 +1,11 @@
 import { NextResponse } from 'next/server';
-import axios from 'axios';
+import { dateWindow, fetchWorldBank } from '../../../lib/worldBankQuery';
+
+// Reference data changes at most a few times a year; cache for a day and serve
+// stale for a week while revalidating, so upstream outages stay invisible.
+export const revalidate = 86400;
 
 // Map 2-letter ISO codes to 3-letter codes for World Bank API
-const countryCodeMap = {
-  US: 'USA', CN: 'CHN', JP: 'JPN', DE: 'DEU', IN: 'IND', 
-  GB: 'GBR', FR: 'FRA', IT: 'ITA', BR: 'BRA', CA: 'CAN',
-  RU: 'RUS', KR: 'KOR', AU: 'AUS', ES: 'ESP', MX: 'MEX',
-  ID: 'IDN', NL: 'NLD', SA: 'SAU', CH: 'CHE', TR: 'TUR',
-  DK: 'DNK', FI: 'FIN', BE: 'BEL', AT: 'AUT', IE: 'IRL',
-  PT: 'PRT', GR: 'GRC', PL: 'POL', CZ: 'CZE', HU: 'HUN',
-  SK: 'SVK', SI: 'SVN', HR: 'HRV', BG: 'BGR', RO: 'ROU',
-  LT: 'LTU', LV: 'LVA', EE: 'EST', LU: 'LUX', MT: 'MLT',
-  CY: 'CYP', IS: 'ISL', SE: 'SWE', NO: 'NOR', UA: 'UKR',
-  BY: 'BLR', RS: 'SRB', BA: 'BIH', ME: 'MNE', MK: 'MKD',
-  AL: 'ALB', MD: 'MDA', GE: 'GEO', AM: 'ARM', AZ: 'AZE',
-  SG: 'SGP', TH: 'THA', MY: 'MYS', VN: 'VNM', PH: 'PHL',
-  AE: 'ARE', QA: 'QAT', KW: 'KWT', OM: 'OMN', BH: 'BHR',
-  JO: 'JOR', LB: 'LBN', IL: 'ISR', EG: 'EGY', MA: 'MAR',
-  TN: 'TUN', DZ: 'DZA', NG: 'NGA', KE: 'KEN', GH: 'GHA',
-  ET: 'ETH', TZ: 'TZA', UG: 'UGA', RW: 'RWA', SN: 'SEN',
-  CI: 'CIV', CM: 'CMR', MG: 'MDG', MZ: 'MOZ', ZM: 'ZMB',
-  ZW: 'ZWE', BW: 'BWA', NA: 'NAM', ZA: 'ZAF', PK: 'PAK',
-  BD: 'BGD', LK: 'LKA', NP: 'NPL', AF: 'AFG', IR: 'IRN',
-  IQ: 'IRQ', CL: 'CHL', PE: 'PER', AR: 'ARG', CO: 'COL',
-  VE: 'VEN', EC: 'ECU', UY: 'URY', PY: 'PRY', BO: 'BOL',
-  // Caribbean and Central America
-  DO: 'DOM', JM: 'JAM', TT: 'TTO', BB: 'BRB', BS: 'BHS',
-  BZ: 'BLZ', CR: 'CRI', SV: 'SLV', GT: 'GTM', HN: 'HND',
-  NI: 'NIC', PA: 'PAN'
-};
-
 // World Bank indicators
 const worldBankIndicators = {
   gdp: 'NY.GDP.MKTP.CD',
@@ -80,61 +56,27 @@ export async function GET(request) {
     }
 
     // Determine URL based on whether we want all countries or single country
-    let url;
-    if (country) {
-      const worldBankCode = countryCodeMap[country.toUpperCase()] || country;
-      url = `https://api.worldbank.org/v2/country/${worldBankCode}/indicator/${indicatorCode}?format=json&per_page=5&date=2020:2024`;
-    } else {
-      url = `https://api.worldbank.org/v2/country/all/indicator/${indicatorCode}?format=json&per_page=20000&date=2020:2024`;
+    // The World Bank API accepts ISO 3166-1 alpha-2 codes directly, so the request
+    // can pass the code straight through. `dateWindow()` keeps the range rolling
+    // instead of frozen at a hardcoded year.
+    const url = country
+      ? `https://api.worldbank.org/v2/country/${country.toUpperCase()}/indicator/${indicatorCode}?format=json&per_page=100&date=${dateWindow()}`
+      : `https://api.worldbank.org/v2/country/all/indicator/${indicatorCode}?format=json&per_page=20000&date=${dateWindow()}`;
+
+    const payload = await fetchWorldBank(url);
+
+    if (!payload) {
+      return NextResponse.json(
+        {
+          error: 'The World Bank API is not responding. Try again in a moment.',
+          metric,
+          indicator: indicatorCode,
+        },
+        { status: 502 }
+      );
     }
 
-    console.log(`Fetching World Bank data: ${url}`);
-
-    const response = await axios.get(url, {
-      timeout: 15000, // 15 second timeout for bulk requests
-      headers: {
-        'User-Agent': 'Country-Profile-App/1.0'
-      }
-    });
-
-    if (!response.data || !Array.isArray(response.data) || response.data.length < 2) {
-      return NextResponse.json({ 
-        error: 'Invalid World Bank API response',
-        metric: metric,
-        indicator: indicatorCode
-      }, { status: 500 });
-    }
-
-    // Debug for problematic metrics
-    if (metric === 'gdp' || metric === 'population') {
-      console.log(`🔍 Processing ${metric} data - ${response.data[1]?.length || 0} total entries from World Bank API`);
-      
-      if (response.data[1] && Array.isArray(response.data[1])) {
-        // Debug Pakistan entries to verify filtering is working
-        const pakistanEntries = response.data[1].filter(entry => 
-          entry.country?.id === 'PAK' || entry.country?.value?.includes('Pakistan')
-        );
-        console.log(`🔍 Found ${pakistanEntries.length} Pakistan-related entries (will filter out aggregates):`);
-        pakistanEntries.forEach((entry) => {
-          const unit = metric === 'gdp' ? '$' : '';
-          const suffix = metric === 'gdp' ? 'B' : 'M';
-          const displayValue = metric === 'gdp' ? 
-            (entry.value / 1e9).toFixed(1) : 
-            (entry.value / 1e6).toFixed(1);
-          const isAggregate = entry.country.value.includes('Middle East') || entry.country.id.length > 3;
-          console.log(`  ${isAggregate ? '🚫 FILTERED' : '✅ KEPT'} ${entry.country.value} (${entry.country.id}): ${unit}${displayValue}${suffix}`);
-        });
-      }
-    }
-
-    const dataArray = response.data[1];
-    if (!Array.isArray(dataArray)) {
-      return NextResponse.json({ 
-        error: 'No data array in World Bank response',
-        metric: metric,
-        indicator: indicatorCode
-      }, { status: 500 });
-    }
+    const dataArray = payload[1];
 
     if (country) {
       // Single country request

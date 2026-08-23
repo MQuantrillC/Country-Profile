@@ -1,4 +1,9 @@
 import { NextResponse } from 'next/server';
+import { getFactbookData } from '../../../lib/factbook';
+
+// Reference data changes at most a few times a year; cache for a day and serve
+// stale for a week while revalidating, so upstream outages stay invisible.
+export const revalidate = 86400;
 
 // Helper function to format trade value
 function formatTradeValue(value) {
@@ -84,17 +89,15 @@ export async function GET(request) {
   }
 
   try {
-    console.log(`Fetching trade data from CIA World Factbook for ${countryCode}`);
-    
-    // Fetch factbook data
-    const factbookResponse = await fetch(`${request.nextUrl.origin}/api/factbook?country=${countryCode}`);
-    
-    if (!factbookResponse.ok) {
-      throw new Error(`Factbook API failed: ${factbookResponse.status}`);
+    // Call the parser directly rather than fetching our own /api/factbook route over
+    // HTTP - same data, one less round trip, and no dependency on the request origin
+    // being reachable from inside the server.
+    const { data: factbookData, error, status } = await getFactbookData(countryCode);
+
+    if (error) {
+      return NextResponse.json({ error }, { status: status ?? 500 });
     }
-    
-    const factbookData = await factbookResponse.json();
-    
+
     // Extract trade data from factbook
     const exportsValue = factbookData.exports || 0;
     const importsValue = factbookData.imports || 0;
@@ -154,8 +157,6 @@ export async function GET(request) {
       }
     };
     
-    console.log(`✅ Successfully fetched factbook trade data for ${countryCode}`);
-    console.log(`Exports: ${formatTradeValue(exportsValue)}, Imports: ${formatTradeValue(importsValue)}`);
     
     return NextResponse.json(tradeData);
 

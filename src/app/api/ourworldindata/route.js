@@ -2,6 +2,10 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
+// Reference data changes at most a few times a year; cache for a day and serve
+// stale for a week while revalidating, so upstream outages stay invisible.
+export const revalidate = 86400;
+
 // Our World in Data Chart Data API endpoints for each metric
 const OWID_CHART_ENDPOINTS = {
   tourists: 'https://api.ourworldindata.org/v1/indicators/985060.data.json',
@@ -204,7 +208,6 @@ async function fetchOWIDData(metric, countryCode) {
       throw new Error(`Unknown metric: ${metric}`);
     }
 
-    console.log(`Fetching OWID data for ${metric} from ${endpoint}`);
     
     // Fetch both data and metadata
     const [dataResponse, metadataResponse] = await Promise.all([
@@ -219,7 +222,6 @@ async function fetchOWIDData(metric, countryCode) {
     const data = await dataResponse.json();
     const metadata = await metadataResponse.json();
 
-    console.log(`OWID API response structure:`, Object.keys(data));
 
     // The OWID API returns flat arrays where each index corresponds to one data point
     if (!data.entities || !data.years || !data.values) {
@@ -248,7 +250,6 @@ async function fetchOWIDData(metric, countryCode) {
       return null;
     }
 
-    console.log(`Found entity: ${targetEntity.name} (ID: ${targetEntity.id})`);
 
     // Find all data points for this entity and get the latest
     let latestValue = null;
@@ -270,7 +271,6 @@ async function fetchOWIDData(metric, countryCode) {
       }
     }
 
-    console.log(`Found data for ${countryName}: ${latestValue} (${latestYear})`);
 
     return {
       value: latestValue,

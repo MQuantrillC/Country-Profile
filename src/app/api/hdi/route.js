@@ -1,5 +1,9 @@
 import { NextResponse } from 'next/server';
 
+// Reference data changes at most a few times a year; cache for a day and serve
+// stale for a week while revalidating, so upstream outages stay invisible.
+export const revalidate = 86400;
+
 // OWID HDI endpoint
 const OWID_HDI_ENDPOINT = 'https://api.ourworldindata.org/v1/indicators/1032439.data.json';
 
@@ -142,7 +146,6 @@ const CODE_TO_COUNTRY = Object.fromEntries(
 
 async function fetchOWIDHDIData(countryCode) {
   try {
-    console.log(`Fetching HDI data from ${OWID_HDI_ENDPOINT}`);
     
     // Fetch both data and metadata (same pattern as working OWID APIs)
     const [dataResponse, metadataResponse] = await Promise.all([
@@ -157,7 +160,6 @@ async function fetchOWIDHDIData(countryCode) {
     const data = await dataResponse.json();
     const metadata = await metadataResponse.json();
 
-    console.log(`OWID HDI API response structure:`, Object.keys(data));
 
     // The OWID API returns flat arrays where each index corresponds to one data point
     if (!data.entities || !data.years || !data.values) {
@@ -186,7 +188,6 @@ async function fetchOWIDHDIData(countryCode) {
       return null;
     }
 
-    console.log(`Found entity: ${targetEntity.name} (ID: ${targetEntity.id})`);
 
     // Find all data points for this entity and get the latest
     let latestValue = null;
@@ -208,7 +209,6 @@ async function fetchOWIDHDIData(countryCode) {
       }
     }
 
-    console.log(`Found data for ${countryName}: ${latestValue} (${latestYear})`);
 
     return {
       value: latestValue,

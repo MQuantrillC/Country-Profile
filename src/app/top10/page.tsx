@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BarChart3, TrendingUp, Globe, Trophy, Medal, Award, TrendingDown, ArrowLeft, RefreshCw, Zap, Database, Filter, Search, Heart, ExternalLink } from 'lucide-react';
-import { countries } from '@/utils/countries';
+import { countries, fromIso3 } from '@/utils/countries';
 
 interface CountryRanking {
   name: string;
@@ -99,20 +99,19 @@ export default function Top10Page() {
 
   // Ultra-fast bulk data loader
   const loadAllWorldBankData = async () => {
-    console.log('🚀 Starting ultra-fast bulk data loading for', worldBankMetrics.length, 'World Bank metrics...');
     
     const newCache: BulkDataCache = {};
     const failedMetrics: string[] = [];
     
     setLoadingState(prev => ({ ...prev, isLoading: true, loadedMetrics: 0, failed: [] }));
 
-    // Create all API calls in parallel for maximum speed (skip calculated metrics)
+    // Skip metrics we derive from others rather than fetch.
     const apiMetrics = worldBankMetrics.filter(metric => metric.id !== 'ruralPopPct');
-    const allPromises = apiMetrics.map(async (metric) => {
+
+    const loadMetric = async (metric: MetricDefinition) => {
       try {
         setLoadingState(prev => ({ ...prev, currentMetric: metric.title }));
         
-        console.log(`📊 Fetching ${metric.title}...`);
         const response = await fetch(`/api/worldbank-single?metric=${metric.id}`, {
           method: 'GET',
           headers: {
@@ -133,67 +132,6 @@ export default function Top10Page() {
         }
 
         // Map countries to our format with improved mapping
-        const countryCodeMap: Record<string, string> = {
-          // Major economies
-          USA: 'US', CHN: 'CN', JPN: 'JP', DEU: 'DE', IND: 'IN', 
-          GBR: 'GB', FRA: 'FR', ITA: 'IT', BRA: 'BR', CAN: 'CA',
-          RUS: 'RU', KOR: 'KR', AUS: 'AU', ESP: 'ES', MEX: 'MX',
-          IDN: 'ID', NLD: 'NL', SAU: 'SA', CHE: 'CH', TUR: 'TR',
-          
-          // Western Europe
-          DNK: 'DK', FIN: 'FI', BEL: 'BE', AUT: 'AT', IRL: 'IE',
-          PRT: 'PT', GRC: 'GR', NOR: 'NO', SWE: 'SE', ISL: 'IS',
-          LUX: 'LU', MLT: 'MT', CYP: 'CY',
-          
-          // Eastern Europe & Balkans
-          POL: 'PL', CZE: 'CZ', HUN: 'HU', SVK: 'SK', SVN: 'SI',
-          HRV: 'HR', BGR: 'BG', ROU: 'RO', LTU: 'LT', LVA: 'LV',
-          EST: 'EE', UKR: 'UA', BLR: 'BY', SRB: 'RS', BIH: 'BA',
-          MNE: 'ME', MKD: 'MK', ALB: 'AL', MDA: 'MD', KSV: 'XK',
-          
-          // Caucasus & Central Asia
-          GEO: 'GE', ARM: 'AM', AZE: 'AZ', KAZ: 'KZ', UZB: 'UZ',
-          TKM: 'TM', KGZ: 'KG', TJK: 'TJ', MNG: 'MN',
-          
-          // East & Southeast Asia
-          SGP: 'SG', THA: 'TH', MYS: 'MY', VNM: 'VN', PHL: 'PH',
-          LAO: 'LA', KHM: 'KH', MMR: 'MM', PRK: 'KP', TWN: 'TW',
-          HKG: 'HK', MAC: 'MO', BRN: 'BN', TLS: 'TL', FJI: 'FJ',
-          
-          // Middle East & North Africa
-          ARE: 'AE', QAT: 'QA', KWT: 'KW', OMN: 'OM', BHR: 'BH',
-          JOR: 'JO', LBN: 'LB', ISR: 'IL', PSE: 'PS', SYR: 'SY',
-          EGY: 'EG', MAR: 'MA', TUN: 'TN', DZA: 'DZ', LBY: 'LY',
-          SDN: 'SD', YEM: 'YE',
-          
-          // Sub-Saharan Africa
-          NGA: 'NG', KEN: 'KE', GHA: 'GH', ETH: 'ET', TZA: 'TZ',
-          UGA: 'UG', RWA: 'RW', SEN: 'SN', CIV: 'CI', CMR: 'CM',
-          MDG: 'MG', MOZ: 'MZ', ZMB: 'ZM', ZWE: 'ZW', BWA: 'BW',
-          NAM: 'NA', ZAF: 'ZA', AGO: 'AO', COD: 'CD', GAB: 'GA',
-          MLI: 'ML', BFA: 'BF', NER: 'NE', TCD: 'TD', CAF: 'CF',
-          COG: 'CG', GNQ: 'GQ', STP: 'ST', BEN: 'BJ', TGO: 'TG',
-          LBR: 'LR', SLE: 'SL', GIN: 'GN', GMB: 'GM', GNB: 'GW',
-          
-          // South Asia
-          PAK: 'PK', BGD: 'BD', LKA: 'LK', NPL: 'NP', AFG: 'AF',
-          BTN: 'BT', MDV: 'MV',
-          
-          // Middle East (continued)
-          IRN: 'IR', IRQ: 'IQ',
-          
-          // Americas
-          CHL: 'CL', PER: 'PE', ARG: 'AR', COL: 'CO', VEN: 'VE',
-          ECU: 'EC', URY: 'UY', PRY: 'PY', BOL: 'BO', GUY: 'GY',
-          SUR: 'SR', CRI: 'CR', PAN: 'PA', NIC: 'NI', HND: 'HN',
-          GTM: 'GT', BLZ: 'BZ', SLV: 'SV', CUB: 'CU', DOM: 'DO',
-          HTI: 'HT', JAM: 'JM', TTO: 'TT', BRB: 'BB', BHS: 'BS',
-          
-          // Pacific
-          NZL: 'NZ', PNG: 'PG', VUT: 'VU', SLB: 'SB', NCL: 'NC',
-          TON: 'TO', WSM: 'WS', KIR: 'KI', TUV: 'TV', NRU: 'NR',
-          PLW: 'PW', MHL: 'MH', FSM: 'FM'
-        };
 
         // Additional mappings for common name variations
         const nameMapping: Record<string, string> = {
@@ -227,65 +165,6 @@ export default function Top10Page() {
 
         const rankings: CountryRanking[] = [];
         
-        // Debug raw World Bank data for problematic metrics
-        if (metric.id === 'gdp' || metric.id === 'gdpPerCapita' || metric.id === 'population') {
-          let minValue;
-          if (metric.id === 'gdp') minValue = 500000000000; // $500B for GDP
-          else if (metric.id === 'gdpPerCapita') minValue = 10000; // $10k for GDP per capita  
-          else minValue = 50000000; // 50M for population
-          
-          console.log(`🔍 Raw World Bank ${metric.title} data (top 20 by value):`);
-          const topRawEntries = data.data
-            .filter((entry: WorldBankEntry) => entry.value && entry.value > minValue)
-            .sort((a: WorldBankEntry, b: WorldBankEntry) => (b.value || 0) - (a.value || 0))
-            .slice(0, 20);
-          
-          topRawEntries.forEach((entry: WorldBankEntry, index: number) => {
-            if (metric.id === 'gdp') {
-              const gdpTrillions = ((entry.value || 0) / 1000000000000).toFixed(2);
-              console.log(`  ${index + 1}. ${entry.countryName} (${entry.countryId}): $${gdpTrillions}T`);
-            } else if (metric.id === 'population') {
-              const populationM = ((entry.value || 0) / 1000000).toFixed(1);
-              console.log(`  ${index + 1}. ${entry.countryName} (${entry.countryId}): ${populationM}M`);
-            } else {
-              console.log(`  ${index + 1}. ${entry.countryName} (${entry.countryId}): $${(entry.value || 0).toLocaleString()}`);
-            }
-          });
-          
-          // Look for ALL Pakistan entries (not just first one)
-          const pakistanRawEntries = data.data.filter((entry: WorldBankEntry) => 
-            entry.countryId === 'PAK' || entry.countryName?.includes('Pakistan')
-          );
-          console.log(`🔍 ALL Pakistan entries found (${pakistanRawEntries.length} total):`);
-          pakistanRawEntries.forEach((entry: WorldBankEntry, index: number) => {
-            if (metric.id === 'gdp') {
-              console.log(`  ${index + 1}. ${entry.countryName} (${entry.countryId}): $${((entry.value || 0) / 1000000000).toFixed(1)}B (${entry.year})`);
-            } else if (metric.id === 'population') {
-              const populationM = ((entry.value || 0) / 1000000).toFixed(1);
-              console.log(`  ${index + 1}. ${entry.countryName} (${entry.countryId}): ${populationM}M (${entry.year})`);
-            } else {
-              console.log(`  ${index + 1}. ${entry.countryName} (${entry.countryId}): $${(entry.value || 0).toLocaleString()} (${entry.year})`);
-            }
-          });
-          
-          // Look for China entries specifically
-          const chinaRawEntries = data.data.filter((entry: WorldBankEntry) => 
-            entry.countryId === 'CHN' || entry.countryId === 'HKG' || entry.countryId === 'MAC' ||
-            entry.countryName?.includes('China')
-          );
-          console.log('🔍 Raw China entries:');
-          chinaRawEntries.forEach((entry: WorldBankEntry) => {
-            if (metric.id === 'gdp') {
-              const gdpTrillions = ((entry.value || 0) / 1000000000000).toFixed(2);
-              console.log(`  - ${entry.countryName} (${entry.countryId}): $${gdpTrillions}T`);
-            } else if (metric.id === 'population') {
-              const populationM = ((entry.value || 0) / 1000000).toFixed(1);
-              console.log(`  - ${entry.countryName} (${entry.countryId}): ${populationM}M`);
-            } else {
-              console.log(`  - ${entry.countryName} (${entry.countryId}): $${(entry.value || 0).toLocaleString()}`);
-            }
-          });
-        }
         
         data.data.forEach((entry: WorldBankEntry) => {
           let matchingCountry = null;
@@ -318,16 +197,14 @@ export default function Top10Page() {
           if (isRegionalAggregate) {
             // Log regional aggregates that might be confusing
             if (metric.id === 'gdp' || metric.id === 'population') {
-              console.log(`🚫 Skipping regional aggregate: ${entry.countryName} (${entry.countryId})`);
             }
             return; // Skip this entry entirely
           }
           
-          // Method 1: Try direct 3-letter to 2-letter mapping (most reliable)
-          const twoLetterCode = countryCodeMap[entry.countryId];
-          if (twoLetterCode) {
-            matchingCountry = countries.find(c => c.code === twoLetterCode);
-          }
+          // Method 1: resolve the World Bank's ISO3 id via the shared country
+          // table. This replaces a hand-written reverse map that only listed a
+          // subset of countries.
+          matchingCountry = fromIso3(entry.countryId) ?? null;
           
           // Method 2: Try name-based mapping
           if (!matchingCountry && entry.countryName) {
@@ -378,24 +255,6 @@ export default function Top10Page() {
           }
 
           if (matchingCountry && typeof entry.value === 'number' && entry.value > 0) {
-            // Debug specific countries during problematic metrics processing
-            if ((metric.id === 'gdp' || metric.id === 'gdpPerCapita' || metric.id === 'population') && (
-              entry.countryName?.includes('Pakistan') || 
-              entry.countryName?.includes('China') || 
-              entry.countryId === 'PAK' || 
-              entry.countryId === 'CHN' || 
-              entry.countryId === 'HKG' || 
-              entry.countryId === 'MAC'
-            )) {
-              if (metric.id === 'gdp') {
-                console.log(`🔍 Mapping: ${entry.countryName} (${entry.countryId}) → ${matchingCountry.name} (${matchingCountry.code}): $${(entry.value / 1000000000).toFixed(1)}B (${entry.year})`);
-              } else if (metric.id === 'population') {
-                const populationM = (entry.value / 1000000).toFixed(1);
-                console.log(`🔍 Mapping: ${entry.countryName} (${entry.countryId}) → ${matchingCountry.name} (${matchingCountry.code}): ${populationM}M (${entry.year})`);
-              } else {
-                console.log(`🔍 Mapping: ${entry.countryName} (${entry.countryId}) → ${matchingCountry.name} (${matchingCountry.code}): $${entry.value.toLocaleString()} (${entry.year})`);
-              }
-            }
             
             rankings.push({
               name: matchingCountry.name,
@@ -432,10 +291,6 @@ export default function Top10Page() {
             if (shouldReplace) {
               // Debug duplicate detection
               if (metric.id === 'gdp' || metric.id === 'population') {
-                console.log(`🔍 Duplicate detected for ${current.name} (${current.code}):`);
-                console.log(`  Existing: ${existing.value} (${existing.year})`);
-                console.log(`  New: ${current.value} (${current.year})`);
-                console.log(`  Keeping: ${shouldReplace ? 'new' : 'existing'}`);
               }
               acc[existingIndex] = current;
             }
@@ -447,68 +302,7 @@ export default function Top10Page() {
         // Store the full, deduplicated list in the cache, NOT just the top 10
         const sortedRankings = deduplicatedRankings.sort((a, b) => b.value - a.value); // Default sort for consistency
         
-        // Debug for problematic metrics
-        if (metric.id === 'gdp' || metric.id === 'gdpPerCapita' || metric.id === 'population') {
-          console.log(`🔍 ${metric.title} Debug - Found ${validRankings.length} valid countries total, ${deduplicatedRankings.length} after deduplication.`);
-          console.log(`Top 10 by ${metric.title}:`);
-          sortedRankings.forEach((country, index) => {
-            if (metric.id === 'gdp') {
-              const gdpTrillions = country.value / 1000000000000;
-              console.log(`${index + 1}. ${country.name} (${country.code}): $${gdpTrillions.toFixed(2)}T (${country.year})`);
-            } else if (metric.id === 'population') {
-              const populationM = (country.value / 1000000).toFixed(1);
-              console.log(`${index + 1}. ${country.name} (${country.code}): ${populationM}M (${country.year})`);
-            } else {
-              console.log(`${index + 1}. ${country.name} (${country.code}): $${country.value.toLocaleString()} (${country.year})`);
-            }
-          });
-          
-          // Debug Pakistan specifically - check for duplicates in validRankings
-          const pakistanEntries = validRankings.filter(r => r.name === 'Pakistan' || r.code === 'PK');
-          console.log(`🔍 Pakistan entries found: ${pakistanEntries.length}`);
-          pakistanEntries.forEach((entry, index) => {
-            if (metric.id === 'gdp') {
-              console.log(`  ${index + 1}. Pakistan GDP: $${(entry.value / 1000000000).toFixed(1)}B (${entry.year})`);
-            } else if (metric.id === 'population') {
-              const populationM = (entry.value / 1000000).toFixed(1);
-              console.log(`  ${index + 1}. Pakistan Population: ${populationM}M (${entry.year})`);
-            } else {
-              console.log(`  ${index + 1}. Pakistan GDP Per Capita: $${entry.value.toLocaleString()} (${entry.year})`);
-            }
-          });
-          
-          // Show final Pakistan entry after deduplication
-          const finalPakistanEntry = deduplicatedRankings.find(r => r.name === 'Pakistan' || r.code === 'PK');
-          if (finalPakistanEntry) {
-            if (metric.id === 'gdp') {
-              console.log(`🔍 Final Pakistan GDP after deduplication: $${(finalPakistanEntry.value / 1000000000).toFixed(1)}B (${finalPakistanEntry.year})`);
-            } else if (metric.id === 'population') {
-              const populationM = (finalPakistanEntry.value / 1000000).toFixed(1);
-              console.log(`🔍 Final Pakistan Population after deduplication: ${populationM}M (${finalPakistanEntry.year})`);
-            } else {
-              console.log(`🔍 Final Pakistan GDP Per Capita after deduplication: $${finalPakistanEntry.value.toLocaleString()} (${finalPakistanEntry.year})`);
-            }
-          }
-          
-          // Debug China entries
-          const chinaEntries = validRankings.filter(r => 
-            r.name.includes('China') || r.code === 'CN' || r.code === 'HK' || r.code === 'MO'
-          );
-          console.log('🔍 China-related entries:');
-          chinaEntries.forEach(entry => {
-            if (metric.id === 'gdp') {
-              const gdpTrillions = entry.value / 1000000000000;
-              console.log(`  - ${entry.name} (${entry.code}): $${gdpTrillions.toFixed(2)}T (${entry.year})`);
-            } else if (metric.id === 'population') {
-              const populationM = (entry.value / 1000000).toFixed(1);
-              console.log(`  - ${entry.name} (${entry.code}): ${populationM}M (${entry.year})`);
-            } else {
-              console.log(`  - ${entry.name} (${entry.code}): $${entry.value.toLocaleString()} (${entry.year})`);
-            }
-          });
-        }
 
-        console.log(`✅ Loaded ${sortedRankings.length} rankings for ${metric.title}`);
         
         setLoadingState(prev => ({ 
           ...prev, 
@@ -526,11 +320,19 @@ export default function Top10Page() {
         }));
         return { metricId: metric.id, rankings: [] };
       }
-    });
+    };
 
-    // Wait for all requests to complete
-    console.log('⚡ Executing', allPromises.length, 'parallel API calls...');
-    const results = await Promise.all(allPromises);
+    // Each of these is a whole-world query covering every country and a decade of
+    // observations. Firing all fourteen at once made the World Bank rate-limit us,
+    // and it signals that with HTTP 200 and an error body - so several metrics came
+    // back empty. A small concurrency window keeps the page fast without tripping it.
+    const CONCURRENCY = 4;
+    const results: { metricId: string; rankings: CountryRanking[] }[] = [];
+
+    for (let i = 0; i < apiMetrics.length; i += CONCURRENCY) {
+      const window = apiMetrics.slice(i, i + CONCURRENCY);
+      results.push(...(await Promise.all(window.map(loadMetric))));
+    }
     
     // Build cache
     results.forEach(({ metricId, rankings }) => {
@@ -539,18 +341,11 @@ export default function Top10Page() {
 
     // Calculate derived metrics (Rural Population %)
     if (newCache['urbanPopPct']) {
-      console.log('📊 Calculating Rural Population % from Urban Population %...');
-      console.log('Sample urban data before calculation:');
-      newCache['urbanPopPct'].slice(0, 5).forEach(entry => {
-        console.log(`${entry.name}: ${entry.value}% urban`);
-      });
-      
       const ruralRankings: CountryRanking[] = newCache['urbanPopPct'].map(urbanEntry => {
         const ruralPercent = Math.max(0, 100 - urbanEntry.value);
         
         // Debug for specific problematic countries
         if (urbanEntry.name === 'Iceland' || urbanEntry.name === 'Belgium') {
-          console.log(`🔍 ${urbanEntry.name}: Urban ${urbanEntry.value}% → Rural ${ruralPercent}%`);
         }
         
         return {
@@ -565,13 +360,7 @@ export default function Top10Page() {
         .sort((a, b) => b.value - a.value) // Highest rural % first
         .slice(0, 10);
       
-      console.log('Top 10 Rural Population results:');
-      sortedRuralRankings.forEach((country, index) => {
-        console.log(`${index + 1}. ${country.name}: ${country.value.toFixed(1)}% rural`);
-      });
-      
       newCache['ruralPopPct'] = sortedRuralRankings;
-      console.log('✅ Rural Population % calculated successfully');
     }
 
     // Use functional update to prevent race conditions
@@ -587,9 +376,6 @@ export default function Top10Page() {
       currentMetric: ''
     }));
 
-    const successCount = worldBankMetrics.length - failedMetrics.length;
-    console.log(`🎉 Bulk loading complete! ${successCount}/${worldBankMetrics.length} metrics loaded successfully`);
-    
     if (failedMetrics.length > 0) {
       console.warn('⚠️ Failed metrics:', failedMetrics);
     }
@@ -848,7 +634,6 @@ export default function Top10Page() {
                       <button
                         key={metric.id}
                         onClick={() => {
-                          console.log(`Switching to metric: ${metric.title} (${metric.id})`);
                           setSelectedMetric(metric);
                           // Reset show top performers to ensure consistent behavior
                           setShowHighest(true);
@@ -1025,7 +810,7 @@ export default function Top10Page() {
             <span>by Marco Quantrill</span>
           </div>
           
-          <div className="flex items-center justify-center space-x-4 text-xs text-gray-500">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-gray-500">
             <a 
               href="https://mquantrillc.github.io/" 
               target="_blank" 

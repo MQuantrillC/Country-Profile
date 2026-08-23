@@ -1,0 +1,6270 @@
+[
+  {
+    "code": "AF",
+    "iso3": "AFG",
+    "name": "Afghanistan",
+    "officialName": "Islamic Republic of Afghanistan",
+    "flag": "🇦🇫",
+    "region": "Asia",
+    "subregion": "Southern Asia",
+    "capital": [
+      "Kabul"
+    ],
+    "currencies": {
+      "AFN": {
+        "name": "Afghan afghani",
+        "symbol": "؋"
+      }
+    },
+    "languages": {
+      "prs": "Dari",
+      "pus": "Pashto",
+      "tuk": "Turkmen"
+    },
+    "timezones": [
+      "UTC+04:30"
+    ],
+    "googleMaps": "https://www.google.com/maps/@33,65,5z",
+    "gec": "af",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "AL",
+    "iso3": "ALB",
+    "name": "Albania",
+    "officialName": "Republic of Albania",
+    "flag": "🇦🇱",
+    "region": "Europe",
+    "subregion": "Southeast Europe",
+    "capital": [
+      "Tirana"
+    ],
+    "currencies": {
+      "ALL": {
+        "name": "Albanian lek",
+        "symbol": "L"
+      }
+    },
+    "languages": {
+      "sqi": "Albanian"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@41,20,5z",
+    "gec": "al",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "DZ",
+    "iso3": "DZA",
+    "name": "Algeria",
+    "officialName": "People's Democratic Republic of Algeria",
+    "flag": "🇩🇿",
+    "region": "Africa",
+    "subregion": "Northern Africa",
+    "capital": [
+      "Algiers"
+    ],
+    "currencies": {
+      "DZD": {
+        "name": "Algerian dinar",
+        "symbol": "د.ج"
+      }
+    },
+    "languages": {
+      "ara": "Arabic"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@28,3,5z",
+    "gec": "ag",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "AD",
+    "iso3": "AND",
+    "name": "Andorra",
+    "officialName": "Principality of Andorra",
+    "flag": "🇦🇩",
+    "region": "Europe",
+    "subregion": "Southern Europe",
+    "capital": [
+      "Andorra la Vella"
+    ],
+    "currencies": {
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      }
+    },
+    "languages": {
+      "cat": "Catalan"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@42.5,1.5,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "AO",
+    "iso3": "AGO",
+    "name": "Angola",
+    "officialName": "Republic of Angola",
+    "flag": "🇦🇴",
+    "region": "Africa",
+    "subregion": "Middle Africa",
+    "capital": [
+      "Luanda"
+    ],
+    "currencies": {
+      "AOA": {
+        "name": "Angolan kwanza",
+        "symbol": "Kz"
+      }
+    },
+    "languages": {
+      "por": "Portuguese"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-12.5,18.5,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "AG",
+    "iso3": "ATG",
+    "name": "Antigua and Barbuda",
+    "officialName": "Antigua and Barbuda",
+    "flag": "🇦🇬",
+    "region": "Americas",
+    "subregion": "Caribbean",
+    "capital": [
+      "Saint John's"
+    ],
+    "currencies": {
+      "XCD": {
+        "name": "Eastern Caribbean dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "eng": "English"
+    },
+    "timezones": [
+      "UTC-04:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@17.05,-61.8,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "AR",
+    "iso3": "ARG",
+    "name": "Argentina",
+    "officialName": "Argentine Republic",
+    "flag": "🇦🇷",
+    "region": "Americas",
+    "subregion": "South America",
+    "capital": [
+      "Buenos Aires"
+    ],
+    "currencies": {
+      "ARS": {
+        "name": "Argentine peso",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "grn": "Guaraní",
+      "spa": "Spanish"
+    },
+    "timezones": [
+      "UTC-03:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-34,-64,5z",
+    "gec": "ar",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "AM",
+    "iso3": "ARM",
+    "name": "Armenia",
+    "officialName": "Republic of Armenia",
+    "flag": "🇦🇲",
+    "region": "Asia",
+    "subregion": "Western Asia",
+    "capital": [
+      "Yerevan"
+    ],
+    "currencies": {
+      "AMD": {
+        "name": "Armenian dram",
+        "symbol": "֏"
+      }
+    },
+    "languages": {
+      "hye": "Armenian"
+    },
+    "timezones": [
+      "UTC+04:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@40,45,5z",
+    "gec": "am",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "AU",
+    "iso3": "AUS",
+    "name": "Australia",
+    "officialName": "Commonwealth of Australia",
+    "flag": "🇦🇺",
+    "region": "Oceania",
+    "subregion": "Australia and New Zealand",
+    "capital": [
+      "Canberra"
+    ],
+    "currencies": {
+      "AUD": {
+        "name": "Australian dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "eng": "English"
+    },
+    "timezones": [
+      "UTC+08:00",
+      "UTC+08:45",
+      "UTC+09:30",
+      "UTC+10:00",
+      "UTC+10:30",
+      "UTC+11:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-27,133,5z",
+    "gec": "as",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "AT",
+    "iso3": "AUT",
+    "name": "Austria",
+    "officialName": "Republic of Austria",
+    "flag": "🇦🇹",
+    "region": "Europe",
+    "subregion": "Central Europe",
+    "capital": [
+      "Vienna"
+    ],
+    "currencies": {
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      }
+    },
+    "languages": {
+      "bar": "Austro-Bavarian German"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@47.33333333,13.33333333,5z",
+    "gec": "au",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "AZ",
+    "iso3": "AZE",
+    "name": "Azerbaijan",
+    "officialName": "Republic of Azerbaijan",
+    "flag": "🇦🇿",
+    "region": "Asia",
+    "subregion": "Western Asia",
+    "capital": [
+      "Baku"
+    ],
+    "currencies": {
+      "AZN": {
+        "name": "Azerbaijani manat",
+        "symbol": "₼"
+      }
+    },
+    "languages": {
+      "aze": "Azerbaijani",
+      "rus": "Russian"
+    },
+    "timezones": [
+      "UTC+04:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@40.5,47.5,5z",
+    "gec": "aj",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "BS",
+    "iso3": "BHS",
+    "name": "Bahamas",
+    "officialName": "Commonwealth of the Bahamas",
+    "flag": "🇧🇸",
+    "region": "Americas",
+    "subregion": "Caribbean",
+    "capital": [
+      "Nassau"
+    ],
+    "currencies": {
+      "BSD": {
+        "name": "Bahamian dollar",
+        "symbol": "$"
+      },
+      "USD": {
+        "name": "United States dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "eng": "English"
+    },
+    "timezones": [
+      "UTC-05:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@24.25,-76,5z",
+    "gec": "bf",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "BH",
+    "iso3": "BHR",
+    "name": "Bahrain",
+    "officialName": "Kingdom of Bahrain",
+    "flag": "🇧🇭",
+    "region": "Asia",
+    "subregion": "Western Asia",
+    "capital": [
+      "Manama"
+    ],
+    "currencies": {
+      "BHD": {
+        "name": "Bahraini dinar",
+        "symbol": ".د.ب"
+      }
+    },
+    "languages": {
+      "ara": "Arabic"
+    },
+    "timezones": [
+      "UTC+03:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@26,50.55,5z",
+    "gec": "ba",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "BD",
+    "iso3": "BGD",
+    "name": "Bangladesh",
+    "officialName": "People's Republic of Bangladesh",
+    "flag": "🇧🇩",
+    "region": "Asia",
+    "subregion": "Southern Asia",
+    "capital": [
+      "Dhaka"
+    ],
+    "currencies": {
+      "BDT": {
+        "name": "Bangladeshi taka",
+        "symbol": "৳"
+      }
+    },
+    "languages": {
+      "ben": "Bengali"
+    },
+    "timezones": [
+      "UTC+06:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@24,90,5z",
+    "gec": "bg",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "BB",
+    "iso3": "BRB",
+    "name": "Barbados",
+    "officialName": "Barbados",
+    "flag": "🇧🇧",
+    "region": "Americas",
+    "subregion": "Caribbean",
+    "capital": [
+      "Bridgetown"
+    ],
+    "currencies": {
+      "BBD": {
+        "name": "Barbadian dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "eng": "English"
+    },
+    "timezones": [
+      "UTC-04:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@13.16666666,-59.53333333,5z",
+    "gec": "bb",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "BY",
+    "iso3": "BLR",
+    "name": "Belarus",
+    "officialName": "Republic of Belarus",
+    "flag": "🇧🇾",
+    "region": "Europe",
+    "subregion": "Eastern Europe",
+    "capital": [
+      "Minsk"
+    ],
+    "currencies": {
+      "BYN": {
+        "name": "Belarusian ruble",
+        "symbol": "Br"
+      }
+    },
+    "languages": {
+      "bel": "Belarusian",
+      "rus": "Russian"
+    },
+    "timezones": [
+      "UTC+03:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@53,28,5z",
+    "gec": "bo",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "BE",
+    "iso3": "BEL",
+    "name": "Belgium",
+    "officialName": "Kingdom of Belgium",
+    "flag": "🇧🇪",
+    "region": "Europe",
+    "subregion": "Western Europe",
+    "capital": [
+      "Brussels"
+    ],
+    "currencies": {
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      }
+    },
+    "languages": {
+      "deu": "German",
+      "fra": "French",
+      "nld": "Dutch"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@50.83333333,4,5z",
+    "gec": "be",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "BZ",
+    "iso3": "BLZ",
+    "name": "Belize",
+    "officialName": "Belize",
+    "flag": "🇧🇿",
+    "region": "Americas",
+    "subregion": "Central America",
+    "capital": [
+      "Belmopan"
+    ],
+    "currencies": {
+      "BZD": {
+        "name": "Belize dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "bjz": "Belizean Creole",
+      "eng": "English",
+      "spa": "Spanish"
+    },
+    "timezones": [
+      "UTC-06:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@17.25,-88.75,5z",
+    "gec": "bh",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "BJ",
+    "iso3": "BEN",
+    "name": "Benin",
+    "officialName": "Republic of Benin",
+    "flag": "🇧🇯",
+    "region": "Africa",
+    "subregion": "Western Africa",
+    "capital": [
+      "Porto-Novo"
+    ],
+    "currencies": {
+      "XOF": {
+        "name": "West African CFA franc",
+        "symbol": "Fr"
+      }
+    },
+    "languages": {
+      "fra": "French"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@9.5,2.25,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "BT",
+    "iso3": "BTN",
+    "name": "Bhutan",
+    "officialName": "Kingdom of Bhutan",
+    "flag": "🇧🇹",
+    "region": "Asia",
+    "subregion": "Southern Asia",
+    "capital": [
+      "Thimphu"
+    ],
+    "currencies": {
+      "BTN": {
+        "name": "Bhutanese ngultrum",
+        "symbol": "Nu."
+      },
+      "INR": {
+        "name": "Indian rupee",
+        "symbol": "₹"
+      }
+    },
+    "languages": {
+      "dzo": "Dzongkha"
+    },
+    "timezones": [
+      "UTC+06:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@27.5,90.5,5z",
+    "gec": "bt",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "BO",
+    "iso3": "BOL",
+    "name": "Bolivia",
+    "officialName": "Plurinational State of Bolivia",
+    "flag": "🇧🇴",
+    "region": "Americas",
+    "subregion": "South America",
+    "capital": [
+      "Sucre"
+    ],
+    "currencies": {
+      "BOB": {
+        "name": "Bolivian boliviano",
+        "symbol": "Bs."
+      }
+    },
+    "languages": {
+      "aym": "Aymara",
+      "grn": "Guaraní",
+      "que": "Quechua",
+      "spa": "Spanish"
+    },
+    "timezones": [
+      "UTC-04:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-17,-65,5z",
+    "gec": "bl",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "BA",
+    "iso3": "BIH",
+    "name": "Bosnia and Herzegovina",
+    "officialName": "Bosnia and Herzegovina",
+    "flag": "🇧🇦",
+    "region": "Europe",
+    "subregion": "Southeast Europe",
+    "capital": [
+      "Sarajevo"
+    ],
+    "currencies": {
+      "BAM": {
+        "name": "Bosnia and Herzegovina convertible mark",
+        "symbol": "KM"
+      }
+    },
+    "languages": {
+      "bos": "Bosnian",
+      "hrv": "Croatian",
+      "srp": "Serbian"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@44,18,5z",
+    "gec": "bk",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "BW",
+    "iso3": "BWA",
+    "name": "Botswana",
+    "officialName": "Republic of Botswana",
+    "flag": "🇧🇼",
+    "region": "Africa",
+    "subregion": "Southern Africa",
+    "capital": [
+      "Gaborone"
+    ],
+    "currencies": {
+      "BWP": {
+        "name": "Botswana pula",
+        "symbol": "P"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "tsn": "Tswana"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-22,24,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "BR",
+    "iso3": "BRA",
+    "name": "Brazil",
+    "officialName": "Federative Republic of Brazil",
+    "flag": "🇧🇷",
+    "region": "Americas",
+    "subregion": "South America",
+    "capital": [
+      "Brasília"
+    ],
+    "currencies": {
+      "BRL": {
+        "name": "Brazilian real",
+        "symbol": "R$"
+      }
+    },
+    "languages": {
+      "por": "Portuguese"
+    },
+    "timezones": [
+      "UTC-02:00",
+      "UTC-03:00",
+      "UTC-04:00",
+      "UTC-05:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-10,-55,5z",
+    "gec": "br",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "BN",
+    "iso3": "BRN",
+    "name": "Brunei",
+    "officialName": "Nation of Brunei, Abode of Peace",
+    "flag": "🇧🇳",
+    "region": "Asia",
+    "subregion": "South-Eastern Asia",
+    "capital": [
+      "Bandar Seri Begawan"
+    ],
+    "currencies": {
+      "BND": {
+        "name": "Brunei dollar",
+        "symbol": "$"
+      },
+      "SGD": {
+        "name": "Singapore dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "msa": "Malay"
+    },
+    "timezones": [
+      "UTC+08:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@4.5,114.66666666,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "BG",
+    "iso3": "BGR",
+    "name": "Bulgaria",
+    "officialName": "Republic of Bulgaria",
+    "flag": "🇧🇬",
+    "region": "Europe",
+    "subregion": "Southeast Europe",
+    "capital": [
+      "Sofia"
+    ],
+    "currencies": {
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      }
+    },
+    "languages": {
+      "bul": "Bulgarian"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@43,25,5z",
+    "gec": "bu",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "BF",
+    "iso3": "BFA",
+    "name": "Burkina Faso",
+    "officialName": "Burkina Faso",
+    "flag": "🇧🇫",
+    "region": "Africa",
+    "subregion": "Western Africa",
+    "capital": [
+      "Ouagadougou"
+    ],
+    "currencies": {
+      "XOF": {
+        "name": "West African CFA franc",
+        "symbol": "Fr"
+      }
+    },
+    "languages": {
+      "fra": "French"
+    },
+    "timezones": [
+      "UTC+00:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@13,-2,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "BI",
+    "iso3": "BDI",
+    "name": "Burundi",
+    "officialName": "Republic of Burundi",
+    "flag": "🇧🇮",
+    "region": "Africa",
+    "subregion": "Eastern Africa",
+    "capital": [
+      "Gitega"
+    ],
+    "currencies": {
+      "BIF": {
+        "name": "Burundian franc",
+        "symbol": "Fr"
+      }
+    },
+    "languages": {
+      "fra": "French",
+      "run": "Kirundi"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-3.5,30,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "KH",
+    "iso3": "KHM",
+    "name": "Cambodia",
+    "officialName": "Kingdom of Cambodia",
+    "flag": "🇰🇭",
+    "region": "Asia",
+    "subregion": "South-Eastern Asia",
+    "capital": [
+      "Phnom Penh"
+    ],
+    "currencies": {
+      "KHR": {
+        "name": "Cambodian riel",
+        "symbol": "៛"
+      },
+      "USD": {
+        "name": "United States dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "khm": "Khmer"
+    },
+    "timezones": [
+      "UTC+07:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@13,105,5z",
+    "gec": "cb",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "CM",
+    "iso3": "CMR",
+    "name": "Cameroon",
+    "officialName": "Republic of Cameroon",
+    "flag": "🇨🇲",
+    "region": "Africa",
+    "subregion": "Middle Africa",
+    "capital": [
+      "Yaoundé"
+    ],
+    "currencies": {
+      "XAF": {
+        "name": "Central African CFA franc",
+        "symbol": "Fr"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "fra": "French"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@6,12,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "CA",
+    "iso3": "CAN",
+    "name": "Canada",
+    "officialName": "Canada",
+    "flag": "🇨🇦",
+    "region": "Americas",
+    "subregion": "North America",
+    "capital": [
+      "Ottawa"
+    ],
+    "currencies": {
+      "CAD": {
+        "name": "Canadian dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "fra": "French"
+    },
+    "timezones": [
+      "UTC-03:30",
+      "UTC-04:00",
+      "UTC-05:00",
+      "UTC-06:00",
+      "UTC-07:00",
+      "UTC-08:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@60,-95,5z",
+    "gec": "ca",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "CV",
+    "iso3": "CPV",
+    "name": "Cape Verde",
+    "officialName": "Republic of Cabo Verde",
+    "flag": "🇨🇻",
+    "region": "Africa",
+    "subregion": "Western Africa",
+    "capital": [
+      "Praia"
+    ],
+    "currencies": {
+      "CVE": {
+        "name": "Cape Verdean escudo",
+        "symbol": "Esc"
+      }
+    },
+    "languages": {
+      "por": "Portuguese"
+    },
+    "timezones": [
+      "UTC-01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@16,-24,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "CF",
+    "iso3": "CAF",
+    "name": "Central African Republic",
+    "officialName": "Central African Republic",
+    "flag": "🇨🇫",
+    "region": "Africa",
+    "subregion": "Middle Africa",
+    "capital": [
+      "Bangui"
+    ],
+    "currencies": {
+      "XAF": {
+        "name": "Central African CFA franc",
+        "symbol": "Fr"
+      }
+    },
+    "languages": {
+      "fra": "French",
+      "sag": "Sango"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@7,21,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "TD",
+    "iso3": "TCD",
+    "name": "Chad",
+    "officialName": "Republic of Chad",
+    "flag": "🇹🇩",
+    "region": "Africa",
+    "subregion": "Middle Africa",
+    "capital": [
+      "N'Djamena"
+    ],
+    "currencies": {
+      "XAF": {
+        "name": "Central African CFA franc",
+        "symbol": "Fr"
+      }
+    },
+    "languages": {
+      "ara": "Arabic",
+      "fra": "French"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@15,19,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "CL",
+    "iso3": "CHL",
+    "name": "Chile",
+    "officialName": "Republic of Chile",
+    "flag": "🇨🇱",
+    "region": "Americas",
+    "subregion": "South America",
+    "capital": [
+      "Santiago"
+    ],
+    "currencies": {
+      "CLP": {
+        "name": "Chilean peso",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "spa": "Spanish"
+    },
+    "timezones": [
+      "UTC-03:00",
+      "UTC-05:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-30,-71,5z",
+    "gec": "ci",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "CN",
+    "iso3": "CHN",
+    "name": "China",
+    "officialName": "People's Republic of China",
+    "flag": "🇨🇳",
+    "region": "Asia",
+    "subregion": "Eastern Asia",
+    "capital": [
+      "Beijing"
+    ],
+    "currencies": {
+      "CNY": {
+        "name": "Chinese yuan",
+        "symbol": "¥"
+      }
+    },
+    "languages": {
+      "zho": "Chinese"
+    },
+    "timezones": [
+      "UTC+06:00",
+      "UTC+08:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@35,105,5z",
+    "gec": "ch",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "CO",
+    "iso3": "COL",
+    "name": "Colombia",
+    "officialName": "Republic of Colombia",
+    "flag": "🇨🇴",
+    "region": "Americas",
+    "subregion": "South America",
+    "capital": [
+      "Bogotá"
+    ],
+    "currencies": {
+      "COP": {
+        "name": "Colombian peso",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "spa": "Spanish"
+    },
+    "timezones": [
+      "UTC-05:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@4,-72,5z",
+    "gec": "co",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "KM",
+    "iso3": "COM",
+    "name": "Comoros",
+    "officialName": "Union of the Comoros",
+    "flag": "🇰🇲",
+    "region": "Africa",
+    "subregion": "Eastern Africa",
+    "capital": [
+      "Moroni"
+    ],
+    "currencies": {
+      "KMF": {
+        "name": "Comorian franc",
+        "symbol": "Fr"
+      }
+    },
+    "languages": {
+      "ara": "Arabic",
+      "fra": "French",
+      "zdj": "Comorian"
+    },
+    "timezones": [
+      "UTC+03:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-12.16666666,44.25,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "CG",
+    "iso3": "COG",
+    "name": "Congo",
+    "officialName": "Republic of the Congo",
+    "flag": "🇨🇬",
+    "region": "Africa",
+    "subregion": "Middle Africa",
+    "capital": [
+      "Brazzaville"
+    ],
+    "currencies": {
+      "XAF": {
+        "name": "Central African CFA franc",
+        "symbol": "Fr"
+      }
+    },
+    "languages": {
+      "fra": "French",
+      "kon": "Kikongo",
+      "lin": "Lingala"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-1,15,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "CR",
+    "iso3": "CRI",
+    "name": "Costa Rica",
+    "officialName": "Republic of Costa Rica",
+    "flag": "🇨🇷",
+    "region": "Americas",
+    "subregion": "Central America",
+    "capital": [
+      "San José"
+    ],
+    "currencies": {
+      "CRC": {
+        "name": "Costa Rican colón",
+        "symbol": "₡"
+      }
+    },
+    "languages": {
+      "spa": "Spanish"
+    },
+    "timezones": [
+      "UTC-06:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@10,-84,5z",
+    "gec": "cs",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "HR",
+    "iso3": "HRV",
+    "name": "Croatia",
+    "officialName": "Republic of Croatia",
+    "flag": "🇭🇷",
+    "region": "Europe",
+    "subregion": "Southeast Europe",
+    "capital": [
+      "Zagreb"
+    ],
+    "currencies": {
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      }
+    },
+    "languages": {
+      "hrv": "Croatian"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@45.16666666,15.5,5z",
+    "gec": "hr",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "CU",
+    "iso3": "CUB",
+    "name": "Cuba",
+    "officialName": "Republic of Cuba",
+    "flag": "🇨🇺",
+    "region": "Americas",
+    "subregion": "Caribbean",
+    "capital": [
+      "Havana"
+    ],
+    "currencies": {
+      "CUC": {
+        "name": "Cuban convertible peso",
+        "symbol": "$"
+      },
+      "CUP": {
+        "name": "Cuban peso",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "spa": "Spanish"
+    },
+    "timezones": [
+      "UTC-05:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@21.5,-80,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "CY",
+    "iso3": "CYP",
+    "name": "Cyprus",
+    "officialName": "Republic of Cyprus",
+    "flag": "🇨🇾",
+    "region": "Europe",
+    "subregion": "Southern Europe",
+    "capital": [
+      "Nicosia"
+    ],
+    "currencies": {
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      }
+    },
+    "languages": {
+      "ell": "Greek",
+      "tur": "Turkish"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@35,33,5z",
+    "gec": "cy",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "CZ",
+    "iso3": "CZE",
+    "name": "Czechia",
+    "officialName": "Czech Republic",
+    "flag": "🇨🇿",
+    "region": "Europe",
+    "subregion": "Central Europe",
+    "capital": [
+      "Prague"
+    ],
+    "currencies": {
+      "CZK": {
+        "name": "Czech koruna",
+        "symbol": "Kč"
+      }
+    },
+    "languages": {
+      "ces": "Czech",
+      "slk": "Slovak"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@49.75,15.5,5z",
+    "gec": "ez",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "DK",
+    "iso3": "DNK",
+    "name": "Denmark",
+    "officialName": "Kingdom of Denmark",
+    "flag": "🇩🇰",
+    "region": "Europe",
+    "subregion": "Northern Europe",
+    "capital": [
+      "Copenhagen"
+    ],
+    "currencies": {
+      "DKK": {
+        "name": "Danish krone",
+        "symbol": "kr"
+      }
+    },
+    "languages": {
+      "dan": "Danish"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@56,10,5z",
+    "gec": "da",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "DJ",
+    "iso3": "DJI",
+    "name": "Djibouti",
+    "officialName": "Republic of Djibouti",
+    "flag": "🇩🇯",
+    "region": "Africa",
+    "subregion": "Eastern Africa",
+    "capital": [
+      "Djibouti"
+    ],
+    "currencies": {
+      "DJF": {
+        "name": "Djiboutian franc",
+        "symbol": "Fr"
+      }
+    },
+    "languages": {
+      "ara": "Arabic",
+      "fra": "French"
+    },
+    "timezones": [
+      "UTC+03:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@11.5,43,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "DM",
+    "iso3": "DMA",
+    "name": "Dominica",
+    "officialName": "Commonwealth of Dominica",
+    "flag": "🇩🇲",
+    "region": "Americas",
+    "subregion": "Caribbean",
+    "capital": [
+      "Roseau"
+    ],
+    "currencies": {
+      "XCD": {
+        "name": "Eastern Caribbean dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "eng": "English"
+    },
+    "timezones": [
+      "UTC-04:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@15.41666666,-61.33333333,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "DO",
+    "iso3": "DOM",
+    "name": "Dominican Republic",
+    "officialName": "Dominican Republic",
+    "flag": "🇩🇴",
+    "region": "Americas",
+    "subregion": "Caribbean",
+    "capital": [
+      "Santo Domingo"
+    ],
+    "currencies": {
+      "DOP": {
+        "name": "Dominican peso",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "spa": "Spanish"
+    },
+    "timezones": [
+      "UTC-04:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@19,-70.66666666,5z",
+    "gec": "dr",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "CD",
+    "iso3": "COD",
+    "name": "DR Congo",
+    "officialName": "Democratic Republic of the Congo",
+    "flag": "🇨🇩",
+    "region": "Africa",
+    "subregion": "Middle Africa",
+    "capital": [
+      "Kinshasa"
+    ],
+    "currencies": {
+      "CDF": {
+        "name": "Congolese franc",
+        "symbol": "FC"
+      }
+    },
+    "languages": {
+      "fra": "French",
+      "kon": "Kikongo",
+      "lin": "Lingala",
+      "lua": "Tshiluba",
+      "swa": "Swahili"
+    },
+    "timezones": [
+      "UTC+01:00",
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@0,25,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "EC",
+    "iso3": "ECU",
+    "name": "Ecuador",
+    "officialName": "Republic of Ecuador",
+    "flag": "🇪🇨",
+    "region": "Americas",
+    "subregion": "South America",
+    "capital": [
+      "Quito"
+    ],
+    "currencies": {
+      "USD": {
+        "name": "United States dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "spa": "Spanish"
+    },
+    "timezones": [
+      "UTC-05:00",
+      "UTC-06:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-2,-77.5,5z",
+    "gec": "ec",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "EG",
+    "iso3": "EGY",
+    "name": "Egypt",
+    "officialName": "Arab Republic of Egypt",
+    "flag": "🇪🇬",
+    "region": "Africa",
+    "subregion": "Northern Africa",
+    "capital": [
+      "Cairo"
+    ],
+    "currencies": {
+      "EGP": {
+        "name": "Egyptian pound",
+        "symbol": "£"
+      }
+    },
+    "languages": {
+      "ara": "Arabic"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@27,30,5z",
+    "gec": "eg",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "SV",
+    "iso3": "SLV",
+    "name": "El Salvador",
+    "officialName": "Republic of El Salvador",
+    "flag": "🇸🇻",
+    "region": "Americas",
+    "subregion": "Central America",
+    "capital": [
+      "San Salvador"
+    ],
+    "currencies": {
+      "USD": {
+        "name": "United States dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "spa": "Spanish"
+    },
+    "timezones": [
+      "UTC-06:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@13.83333333,-88.91666666,5z",
+    "gec": "es",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "GQ",
+    "iso3": "GNQ",
+    "name": "Equatorial Guinea",
+    "officialName": "Republic of Equatorial Guinea",
+    "flag": "🇬🇶",
+    "region": "Africa",
+    "subregion": "Middle Africa",
+    "capital": [
+      "Malabo"
+    ],
+    "currencies": {
+      "XAF": {
+        "name": "Central African CFA franc",
+        "symbol": "Fr"
+      }
+    },
+    "languages": {
+      "fra": "French",
+      "por": "Portuguese",
+      "spa": "Spanish"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@2,10,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "ER",
+    "iso3": "ERI",
+    "name": "Eritrea",
+    "officialName": "State of Eritrea",
+    "flag": "🇪🇷",
+    "region": "Africa",
+    "subregion": "Eastern Africa",
+    "capital": [
+      "Asmara"
+    ],
+    "currencies": {
+      "ERN": {
+        "name": "Eritrean nakfa",
+        "symbol": "Nfk"
+      }
+    },
+    "languages": {
+      "ara": "Arabic",
+      "eng": "English",
+      "tir": "Tigrinya"
+    },
+    "timezones": [
+      "UTC+03:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@15,39,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "EE",
+    "iso3": "EST",
+    "name": "Estonia",
+    "officialName": "Republic of Estonia",
+    "flag": "🇪🇪",
+    "region": "Europe",
+    "subregion": "Northern Europe",
+    "capital": [
+      "Tallinn"
+    ],
+    "currencies": {
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      }
+    },
+    "languages": {
+      "est": "Estonian"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@59,26,5z",
+    "gec": "en",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "SZ",
+    "iso3": "SWZ",
+    "name": "Eswatini",
+    "officialName": "Kingdom of Eswatini",
+    "flag": "🇸🇿",
+    "region": "Africa",
+    "subregion": "Southern Africa",
+    "capital": [
+      "Lobamba"
+    ],
+    "currencies": {
+      "SZL": {
+        "name": "Swazi lilangeni",
+        "symbol": "L"
+      },
+      "ZAR": {
+        "name": "South African rand",
+        "symbol": "R"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "ssw": "Swazi"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-26.5,31.5,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "ET",
+    "iso3": "ETH",
+    "name": "Ethiopia",
+    "officialName": "Federal Democratic Republic of Ethiopia",
+    "flag": "🇪🇹",
+    "region": "Africa",
+    "subregion": "Eastern Africa",
+    "capital": [
+      "Addis Ababa"
+    ],
+    "currencies": {
+      "ETB": {
+        "name": "Ethiopian birr",
+        "symbol": "Br"
+      }
+    },
+    "languages": {
+      "amh": "Amharic"
+    },
+    "timezones": [
+      "UTC+03:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@8,38,5z",
+    "gec": "et",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "FJ",
+    "iso3": "FJI",
+    "name": "Fiji",
+    "officialName": "Republic of Fiji",
+    "flag": "🇫🇯",
+    "region": "Oceania",
+    "subregion": "Melanesia",
+    "capital": [
+      "Suva"
+    ],
+    "currencies": {
+      "FJD": {
+        "name": "Fijian dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "fij": "Fijian",
+      "hif": "Fiji Hindi"
+    },
+    "timezones": [
+      "UTC+12:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-18,175,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "FI",
+    "iso3": "FIN",
+    "name": "Finland",
+    "officialName": "Republic of Finland",
+    "flag": "🇫🇮",
+    "region": "Europe",
+    "subregion": "Northern Europe",
+    "capital": [
+      "Helsinki"
+    ],
+    "currencies": {
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      }
+    },
+    "languages": {
+      "fin": "Finnish",
+      "swe": "Swedish"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@64,26,5z",
+    "gec": "fi",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "FR",
+    "iso3": "FRA",
+    "name": "France",
+    "officialName": "French Republic",
+    "flag": "🇫🇷",
+    "region": "Europe",
+    "subregion": "Western Europe",
+    "capital": [
+      "Paris"
+    ],
+    "currencies": {
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      }
+    },
+    "languages": {
+      "fra": "French"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@46,2,5z",
+    "gec": "fr",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "GA",
+    "iso3": "GAB",
+    "name": "Gabon",
+    "officialName": "Gabonese Republic",
+    "flag": "🇬🇦",
+    "region": "Africa",
+    "subregion": "Middle Africa",
+    "capital": [
+      "Libreville"
+    ],
+    "currencies": {
+      "XAF": {
+        "name": "Central African CFA franc",
+        "symbol": "Fr"
+      }
+    },
+    "languages": {
+      "fra": "French"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-1,11.75,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "GM",
+    "iso3": "GMB",
+    "name": "Gambia",
+    "officialName": "Republic of the Gambia",
+    "flag": "🇬🇲",
+    "region": "Africa",
+    "subregion": "Western Africa",
+    "capital": [
+      "Banjul"
+    ],
+    "currencies": {
+      "GMD": {
+        "name": "dalasi",
+        "symbol": "D"
+      }
+    },
+    "languages": {
+      "eng": "English"
+    },
+    "timezones": [
+      "UTC+00:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@13.46666666,-16.56666666,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "GE",
+    "iso3": "GEO",
+    "name": "Georgia",
+    "officialName": "Georgia",
+    "flag": "🇬🇪",
+    "region": "Asia",
+    "subregion": "Western Asia",
+    "capital": [
+      "Tbilisi"
+    ],
+    "currencies": {
+      "GEL": {
+        "name": "lari",
+        "symbol": "₾"
+      }
+    },
+    "languages": {
+      "kat": "Georgian"
+    },
+    "timezones": [
+      "UTC+04:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@42,43.5,5z",
+    "gec": "gg",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "DE",
+    "iso3": "DEU",
+    "name": "Germany",
+    "officialName": "Federal Republic of Germany",
+    "flag": "🇩🇪",
+    "region": "Europe",
+    "subregion": "Western Europe",
+    "capital": [
+      "Berlin"
+    ],
+    "currencies": {
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      }
+    },
+    "languages": {
+      "deu": "German"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@51,9,5z",
+    "gec": "gm",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "GH",
+    "iso3": "GHA",
+    "name": "Ghana",
+    "officialName": "Republic of Ghana",
+    "flag": "🇬🇭",
+    "region": "Africa",
+    "subregion": "Western Africa",
+    "capital": [
+      "Accra"
+    ],
+    "currencies": {
+      "GHS": {
+        "name": "Ghanaian cedi",
+        "symbol": "₵"
+      }
+    },
+    "languages": {
+      "eng": "English"
+    },
+    "timezones": [
+      "UTC+00:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@8,-2,5z",
+    "gec": "gh",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "GR",
+    "iso3": "GRC",
+    "name": "Greece",
+    "officialName": "Hellenic Republic",
+    "flag": "🇬🇷",
+    "region": "Europe",
+    "subregion": "Southern Europe",
+    "capital": [
+      "Athens"
+    ],
+    "currencies": {
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      }
+    },
+    "languages": {
+      "ell": "Greek"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@39,22,5z",
+    "gec": "gr",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "GD",
+    "iso3": "GRD",
+    "name": "Grenada",
+    "officialName": "Grenada",
+    "flag": "🇬🇩",
+    "region": "Americas",
+    "subregion": "Caribbean",
+    "capital": [
+      "St. George's"
+    ],
+    "currencies": {
+      "XCD": {
+        "name": "Eastern Caribbean dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "eng": "English"
+    },
+    "timezones": [
+      "UTC-04:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@12.11666666,-61.66666666,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "GT",
+    "iso3": "GTM",
+    "name": "Guatemala",
+    "officialName": "Republic of Guatemala",
+    "flag": "🇬🇹",
+    "region": "Americas",
+    "subregion": "Central America",
+    "capital": [
+      "Guatemala City"
+    ],
+    "currencies": {
+      "GTQ": {
+        "name": "Guatemalan quetzal",
+        "symbol": "Q"
+      }
+    },
+    "languages": {
+      "spa": "Spanish"
+    },
+    "timezones": [
+      "UTC-06:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@15.5,-90.25,5z",
+    "gec": "gt",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "GN",
+    "iso3": "GIN",
+    "name": "Guinea",
+    "officialName": "Republic of Guinea",
+    "flag": "🇬🇳",
+    "region": "Africa",
+    "subregion": "Western Africa",
+    "capital": [
+      "Conakry"
+    ],
+    "currencies": {
+      "GNF": {
+        "name": "Guinean franc",
+        "symbol": "Fr"
+      }
+    },
+    "languages": {
+      "fra": "French"
+    },
+    "timezones": [
+      "UTC+00:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@11,-10,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "GW",
+    "iso3": "GNB",
+    "name": "Guinea-Bissau",
+    "officialName": "Republic of Guinea-Bissau",
+    "flag": "🇬🇼",
+    "region": "Africa",
+    "subregion": "Western Africa",
+    "capital": [
+      "Bissau"
+    ],
+    "currencies": {
+      "XOF": {
+        "name": "West African CFA franc",
+        "symbol": "Fr"
+      }
+    },
+    "languages": {
+      "por": "Portuguese",
+      "pov": "Upper Guinea Creole"
+    },
+    "timezones": [
+      "UTC+00:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@12,-15,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "GY",
+    "iso3": "GUY",
+    "name": "Guyana",
+    "officialName": "Co-operative Republic of Guyana",
+    "flag": "🇬🇾",
+    "region": "Americas",
+    "subregion": "South America",
+    "capital": [
+      "Georgetown"
+    ],
+    "currencies": {
+      "GYD": {
+        "name": "Guyanese dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "eng": "English"
+    },
+    "timezones": [
+      "UTC-04:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@5,-59,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "HT",
+    "iso3": "HTI",
+    "name": "Haiti",
+    "officialName": "Republic of Haiti",
+    "flag": "🇭🇹",
+    "region": "Americas",
+    "subregion": "Caribbean",
+    "capital": [
+      "Port-au-Prince"
+    ],
+    "currencies": {
+      "HTG": {
+        "name": "Haitian gourde",
+        "symbol": "G"
+      }
+    },
+    "languages": {
+      "fra": "French",
+      "hat": "Haitian Creole"
+    },
+    "timezones": [
+      "UTC-05:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@19,-72.41666666,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "HN",
+    "iso3": "HND",
+    "name": "Honduras",
+    "officialName": "Republic of Honduras",
+    "flag": "🇭🇳",
+    "region": "Americas",
+    "subregion": "Central America",
+    "capital": [
+      "Tegucigalpa"
+    ],
+    "currencies": {
+      "HNL": {
+        "name": "Honduran lempira",
+        "symbol": "L"
+      }
+    },
+    "languages": {
+      "spa": "Spanish"
+    },
+    "timezones": [
+      "UTC-06:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@15,-86.5,5z",
+    "gec": "ho",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "HU",
+    "iso3": "HUN",
+    "name": "Hungary",
+    "officialName": "Hungary",
+    "flag": "🇭🇺",
+    "region": "Europe",
+    "subregion": "Central Europe",
+    "capital": [
+      "Budapest"
+    ],
+    "currencies": {
+      "HUF": {
+        "name": "Hungarian forint",
+        "symbol": "Ft"
+      }
+    },
+    "languages": {
+      "hun": "Hungarian"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@47,20,5z",
+    "gec": "hu",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "IS",
+    "iso3": "ISL",
+    "name": "Iceland",
+    "officialName": "Iceland",
+    "flag": "🇮🇸",
+    "region": "Europe",
+    "subregion": "Northern Europe",
+    "capital": [
+      "Reykjavik"
+    ],
+    "currencies": {
+      "ISK": {
+        "name": "Icelandic króna",
+        "symbol": "kr"
+      }
+    },
+    "languages": {
+      "isl": "Icelandic"
+    },
+    "timezones": [
+      "UTC+00:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@65,-18,5z",
+    "gec": "ic",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "IN",
+    "iso3": "IND",
+    "name": "India",
+    "officialName": "Republic of India",
+    "flag": "🇮🇳",
+    "region": "Asia",
+    "subregion": "Southern Asia",
+    "capital": [
+      "New Delhi"
+    ],
+    "currencies": {
+      "INR": {
+        "name": "Indian rupee",
+        "symbol": "₹"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "hin": "Hindi",
+      "tam": "Tamil"
+    },
+    "timezones": [
+      "UTC+05:30"
+    ],
+    "googleMaps": "https://www.google.com/maps/@20,77,5z",
+    "gec": "in",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "ID",
+    "iso3": "IDN",
+    "name": "Indonesia",
+    "officialName": "Republic of Indonesia",
+    "flag": "🇮🇩",
+    "region": "Asia",
+    "subregion": "South-Eastern Asia",
+    "capital": [
+      "Jakarta"
+    ],
+    "currencies": {
+      "IDR": {
+        "name": "Indonesian rupiah",
+        "symbol": "Rp"
+      }
+    },
+    "languages": {
+      "ind": "Indonesian"
+    },
+    "timezones": [
+      "UTC+07:00",
+      "UTC+08:00",
+      "UTC+09:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-5,120,5z",
+    "gec": "id",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "IR",
+    "iso3": "IRN",
+    "name": "Iran",
+    "officialName": "Islamic Republic of Iran",
+    "flag": "🇮🇷",
+    "region": "Asia",
+    "subregion": "Southern Asia",
+    "capital": [
+      "Tehran"
+    ],
+    "currencies": {
+      "IRR": {
+        "name": "Iranian rial",
+        "symbol": "﷼"
+      }
+    },
+    "languages": {
+      "fas": "Persian (Farsi)"
+    },
+    "timezones": [
+      "UTC+03:30"
+    ],
+    "googleMaps": "https://www.google.com/maps/@32,53,5z",
+    "gec": "ir",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "IQ",
+    "iso3": "IRQ",
+    "name": "Iraq",
+    "officialName": "Republic of Iraq",
+    "flag": "🇮🇶",
+    "region": "Asia",
+    "subregion": "Western Asia",
+    "capital": [
+      "Baghdad"
+    ],
+    "currencies": {
+      "IQD": {
+        "name": "Iraqi dinar",
+        "symbol": "ع.د"
+      }
+    },
+    "languages": {
+      "ara": "Arabic",
+      "arc": "Aramaic",
+      "ckb": "Sorani"
+    },
+    "timezones": [
+      "UTC+03:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@33,44,5z",
+    "gec": "iz",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "IE",
+    "iso3": "IRL",
+    "name": "Ireland",
+    "officialName": "Republic of Ireland",
+    "flag": "🇮🇪",
+    "region": "Europe",
+    "subregion": "Northern Europe",
+    "capital": [
+      "Dublin"
+    ],
+    "currencies": {
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "gle": "Irish"
+    },
+    "timezones": [
+      "UTC+00:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@53,-8,5z",
+    "gec": "ei",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "IL",
+    "iso3": "ISR",
+    "name": "Israel",
+    "officialName": "State of Israel",
+    "flag": "🇮🇱",
+    "region": "Asia",
+    "subregion": "Western Asia",
+    "capital": [
+      "Jerusalem"
+    ],
+    "currencies": {
+      "ILS": {
+        "name": "Israeli new shekel",
+        "symbol": "₪"
+      }
+    },
+    "languages": {
+      "ara": "Arabic",
+      "heb": "Hebrew"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@31.47,35.13,5z",
+    "gec": "is",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "IT",
+    "iso3": "ITA",
+    "name": "Italy",
+    "officialName": "Italian Republic",
+    "flag": "🇮🇹",
+    "region": "Europe",
+    "subregion": "Southern Europe",
+    "capital": [
+      "Rome"
+    ],
+    "currencies": {
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      }
+    },
+    "languages": {
+      "ita": "Italian"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@42.83333333,12.83333333,5z",
+    "gec": "it",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "CI",
+    "iso3": "CIV",
+    "name": "Ivory Coast",
+    "officialName": "Republic of Côte d'Ivoire",
+    "flag": "🇨🇮",
+    "region": "Africa",
+    "subregion": "Western Africa",
+    "capital": [
+      "Yamoussoukro"
+    ],
+    "currencies": {
+      "XOF": {
+        "name": "West African CFA franc",
+        "symbol": "Fr"
+      }
+    },
+    "languages": {
+      "fra": "French"
+    },
+    "timezones": [
+      "UTC+00:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@8,-5,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "JM",
+    "iso3": "JAM",
+    "name": "Jamaica",
+    "officialName": "Jamaica",
+    "flag": "🇯🇲",
+    "region": "Americas",
+    "subregion": "Caribbean",
+    "capital": [
+      "Kingston"
+    ],
+    "currencies": {
+      "JMD": {
+        "name": "Jamaican dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "jam": "Jamaican Patois"
+    },
+    "timezones": [
+      "UTC-05:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@18.25,-77.5,5z",
+    "gec": "jm",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "JP",
+    "iso3": "JPN",
+    "name": "Japan",
+    "officialName": "Japan",
+    "flag": "🇯🇵",
+    "region": "Asia",
+    "subregion": "Eastern Asia",
+    "capital": [
+      "Tokyo"
+    ],
+    "currencies": {
+      "JPY": {
+        "name": "Japanese yen",
+        "symbol": "¥"
+      }
+    },
+    "languages": {
+      "jpn": "Japanese"
+    },
+    "timezones": [
+      "UTC+09:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@36,138,5z",
+    "gec": "ja",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "JO",
+    "iso3": "JOR",
+    "name": "Jordan",
+    "officialName": "Hashemite Kingdom of Jordan",
+    "flag": "🇯🇴",
+    "region": "Asia",
+    "subregion": "Western Asia",
+    "capital": [
+      "Amman"
+    ],
+    "currencies": {
+      "JOD": {
+        "name": "Jordanian dinar",
+        "symbol": "د.ا"
+      }
+    },
+    "languages": {
+      "ara": "Arabic"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@31,36,5z",
+    "gec": "jo",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "KZ",
+    "iso3": "KAZ",
+    "name": "Kazakhstan",
+    "officialName": "Republic of Kazakhstan",
+    "flag": "🇰🇿",
+    "region": "Asia",
+    "subregion": "Central Asia",
+    "capital": [
+      "Astana"
+    ],
+    "currencies": {
+      "KZT": {
+        "name": "Kazakhstani tenge",
+        "symbol": "₸"
+      }
+    },
+    "languages": {
+      "kaz": "Kazakh",
+      "rus": "Russian"
+    },
+    "timezones": [
+      "UTC+05:00",
+      "UTC+06:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@48,68,5z",
+    "gec": "kz",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "KE",
+    "iso3": "KEN",
+    "name": "Kenya",
+    "officialName": "Republic of Kenya",
+    "flag": "🇰🇪",
+    "region": "Africa",
+    "subregion": "Eastern Africa",
+    "capital": [
+      "Nairobi"
+    ],
+    "currencies": {
+      "KES": {
+        "name": "Kenyan shilling",
+        "symbol": "Sh"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "swa": "Swahili"
+    },
+    "timezones": [
+      "UTC+03:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@1,38,5z",
+    "gec": "ke",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "KI",
+    "iso3": "KIR",
+    "name": "Kiribati",
+    "officialName": "Independent and Sovereign Republic of Kiribati",
+    "flag": "🇰🇮",
+    "region": "Oceania",
+    "subregion": "Micronesia",
+    "capital": [
+      "South Tarawa"
+    ],
+    "currencies": {
+      "AUD": {
+        "name": "Australian dollar",
+        "symbol": "$"
+      },
+      "KID": {
+        "name": "Kiribati dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "gil": "Gilbertese"
+    },
+    "timezones": [
+      "UTC+12:00",
+      "UTC+13:00",
+      "UTC+14:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@1.41666666,173,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "KW",
+    "iso3": "KWT",
+    "name": "Kuwait",
+    "officialName": "State of Kuwait",
+    "flag": "🇰🇼",
+    "region": "Asia",
+    "subregion": "Western Asia",
+    "capital": [
+      "Kuwait City"
+    ],
+    "currencies": {
+      "KWD": {
+        "name": "Kuwaiti dinar",
+        "symbol": "د.ك"
+      }
+    },
+    "languages": {
+      "ara": "Arabic"
+    },
+    "timezones": [
+      "UTC+03:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@29.5,45.75,5z",
+    "gec": "ku",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "KG",
+    "iso3": "KGZ",
+    "name": "Kyrgyzstan",
+    "officialName": "Kyrgyz Republic",
+    "flag": "🇰🇬",
+    "region": "Asia",
+    "subregion": "Central Asia",
+    "capital": [
+      "Bishkek"
+    ],
+    "currencies": {
+      "KGS": {
+        "name": "Kyrgyzstani som",
+        "symbol": "с"
+      }
+    },
+    "languages": {
+      "kir": "Kyrgyz",
+      "rus": "Russian"
+    },
+    "timezones": [
+      "UTC+06:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@41,75,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "LA",
+    "iso3": "LAO",
+    "name": "Laos",
+    "officialName": "Lao People's Democratic Republic",
+    "flag": "🇱🇦",
+    "region": "Asia",
+    "subregion": "South-Eastern Asia",
+    "capital": [
+      "Vientiane"
+    ],
+    "currencies": {
+      "LAK": {
+        "name": "Lao kip",
+        "symbol": "₭"
+      }
+    },
+    "languages": {
+      "lao": "Lao"
+    },
+    "timezones": [
+      "UTC+07:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@18,105,5z",
+    "gec": "la",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": false
+    }
+  },
+  {
+    "code": "LV",
+    "iso3": "LVA",
+    "name": "Latvia",
+    "officialName": "Republic of Latvia",
+    "flag": "🇱🇻",
+    "region": "Europe",
+    "subregion": "Northern Europe",
+    "capital": [
+      "Riga"
+    ],
+    "currencies": {
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      }
+    },
+    "languages": {
+      "lav": "Latvian"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@57,25,5z",
+    "gec": "lg",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "LB",
+    "iso3": "LBN",
+    "name": "Lebanon",
+    "officialName": "Lebanese Republic",
+    "flag": "🇱🇧",
+    "region": "Asia",
+    "subregion": "Western Asia",
+    "capital": [
+      "Beirut"
+    ],
+    "currencies": {
+      "LBP": {
+        "name": "Lebanese pound",
+        "symbol": "ل.ل"
+      }
+    },
+    "languages": {
+      "ara": "Arabic",
+      "fra": "French"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@33.83333333,35.83333333,5z",
+    "gec": "le",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "LS",
+    "iso3": "LSO",
+    "name": "Lesotho",
+    "officialName": "Kingdom of Lesotho",
+    "flag": "🇱🇸",
+    "region": "Africa",
+    "subregion": "Southern Africa",
+    "capital": [
+      "Maseru"
+    ],
+    "currencies": {
+      "LSL": {
+        "name": "Lesotho loti",
+        "symbol": "L"
+      },
+      "ZAR": {
+        "name": "South African rand",
+        "symbol": "R"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "sot": "Sotho"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-29.5,28.5,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "LR",
+    "iso3": "LBR",
+    "name": "Liberia",
+    "officialName": "Republic of Liberia",
+    "flag": "🇱🇷",
+    "region": "Africa",
+    "subregion": "Western Africa",
+    "capital": [
+      "Monrovia"
+    ],
+    "currencies": {
+      "LRD": {
+        "name": "Liberian dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "eng": "English"
+    },
+    "timezones": [
+      "UTC+00:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@6.5,-9.5,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "LY",
+    "iso3": "LBY",
+    "name": "Libya",
+    "officialName": "State of Libya",
+    "flag": "🇱🇾",
+    "region": "Africa",
+    "subregion": "Northern Africa",
+    "capital": [
+      "Tripoli"
+    ],
+    "currencies": {
+      "LYD": {
+        "name": "Libyan dinar",
+        "symbol": "ل.د"
+      }
+    },
+    "languages": {
+      "ara": "Arabic"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@25,17,5z",
+    "gec": "ly",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": false
+    }
+  },
+  {
+    "code": "LI",
+    "iso3": "LIE",
+    "name": "Liechtenstein",
+    "officialName": "Principality of Liechtenstein",
+    "flag": "🇱🇮",
+    "region": "Europe",
+    "subregion": "Western Europe",
+    "capital": [
+      "Vaduz"
+    ],
+    "currencies": {
+      "CHF": {
+        "name": "Swiss franc",
+        "symbol": "Fr"
+      }
+    },
+    "languages": {
+      "deu": "German"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@47.26666666,9.53333333,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "LT",
+    "iso3": "LTU",
+    "name": "Lithuania",
+    "officialName": "Republic of Lithuania",
+    "flag": "🇱🇹",
+    "region": "Europe",
+    "subregion": "Northern Europe",
+    "capital": [
+      "Vilnius"
+    ],
+    "currencies": {
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      }
+    },
+    "languages": {
+      "lit": "Lithuanian"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@56,24,5z",
+    "gec": "lh",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "LU",
+    "iso3": "LUX",
+    "name": "Luxembourg",
+    "officialName": "Grand Duchy of Luxembourg",
+    "flag": "🇱🇺",
+    "region": "Europe",
+    "subregion": "Western Europe",
+    "capital": [
+      "Luxembourg"
+    ],
+    "currencies": {
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      }
+    },
+    "languages": {
+      "deu": "German",
+      "fra": "French",
+      "ltz": "Luxembourgish"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@49.75,6.16666666,5z",
+    "gec": "lu",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "MG",
+    "iso3": "MDG",
+    "name": "Madagascar",
+    "officialName": "Republic of Madagascar",
+    "flag": "🇲🇬",
+    "region": "Africa",
+    "subregion": "Eastern Africa",
+    "capital": [
+      "Antananarivo"
+    ],
+    "currencies": {
+      "MGA": {
+        "name": "Malagasy ariary",
+        "symbol": "Ar"
+      }
+    },
+    "languages": {
+      "fra": "French",
+      "mlg": "Malagasy"
+    },
+    "timezones": [
+      "UTC+03:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-20,47,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "MW",
+    "iso3": "MWI",
+    "name": "Malawi",
+    "officialName": "Republic of Malawi",
+    "flag": "🇲🇼",
+    "region": "Africa",
+    "subregion": "Eastern Africa",
+    "capital": [
+      "Lilongwe"
+    ],
+    "currencies": {
+      "MWK": {
+        "name": "Malawian kwacha",
+        "symbol": "MK"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "nya": "Chewa"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-13.5,34,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "MY",
+    "iso3": "MYS",
+    "name": "Malaysia",
+    "officialName": "Malaysia",
+    "flag": "🇲🇾",
+    "region": "Asia",
+    "subregion": "South-Eastern Asia",
+    "capital": [
+      "Kuala Lumpur"
+    ],
+    "currencies": {
+      "MYR": {
+        "name": "Malaysian ringgit",
+        "symbol": "RM"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "msa": "Malay"
+    },
+    "timezones": [
+      "UTC+08:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@2.5,112.5,5z",
+    "gec": "my",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "MV",
+    "iso3": "MDV",
+    "name": "Maldives",
+    "officialName": "Republic of the Maldives",
+    "flag": "🇲🇻",
+    "region": "Asia",
+    "subregion": "Southern Asia",
+    "capital": [
+      "Malé"
+    ],
+    "currencies": {
+      "MVR": {
+        "name": "Maldivian rufiyaa",
+        "symbol": ".ރ"
+      }
+    },
+    "languages": {
+      "div": "Maldivian"
+    },
+    "timezones": [
+      "UTC+05:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@3.25,73,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "ML",
+    "iso3": "MLI",
+    "name": "Mali",
+    "officialName": "Republic of Mali",
+    "flag": "🇲🇱",
+    "region": "Africa",
+    "subregion": "Western Africa",
+    "capital": [
+      "Bamako"
+    ],
+    "currencies": {
+      "XOF": {
+        "name": "West African CFA franc",
+        "symbol": "Fr"
+      }
+    },
+    "languages": {
+      "fra": "French"
+    },
+    "timezones": [
+      "UTC+00:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@17,-4,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "MT",
+    "iso3": "MLT",
+    "name": "Malta",
+    "officialName": "Republic of Malta",
+    "flag": "🇲🇹",
+    "region": "Europe",
+    "subregion": "Southern Europe",
+    "capital": [
+      "Valletta"
+    ],
+    "currencies": {
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "mlt": "Maltese"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@35.83333333,14.58333333,5z",
+    "gec": "mt",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "MH",
+    "iso3": "MHL",
+    "name": "Marshall Islands",
+    "officialName": "Republic of the Marshall Islands",
+    "flag": "🇲🇭",
+    "region": "Oceania",
+    "subregion": "Micronesia",
+    "capital": [
+      "Majuro"
+    ],
+    "currencies": {
+      "USD": {
+        "name": "United States dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "mah": "Marshallese"
+    },
+    "timezones": [
+      "UTC+12:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@9,168,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "MR",
+    "iso3": "MRT",
+    "name": "Mauritania",
+    "officialName": "Islamic Republic of Mauritania",
+    "flag": "🇲🇷",
+    "region": "Africa",
+    "subregion": "Western Africa",
+    "capital": [
+      "Nouakchott"
+    ],
+    "currencies": {
+      "MRU": {
+        "name": "Mauritanian ouguiya",
+        "symbol": "UM"
+      }
+    },
+    "languages": {
+      "ara": "Arabic"
+    },
+    "timezones": [
+      "UTC+00:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@20,-12,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "MU",
+    "iso3": "MUS",
+    "name": "Mauritius",
+    "officialName": "Republic of Mauritius",
+    "flag": "🇲🇺",
+    "region": "Africa",
+    "subregion": "Eastern Africa",
+    "capital": [
+      "Port Louis"
+    ],
+    "currencies": {
+      "MUR": {
+        "name": "Mauritian rupee",
+        "symbol": "₨"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "fra": "French",
+      "mfe": "Mauritian Creole"
+    },
+    "timezones": [
+      "UTC+04:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-20.28333333,57.55,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "MX",
+    "iso3": "MEX",
+    "name": "Mexico",
+    "officialName": "United Mexican States",
+    "flag": "🇲🇽",
+    "region": "Americas",
+    "subregion": "North America",
+    "capital": [
+      "Mexico City"
+    ],
+    "currencies": {
+      "MXN": {
+        "name": "Mexican peso",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "spa": "Spanish"
+    },
+    "timezones": [
+      "UTC-05:00",
+      "UTC-06:00",
+      "UTC-07:00",
+      "UTC-08:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@23,-102,5z",
+    "gec": "mx",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "FM",
+    "iso3": "FSM",
+    "name": "Micronesia",
+    "officialName": "Federated States of Micronesia",
+    "flag": "🇫🇲",
+    "region": "Oceania",
+    "subregion": "Micronesia",
+    "capital": [
+      "Palikir"
+    ],
+    "currencies": {},
+    "languages": {
+      "eng": "English"
+    },
+    "timezones": [
+      "UTC+10:00",
+      "UTC+11:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@6.91666666,158.25,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "MD",
+    "iso3": "MDA",
+    "name": "Moldova",
+    "officialName": "Republic of Moldova",
+    "flag": "🇲🇩",
+    "region": "Europe",
+    "subregion": "Eastern Europe",
+    "capital": [
+      "Chișinău"
+    ],
+    "currencies": {
+      "MDL": {
+        "name": "Moldovan leu",
+        "symbol": "L"
+      }
+    },
+    "languages": {
+      "ron": "Moldavian"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@47,29,5z",
+    "gec": "md",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "MC",
+    "iso3": "MCO",
+    "name": "Monaco",
+    "officialName": "Principality of Monaco",
+    "flag": "🇲🇨",
+    "region": "Europe",
+    "subregion": "Western Europe",
+    "capital": [
+      "Monaco"
+    ],
+    "currencies": {
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      }
+    },
+    "languages": {
+      "fra": "French"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@43.73333333,7.4,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "MN",
+    "iso3": "MNG",
+    "name": "Mongolia",
+    "officialName": "Mongolia",
+    "flag": "🇲🇳",
+    "region": "Asia",
+    "subregion": "Eastern Asia",
+    "capital": [
+      "Ulan Bator"
+    ],
+    "currencies": {
+      "MNT": {
+        "name": "Mongolian tögrög",
+        "symbol": "₮"
+      }
+    },
+    "languages": {
+      "mon": "Mongolian"
+    },
+    "timezones": [
+      "UTC+07:00",
+      "UTC+08:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@46,105,5z",
+    "gec": "mg",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "ME",
+    "iso3": "MNE",
+    "name": "Montenegro",
+    "officialName": "Montenegro",
+    "flag": "🇲🇪",
+    "region": "Europe",
+    "subregion": "Southeast Europe",
+    "capital": [
+      "Podgorica"
+    ],
+    "currencies": {
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      }
+    },
+    "languages": {
+      "cnr": "Montenegrin"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@42.5,19.3,5z",
+    "gec": "mj",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "MA",
+    "iso3": "MAR",
+    "name": "Morocco",
+    "officialName": "Kingdom of Morocco",
+    "flag": "🇲🇦",
+    "region": "Africa",
+    "subregion": "Northern Africa",
+    "capital": [
+      "Rabat"
+    ],
+    "currencies": {
+      "MAD": {
+        "name": "Moroccan dirham",
+        "symbol": "د.م."
+      }
+    },
+    "languages": {
+      "ara": "Arabic",
+      "ber": "Berber"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@32,-5,5z",
+    "gec": "mo",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "MZ",
+    "iso3": "MOZ",
+    "name": "Mozambique",
+    "officialName": "Republic of Mozambique",
+    "flag": "🇲🇿",
+    "region": "Africa",
+    "subregion": "Eastern Africa",
+    "capital": [
+      "Maputo"
+    ],
+    "currencies": {
+      "MZN": {
+        "name": "Mozambican metical",
+        "symbol": "MT"
+      }
+    },
+    "languages": {
+      "por": "Portuguese"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-18.25,35,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "MM",
+    "iso3": "MMR",
+    "name": "Myanmar",
+    "officialName": "Republic of the Union of Myanmar",
+    "flag": "🇲🇲",
+    "region": "Asia",
+    "subregion": "South-Eastern Asia",
+    "capital": [
+      "Naypyidaw"
+    ],
+    "currencies": {
+      "MMK": {
+        "name": "Burmese kyat",
+        "symbol": "Ks"
+      }
+    },
+    "languages": {
+      "mya": "Burmese"
+    },
+    "timezones": [
+      "UTC+06:30"
+    ],
+    "googleMaps": "https://www.google.com/maps/@22,98,5z",
+    "gec": "bm",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "NA",
+    "iso3": "NAM",
+    "name": "Namibia",
+    "officialName": "Republic of Namibia",
+    "flag": "🇳🇦",
+    "region": "Africa",
+    "subregion": "Southern Africa",
+    "capital": [
+      "Windhoek"
+    ],
+    "currencies": {
+      "NAD": {
+        "name": "Namibian dollar",
+        "symbol": "$"
+      },
+      "ZAR": {
+        "name": "South African rand",
+        "symbol": "R"
+      }
+    },
+    "languages": {
+      "afr": "Afrikaans",
+      "deu": "German",
+      "eng": "English",
+      "her": "Herero",
+      "hgm": "Khoekhoe",
+      "kwn": "Kwangali",
+      "loz": "Lozi",
+      "ndo": "Ndonga",
+      "tsn": "Tswana"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-22,17,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "NR",
+    "iso3": "NRU",
+    "name": "Nauru",
+    "officialName": "Republic of Nauru",
+    "flag": "🇳🇷",
+    "region": "Oceania",
+    "subregion": "Micronesia",
+    "capital": [
+      "Yaren"
+    ],
+    "currencies": {
+      "AUD": {
+        "name": "Australian dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "nau": "Nauru"
+    },
+    "timezones": [
+      "UTC+12:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-0.53333333,166.91666666,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "NP",
+    "iso3": "NPL",
+    "name": "Nepal",
+    "officialName": "Federal Democratic Republic of Nepal",
+    "flag": "🇳🇵",
+    "region": "Asia",
+    "subregion": "Southern Asia",
+    "capital": [
+      "Kathmandu"
+    ],
+    "currencies": {
+      "NPR": {
+        "name": "Nepalese rupee",
+        "symbol": "₨"
+      }
+    },
+    "languages": {
+      "nep": "Nepali"
+    },
+    "timezones": [
+      "UTC+05:45"
+    ],
+    "googleMaps": "https://www.google.com/maps/@28,84,5z",
+    "gec": "np",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "NL",
+    "iso3": "NLD",
+    "name": "Netherlands",
+    "officialName": "Kingdom of the Netherlands",
+    "flag": "🇳🇱",
+    "region": "Europe",
+    "subregion": "Western Europe",
+    "capital": [
+      "Amsterdam"
+    ],
+    "currencies": {
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      }
+    },
+    "languages": {
+      "nld": "Dutch"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@52.5,5.75,5z",
+    "gec": "nl",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "NZ",
+    "iso3": "NZL",
+    "name": "New Zealand",
+    "officialName": "New Zealand",
+    "flag": "🇳🇿",
+    "region": "Oceania",
+    "subregion": "Australia and New Zealand",
+    "capital": [
+      "Wellington"
+    ],
+    "currencies": {
+      "NZD": {
+        "name": "New Zealand dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "mri": "Māori",
+      "nzs": "New Zealand Sign Language"
+    },
+    "timezones": [
+      "UTC+13:00",
+      "UTC+13:45"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-41,174,5z",
+    "gec": "nz",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "NI",
+    "iso3": "NIC",
+    "name": "Nicaragua",
+    "officialName": "Republic of Nicaragua",
+    "flag": "🇳🇮",
+    "region": "Americas",
+    "subregion": "Central America",
+    "capital": [
+      "Managua"
+    ],
+    "currencies": {
+      "NIO": {
+        "name": "Nicaraguan córdoba",
+        "symbol": "C$"
+      }
+    },
+    "languages": {
+      "spa": "Spanish"
+    },
+    "timezones": [
+      "UTC-06:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@13,-85,5z",
+    "gec": "nu",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "NE",
+    "iso3": "NER",
+    "name": "Niger",
+    "officialName": "Republic of Niger",
+    "flag": "🇳🇪",
+    "region": "Africa",
+    "subregion": "Western Africa",
+    "capital": [
+      "Niamey"
+    ],
+    "currencies": {
+      "XOF": {
+        "name": "West African CFA franc",
+        "symbol": "Fr"
+      }
+    },
+    "languages": {
+      "fra": "French"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@16,8,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "NG",
+    "iso3": "NGA",
+    "name": "Nigeria",
+    "officialName": "Federal Republic of Nigeria",
+    "flag": "🇳🇬",
+    "region": "Africa",
+    "subregion": "Western Africa",
+    "capital": [
+      "Abuja"
+    ],
+    "currencies": {
+      "NGN": {
+        "name": "Nigerian naira",
+        "symbol": "₦"
+      }
+    },
+    "languages": {
+      "eng": "English"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@10,8,5z",
+    "gec": "ni",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "KP",
+    "iso3": "PRK",
+    "name": "North Korea",
+    "officialName": "Democratic People's Republic of Korea",
+    "flag": "🇰🇵",
+    "region": "Asia",
+    "subregion": "Eastern Asia",
+    "capital": [
+      "Pyongyang"
+    ],
+    "currencies": {
+      "KPW": {
+        "name": "North Korean won",
+        "symbol": "₩"
+      }
+    },
+    "languages": {
+      "kor": "Korean"
+    },
+    "timezones": [
+      "UTC+09:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@40,127,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "MK",
+    "iso3": "MKD",
+    "name": "North Macedonia",
+    "officialName": "Republic of North Macedonia",
+    "flag": "🇲🇰",
+    "region": "Europe",
+    "subregion": "Southeast Europe",
+    "capital": [
+      "Skopje"
+    ],
+    "currencies": {
+      "MKD": {
+        "name": "denar",
+        "symbol": "den"
+      }
+    },
+    "languages": {
+      "mkd": "Macedonian"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@41.83333333,22,5z",
+    "gec": "mk",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "NO",
+    "iso3": "NOR",
+    "name": "Norway",
+    "officialName": "Kingdom of Norway",
+    "flag": "🇳🇴",
+    "region": "Europe",
+    "subregion": "Northern Europe",
+    "capital": [
+      "Oslo"
+    ],
+    "currencies": {
+      "NOK": {
+        "name": "Norwegian krone",
+        "symbol": "kr"
+      }
+    },
+    "languages": {
+      "nno": "Norwegian Nynorsk",
+      "nob": "Norwegian Bokmål",
+      "smi": "Sami"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@62,10,5z",
+    "gec": "no",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "OM",
+    "iso3": "OMN",
+    "name": "Oman",
+    "officialName": "Sultanate of Oman",
+    "flag": "🇴🇲",
+    "region": "Asia",
+    "subregion": "Western Asia",
+    "capital": [
+      "Muscat"
+    ],
+    "currencies": {
+      "OMR": {
+        "name": "Omani rial",
+        "symbol": "ر.ع."
+      }
+    },
+    "languages": {
+      "ara": "Arabic"
+    },
+    "timezones": [
+      "UTC+04:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@21,57,5z",
+    "gec": "mu",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "PK",
+    "iso3": "PAK",
+    "name": "Pakistan",
+    "officialName": "Islamic Republic of Pakistan",
+    "flag": "🇵🇰",
+    "region": "Asia",
+    "subregion": "Southern Asia",
+    "capital": [
+      "Islamabad"
+    ],
+    "currencies": {
+      "PKR": {
+        "name": "Pakistani rupee",
+        "symbol": "₨"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "urd": "Urdu"
+    },
+    "timezones": [
+      "UTC+05:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@30,70,5z",
+    "gec": "pk",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "PW",
+    "iso3": "PLW",
+    "name": "Palau",
+    "officialName": "Republic of Palau",
+    "flag": "🇵🇼",
+    "region": "Oceania",
+    "subregion": "Micronesia",
+    "capital": [
+      "Ngerulmud"
+    ],
+    "currencies": {
+      "USD": {
+        "name": "United States dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "pau": "Palauan"
+    },
+    "timezones": [
+      "UTC+09:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@7.5,134.5,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "PA",
+    "iso3": "PAN",
+    "name": "Panama",
+    "officialName": "Republic of Panama",
+    "flag": "🇵🇦",
+    "region": "Americas",
+    "subregion": "Central America",
+    "capital": [
+      "Panama City"
+    ],
+    "currencies": {
+      "PAB": {
+        "name": "Panamanian balboa",
+        "symbol": "B/."
+      },
+      "USD": {
+        "name": "United States dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "spa": "Spanish"
+    },
+    "timezones": [
+      "UTC-05:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@9,-80,5z",
+    "gec": "pm",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "PG",
+    "iso3": "PNG",
+    "name": "Papua New Guinea",
+    "officialName": "Independent State of Papua New Guinea",
+    "flag": "🇵🇬",
+    "region": "Oceania",
+    "subregion": "Melanesia",
+    "capital": [
+      "Port Moresby"
+    ],
+    "currencies": {
+      "PGK": {
+        "name": "Papua New Guinean kina",
+        "symbol": "K"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "hmo": "Hiri Motu",
+      "tpi": "Tok Pisin"
+    },
+    "timezones": [
+      "UTC+10:00",
+      "UTC+11:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-6,147,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "PY",
+    "iso3": "PRY",
+    "name": "Paraguay",
+    "officialName": "Republic of Paraguay",
+    "flag": "🇵🇾",
+    "region": "Americas",
+    "subregion": "South America",
+    "capital": [
+      "Asunción"
+    ],
+    "currencies": {
+      "PYG": {
+        "name": "Paraguayan guaraní",
+        "symbol": "₲"
+      }
+    },
+    "languages": {
+      "grn": "Guaraní",
+      "spa": "Spanish"
+    },
+    "timezones": [
+      "UTC-03:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-23,-58,5z",
+    "gec": "pa",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "PE",
+    "iso3": "PER",
+    "name": "Peru",
+    "officialName": "Republic of Peru",
+    "flag": "🇵🇪",
+    "region": "Americas",
+    "subregion": "South America",
+    "capital": [
+      "Lima"
+    ],
+    "currencies": {
+      "PEN": {
+        "name": "Peruvian sol",
+        "symbol": "S/."
+      }
+    },
+    "languages": {
+      "aym": "Aymara",
+      "que": "Quechua",
+      "spa": "Spanish"
+    },
+    "timezones": [
+      "UTC-05:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-10,-76,5z",
+    "gec": "pe",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "PH",
+    "iso3": "PHL",
+    "name": "Philippines",
+    "officialName": "Republic of the Philippines",
+    "flag": "🇵🇭",
+    "region": "Asia",
+    "subregion": "South-Eastern Asia",
+    "capital": [
+      "Manila"
+    ],
+    "currencies": {
+      "PHP": {
+        "name": "Philippine peso",
+        "symbol": "₱"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "fil": "Filipino"
+    },
+    "timezones": [
+      "UTC+08:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@13,122,5z",
+    "gec": "rp",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "PL",
+    "iso3": "POL",
+    "name": "Poland",
+    "officialName": "Republic of Poland",
+    "flag": "🇵🇱",
+    "region": "Europe",
+    "subregion": "Central Europe",
+    "capital": [
+      "Warsaw"
+    ],
+    "currencies": {
+      "PLN": {
+        "name": "Polish złoty",
+        "symbol": "zł"
+      }
+    },
+    "languages": {
+      "pol": "Polish"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@52,20,5z",
+    "gec": "pl",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "PT",
+    "iso3": "PRT",
+    "name": "Portugal",
+    "officialName": "Portuguese Republic",
+    "flag": "🇵🇹",
+    "region": "Europe",
+    "subregion": "Southern Europe",
+    "capital": [
+      "Lisbon"
+    ],
+    "currencies": {
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      }
+    },
+    "languages": {
+      "por": "Portuguese"
+    },
+    "timezones": [
+      "UTC+00:00",
+      "UTC-01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@39.5,-8,5z",
+    "gec": "po",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "QA",
+    "iso3": "QAT",
+    "name": "Qatar",
+    "officialName": "State of Qatar",
+    "flag": "🇶🇦",
+    "region": "Asia",
+    "subregion": "Western Asia",
+    "capital": [
+      "Doha"
+    ],
+    "currencies": {
+      "QAR": {
+        "name": "Qatari riyal",
+        "symbol": "ر.ق"
+      }
+    },
+    "languages": {
+      "ara": "Arabic"
+    },
+    "timezones": [
+      "UTC+03:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@25.5,51.25,5z",
+    "gec": "qa",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "RO",
+    "iso3": "ROU",
+    "name": "Romania",
+    "officialName": "Romania",
+    "flag": "🇷🇴",
+    "region": "Europe",
+    "subregion": "Southeast Europe",
+    "capital": [
+      "Bucharest"
+    ],
+    "currencies": {
+      "RON": {
+        "name": "Romanian leu",
+        "symbol": "lei"
+      }
+    },
+    "languages": {
+      "ron": "Romanian"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@46,25,5z",
+    "gec": "ro",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "RU",
+    "iso3": "RUS",
+    "name": "Russia",
+    "officialName": "Russian Federation",
+    "flag": "🇷🇺",
+    "region": "Europe",
+    "subregion": "Eastern Europe",
+    "capital": [
+      "Moscow"
+    ],
+    "currencies": {
+      "RUB": {
+        "name": "Russian ruble",
+        "symbol": "₽"
+      }
+    },
+    "languages": {
+      "rus": "Russian"
+    },
+    "timezones": [
+      "UTC+02:00",
+      "UTC+03:00",
+      "UTC+04:00",
+      "UTC+05:00",
+      "UTC+06:00",
+      "UTC+07:00",
+      "UTC+08:00",
+      "UTC+09:00",
+      "UTC+10:00",
+      "UTC+11:00",
+      "UTC+12:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@60,100,5z",
+    "gec": "rs",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "RW",
+    "iso3": "RWA",
+    "name": "Rwanda",
+    "officialName": "Republic of Rwanda",
+    "flag": "🇷🇼",
+    "region": "Africa",
+    "subregion": "Eastern Africa",
+    "capital": [
+      "Kigali"
+    ],
+    "currencies": {
+      "RWF": {
+        "name": "Rwandan franc",
+        "symbol": "Fr"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "fra": "French",
+      "kin": "Kinyarwanda"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-2,30,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "KN",
+    "iso3": "KNA",
+    "name": "Saint Kitts and Nevis",
+    "officialName": "Federation of Saint Christopher and Nevis",
+    "flag": "🇰🇳",
+    "region": "Americas",
+    "subregion": "Caribbean",
+    "capital": [
+      "Basseterre"
+    ],
+    "currencies": {
+      "XCD": {
+        "name": "Eastern Caribbean dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "eng": "English"
+    },
+    "timezones": [
+      "UTC-04:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@17.33333333,-62.75,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "LC",
+    "iso3": "LCA",
+    "name": "Saint Lucia",
+    "officialName": "Saint Lucia",
+    "flag": "🇱🇨",
+    "region": "Americas",
+    "subregion": "Caribbean",
+    "capital": [
+      "Castries"
+    ],
+    "currencies": {
+      "XCD": {
+        "name": "Eastern Caribbean dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "eng": "English"
+    },
+    "timezones": [
+      "UTC-04:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@13.88333333,-60.96666666,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "VC",
+    "iso3": "VCT",
+    "name": "Saint Vincent and the Grenadines",
+    "officialName": "Saint Vincent and the Grenadines",
+    "flag": "🇻🇨",
+    "region": "Americas",
+    "subregion": "Caribbean",
+    "capital": [
+      "Kingstown"
+    ],
+    "currencies": {
+      "XCD": {
+        "name": "Eastern Caribbean dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "eng": "English"
+    },
+    "timezones": [
+      "UTC-04:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@13.25,-61.2,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "WS",
+    "iso3": "WSM",
+    "name": "Samoa",
+    "officialName": "Independent State of Samoa",
+    "flag": "🇼🇸",
+    "region": "Oceania",
+    "subregion": "Polynesia",
+    "capital": [
+      "Apia"
+    ],
+    "currencies": {
+      "WST": {
+        "name": "Samoan tālā",
+        "symbol": "T"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "smo": "Samoan"
+    },
+    "timezones": [
+      "UTC+14:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-13.58333333,-172.33333333,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "SM",
+    "iso3": "SMR",
+    "name": "San Marino",
+    "officialName": "Most Serene Republic of San Marino",
+    "flag": "🇸🇲",
+    "region": "Europe",
+    "subregion": "Southern Europe",
+    "capital": [
+      "City of San Marino"
+    ],
+    "currencies": {
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      }
+    },
+    "languages": {
+      "ita": "Italian"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@43.76666666,12.41666666,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "ST",
+    "iso3": "STP",
+    "name": "São Tomé and Príncipe",
+    "officialName": "Democratic Republic of São Tomé and Príncipe",
+    "flag": "🇸🇹",
+    "region": "Africa",
+    "subregion": "Middle Africa",
+    "capital": [
+      "São Tomé"
+    ],
+    "currencies": {
+      "STN": {
+        "name": "São Tomé and Príncipe dobra",
+        "symbol": "Db"
+      }
+    },
+    "languages": {
+      "por": "Portuguese"
+    },
+    "timezones": [
+      "UTC+00:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@1,7,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "SA",
+    "iso3": "SAU",
+    "name": "Saudi Arabia",
+    "officialName": "Kingdom of Saudi Arabia",
+    "flag": "🇸🇦",
+    "region": "Asia",
+    "subregion": "Western Asia",
+    "capital": [
+      "Riyadh"
+    ],
+    "currencies": {
+      "SAR": {
+        "name": "Saudi riyal",
+        "symbol": "ر.س"
+      }
+    },
+    "languages": {
+      "ara": "Arabic"
+    },
+    "timezones": [
+      "UTC+03:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@25,45,5z",
+    "gec": "sa",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "SN",
+    "iso3": "SEN",
+    "name": "Senegal",
+    "officialName": "Republic of Senegal",
+    "flag": "🇸🇳",
+    "region": "Africa",
+    "subregion": "Western Africa",
+    "capital": [
+      "Dakar"
+    ],
+    "currencies": {
+      "XOF": {
+        "name": "West African CFA franc",
+        "symbol": "Fr"
+      }
+    },
+    "languages": {
+      "fra": "French"
+    },
+    "timezones": [
+      "UTC+00:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@14,-14,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "RS",
+    "iso3": "SRB",
+    "name": "Serbia",
+    "officialName": "Republic of Serbia",
+    "flag": "🇷🇸",
+    "region": "Europe",
+    "subregion": "Southeast Europe",
+    "capital": [
+      "Belgrade"
+    ],
+    "currencies": {
+      "RSD": {
+        "name": "Serbian dinar",
+        "symbol": "дин."
+      }
+    },
+    "languages": {
+      "srp": "Serbian"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@44,21,5z",
+    "gec": "ri",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "SC",
+    "iso3": "SYC",
+    "name": "Seychelles",
+    "officialName": "Republic of Seychelles",
+    "flag": "🇸🇨",
+    "region": "Africa",
+    "subregion": "Eastern Africa",
+    "capital": [
+      "Victoria"
+    ],
+    "currencies": {
+      "SCR": {
+        "name": "Seychellois rupee",
+        "symbol": "₨"
+      }
+    },
+    "languages": {
+      "crs": "Seychellois Creole",
+      "eng": "English",
+      "fra": "French"
+    },
+    "timezones": [
+      "UTC+04:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-4.58333333,55.66666666,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "SL",
+    "iso3": "SLE",
+    "name": "Sierra Leone",
+    "officialName": "Republic of Sierra Leone",
+    "flag": "🇸🇱",
+    "region": "Africa",
+    "subregion": "Western Africa",
+    "capital": [
+      "Freetown"
+    ],
+    "currencies": {
+      "SLE": {
+        "name": "Sierra Leonean leone",
+        "symbol": "Le"
+      }
+    },
+    "languages": {
+      "eng": "English"
+    },
+    "timezones": [
+      "UTC+00:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@8.5,-11.5,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "SG",
+    "iso3": "SGP",
+    "name": "Singapore",
+    "officialName": "Republic of Singapore",
+    "flag": "🇸🇬",
+    "region": "Asia",
+    "subregion": "South-Eastern Asia",
+    "capital": [
+      "Singapore"
+    ],
+    "currencies": {
+      "SGD": {
+        "name": "Singapore dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "msa": "Malay",
+      "tam": "Tamil",
+      "zho": "Chinese"
+    },
+    "timezones": [
+      "UTC+08:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@1.36666666,103.8,5z",
+    "gec": "sn",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "SK",
+    "iso3": "SVK",
+    "name": "Slovakia",
+    "officialName": "Slovak Republic",
+    "flag": "🇸🇰",
+    "region": "Europe",
+    "subregion": "Central Europe",
+    "capital": [
+      "Bratislava"
+    ],
+    "currencies": {
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      }
+    },
+    "languages": {
+      "slk": "Slovak"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@48.66666666,19.5,5z",
+    "gec": "lo",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "SI",
+    "iso3": "SVN",
+    "name": "Slovenia",
+    "officialName": "Republic of Slovenia",
+    "flag": "🇸🇮",
+    "region": "Europe",
+    "subregion": "Central Europe",
+    "capital": [
+      "Ljubljana"
+    ],
+    "currencies": {
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      }
+    },
+    "languages": {
+      "slv": "Slovene"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@46.11666666,14.81666666,5z",
+    "gec": "si",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "SB",
+    "iso3": "SLB",
+    "name": "Solomon Islands",
+    "officialName": "Solomon Islands",
+    "flag": "🇸🇧",
+    "region": "Oceania",
+    "subregion": "Melanesia",
+    "capital": [
+      "Honiara"
+    ],
+    "currencies": {
+      "SBD": {
+        "name": "Solomon Islands dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "eng": "English"
+    },
+    "timezones": [
+      "UTC+11:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-8,159,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "SO",
+    "iso3": "SOM",
+    "name": "Somalia",
+    "officialName": "Federal Republic of Somalia",
+    "flag": "🇸🇴",
+    "region": "Africa",
+    "subregion": "Eastern Africa",
+    "capital": [
+      "Mogadishu"
+    ],
+    "currencies": {
+      "SOS": {
+        "name": "Somali shilling",
+        "symbol": "Sh"
+      }
+    },
+    "languages": {
+      "ara": "Arabic",
+      "som": "Somali"
+    },
+    "timezones": [
+      "UTC+03:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@10,49,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "ZA",
+    "iso3": "ZAF",
+    "name": "South Africa",
+    "officialName": "Republic of South Africa",
+    "flag": "🇿🇦",
+    "region": "Africa",
+    "subregion": "Southern Africa",
+    "capital": [
+      "Pretoria",
+      "Bloemfontein",
+      "Cape Town"
+    ],
+    "currencies": {
+      "ZAR": {
+        "name": "South African rand",
+        "symbol": "R"
+      }
+    },
+    "languages": {
+      "afr": "Afrikaans",
+      "eng": "English",
+      "nbl": "Southern Ndebele",
+      "nso": "Northern Sotho",
+      "sot": "Southern Sotho",
+      "ssw": "Swazi",
+      "tsn": "Tswana",
+      "tso": "Tsonga",
+      "ven": "Venda",
+      "xho": "Xhosa",
+      "zul": "Zulu"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-29,24,5z",
+    "gec": "sf",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "KR",
+    "iso3": "KOR",
+    "name": "South Korea",
+    "officialName": "Republic of Korea",
+    "flag": "🇰🇷",
+    "region": "Asia",
+    "subregion": "Eastern Asia",
+    "capital": [
+      "Seoul"
+    ],
+    "currencies": {
+      "KRW": {
+        "name": "South Korean won",
+        "symbol": "₩"
+      }
+    },
+    "languages": {
+      "kor": "Korean"
+    },
+    "timezones": [
+      "UTC+09:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@37,127.5,5z",
+    "gec": "ks",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "SS",
+    "iso3": "SSD",
+    "name": "South Sudan",
+    "officialName": "Republic of South Sudan",
+    "flag": "🇸🇸",
+    "region": "Africa",
+    "subregion": "Middle Africa",
+    "capital": [
+      "Juba"
+    ],
+    "currencies": {
+      "SSP": {
+        "name": "South Sudanese pound",
+        "symbol": "£"
+      }
+    },
+    "languages": {
+      "eng": "English"
+    },
+    "timezones": [
+      "UTC+03:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@7,30,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "ES",
+    "iso3": "ESP",
+    "name": "Spain",
+    "officialName": "Kingdom of Spain",
+    "flag": "🇪🇸",
+    "region": "Europe",
+    "subregion": "Southern Europe",
+    "capital": [
+      "Madrid"
+    ],
+    "currencies": {
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      }
+    },
+    "languages": {
+      "spa": "Spanish"
+    },
+    "timezones": [
+      "UTC+00:00",
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@40,-4,5z",
+    "gec": "sp",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "LK",
+    "iso3": "LKA",
+    "name": "Sri Lanka",
+    "officialName": "Democratic Socialist Republic of Sri Lanka",
+    "flag": "🇱🇰",
+    "region": "Asia",
+    "subregion": "Southern Asia",
+    "capital": [
+      "Colombo"
+    ],
+    "currencies": {
+      "LKR": {
+        "name": "Sri Lankan rupee",
+        "symbol": "Rs රු"
+      }
+    },
+    "languages": {
+      "sin": "Sinhala",
+      "tam": "Tamil"
+    },
+    "timezones": [
+      "UTC+05:30"
+    ],
+    "googleMaps": "https://www.google.com/maps/@7,81,5z",
+    "gec": "ce",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "SD",
+    "iso3": "SDN",
+    "name": "Sudan",
+    "officialName": "Republic of the Sudan",
+    "flag": "🇸🇩",
+    "region": "Africa",
+    "subregion": "Northern Africa",
+    "capital": [
+      "Khartoum"
+    ],
+    "currencies": {
+      "SDG": {
+        "name": "Sudanese pound",
+        "symbol": "PT"
+      }
+    },
+    "languages": {
+      "ara": "Arabic",
+      "eng": "English"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@15,30,5z",
+    "gec": "su",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": false
+    }
+  },
+  {
+    "code": "SR",
+    "iso3": "SUR",
+    "name": "Suriname",
+    "officialName": "Republic of Suriname",
+    "flag": "🇸🇷",
+    "region": "Americas",
+    "subregion": "South America",
+    "capital": [
+      "Paramaribo"
+    ],
+    "currencies": {
+      "SRD": {
+        "name": "Surinamese dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "nld": "Dutch"
+    },
+    "timezones": [
+      "UTC-03:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@4,-56,5z",
+    "gec": "ns",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "SE",
+    "iso3": "SWE",
+    "name": "Sweden",
+    "officialName": "Kingdom of Sweden",
+    "flag": "🇸🇪",
+    "region": "Europe",
+    "subregion": "Northern Europe",
+    "capital": [
+      "Stockholm"
+    ],
+    "currencies": {
+      "SEK": {
+        "name": "Swedish krona",
+        "symbol": "kr"
+      }
+    },
+    "languages": {
+      "swe": "Swedish"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@62,15,5z",
+    "gec": "sw",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "CH",
+    "iso3": "CHE",
+    "name": "Switzerland",
+    "officialName": "Swiss Confederation",
+    "flag": "🇨🇭",
+    "region": "Europe",
+    "subregion": "Western Europe",
+    "capital": [
+      "Bern"
+    ],
+    "currencies": {
+      "CHF": {
+        "name": "Swiss franc",
+        "symbol": "Fr."
+      }
+    },
+    "languages": {
+      "fra": "French",
+      "gsw": "Swiss German",
+      "ita": "Italian",
+      "roh": "Romansh"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@47,8,5z",
+    "gec": "sz",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "SY",
+    "iso3": "SYR",
+    "name": "Syria",
+    "officialName": "Syrian Arab Republic",
+    "flag": "🇸🇾",
+    "region": "Asia",
+    "subregion": "Western Asia",
+    "capital": [
+      "Damascus"
+    ],
+    "currencies": {
+      "SYP": {
+        "name": "Syrian pound",
+        "symbol": "£"
+      }
+    },
+    "languages": {
+      "ara": "Arabic"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@35,38,5z",
+    "gec": "sy",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "TJ",
+    "iso3": "TJK",
+    "name": "Tajikistan",
+    "officialName": "Republic of Tajikistan",
+    "flag": "🇹🇯",
+    "region": "Asia",
+    "subregion": "Central Asia",
+    "capital": [
+      "Dushanbe"
+    ],
+    "currencies": {
+      "TJS": {
+        "name": "Tajikistani somoni",
+        "symbol": "ЅМ"
+      }
+    },
+    "languages": {
+      "rus": "Russian",
+      "tgk": "Tajik"
+    },
+    "timezones": [
+      "UTC+05:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@39,71,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "TZ",
+    "iso3": "TZA",
+    "name": "Tanzania",
+    "officialName": "United Republic of Tanzania",
+    "flag": "🇹🇿",
+    "region": "Africa",
+    "subregion": "Eastern Africa",
+    "capital": [
+      "Dodoma"
+    ],
+    "currencies": {
+      "TZS": {
+        "name": "Tanzanian shilling",
+        "symbol": "Sh"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "swa": "Swahili"
+    },
+    "timezones": [
+      "UTC+03:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-6,35,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "TH",
+    "iso3": "THA",
+    "name": "Thailand",
+    "officialName": "Kingdom of Thailand",
+    "flag": "🇹🇭",
+    "region": "Asia",
+    "subregion": "South-Eastern Asia",
+    "capital": [
+      "Bangkok"
+    ],
+    "currencies": {
+      "THB": {
+        "name": "Thai baht",
+        "symbol": "฿"
+      }
+    },
+    "languages": {
+      "tha": "Thai"
+    },
+    "timezones": [
+      "UTC+07:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@15,100,5z",
+    "gec": "th",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "TL",
+    "iso3": "TLS",
+    "name": "Timor-Leste",
+    "officialName": "Democratic Republic of Timor-Leste",
+    "flag": "🇹🇱",
+    "region": "Asia",
+    "subregion": "South-Eastern Asia",
+    "capital": [
+      "Dili"
+    ],
+    "currencies": {
+      "USD": {
+        "name": "United States dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "por": "Portuguese",
+      "tet": "Tetum"
+    },
+    "timezones": [
+      "UTC+09:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-8.83333333,125.91666666,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "TG",
+    "iso3": "TGO",
+    "name": "Togo",
+    "officialName": "Togolese Republic",
+    "flag": "🇹🇬",
+    "region": "Africa",
+    "subregion": "Western Africa",
+    "capital": [
+      "Lomé"
+    ],
+    "currencies": {
+      "XOF": {
+        "name": "West African CFA franc",
+        "symbol": "Fr"
+      }
+    },
+    "languages": {
+      "fra": "French"
+    },
+    "timezones": [
+      "UTC+00:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@8,1.16666666,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "TO",
+    "iso3": "TON",
+    "name": "Tonga",
+    "officialName": "Kingdom of Tonga",
+    "flag": "🇹🇴",
+    "region": "Oceania",
+    "subregion": "Polynesia",
+    "capital": [
+      "Nuku'alofa"
+    ],
+    "currencies": {
+      "TOP": {
+        "name": "Tongan paʻanga",
+        "symbol": "T$"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "ton": "Tongan"
+    },
+    "timezones": [
+      "UTC+13:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-20,-175,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "TT",
+    "iso3": "TTO",
+    "name": "Trinidad and Tobago",
+    "officialName": "Republic of Trinidad and Tobago",
+    "flag": "🇹🇹",
+    "region": "Americas",
+    "subregion": "Caribbean",
+    "capital": [
+      "Port of Spain"
+    ],
+    "currencies": {
+      "TTD": {
+        "name": "Trinidad and Tobago dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "eng": "English"
+    },
+    "timezones": [
+      "UTC-04:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@11,-61,5z",
+    "gec": "td",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "TN",
+    "iso3": "TUN",
+    "name": "Tunisia",
+    "officialName": "Tunisian Republic",
+    "flag": "🇹🇳",
+    "region": "Africa",
+    "subregion": "Northern Africa",
+    "capital": [
+      "Tunis"
+    ],
+    "currencies": {
+      "TND": {
+        "name": "Tunisian dinar",
+        "symbol": "د.ت"
+      }
+    },
+    "languages": {
+      "ara": "Arabic"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@34,9,5z",
+    "gec": "ts",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "TR",
+    "iso3": "TUR",
+    "name": "Türkiye",
+    "officialName": "Republic of Türkiye",
+    "flag": "🇹🇷",
+    "region": "Asia",
+    "subregion": "Western Asia",
+    "capital": [
+      "Ankara"
+    ],
+    "currencies": {
+      "TRY": {
+        "name": "Turkish lira",
+        "symbol": "₺"
+      }
+    },
+    "languages": {
+      "tur": "Turkish"
+    },
+    "timezones": [
+      "UTC+03:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@39,35,5z",
+    "gec": "tu",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "TM",
+    "iso3": "TKM",
+    "name": "Turkmenistan",
+    "officialName": "Turkmenistan",
+    "flag": "🇹🇲",
+    "region": "Asia",
+    "subregion": "Central Asia",
+    "capital": [
+      "Ashgabat"
+    ],
+    "currencies": {
+      "TMT": {
+        "name": "Turkmenistan manat",
+        "symbol": "m"
+      }
+    },
+    "languages": {
+      "rus": "Russian",
+      "tuk": "Turkmen"
+    },
+    "timezones": [
+      "UTC+05:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@40,60,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "TV",
+    "iso3": "TUV",
+    "name": "Tuvalu",
+    "officialName": "Tuvalu",
+    "flag": "🇹🇻",
+    "region": "Oceania",
+    "subregion": "Polynesia",
+    "capital": [
+      "Funafuti"
+    ],
+    "currencies": {
+      "AUD": {
+        "name": "Australian dollar",
+        "symbol": "$"
+      },
+      "TVD": {
+        "name": "Tuvaluan dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "tvl": "Tuvaluan"
+    },
+    "timezones": [
+      "UTC+12:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-8,178,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "UG",
+    "iso3": "UGA",
+    "name": "Uganda",
+    "officialName": "Republic of Uganda",
+    "flag": "🇺🇬",
+    "region": "Africa",
+    "subregion": "Eastern Africa",
+    "capital": [
+      "Kampala"
+    ],
+    "currencies": {
+      "UGX": {
+        "name": "Ugandan shilling",
+        "symbol": "Sh"
+      }
+    },
+    "languages": {
+      "eng": "English",
+      "swa": "Swahili"
+    },
+    "timezones": [
+      "UTC+03:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@1,32,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "UA",
+    "iso3": "UKR",
+    "name": "Ukraine",
+    "officialName": "Ukraine",
+    "flag": "🇺🇦",
+    "region": "Europe",
+    "subregion": "Eastern Europe",
+    "capital": [
+      "Kyiv"
+    ],
+    "currencies": {
+      "UAH": {
+        "name": "Ukrainian hryvnia",
+        "symbol": "₴"
+      }
+    },
+    "languages": {
+      "ukr": "Ukrainian"
+    },
+    "timezones": [
+      "UTC+02:00",
+      "UTC+03:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@49,32,5z",
+    "gec": "up",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "AE",
+    "iso3": "ARE",
+    "name": "United Arab Emirates",
+    "officialName": "United Arab Emirates",
+    "flag": "🇦🇪",
+    "region": "Asia",
+    "subregion": "Western Asia",
+    "capital": [
+      "Abu Dhabi"
+    ],
+    "currencies": {
+      "AED": {
+        "name": "United Arab Emirates dirham",
+        "symbol": "د.إ"
+      }
+    },
+    "languages": {
+      "ara": "Arabic"
+    },
+    "timezones": [
+      "UTC+04:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@24,54,5z",
+    "gec": "ae",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "GB",
+    "iso3": "GBR",
+    "name": "United Kingdom",
+    "officialName": "United Kingdom of Great Britain and Northern Ireland",
+    "flag": "🇬🇧",
+    "region": "Europe",
+    "subregion": "Northern Europe",
+    "capital": [
+      "London"
+    ],
+    "currencies": {
+      "GBP": {
+        "name": "British pound",
+        "symbol": "£"
+      }
+    },
+    "languages": {
+      "eng": "English"
+    },
+    "timezones": [
+      "UTC+00:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@54,-2,5z",
+    "gec": "uk",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": false
+    }
+  },
+  {
+    "code": "US",
+    "iso3": "USA",
+    "name": "United States",
+    "officialName": "United States of America",
+    "flag": "🇺🇸",
+    "region": "Americas",
+    "subregion": "North America",
+    "capital": [
+      "Washington D.C."
+    ],
+    "currencies": {
+      "USD": {
+        "name": "United States dollar",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "eng": "English"
+    },
+    "timezones": [
+      "UTC-05:00",
+      "UTC-06:00",
+      "UTC-07:00",
+      "UTC-08:00",
+      "UTC-09:00",
+      "UTC-10:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@38,-97,5z",
+    "gec": "us",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "UY",
+    "iso3": "URY",
+    "name": "Uruguay",
+    "officialName": "Oriental Republic of Uruguay",
+    "flag": "🇺🇾",
+    "region": "Americas",
+    "subregion": "South America",
+    "capital": [
+      "Montevideo"
+    ],
+    "currencies": {
+      "UYU": {
+        "name": "Uruguayan peso",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "spa": "Spanish"
+    },
+    "timezones": [
+      "UTC-03:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-33,-56,5z",
+    "gec": "uy",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "UZ",
+    "iso3": "UZB",
+    "name": "Uzbekistan",
+    "officialName": "Republic of Uzbekistan",
+    "flag": "🇺🇿",
+    "region": "Asia",
+    "subregion": "Central Asia",
+    "capital": [
+      "Tashkent"
+    ],
+    "currencies": {
+      "UZS": {
+        "name": "Uzbekistani soʻm",
+        "symbol": "so'm"
+      }
+    },
+    "languages": {
+      "rus": "Russian",
+      "uzb": "Uzbek"
+    },
+    "timezones": [
+      "UTC+05:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@41,64,5z",
+    "gec": "uz",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "VU",
+    "iso3": "VUT",
+    "name": "Vanuatu",
+    "officialName": "Republic of Vanuatu",
+    "flag": "🇻🇺",
+    "region": "Oceania",
+    "subregion": "Melanesia",
+    "capital": [
+      "Port Vila"
+    ],
+    "currencies": {
+      "VUV": {
+        "name": "Vanuatu vatu",
+        "symbol": "Vt"
+      }
+    },
+    "languages": {
+      "bis": "Bislama",
+      "eng": "English",
+      "fra": "French"
+    },
+    "timezones": [
+      "UTC+11:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-16,167,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "VA",
+    "iso3": "VAT",
+    "name": "Vatican City",
+    "officialName": "Vatican City State",
+    "flag": "🇻🇦",
+    "region": "Europe",
+    "subregion": "Southern Europe",
+    "capital": [
+      "Vatican City"
+    ],
+    "currencies": {
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      }
+    },
+    "languages": {
+      "ita": "Italian",
+      "lat": "Latin"
+    },
+    "timezones": [
+      "UTC+01:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@41.9,12.45,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "VE",
+    "iso3": "VEN",
+    "name": "Venezuela",
+    "officialName": "Bolivarian Republic of Venezuela",
+    "flag": "🇻🇪",
+    "region": "Americas",
+    "subregion": "South America",
+    "capital": [
+      "Caracas"
+    ],
+    "currencies": {
+      "VES": {
+        "name": "Venezuelan bolívar soberano",
+        "symbol": "Bs.S."
+      }
+    },
+    "languages": {
+      "spa": "Spanish"
+    },
+    "timezones": [
+      "UTC-04:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@8,-66,5z",
+    "gec": "ve",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "VN",
+    "iso3": "VNM",
+    "name": "Vietnam",
+    "officialName": "Socialist Republic of Vietnam",
+    "flag": "🇻🇳",
+    "region": "Asia",
+    "subregion": "South-Eastern Asia",
+    "capital": [
+      "Hanoi"
+    ],
+    "currencies": {
+      "VND": {
+        "name": "Vietnamese đồng",
+        "symbol": "₫"
+      }
+    },
+    "languages": {
+      "vie": "Vietnamese"
+    },
+    "timezones": [
+      "UTC+07:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@16.16666666,107.83333333,5z",
+    "gec": "vm",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "YE",
+    "iso3": "YEM",
+    "name": "Yemen",
+    "officialName": "Republic of Yemen",
+    "flag": "🇾🇪",
+    "region": "Asia",
+    "subregion": "Western Asia",
+    "capital": [
+      "Sana'a"
+    ],
+    "currencies": {
+      "YER": {
+        "name": "Yemeni rial",
+        "symbol": "﷼"
+      }
+    },
+    "languages": {
+      "ara": "Arabic"
+    },
+    "timezones": [
+      "UTC+03:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@15,48,5z",
+    "gec": "ym",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "ZM",
+    "iso3": "ZMB",
+    "name": "Zambia",
+    "officialName": "Republic of Zambia",
+    "flag": "🇿🇲",
+    "region": "Africa",
+    "subregion": "Eastern Africa",
+    "capital": [
+      "Lusaka"
+    ],
+    "currencies": {
+      "ZMW": {
+        "name": "Zambian kwacha",
+        "symbol": "ZK"
+      }
+    },
+    "languages": {
+      "eng": "English"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-15,30,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "ZW",
+    "iso3": "ZWE",
+    "name": "Zimbabwe",
+    "officialName": "Republic of Zimbabwe",
+    "flag": "🇿🇼",
+    "region": "Africa",
+    "subregion": "Eastern Africa",
+    "capital": [
+      "Harare"
+    ],
+    "currencies": {
+      "BWP": {
+        "name": "Botswana pula",
+        "symbol": "P"
+      },
+      "CNY": {
+        "name": "Chinese yuan",
+        "symbol": "¥"
+      },
+      "EUR": {
+        "name": "Euro",
+        "symbol": "€"
+      },
+      "GBP": {
+        "name": "British pound",
+        "symbol": "£"
+      },
+      "INR": {
+        "name": "Indian rupee",
+        "symbol": "₹"
+      },
+      "JPY": {
+        "name": "Japanese yen",
+        "symbol": "¥"
+      },
+      "USD": {
+        "name": "United States dollar",
+        "symbol": "$"
+      },
+      "ZAR": {
+        "name": "South African rand",
+        "symbol": "Rs"
+      },
+      "ZWB": {
+        "name": "Zimbabwean bonds",
+        "symbol": "$"
+      }
+    },
+    "languages": {
+      "bwg": "Chibarwe",
+      "eng": "English",
+      "kck": "Kalanga",
+      "khi": "Khoisan",
+      "ndc": "Ndau",
+      "nde": "Northern Ndebele",
+      "nya": "Chewa",
+      "sna": "Shona",
+      "sot": "Sotho",
+      "toi": "Tonga",
+      "tsn": "Tswana",
+      "tso": "Tsonga",
+      "ven": "Venda",
+      "xho": "Xhosa",
+      "zib": "Zimbabwean Sign Language"
+    },
+    "timezones": [
+      "UTC+02:00"
+    ],
+    "googleMaps": "https://www.google.com/maps/@-20,30,5z",
+    "gec": null,
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  }
+]

@@ -1,170 +1,9 @@
 import { NextResponse } from 'next/server';
+import { toIso3 } from '../../../lib/countries';
 
-// Map 2-letter ISO codes to 3-letter codes for World Bank Climate API
-const climateCountryCodeMap = {
-  // North America
-  'US': 'USA',
-  'CA': 'CAN',
-  'MX': 'MEX',
-  
-  // Europe
-  'GB': 'GBR',
-  'DE': 'DEU',
-  'FR': 'FRA',
-  'IT': 'ITA',
-  'ES': 'ESP',
-  'NL': 'NLD',
-  'BE': 'BEL',
-  'CH': 'CHE',
-  'AT': 'AUT',
-  'SE': 'SWE',
-  'NO': 'NOR',
-  'DK': 'DNK',
-  'FI': 'FIN',
-  'PL': 'POL',
-  'CZ': 'CZE',
-  'HU': 'HUN',
-  'GR': 'GRC',
-  'PT': 'PRT',
-  'IE': 'IRL',
-  'SK': 'SVK',
-  'SI': 'SVN',
-  'HR': 'HRV',
-  'BG': 'BGR',
-  'RO': 'ROU',
-  'LT': 'LTU',
-  'LV': 'LVA',
-  'EE': 'EST',
-  'LU': 'LUX',
-  'MT': 'MLT',
-  'CY': 'CYP',
-  
-  // Asia
-  'JP': 'JPN',
-  'CN': 'CHN',
-  'IN': 'IND',
-  'KR': 'KOR',
-  'TH': 'THA',
-  'VN': 'VNM',
-  'MY': 'MYS',
-  'SG': 'SGP',
-  'PH': 'PHL',
-  'ID': 'IDN',
-  'TR': 'TUR',
-  'IL': 'ISR',
-  'SA': 'SAU',
-  'AE': 'ARE',
-  'QA': 'QAT',
-  'KW': 'KWT',
-  'BH': 'BHR',
-  'OM': 'OMN',
-  'JO': 'JOR',
-  'LB': 'LBN',
-  'SY': 'SYR',
-  'IQ': 'IRQ',
-  'IR': 'IRN',
-  'AF': 'AFG',
-  'PK': 'PAK',
-  'BD': 'BGD',
-  'LK': 'LKA',
-  'NP': 'NPL',
-  'BT': 'BTN',
-  'MM': 'MMR',
-  'KH': 'KHM',
-  'LA': 'LAO',
-  'MN': 'MNG',
-  'KP': 'PRK',
-  'KZ': 'KAZ',
-  'UZ': 'UZB',
-  'TM': 'TKM',
-  'TJ': 'TJK',
-  'KG': 'KGZ',
-  'AM': 'ARM',
-  'AZ': 'AZE',
-  'GE': 'GEO',
-  
-  // South America
-  'BR': 'BRA',
-  'AR': 'ARG',
-  'CL': 'CHL',
-  'PE': 'PER',
-  'CO': 'COL',
-  'VE': 'VEN',
-  'EC': 'ECU',
-  'BO': 'BOL',
-  'PY': 'PRY',
-  'UY': 'URY',
-  'GY': 'GUY',
-  'SR': 'SUR',
-  
-  // Africa
-  'ZA': 'ZAF',
-  'EG': 'EGY',
-  'NG': 'NGA',
-  'KE': 'KEN',
-  'ET': 'ETH',
-  'GH': 'GHA',
-  'TZ': 'TZA',
-  'UG': 'UGA',
-  'DZ': 'DZA',
-  'MA': 'MAR',
-  'TN': 'TUN',
-  'LY': 'LBY',
-  'SD': 'SDN',
-  'AO': 'AGO',
-  'MZ': 'MOZ',
-  'MG': 'MDG',
-  'ZW': 'ZWE',
-  'ZM': 'ZMB',
-  'MW': 'MWI',
-  'BW': 'BWA',
-  'NA': 'NAM',
-  'SZ': 'SWZ',
-  'LS': 'LSO',
-  
-  // Oceania
-  'AU': 'AUS',
-  'NZ': 'NZL',
-  'FJ': 'FJI',
-  'PG': 'PNG',
-  'SB': 'SLB',
-  'VU': 'VUT',
-  'NC': 'NCL',
-  'PF': 'PYF',
-  
-  // Eastern Europe & Former Soviet
-  'RU': 'RUS',
-  'UA': 'UKR',
-  'BY': 'BLR',
-  'MD': 'MDA',
-  'AL': 'ALB',
-  'BA': 'BIH',
-  'MK': 'MKD',
-  'ME': 'MNE',
-  'RS': 'SRB',
-  'XK': 'XKX', // Kosovo
-  
-  // Caribbean & Central America
-  'GT': 'GTM',
-  'BZ': 'BLZ',
-  'SV': 'SLV',
-  'HN': 'HND',
-  'NI': 'NIC',
-  'CR': 'CRI',
-  'PA': 'PAN',
-  'CU': 'CUB',
-  'DO': 'DOM',
-  'HT': 'HTI',
-  'JM': 'JAM',
-  'TT': 'TTO',
-  'BB': 'BRB',
-  'GD': 'GRD',
-  'LC': 'LCA',
-  'VC': 'VCT',
-  'AG': 'ATG',
-  'DM': 'DMA',
-  'KN': 'KNA'
-};
+// Reference data changes at most a few times a year; cache for a day and serve
+// stale for a week while revalidating, so upstream outages stay invisible.
+export const revalidate = 86400;
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
@@ -176,49 +15,46 @@ export async function GET(request) {
   }
 
   try {
-    // Convert 2-letter country code to 3-letter for World Bank Climate API
-    const worldBankCountryCode = climateCountryCodeMap[country.toUpperCase()] || country;
+    // The Climate Knowledge Portal is keyed by ISO3.
+    const worldBankCountryCode = toIso3(country) ?? country.toUpperCase();
     
     // If no variable specified, fetch multiple key climate variables
     const variables = variable ? [variable] : ['tas', 'hd30', 'hd35', 'fd'];
     const results = {};
     
-    console.log(`Fetching climate data for ${country} (${worldBankCountryCode}): ${variables.join(', ')}`);
-    
-    for (const var_name of variables) {
-      try {
-        // World Bank Climate API endpoint
-        // Using historical climatology data from CRU (Climate Research Unit)
-        const climateUrl = `https://cckpapi.worldbank.org/cckp/v1/cru-x0.5_climatology_${var_name}_climatology_annual_1991-2020_median_historical_cru-ensemble_all_mean/${worldBankCountryCode}?_format=json`;
-        
-        console.log(`Fetching from Climate API: ${climateUrl}`);
-        
-        const response = await fetch(climateUrl);
-        
-        if (response.ok) {
-          const data = await response.json();
-          results[var_name] = data;
-        } else {
-          console.error(`Climate API error for ${var_name}: ${response.status} ${response.statusText}`);
-          // Try alternative format if first request fails
-          const alternativeUrl = `https://cckpapi.worldbank.org/cckp/v1/era5-x0.25_climatology_${var_name}_climatology_annual_1991-2020_median_historical_era5-ensemble_all_mean/${worldBankCountryCode}?_format=json`;
-          console.log(`Trying alternative URL: ${alternativeUrl}`);
-          
-          const altResponse = await fetch(alternativeUrl);
-          if (altResponse.ok) {
-            const altData = await altResponse.json();
-            results[var_name] = altData;
-          } else {
-            console.warn(`Both climate API endpoints failed for ${var_name}`);
-            results[var_name] = { error: `Failed to fetch ${var_name} data` };
-          }
+    // The four variables are independent, so fetch them together rather than in
+    // series - this route used to cost up to eight sequential round trips.
+    const climatologyUrl = (dataset, ensemble, varName) =>
+      `https://cckpapi.worldbank.org/cckp/v1/${dataset}_climatology_${varName}_climatology_annual_1991-2020_median_historical_${ensemble}_all_mean/${worldBankCountryCode}?_format=json`;
+
+    const fetchVariable = async (varName) => {
+      // CRU is the preferred dataset; ERA5 is the fallback when CRU has no coverage.
+      const sources = [
+        climatologyUrl('cru-x0.5', 'cru-ensemble', varName),
+        climatologyUrl('era5-x0.25', 'era5-ensemble', varName),
+      ];
+
+      for (const url of sources) {
+        try {
+          const response = await fetch(url, {
+            next: { revalidate: 86400 },
+            signal: AbortSignal.timeout(10_000),
+          });
+          if (response.ok) return [varName, await response.json()];
+        } catch {
+          // Try the next dataset.
         }
-      } catch (error) {
-        console.error(`Error fetching ${var_name}:`, error);
-        results[var_name] = { error: error.message };
       }
+
+      return [varName, { error: `No climatology available for ${varName}` }];
+    };
+
+    const settled = await Promise.all(variables.map(fetchVariable));
+    for (const [varName, data] of settled) {
+      results[varName] = data;
     }
-    
+
+
     // If only one variable was requested, return just that data
     if (variable && variables.length === 1) {
       return NextResponse.json(results[variable] || { error: 'No data found' });
@@ -247,8 +83,6 @@ export async function GET(request) {
     );
     
     if (!hasAnyRealData || hasRateLimitErrors) {
-      console.log('No climate data found or rate limited, using fallback for', country);
-      console.log('Rate limit errors detected:', hasRateLimitErrors);
       
       // Use fallback data when API is unavailable
       const fallbackData = getFallbackClimateData(country);
@@ -257,7 +91,6 @@ export async function GET(request) {
       }
     }
     
-    console.log('Processed Climate Data:', JSON.stringify(processedData, null, 2));
     
     return NextResponse.json(processedData);
   } catch (error) {

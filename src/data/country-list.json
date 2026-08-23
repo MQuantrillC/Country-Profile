@@ -1,0 +1,2136 @@
+[
+  {
+    "code": "AF",
+    "iso3": "AFG",
+    "name": "Afghanistan",
+    "flag": "🇦🇫",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "AL",
+    "iso3": "ALB",
+    "name": "Albania",
+    "flag": "🇦🇱",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "DZ",
+    "iso3": "DZA",
+    "name": "Algeria",
+    "flag": "🇩🇿",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "AD",
+    "iso3": "AND",
+    "name": "Andorra",
+    "flag": "🇦🇩",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "AO",
+    "iso3": "AGO",
+    "name": "Angola",
+    "flag": "🇦🇴",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "AG",
+    "iso3": "ATG",
+    "name": "Antigua and Barbuda",
+    "flag": "🇦🇬",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "AR",
+    "iso3": "ARG",
+    "name": "Argentina",
+    "flag": "🇦🇷",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "AM",
+    "iso3": "ARM",
+    "name": "Armenia",
+    "flag": "🇦🇲",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "AU",
+    "iso3": "AUS",
+    "name": "Australia",
+    "flag": "🇦🇺",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "AT",
+    "iso3": "AUT",
+    "name": "Austria",
+    "flag": "🇦🇹",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "AZ",
+    "iso3": "AZE",
+    "name": "Azerbaijan",
+    "flag": "🇦🇿",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "BS",
+    "iso3": "BHS",
+    "name": "Bahamas",
+    "flag": "🇧🇸",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "BH",
+    "iso3": "BHR",
+    "name": "Bahrain",
+    "flag": "🇧🇭",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "BD",
+    "iso3": "BGD",
+    "name": "Bangladesh",
+    "flag": "🇧🇩",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "BB",
+    "iso3": "BRB",
+    "name": "Barbados",
+    "flag": "🇧🇧",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "BY",
+    "iso3": "BLR",
+    "name": "Belarus",
+    "flag": "🇧🇾",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "BE",
+    "iso3": "BEL",
+    "name": "Belgium",
+    "flag": "🇧🇪",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "BZ",
+    "iso3": "BLZ",
+    "name": "Belize",
+    "flag": "🇧🇿",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "BJ",
+    "iso3": "BEN",
+    "name": "Benin",
+    "flag": "🇧🇯",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "BT",
+    "iso3": "BTN",
+    "name": "Bhutan",
+    "flag": "🇧🇹",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "BO",
+    "iso3": "BOL",
+    "name": "Bolivia",
+    "flag": "🇧🇴",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "BA",
+    "iso3": "BIH",
+    "name": "Bosnia and Herzegovina",
+    "flag": "🇧🇦",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "BW",
+    "iso3": "BWA",
+    "name": "Botswana",
+    "flag": "🇧🇼",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "BR",
+    "iso3": "BRA",
+    "name": "Brazil",
+    "flag": "🇧🇷",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "BN",
+    "iso3": "BRN",
+    "name": "Brunei",
+    "flag": "🇧🇳",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "BG",
+    "iso3": "BGR",
+    "name": "Bulgaria",
+    "flag": "🇧🇬",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "BF",
+    "iso3": "BFA",
+    "name": "Burkina Faso",
+    "flag": "🇧🇫",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "BI",
+    "iso3": "BDI",
+    "name": "Burundi",
+    "flag": "🇧🇮",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "KH",
+    "iso3": "KHM",
+    "name": "Cambodia",
+    "flag": "🇰🇭",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "CM",
+    "iso3": "CMR",
+    "name": "Cameroon",
+    "flag": "🇨🇲",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "CA",
+    "iso3": "CAN",
+    "name": "Canada",
+    "flag": "🇨🇦",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "CV",
+    "iso3": "CPV",
+    "name": "Cape Verde",
+    "flag": "🇨🇻",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "CF",
+    "iso3": "CAF",
+    "name": "Central African Republic",
+    "flag": "🇨🇫",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "TD",
+    "iso3": "TCD",
+    "name": "Chad",
+    "flag": "🇹🇩",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "CL",
+    "iso3": "CHL",
+    "name": "Chile",
+    "flag": "🇨🇱",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "CN",
+    "iso3": "CHN",
+    "name": "China",
+    "flag": "🇨🇳",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "CO",
+    "iso3": "COL",
+    "name": "Colombia",
+    "flag": "🇨🇴",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "KM",
+    "iso3": "COM",
+    "name": "Comoros",
+    "flag": "🇰🇲",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "CG",
+    "iso3": "COG",
+    "name": "Congo",
+    "flag": "🇨🇬",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "CR",
+    "iso3": "CRI",
+    "name": "Costa Rica",
+    "flag": "🇨🇷",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "HR",
+    "iso3": "HRV",
+    "name": "Croatia",
+    "flag": "🇭🇷",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "CU",
+    "iso3": "CUB",
+    "name": "Cuba",
+    "flag": "🇨🇺",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "CY",
+    "iso3": "CYP",
+    "name": "Cyprus",
+    "flag": "🇨🇾",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "CZ",
+    "iso3": "CZE",
+    "name": "Czechia",
+    "flag": "🇨🇿",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "DK",
+    "iso3": "DNK",
+    "name": "Denmark",
+    "flag": "🇩🇰",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "DJ",
+    "iso3": "DJI",
+    "name": "Djibouti",
+    "flag": "🇩🇯",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "DM",
+    "iso3": "DMA",
+    "name": "Dominica",
+    "flag": "🇩🇲",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "DO",
+    "iso3": "DOM",
+    "name": "Dominican Republic",
+    "flag": "🇩🇴",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "CD",
+    "iso3": "COD",
+    "name": "DR Congo",
+    "flag": "🇨🇩",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "EC",
+    "iso3": "ECU",
+    "name": "Ecuador",
+    "flag": "🇪🇨",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "EG",
+    "iso3": "EGY",
+    "name": "Egypt",
+    "flag": "🇪🇬",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "SV",
+    "iso3": "SLV",
+    "name": "El Salvador",
+    "flag": "🇸🇻",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "GQ",
+    "iso3": "GNQ",
+    "name": "Equatorial Guinea",
+    "flag": "🇬🇶",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "ER",
+    "iso3": "ERI",
+    "name": "Eritrea",
+    "flag": "🇪🇷",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "EE",
+    "iso3": "EST",
+    "name": "Estonia",
+    "flag": "🇪🇪",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "SZ",
+    "iso3": "SWZ",
+    "name": "Eswatini",
+    "flag": "🇸🇿",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "ET",
+    "iso3": "ETH",
+    "name": "Ethiopia",
+    "flag": "🇪🇹",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "FJ",
+    "iso3": "FJI",
+    "name": "Fiji",
+    "flag": "🇫🇯",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "FI",
+    "iso3": "FIN",
+    "name": "Finland",
+    "flag": "🇫🇮",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "FR",
+    "iso3": "FRA",
+    "name": "France",
+    "flag": "🇫🇷",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "GA",
+    "iso3": "GAB",
+    "name": "Gabon",
+    "flag": "🇬🇦",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "GM",
+    "iso3": "GMB",
+    "name": "Gambia",
+    "flag": "🇬🇲",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "GE",
+    "iso3": "GEO",
+    "name": "Georgia",
+    "flag": "🇬🇪",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "DE",
+    "iso3": "DEU",
+    "name": "Germany",
+    "flag": "🇩🇪",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "GH",
+    "iso3": "GHA",
+    "name": "Ghana",
+    "flag": "🇬🇭",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "GR",
+    "iso3": "GRC",
+    "name": "Greece",
+    "flag": "🇬🇷",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "GD",
+    "iso3": "GRD",
+    "name": "Grenada",
+    "flag": "🇬🇩",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "GT",
+    "iso3": "GTM",
+    "name": "Guatemala",
+    "flag": "🇬🇹",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "GN",
+    "iso3": "GIN",
+    "name": "Guinea",
+    "flag": "🇬🇳",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "GW",
+    "iso3": "GNB",
+    "name": "Guinea-Bissau",
+    "flag": "🇬🇼",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "GY",
+    "iso3": "GUY",
+    "name": "Guyana",
+    "flag": "🇬🇾",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "HT",
+    "iso3": "HTI",
+    "name": "Haiti",
+    "flag": "🇭🇹",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "HN",
+    "iso3": "HND",
+    "name": "Honduras",
+    "flag": "🇭🇳",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "HU",
+    "iso3": "HUN",
+    "name": "Hungary",
+    "flag": "🇭🇺",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "IS",
+    "iso3": "ISL",
+    "name": "Iceland",
+    "flag": "🇮🇸",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "IN",
+    "iso3": "IND",
+    "name": "India",
+    "flag": "🇮🇳",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "ID",
+    "iso3": "IDN",
+    "name": "Indonesia",
+    "flag": "🇮🇩",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "IR",
+    "iso3": "IRN",
+    "name": "Iran",
+    "flag": "🇮🇷",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "IQ",
+    "iso3": "IRQ",
+    "name": "Iraq",
+    "flag": "🇮🇶",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "IE",
+    "iso3": "IRL",
+    "name": "Ireland",
+    "flag": "🇮🇪",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "IL",
+    "iso3": "ISR",
+    "name": "Israel",
+    "flag": "🇮🇱",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "IT",
+    "iso3": "ITA",
+    "name": "Italy",
+    "flag": "🇮🇹",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "CI",
+    "iso3": "CIV",
+    "name": "Ivory Coast",
+    "flag": "🇨🇮",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "JM",
+    "iso3": "JAM",
+    "name": "Jamaica",
+    "flag": "🇯🇲",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "JP",
+    "iso3": "JPN",
+    "name": "Japan",
+    "flag": "🇯🇵",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "JO",
+    "iso3": "JOR",
+    "name": "Jordan",
+    "flag": "🇯🇴",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "KZ",
+    "iso3": "KAZ",
+    "name": "Kazakhstan",
+    "flag": "🇰🇿",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "KE",
+    "iso3": "KEN",
+    "name": "Kenya",
+    "flag": "🇰🇪",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "KI",
+    "iso3": "KIR",
+    "name": "Kiribati",
+    "flag": "🇰🇮",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "KW",
+    "iso3": "KWT",
+    "name": "Kuwait",
+    "flag": "🇰🇼",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "KG",
+    "iso3": "KGZ",
+    "name": "Kyrgyzstan",
+    "flag": "🇰🇬",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "LA",
+    "iso3": "LAO",
+    "name": "Laos",
+    "flag": "🇱🇦",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": false
+    }
+  },
+  {
+    "code": "LV",
+    "iso3": "LVA",
+    "name": "Latvia",
+    "flag": "🇱🇻",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "LB",
+    "iso3": "LBN",
+    "name": "Lebanon",
+    "flag": "🇱🇧",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "LS",
+    "iso3": "LSO",
+    "name": "Lesotho",
+    "flag": "🇱🇸",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "LR",
+    "iso3": "LBR",
+    "name": "Liberia",
+    "flag": "🇱🇷",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "LY",
+    "iso3": "LBY",
+    "name": "Libya",
+    "flag": "🇱🇾",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": false
+    }
+  },
+  {
+    "code": "LI",
+    "iso3": "LIE",
+    "name": "Liechtenstein",
+    "flag": "🇱🇮",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "LT",
+    "iso3": "LTU",
+    "name": "Lithuania",
+    "flag": "🇱🇹",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "LU",
+    "iso3": "LUX",
+    "name": "Luxembourg",
+    "flag": "🇱🇺",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "MG",
+    "iso3": "MDG",
+    "name": "Madagascar",
+    "flag": "🇲🇬",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "MW",
+    "iso3": "MWI",
+    "name": "Malawi",
+    "flag": "🇲🇼",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "MY",
+    "iso3": "MYS",
+    "name": "Malaysia",
+    "flag": "🇲🇾",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "MV",
+    "iso3": "MDV",
+    "name": "Maldives",
+    "flag": "🇲🇻",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "ML",
+    "iso3": "MLI",
+    "name": "Mali",
+    "flag": "🇲🇱",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "MT",
+    "iso3": "MLT",
+    "name": "Malta",
+    "flag": "🇲🇹",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "MH",
+    "iso3": "MHL",
+    "name": "Marshall Islands",
+    "flag": "🇲🇭",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "MR",
+    "iso3": "MRT",
+    "name": "Mauritania",
+    "flag": "🇲🇷",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "MU",
+    "iso3": "MUS",
+    "name": "Mauritius",
+    "flag": "🇲🇺",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "MX",
+    "iso3": "MEX",
+    "name": "Mexico",
+    "flag": "🇲🇽",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "FM",
+    "iso3": "FSM",
+    "name": "Micronesia",
+    "flag": "🇫🇲",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "MD",
+    "iso3": "MDA",
+    "name": "Moldova",
+    "flag": "🇲🇩",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "MC",
+    "iso3": "MCO",
+    "name": "Monaco",
+    "flag": "🇲🇨",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "MN",
+    "iso3": "MNG",
+    "name": "Mongolia",
+    "flag": "🇲🇳",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "ME",
+    "iso3": "MNE",
+    "name": "Montenegro",
+    "flag": "🇲🇪",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "MA",
+    "iso3": "MAR",
+    "name": "Morocco",
+    "flag": "🇲🇦",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "MZ",
+    "iso3": "MOZ",
+    "name": "Mozambique",
+    "flag": "🇲🇿",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "MM",
+    "iso3": "MMR",
+    "name": "Myanmar",
+    "flag": "🇲🇲",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "NA",
+    "iso3": "NAM",
+    "name": "Namibia",
+    "flag": "🇳🇦",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "NR",
+    "iso3": "NRU",
+    "name": "Nauru",
+    "flag": "🇳🇷",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "NP",
+    "iso3": "NPL",
+    "name": "Nepal",
+    "flag": "🇳🇵",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "NL",
+    "iso3": "NLD",
+    "name": "Netherlands",
+    "flag": "🇳🇱",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "NZ",
+    "iso3": "NZL",
+    "name": "New Zealand",
+    "flag": "🇳🇿",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "NI",
+    "iso3": "NIC",
+    "name": "Nicaragua",
+    "flag": "🇳🇮",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "NE",
+    "iso3": "NER",
+    "name": "Niger",
+    "flag": "🇳🇪",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "NG",
+    "iso3": "NGA",
+    "name": "Nigeria",
+    "flag": "🇳🇬",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "KP",
+    "iso3": "PRK",
+    "name": "North Korea",
+    "flag": "🇰🇵",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "MK",
+    "iso3": "MKD",
+    "name": "North Macedonia",
+    "flag": "🇲🇰",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "NO",
+    "iso3": "NOR",
+    "name": "Norway",
+    "flag": "🇳🇴",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "OM",
+    "iso3": "OMN",
+    "name": "Oman",
+    "flag": "🇴🇲",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "PK",
+    "iso3": "PAK",
+    "name": "Pakistan",
+    "flag": "🇵🇰",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "PW",
+    "iso3": "PLW",
+    "name": "Palau",
+    "flag": "🇵🇼",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "PA",
+    "iso3": "PAN",
+    "name": "Panama",
+    "flag": "🇵🇦",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "PG",
+    "iso3": "PNG",
+    "name": "Papua New Guinea",
+    "flag": "🇵🇬",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "PY",
+    "iso3": "PRY",
+    "name": "Paraguay",
+    "flag": "🇵🇾",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "PE",
+    "iso3": "PER",
+    "name": "Peru",
+    "flag": "🇵🇪",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "PH",
+    "iso3": "PHL",
+    "name": "Philippines",
+    "flag": "🇵🇭",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "PL",
+    "iso3": "POL",
+    "name": "Poland",
+    "flag": "🇵🇱",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "PT",
+    "iso3": "PRT",
+    "name": "Portugal",
+    "flag": "🇵🇹",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "QA",
+    "iso3": "QAT",
+    "name": "Qatar",
+    "flag": "🇶🇦",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "RO",
+    "iso3": "ROU",
+    "name": "Romania",
+    "flag": "🇷🇴",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "RU",
+    "iso3": "RUS",
+    "name": "Russia",
+    "flag": "🇷🇺",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "RW",
+    "iso3": "RWA",
+    "name": "Rwanda",
+    "flag": "🇷🇼",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "KN",
+    "iso3": "KNA",
+    "name": "Saint Kitts and Nevis",
+    "flag": "🇰🇳",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "LC",
+    "iso3": "LCA",
+    "name": "Saint Lucia",
+    "flag": "🇱🇨",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "VC",
+    "iso3": "VCT",
+    "name": "Saint Vincent and the Grenadines",
+    "flag": "🇻🇨",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "WS",
+    "iso3": "WSM",
+    "name": "Samoa",
+    "flag": "🇼🇸",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "SM",
+    "iso3": "SMR",
+    "name": "San Marino",
+    "flag": "🇸🇲",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "ST",
+    "iso3": "STP",
+    "name": "São Tomé and Príncipe",
+    "flag": "🇸🇹",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "SA",
+    "iso3": "SAU",
+    "name": "Saudi Arabia",
+    "flag": "🇸🇦",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "SN",
+    "iso3": "SEN",
+    "name": "Senegal",
+    "flag": "🇸🇳",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "RS",
+    "iso3": "SRB",
+    "name": "Serbia",
+    "flag": "🇷🇸",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "SC",
+    "iso3": "SYC",
+    "name": "Seychelles",
+    "flag": "🇸🇨",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "SL",
+    "iso3": "SLE",
+    "name": "Sierra Leone",
+    "flag": "🇸🇱",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "SG",
+    "iso3": "SGP",
+    "name": "Singapore",
+    "flag": "🇸🇬",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "SK",
+    "iso3": "SVK",
+    "name": "Slovakia",
+    "flag": "🇸🇰",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "SI",
+    "iso3": "SVN",
+    "name": "Slovenia",
+    "flag": "🇸🇮",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "SB",
+    "iso3": "SLB",
+    "name": "Solomon Islands",
+    "flag": "🇸🇧",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "SO",
+    "iso3": "SOM",
+    "name": "Somalia",
+    "flag": "🇸🇴",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "ZA",
+    "iso3": "ZAF",
+    "name": "South Africa",
+    "flag": "🇿🇦",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "KR",
+    "iso3": "KOR",
+    "name": "South Korea",
+    "flag": "🇰🇷",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "SS",
+    "iso3": "SSD",
+    "name": "South Sudan",
+    "flag": "🇸🇸",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "ES",
+    "iso3": "ESP",
+    "name": "Spain",
+    "flag": "🇪🇸",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "LK",
+    "iso3": "LKA",
+    "name": "Sri Lanka",
+    "flag": "🇱🇰",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "SD",
+    "iso3": "SDN",
+    "name": "Sudan",
+    "flag": "🇸🇩",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": false
+    }
+  },
+  {
+    "code": "SR",
+    "iso3": "SUR",
+    "name": "Suriname",
+    "flag": "🇸🇷",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "SE",
+    "iso3": "SWE",
+    "name": "Sweden",
+    "flag": "🇸🇪",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "CH",
+    "iso3": "CHE",
+    "name": "Switzerland",
+    "flag": "🇨🇭",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "SY",
+    "iso3": "SYR",
+    "name": "Syria",
+    "flag": "🇸🇾",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "TJ",
+    "iso3": "TJK",
+    "name": "Tajikistan",
+    "flag": "🇹🇯",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "TZ",
+    "iso3": "TZA",
+    "name": "Tanzania",
+    "flag": "🇹🇿",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "TH",
+    "iso3": "THA",
+    "name": "Thailand",
+    "flag": "🇹🇭",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "TL",
+    "iso3": "TLS",
+    "name": "Timor-Leste",
+    "flag": "🇹🇱",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "TG",
+    "iso3": "TGO",
+    "name": "Togo",
+    "flag": "🇹🇬",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "TO",
+    "iso3": "TON",
+    "name": "Tonga",
+    "flag": "🇹🇴",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "TT",
+    "iso3": "TTO",
+    "name": "Trinidad and Tobago",
+    "flag": "🇹🇹",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "TN",
+    "iso3": "TUN",
+    "name": "Tunisia",
+    "flag": "🇹🇳",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "TR",
+    "iso3": "TUR",
+    "name": "Türkiye",
+    "flag": "🇹🇷",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "TM",
+    "iso3": "TKM",
+    "name": "Turkmenistan",
+    "flag": "🇹🇲",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "TV",
+    "iso3": "TUV",
+    "name": "Tuvalu",
+    "flag": "🇹🇻",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "UG",
+    "iso3": "UGA",
+    "name": "Uganda",
+    "flag": "🇺🇬",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "UA",
+    "iso3": "UKR",
+    "name": "Ukraine",
+    "flag": "🇺🇦",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "AE",
+    "iso3": "ARE",
+    "name": "United Arab Emirates",
+    "flag": "🇦🇪",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "GB",
+    "iso3": "GBR",
+    "name": "United Kingdom",
+    "flag": "🇬🇧",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": false
+    }
+  },
+  {
+    "code": "US",
+    "iso3": "USA",
+    "name": "United States",
+    "flag": "🇺🇸",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "UY",
+    "iso3": "URY",
+    "name": "Uruguay",
+    "flag": "🇺🇾",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "UZ",
+    "iso3": "UZB",
+    "name": "Uzbekistan",
+    "flag": "🇺🇿",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "VU",
+    "iso3": "VUT",
+    "name": "Vanuatu",
+    "flag": "🇻🇺",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "VA",
+    "iso3": "VAT",
+    "name": "Vatican City",
+    "flag": "🇻🇦",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": false
+    }
+  },
+  {
+    "code": "VE",
+    "iso3": "VEN",
+    "name": "Venezuela",
+    "flag": "🇻🇪",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "VN",
+    "iso3": "VNM",
+    "name": "Vietnam",
+    "flag": "🇻🇳",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "YE",
+    "iso3": "YEM",
+    "name": "Yemen",
+    "flag": "🇾🇪",
+    "coverage": {
+      "worldBank": true,
+      "factbook": true,
+      "crime": true
+    }
+  },
+  {
+    "code": "ZM",
+    "iso3": "ZMB",
+    "name": "Zambia",
+    "flag": "🇿🇲",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  },
+  {
+    "code": "ZW",
+    "iso3": "ZWE",
+    "name": "Zimbabwe",
+    "flag": "🇿🇼",
+    "coverage": {
+      "worldBank": true,
+      "factbook": false,
+      "crime": true
+    }
+  }
+]

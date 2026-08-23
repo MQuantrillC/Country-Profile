@@ -32,7 +32,14 @@ import {
   faMapMarkedAlt, faWeightHanging, faGavel, faWineGlass, faSmoking, faSkullCrossbones,
   faExchangeAlt, faSignInAlt, faSignOutAlt, faTree, faTractor, faBeer, faGlassWhiskey
 } from '@fortawesome/free-solid-svg-icons';
-import { countries, type Country } from '../utils/countries';
+import { countries, getCountry, missingCoverage, type Country, type CountryCoverage } from '../utils/countries';
+
+/** How many countries can be compared at once. */
+const MAX_COMPARISON = 5;
+
+/** Short human labels for the datasets, for the coverage note in the picker. */
+const datasetLabel = (dataset: keyof CountryCoverage): string =>
+  ({ worldBank: 'World Bank', factbook: 'Factbook', crime: 'crime' })[dataset];
 
 // Define sections outside component to avoid dependency issues
 const sections = [
@@ -50,6 +57,30 @@ interface DataWithSource {
   year: string | null;
   source: string;
   sourceOrganization: string;
+  /**
+   * Whether the upstream request succeeded. Without this, "this country has no
+   * observation" and "the request failed" both collapse into a bare N/A.
+   */
+  status?: 'ok' | 'no-data' | 'failed';
+}
+
+/** What a metric case may return; missing fields are filled in by getMetricValue. */
+interface PartialReading {
+  value: number | null;
+  source: string | null;
+  sourceDetail: string | null;
+  year?: string | null;
+  status?: 'ok' | 'no-data' | 'failed';
+}
+
+/** One metric resolved for one country, ready to render. */
+interface MetricReading {
+  value: number | null;
+  source: string | null;
+  sourceDetail: string | null;
+  /** Observation year, so a figure from a decade ago is not read as current. */
+  year: string | null;
+  status: 'ok' | 'no-data' | 'failed';
 }
 
 interface RestCountriesData {
@@ -103,7 +134,6 @@ interface CrimeData {
   prisonDeaths?: number | null;
   source: string;
   unit: string;
-  rawData?: unknown[];
 }
 
 // Interface for Human Development Index data
@@ -331,7 +361,7 @@ const CountryDropdown = ({ selectedCountries, onSelect, countries }: CountryDrop
     if (isSelected) {
       onSelect(selectedCountries.filter(c => c.code !== country.code));
     } else {
-      if (selectedCountries.length < 5) {
+      if (selectedCountries.length < MAX_COMPARISON) {
         onSelect([...selectedCountries, country]);
       }
     }
@@ -350,18 +380,22 @@ const CountryDropdown = ({ selectedCountries, onSelect, countries }: CountryDrop
           {selectedCountries.map((country) => (
             <div key={country.code} className="flex items-center bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg">
               <Image 
-                src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
-                alt={`${country.name} flag`}
-                width={20}
-                height={15}
+                src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png` }
+                alt={`${country.name} flag` }
+                width={20 }
+                height={15 }
                 className="w-4 h-auto sm:w-5 mr-1.5 sm:mr-2"
               />
               <span className="text-xs sm:text-sm font-medium">{country.name}</span>
-              <button onClick={() => handleRemoveCountry(country.code)} className="ml-1.5 sm:ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 text-sm sm:text-base">
-                ×
+              <button
+                onClick={() => handleRemoveCountry(country.code)}
+                aria-label={`Remove ${country.name} from the comparison`}
+                className="relative p-1 ml-1 sm:ml-1.5 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 text-sm sm:text-base touch-manipulation after:absolute after:-inset-3 after:content-['']"
+              >
+                <span aria-hidden="true">×</span>
               </button>
             </div>
-          ))}
+          )) }
         </div>
         
         <div className="relative">
@@ -370,9 +404,13 @@ const CountryDropdown = ({ selectedCountries, onSelect, countries }: CountryDrop
             if (!isOpen) {
               setTimeout(() => searchInputRef.current?.focus(), 100);
             }
-          }} className="w-full flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200">
+          }}
+          aria-expanded={isOpen}
+          aria-haspopup="listbox"
+          aria-controls="country-picker-list"
+          className="w-full flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200">
             <span className="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
-              {selectedCountries.length === 0 ? "Select countries to compare (max 5)" : `Add more countries (${selectedCountries.length}/5)`}
+              {selectedCountries.length === 0 ? `Select countries to compare (max ${MAX_COMPARISON})` : `Add more countries (${selectedCountries.length}/${MAX_COMPARISON})` }
             </span>
             <span className={`transform transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}>▼</span>
           </button>
@@ -380,31 +418,31 @@ const CountryDropdown = ({ selectedCountries, onSelect, countries }: CountryDrop
 
         {isOpen && (
           <div className="absolute z-50 w-full mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl">
-            {/* Search Input */}
+            {/* Search Input */ }
             <div className="p-2 sm:p-3 border-b border-gray-200 dark:border-gray-600">
               <input
-                ref={searchInputRef}
+                ref={searchInputRef }
                 type="text"
                 placeholder="Search countries..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                value={searchTerm }
+                onChange={(e) => setSearchTerm(e.target.value) }
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' && filteredCountries.length > 0) {
                     // Select the first filtered country on Enter
                     const firstCountry = filteredCountries[0];
                     const isSelected = selectedCountries.some(c => c.code === firstCountry.code);
-                    const isDisabled = selectedCountries.length >= 5 && !isSelected;
+                    const isDisabled = selectedCountries.length >= MAX_COMPARISON && !isSelected;
                     if (!isDisabled) {
                       handleCountryToggle(firstCountry);
                     }
                   }
-                }}
+                } }
                 className="w-full px-2 sm:px-3 py-2 text-xs sm:text-sm bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               />
             </div>
             
-            {/* Countries List */}
-            <div className="max-h-48 overflow-y-auto">
+            {/* Countries List */ }
+            <div id="country-picker-list" role="listbox" aria-label="Countries" className="max-h-48 overflow-y-auto">
               {filteredCountries.length === 0 ? (
                 <div className="px-3 sm:px-4 py-3 text-gray-500 dark:text-gray-400 text-center text-xs sm:text-sm">
                   No countries found
@@ -412,26 +450,37 @@ const CountryDropdown = ({ selectedCountries, onSelect, countries }: CountryDrop
               ) : (
                 filteredCountries.map((country) => {
               const isSelected = selectedCountries.some(c => c.code === country.code);
-              const isDisabled = selectedCountries.length >= 5 && !isSelected;
-              
+              const isDisabled = selectedCountries.length >= MAX_COMPARISON && !isSelected;
+              // Say up front which datasets have nothing for this country, rather
+              // than letting whole sections render as N/A with no explanation.
+              const gaps = missingCoverage(country.code);
+
               return (
-                <button key={country.code} onClick={() => !isDisabled && handleCountryToggle(country)} disabled={isDisabled} className={`w-full flex items-center px-3 sm:px-4 py-2.5 sm:py-3 text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 ${isSelected ? 'bg-blue-50 dark:bg-blue-900/30' : ''} ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                <button key={country.code} role="option" aria-selected={isSelected} onClick={() => !isDisabled && handleCountryToggle(country)} disabled={isDisabled} className={`w-full flex items-center min-h-11 touch-manipulation px-3 sm:px-4 py-2.5 sm:py-3 text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 ${isSelected ? 'bg-blue-50 dark:bg-blue-900/30' : ''} ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}>
                   <Image 
-                    src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
-                    alt={`${country.name} flag`}
-                    width={20}
-                    height={15}
+                    src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png` }
+                    alt={`${country.name} flag` }
+                    width={20 }
+                    height={15 }
                     className="w-4 h-auto sm:w-5 mr-2 sm:mr-3"
                   />
                   <span className="text-xs sm:text-sm text-gray-900 dark:text-white">{country.name}</span>
-                    {isSelected && <span className="ml-auto text-blue-600 dark:text-blue-400">✓</span>}
+                    {gaps.length > 0 && (
+                      <span
+                        className="ml-2 text-[10px] text-gray-400 dark:text-gray-500 whitespace-nowrap"
+                        title={`No ${gaps.map(datasetLabel).join(' or ')} data is published for ${country.name}`}
+                      >
+                        {'·'} no {gaps.map(datasetLabel).join('/')}
+                      </span>
+                    ) }
+                    {isSelected && <span className="ml-auto text-blue-600 dark:text-blue-400">✓</span> }
                   </button>
                 );
               })
-              )}
+              ) }
             </div>
           </div>
-        )}
+        ) }
       </div>
     </div>
   );
@@ -655,182 +704,195 @@ const CompactSectionTable = ({
   const [showSources, setShowSources] = useState(false);
   const [showAsPercentage, setShowAsPercentage] = useState(false);
   
-  const getWorldBankMetricValue = (data: DataWithSource | undefined | null, format: (value: number) => string) => {
+  const getWorldBankMetricValue = (data: DataWithSource | undefined | null): MetricReading => {
     return {
       value: data?.value ?? null,
       source: 'World Bank Open Data',
       sourceDetail: data?.source ?? null,
-      formatted: data?.value ? format(data.value) : 'N/A'
+      year: data?.year ?? null,
+      status: data?.status ?? 'no-data',
     };
   };
 
   // Get value function for each metric
-  const getMetricValue = (metric: string, country: Country): { value: number | null; source: string | null; sourceDetail: string | null; formatted: string } => {
+  /**
+   * Resolve a metric to a value plus its provenance.
+   *
+   * Cases may omit `year`/`status`; `getMetricValue` fills those in so every
+   * caller sees the same complete shape.
+   */
+  const resolveMetric = (metric: string, country: Country): PartialReading => {
     const stats = countryStats[country.code];
-    if (!stats) return { value: null, source: null, sourceDetail: null, formatted: 'N/A' };
+    if (!stats) return { value: null, source: null, sourceDetail: null, status: 'no-data' };
 
     switch (metric) {
       // Overview metrics
       case 'Total Population':
-        return getWorldBankMetricValue(stats.population, v => `${v.toLocaleString()} people`);
+        return getWorldBankMetricValue(stats.population);
       case 'Area':
-        return getWorldBankMetricValue(stats.area, v => `${v.toLocaleString()} km²`);
+        return getWorldBankMetricValue(stats.area);
       case 'Population Density':
-        return getWorldBankMetricValue(stats.populationDensity, v => `${v.toFixed(1)} people/km²`);
+        return getWorldBankMetricValue(stats.populationDensity);
       case 'Urban Population %':
-        return getWorldBankMetricValue(stats.urbanPopPct, v => `${v.toFixed(1)}%`);
+        return getWorldBankMetricValue(stats.urbanPopPct);
       case 'Rural Population %':
-        return getWorldBankMetricValue(stats.ruralPopPct, v => `${v.toFixed(1)}%`);
+        return getWorldBankMetricValue(stats.ruralPopPct);
       case 'Net Migration Rate (per 1,000 people)':
-        return { value: stats.enhancedInfo?.factbookData?.netMigrationRate ?? null, source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.netMigrationRate ? `${stats.enhancedInfo.factbookData.netMigrationRate.toFixed(1)}/1000` : 'N/A' };
+        return { value: stats.enhancedInfo?.factbookData?.netMigrationRate ?? null, source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook' };
       case 'International Migrants':
-        return { value: stats.enhancedInfo?.migrantsData?.value ?? null, source: 'UN DESA', sourceDetail: stats.enhancedInfo?.migrantsData?.source ?? null, formatted: stats.enhancedInfo?.migrantsData?.value ? `${stats.enhancedInfo.migrantsData.value.toLocaleString()} people` : 'N/A' };
+        return { value: stats.enhancedInfo?.migrantsData?.value ?? null, source: 'UN DESA', sourceDetail: stats.enhancedInfo?.migrantsData?.source ?? null };
       
       // Economy metrics
       case 'GDP':
-        return getWorldBankMetricValue(stats.gdp, v => `$${(v).toLocaleString('en-US', { maximumFractionDigits: 1, minimumFractionDigits: 1 })}B`);
+        return getWorldBankMetricValue(stats.gdp);
       case 'GDP Per Capita':
-        return getWorldBankMetricValue(stats.gdpPerCapita, v => `$${v.toLocaleString()}`);
+        return getWorldBankMetricValue(stats.gdpPerCapita);
       case 'GNI Per Capita':
-        return getWorldBankMetricValue(stats.gniPerCapita, v => `$${v.toLocaleString()}`);
+        return getWorldBankMetricValue(stats.gniPerCapita);
       case 'Trade as % of GDP':
-        return getWorldBankMetricValue(stats.tradeGDP, v => `${v.toFixed(1)}%`);
+        return getWorldBankMetricValue(stats.tradeGDP);
       case 'Unemployment Rate':
-        return getWorldBankMetricValue(stats.unemploymentRate, v => `${v.toFixed(1)}%`);
+        return getWorldBankMetricValue(stats.unemploymentRate);
       case 'Public Debt % of GDP': {
         const wbData = stats.publicDebtGDP;
         if (wbData?.value != null) {
-          return getWorldBankMetricValue(wbData, v => `${v.toFixed(1)}%`);
+          return getWorldBankMetricValue(wbData);
         }
         const fbValue = stats.enhancedInfo?.factbookData?.publicDebt;
         return {
           value: fbValue ?? null,
           source: fbValue != null ? 'CIA World Factbook' : null,
-          sourceDetail: fbValue != null ? 'CIA World Factbook' : null,
-          formatted: fbValue != null ? `${fbValue.toFixed(1)}%` : 'N/A'
-        };
+          sourceDetail: fbValue != null ? 'CIA World Factbook' : null };
       }
       case 'Military Expenditure % of GDP':
-        return { value: stats.enhancedInfo?.factbookData?.militaryExpenditure ?? null, source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.militaryExpenditure ? `${stats.enhancedInfo.factbookData.militaryExpenditure.toFixed(1)}%` : 'N/A' };
+        return { value: stats.enhancedInfo?.factbookData?.militaryExpenditure ?? null, source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook' };
       case 'Gini Index':
-        return { value: stats.enhancedInfo?.factbookData?.giniIndex ?? null, source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.giniIndex ? `${stats.enhancedInfo.factbookData.giniIndex.toFixed(1)}` : 'N/A' };
+        return { value: stats.enhancedInfo?.factbookData?.giniIndex ?? null, source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook' };
       case 'Tax Revenue as % of GDP':
-        return { value: stats.enhancedInfo?.taxRevenueData?.value ?? null, source: 'UNU-WIDER', sourceDetail: stats.enhancedInfo?.taxRevenueData?.source ?? null, formatted: stats.enhancedInfo?.taxRevenueData?.value ? `${stats.enhancedInfo.taxRevenueData.value.toFixed(1)}%` : 'N/A' };
+        return { value: stats.enhancedInfo?.taxRevenueData?.value ?? null, source: 'UNU-WIDER', sourceDetail: stats.enhancedInfo?.taxRevenueData?.source ?? null };
       case 'Internet Users %':
-        return getWorldBankMetricValue(stats.internetUsers, v => `${v.toFixed(1)}%`);
+        return getWorldBankMetricValue(stats.internetUsers);
       case 'Electricity Access %':
-        return getWorldBankMetricValue(stats.electricityAccess, v => `${v.toFixed(1)}%`);
+        return getWorldBankMetricValue(stats.electricityAccess);
       
       // Social metrics
       case 'Human Development Index (HDI)':
-        return { value: stats.enhancedInfo?.hdiData?.hdi ?? null, source: 'UN HDI', sourceDetail: stats.enhancedInfo?.hdiData?.source ?? null, formatted: stats.enhancedInfo?.hdiData?.hdi ? `${stats.enhancedInfo.hdiData.hdi.toFixed(3)}` : 'N/A' };
+        return { value: stats.enhancedInfo?.hdiData?.hdi ?? null, source: 'UN HDI', sourceDetail: stats.enhancedInfo?.hdiData?.source ?? null };
       case 'Life Expectancy':
-        return getWorldBankMetricValue(stats.lifeExpectancy, v => `${v.toFixed(1)} years`);
+        return getWorldBankMetricValue(stats.lifeExpectancy);
       case 'Fertility Rate (births per woman)':
-        return getWorldBankMetricValue(stats.fertilityRate, v => `${v.toFixed(1)} births/woman`);
+        return getWorldBankMetricValue(stats.fertilityRate);
       case 'Literacy Rate': {
         const wbData = stats.literacyRate;
         if (wbData?.value != null) {
-          return getWorldBankMetricValue(wbData, v => `${v.toFixed(1)}%`);
+          return getWorldBankMetricValue(wbData);
         }
         const fbValue = stats.enhancedInfo?.factbookData?.literacyRate;
         return {
           value: fbValue ?? null,
           source: fbValue != null ? 'CIA World Factbook' : null,
-          sourceDetail: fbValue != null ? 'CIA World Factbook' : null,
-          formatted: fbValue != null ? `${fbValue.toFixed(1)}%` : 'N/A'
-        };
+          sourceDetail: fbValue != null ? 'CIA World Factbook' : null };
       }
       case 'Education Spending % of GDP':
-        return getWorldBankMetricValue(stats.educationSpendPctGDP, v => `${v.toFixed(1)}%`);
+        return getWorldBankMetricValue(stats.educationSpendPctGDP);
       case 'Mean Years of Schooling':
-        return { value: stats.enhancedInfo?.schoolingYearsData?.value ?? null, source: 'Barro-Lee', sourceDetail: stats.enhancedInfo?.schoolingYearsData?.source ?? null, formatted: stats.enhancedInfo?.schoolingYearsData?.value ? `${stats.enhancedInfo.schoolingYearsData.value.toFixed(1)} years` : 'N/A' };
+        return { value: stats.enhancedInfo?.schoolingYearsData?.value ?? null, source: 'Barro-Lee', sourceDetail: stats.enhancedInfo?.schoolingYearsData?.source ?? null };
       case 'Extreme Poverty Rate':
-        return { value: stats.enhancedInfo?.extremePovertyData?.value ?? null, source: 'Our World in Data', sourceDetail: stats.enhancedInfo?.extremePovertyData?.source ?? null, formatted: stats.enhancedInfo?.extremePovertyData?.value ? `${stats.enhancedInfo.extremePovertyData.value.toFixed(1)}%` : 'N/A' };
+        return { value: stats.enhancedInfo?.extremePovertyData?.value ?? null, source: 'Our World in Data', sourceDetail: stats.enhancedInfo?.extremePovertyData?.source ?? null };
       case 'Daily Caloric Supply':
-        return { value: stats.enhancedInfo?.caloricSupplyData?.value ?? null, source: 'FAO', sourceDetail: stats.enhancedInfo?.caloricSupplyData?.source ?? null, formatted: stats.enhancedInfo?.caloricSupplyData?.value ? `${stats.enhancedInfo.caloricSupplyData.value.toLocaleString()} kcal` : 'N/A' };
+        return { value: stats.enhancedInfo?.caloricSupplyData?.value ?? null, source: 'FAO', sourceDetail: stats.enhancedInfo?.caloricSupplyData?.source ?? null };
       case 'Income Share of Richest 1%':
-        return { value: stats.enhancedInfo?.incomeShareRichest1Data?.value ?? null, source: 'World Inequality Database', sourceDetail: stats.enhancedInfo?.incomeShareRichest1Data?.source ?? null, formatted: stats.enhancedInfo?.incomeShareRichest1Data?.value ? `${stats.enhancedInfo.incomeShareRichest1Data.value.toFixed(1)}%` : 'N/A' };
+        return { value: stats.enhancedInfo?.incomeShareRichest1Data?.value ?? null, source: 'World Inequality Database', sourceDetail: stats.enhancedInfo?.incomeShareRichest1Data?.source ?? null };
       case 'Income Share of Poorest 50%':
-        return { value: stats.enhancedInfo?.incomeSharePoorest50Data?.value ?? null, source: 'World Inequality Database', sourceDetail: stats.enhancedInfo?.incomeSharePoorest50Data?.source ?? null, formatted: stats.enhancedInfo?.incomeSharePoorest50Data?.value ? `${stats.enhancedInfo.incomeSharePoorest50Data.value.toFixed(1)}%` : 'N/A' };
+        return { value: stats.enhancedInfo?.incomeSharePoorest50Data?.value ?? null, source: 'World Inequality Database', sourceDetail: stats.enhancedInfo?.incomeSharePoorest50Data?.source ?? null };
       case 'Armed Forces Personnel':
-        return { value: stats.enhancedInfo?.armedForcesPersonnelData?.value ?? null, source: 'Our World in Data', sourceDetail: stats.enhancedInfo?.armedForcesPersonnelData?.source ?? null, formatted: stats.enhancedInfo?.armedForcesPersonnelData?.value != null ? `${stats.enhancedInfo.armedForcesPersonnelData.value.toFixed(1)}%` : 'N/A' };
+        return { value: stats.enhancedInfo?.armedForcesPersonnelData?.value ?? null, source: 'Our World in Data', sourceDetail: stats.enhancedInfo?.armedForcesPersonnelData?.source ?? null };
       case 'Forest Coverage %':
-        return getWorldBankMetricValue(stats.forestPct, v => `${v.toFixed(1)}%`);
+        return getWorldBankMetricValue(stats.forestPct);
       case 'Agricultural Land %':
-        return getWorldBankMetricValue(stats.agriculturalLandPct, v => `${v.toFixed(1)}%`);
+        return getWorldBankMetricValue(stats.agriculturalLandPct);
       case 'Alcohol Consumption (liters pure alcohol/year)':
-        return { value: parseAlcoholConsumption(stats.enhancedInfo?.factbookData?.alcoholConsumption), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.alcoholConsumption ? `${stats.enhancedInfo.factbookData.alcoholConsumption}` : 'N/A' };
+        return { value: parseAlcoholConsumption(stats.enhancedInfo?.factbookData?.alcoholConsumption), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook' };
       case 'Beer Consumption (liters pure alcohol/year)':
-        return { value: parseAlcoholBeer(stats.enhancedInfo?.factbookData?.alcoholConsumption), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.alcoholConsumption ? `${stats.enhancedInfo.factbookData.alcoholConsumption}` : 'N/A' };
+        return { value: parseAlcoholBeer(stats.enhancedInfo?.factbookData?.alcoholConsumption), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook' };
       case 'Wine Consumption (liters pure alcohol/year)':
-        return { value: parseAlcoholWine(stats.enhancedInfo?.factbookData?.alcoholConsumption), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.alcoholConsumption ? `${stats.enhancedInfo.factbookData.alcoholConsumption}` : 'N/A' };
+        return { value: parseAlcoholWine(stats.enhancedInfo?.factbookData?.alcoholConsumption), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook' };
       case 'Spirits Consumption (liters pure alcohol/year)':
-        return { value: parseAlcoholSpirits(stats.enhancedInfo?.factbookData?.alcoholConsumption), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.alcoholConsumption ? `${stats.enhancedInfo.factbookData.alcoholConsumption}` : 'N/A' };
+        return { value: parseAlcoholSpirits(stats.enhancedInfo?.factbookData?.alcoholConsumption), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook' };
       case 'Other Alcohols Consumption (liters pure alcohol/year)':
-        return { value: parseAlcoholOther(stats.enhancedInfo?.factbookData?.alcoholConsumption), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.alcoholConsumption ? `${stats.enhancedInfo.factbookData.alcoholConsumption}` : 'N/A' };
+        return { value: parseAlcoholOther(stats.enhancedInfo?.factbookData?.alcoholConsumption), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook' };
       case 'Tobacco Use (%)':
-        return { value: parseTobaccoUse(stats.enhancedInfo?.factbookData?.tobaccoUse), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.tobaccoUse ? `${stats.enhancedInfo.factbookData.tobaccoUse}` : 'N/A' };
+        return { value: parseTobaccoUse(stats.enhancedInfo?.factbookData?.tobaccoUse), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook' };
       case 'Tobacco Use - Male (%)':
-        return { value: parseTobaccoUseMale(stats.enhancedInfo?.factbookData?.tobaccoUse), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.tobaccoUse ? `${stats.enhancedInfo.factbookData.tobaccoUse}` : 'N/A' };
+        return { value: parseTobaccoUseMale(stats.enhancedInfo?.factbookData?.tobaccoUse), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook' };
       case 'Tobacco Use - Female (%)':
-        return { value: parseTobaccoUseFemale(stats.enhancedInfo?.factbookData?.tobaccoUse), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.tobaccoUse ? `${stats.enhancedInfo.factbookData.tobaccoUse}` : 'N/A' };
+        return { value: parseTobaccoUseFemale(stats.enhancedInfo?.factbookData?.tobaccoUse), source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook' };
       
       // Safety metrics
       case 'Homicide Rate (per 100,000)':
-        return getWorldBankMetricValue(stats.homicideRate, v => v.toFixed(1));
+        return getWorldBankMetricValue(stats.homicideRate);
       case 'Homicide Victims (Total)':
-        return { value: stats.enhancedInfo?.crimeData?.victimData?.totalVictims ?? null, source: 'CTS/NSO', sourceDetail: stats.enhancedInfo?.crimeData?.source ?? null, formatted: stats.enhancedInfo?.crimeData?.victimData?.totalVictims ? `${stats.enhancedInfo.crimeData.victimData.totalVictims.toLocaleString()} people` : 'N/A' };
+        return { value: stats.enhancedInfo?.crimeData?.victimData?.totalVictims ?? null, source: 'CTS/NSO', sourceDetail: stats.enhancedInfo?.crimeData?.source ?? null };
       case 'Homicide Arrests (Total)':
-        return { value: stats.enhancedInfo?.crimeData?.totalArrests ?? null, source: 'CTS/NSO', sourceDetail: stats.enhancedInfo?.crimeData?.source ?? null, formatted: stats.enhancedInfo?.crimeData?.totalArrests ? `${stats.enhancedInfo.crimeData.totalArrests.toLocaleString()} people` : 'N/A' };
+        return { value: stats.enhancedInfo?.crimeData?.totalArrests ?? null, source: 'CTS/NSO', sourceDetail: stats.enhancedInfo?.crimeData?.source ?? null };
       case 'Male Arrests':
-        return { value: stats.enhancedInfo?.crimeData?.arrestsBySex?.male ?? null, source: 'CTS/NSO', sourceDetail: stats.enhancedInfo?.crimeData?.source ?? null, formatted: stats.enhancedInfo?.crimeData?.arrestsBySex?.male ? `${stats.enhancedInfo.crimeData.arrestsBySex.male.toLocaleString()} people` : 'N/A' };
+        return { value: stats.enhancedInfo?.crimeData?.arrestsBySex?.male ?? null, source: 'CTS/NSO', sourceDetail: stats.enhancedInfo?.crimeData?.source ?? null };
       case 'Female Arrests':
-        return { value: stats.enhancedInfo?.crimeData?.arrestsBySex?.female ?? null, source: 'CTS/NSO', sourceDetail: stats.enhancedInfo?.crimeData?.source ?? null, formatted: stats.enhancedInfo?.crimeData?.arrestsBySex?.female ? `${stats.enhancedInfo.crimeData.arrestsBySex.female.toLocaleString()} people` : 'N/A' };
+        return { value: stats.enhancedInfo?.crimeData?.arrestsBySex?.female ?? null, source: 'CTS/NSO', sourceDetail: stats.enhancedInfo?.crimeData?.source ?? null };
       case 'Male Victims':
-        return { value: stats.enhancedInfo?.crimeData?.victimData?.maleVictims ?? null, source: 'CTS/NSO', sourceDetail: stats.enhancedInfo?.crimeData?.source ?? null, formatted: stats.enhancedInfo?.crimeData?.victimData?.maleVictims ? `${stats.enhancedInfo.crimeData.victimData.maleVictims.toLocaleString()} people` : 'N/A' };
+        return { value: stats.enhancedInfo?.crimeData?.victimData?.maleVictims ?? null, source: 'CTS/NSO', sourceDetail: stats.enhancedInfo?.crimeData?.source ?? null };
       case 'Female Victims':
-        return { value: stats.enhancedInfo?.crimeData?.victimData?.femaleVictims ?? null, source: 'CTS/NSO', sourceDetail: stats.enhancedInfo?.crimeData?.source ?? null, formatted: stats.enhancedInfo?.crimeData?.victimData?.femaleVictims ? `${stats.enhancedInfo.crimeData.victimData.femaleVictims.toLocaleString()} people` : 'N/A' };
+        return { value: stats.enhancedInfo?.crimeData?.victimData?.femaleVictims ?? null, source: 'CTS/NSO', sourceDetail: stats.enhancedInfo?.crimeData?.source ?? null };
       case 'Prison Deaths':
-        return { value: stats.enhancedInfo?.crimeData?.prisonDeaths ?? null, source: 'CTS/NSO', sourceDetail: stats.enhancedInfo?.crimeData?.source ?? null, formatted: stats.enhancedInfo?.crimeData?.prisonDeaths ? `${stats.enhancedInfo.crimeData.prisonDeaths.toLocaleString()} deaths` : 'N/A' };
+        return { value: stats.enhancedInfo?.crimeData?.prisonDeaths ?? null, source: 'CTS/NSO', sourceDetail: stats.enhancedInfo?.crimeData?.source ?? null };
       case 'Terrorism Deaths':
-        return { value: stats.enhancedInfo?.terrorismDeathsData?.value ?? null, source: 'Global Terrorism Database', sourceDetail: stats.enhancedInfo?.terrorismDeathsData?.source ?? null, formatted: stats.enhancedInfo?.terrorismDeathsData?.value ? `${stats.enhancedInfo.terrorismDeathsData.value.toLocaleString()} deaths` : 'N/A' };
+        return { value: stats.enhancedInfo?.terrorismDeathsData?.value ?? null, source: 'Global Terrorism Database', sourceDetail: stats.enhancedInfo?.terrorismDeathsData?.source ?? null };
       
       // Climate metrics
       case 'Average Temperature':
-        return { value: stats.enhancedInfo?.climateData?.averageTemperature ?? null, source: 'World Bank Climate Knowledge Portal', sourceDetail: stats.enhancedInfo?.climateData?.source ?? null, formatted: stats.enhancedInfo?.climateData?.averageTemperature ? `${stats.enhancedInfo.climateData.averageTemperature.toFixed(1)}°C` : 'N/A' };
+        return { value: stats.enhancedInfo?.climateData?.averageTemperature ?? null, source: 'World Bank Climate Knowledge Portal', sourceDetail: stats.enhancedInfo?.climateData?.source ?? null };
       case 'Hot Days (>30°C)':
-        return { value: stats.enhancedInfo?.climateData?.hotDays30 ?? null, source: 'World Bank Climate Knowledge Portal', sourceDetail: stats.enhancedInfo?.climateData?.source ?? null, formatted: stats.enhancedInfo?.climateData?.hotDays30 ? `${stats.enhancedInfo.climateData.hotDays30.toFixed(0)} days` : 'N/A' };
+        return { value: stats.enhancedInfo?.climateData?.hotDays30 ?? null, source: 'World Bank Climate Knowledge Portal', sourceDetail: stats.enhancedInfo?.climateData?.source ?? null };
       case 'Very Hot Days (>35°C)':
-        return { value: stats.enhancedInfo?.climateData?.hotDays35 ?? null, source: 'World Bank Climate Knowledge Portal', sourceDetail: stats.enhancedInfo?.climateData?.source ?? null, formatted: stats.enhancedInfo?.climateData?.hotDays35 ? `${stats.enhancedInfo.climateData.hotDays35.toFixed(0)} days` : 'N/A' };
+        return { value: stats.enhancedInfo?.climateData?.hotDays35 ?? null, source: 'World Bank Climate Knowledge Portal', sourceDetail: stats.enhancedInfo?.climateData?.source ?? null };
       case 'Cold Days (<0°C)':
-        return { value: stats.enhancedInfo?.climateData?.coldDays ?? null, source: 'World Bank Climate Knowledge Portal', sourceDetail: stats.enhancedInfo?.climateData?.source ?? null, formatted: stats.enhancedInfo?.climateData?.coldDays ? `${stats.enhancedInfo.climateData.coldDays.toFixed(0)} days` : 'N/A' };
+        return { value: stats.enhancedInfo?.climateData?.coldDays ?? null, source: 'World Bank Climate Knowledge Portal', sourceDetail: stats.enhancedInfo?.climateData?.source ?? null };
       
       // Trade metrics
       case 'Total Exports':
-        return { value: stats.enhancedInfo?.comtradeData?.totalExports?.value ?? null, source: 'UN Comtrade', sourceDetail: stats.enhancedInfo?.comtradeData?.source ?? null, formatted: stats.enhancedInfo?.comtradeData?.totalExports?.value ? `$${(stats.enhancedInfo.comtradeData.totalExports.value).toLocaleString('en-US', { maximumFractionDigits: 1, minimumFractionDigits: 1 })}B` : 'N/A' };
+        return { value: stats.enhancedInfo?.comtradeData?.totalExports?.value ?? null, source: 'UN Comtrade', sourceDetail: stats.enhancedInfo?.comtradeData?.source ?? null };
       case 'Total Imports':
-        return { value: stats.enhancedInfo?.comtradeData?.totalImports?.value ?? null, source: 'UN Comtrade', sourceDetail: stats.enhancedInfo?.comtradeData?.source ?? null, formatted: stats.enhancedInfo?.comtradeData?.totalImports?.value ? `$${(stats.enhancedInfo.comtradeData.totalImports.value).toLocaleString('en-US', { maximumFractionDigits: 1, minimumFractionDigits: 1 })}B` : 'N/A' };
+        return { value: stats.enhancedInfo?.comtradeData?.totalImports?.value ?? null, source: 'UN Comtrade', sourceDetail: stats.enhancedInfo?.comtradeData?.source ?? null };
       case 'Trade Balance':
-        const tradeBalanceValue = stats.enhancedInfo?.comtradeData?.tradeBalance?.value;
-        const formattedTradeBalance = tradeBalanceValue != null ? `${(Math.abs(tradeBalanceValue)).toLocaleString('en-US', { maximumFractionDigits: 1, minimumFractionDigits: 1 })}B` : 'N/A';
-        return { value: tradeBalanceValue ?? null, source: 'UN Comtrade', sourceDetail: stats.enhancedInfo?.comtradeData?.source ?? null, formatted: tradeBalanceValue != null ? `${tradeBalanceValue >= 0 ? '+' : '-'}$${formattedTradeBalance}` : 'N/A' };
+        return { value: stats.enhancedInfo?.comtradeData?.tradeBalance?.value ?? null, source: 'UN Comtrade', sourceDetail: stats.enhancedInfo?.comtradeData?.source ?? null };
       case 'International Tourist Arrivals':
-        return { value: stats.enhancedInfo?.touristsData?.value ?? null, source: 'UNWTO', sourceDetail: stats.enhancedInfo?.touristsData?.source ?? null, formatted: stats.enhancedInfo?.touristsData?.value ? `${stats.enhancedInfo.touristsData.value.toLocaleString()} trips` : 'N/A' };
+        return { value: stats.enhancedInfo?.touristsData?.value ?? null, source: 'UNWTO', sourceDetail: stats.enhancedInfo?.touristsData?.source ?? null };
       case 'Airports':
-        return { value: stats.enhancedInfo?.factbookData?.airports ?? null, source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.airports ? `${stats.enhancedInfo.factbookData.airports.toLocaleString()} airports` : 'N/A' };
+        return { value: stats.enhancedInfo?.factbookData?.airports ?? null, source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook' };
       case 'Railways (km)':
-        return { value: stats.enhancedInfo?.factbookData?.railways ?? null, source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.railways ? `${stats.enhancedInfo.factbookData.railways.toLocaleString()} km` : 'N/A' };
+        return { value: stats.enhancedInfo?.factbookData?.railways ?? null, source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook' };
       case 'Ports':
-        return { value: stats.enhancedInfo?.factbookData?.ports ?? null, source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook', formatted: stats.enhancedInfo?.factbookData?.ports ? `${stats.enhancedInfo.factbookData.ports.toLocaleString()} ports` : 'N/A' };
+        return { value: stats.enhancedInfo?.factbookData?.ports ?? null, source: 'CIA World Factbook', sourceDetail: 'CIA World Factbook' };
       
       default:
-        return { value: null, source: null, sourceDetail: null, formatted: 'N/A' };
+        return { value: null, source: null, sourceDetail: null };
     }
   };
 
+  const getMetricValue = (metric: string, country: Country): MetricReading => {
+    const reading = resolveMetric(metric, country);
+    return {
+      value: reading.value ?? null,
+      source: reading.source ?? null,
+      sourceDetail: reading.sourceDetail ?? null,
+      year: reading.year ?? null,
+      status: reading.status ?? (reading.value != null ? 'ok' : 'no-data'),
+    };
+  };
+
   const formatMetricValue = (metric: string, value: number | null): string => {
-    if (value === null) return 'N/A';
+    // `== null` catches undefined too - a metric that is genuinely 0 must still render as 0.
+    if (value == null || Number.isNaN(value)) return 'N/A';
     
     switch (metric) {
       // Overview metrics
@@ -856,7 +918,7 @@ const CompactSectionTable = ({
         return `$${(value / 1000000).toLocaleString('en-US', { maximumFractionDigits: 1, minimumFractionDigits: 1 })}M`;
       case 'GDP Per Capita':
       case 'GNI Per Capita':
-        return `$${value.toLocaleString()}`;
+        return `$${value.toLocaleString('en-US', { maximumFractionDigits: 0 })}`;
       case 'Trade as % of GDP':
       case 'Unemployment Rate':
       case 'Public Debt % of GDP':
@@ -975,12 +1037,13 @@ const CompactSectionTable = ({
   return (
     <div id={sectionId} className="mb-12 scroll-mt-24">
       <button
-        onClick={onToggle}
+        onClick={onToggle }
+        aria-expanded={isExpanded}
         className="w-full text-left mb-6 group"
       >
         <div className="flex items-center justify-between">
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
-            {title}
+            {title }
           </h2>
           <div className={`transform transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}>
             <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -997,23 +1060,23 @@ const CompactSectionTable = ({
               <div className="inline-flex rounded-md shadow-sm" role="group">
                   <button
                       type="button"
-                      onClick={() => setShowAsPercentage(false)}
+                      onClick={() => setShowAsPercentage(false) }
                       className={`px-4 py-2 text-sm font-medium rounded-l-lg border transition-colors ${
                           !showAsPercentage
                               ? 'bg-blue-600 text-white border-blue-600 z-10 ring-2 ring-blue-300'
                               : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700'
-                      }`}
+                      }` }
                   >
                       Raw Value
                   </button>
                   <button
                       type="button"
-                      onClick={() => setShowAsPercentage(true)}
+                      onClick={() => setShowAsPercentage(true) }
                       className={`px-4 py-2 text-sm font-medium rounded-r-lg border transition-colors ${
                           showAsPercentage
                               ? 'bg-blue-600 text-white border-blue-600 z-10 ring-2 ring-blue-300'
                               : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700'
-                      }`}
+                      }` }
                   >
                       % of Highest
                   </button>
@@ -1031,16 +1094,16 @@ const CompactSectionTable = ({
                       <th key={country.code} className="px-3 sm:px-4 py-3 text-center text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 min-w-[140px]">
                         <div className="flex flex-col items-center space-y-1">
                           <Image 
-                            src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
-                            alt={`${country.name} flag`}
-                            width={20}
-                            height={15}
+                            src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png` }
+                            alt={`${country.name} flag` }
+                            width={20 }
+                            height={15 }
                             className="w-5 h-auto"
                           />
                           <span className="text-xs font-medium truncate max-w-[120px]">{country.name}</span>
                         </div>
                       </th>
-                    ))}
+                    )) }
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100 dark:divide-gray-600">
@@ -1054,7 +1117,7 @@ const CompactSectionTable = ({
                           <div className="flex items-center space-x-3">
                             <div 
                               className="w-2 h-2 rounded-full flex-shrink-0"
-                              style={{ backgroundColor: getSourceColor(countries.find(c => getMetricValue(metric, c).source)?.code ? getMetricValue(metric, countries.find(c => getMetricValue(metric, c).source)!).source || undefined : undefined) }}
+                              style={{ backgroundColor: getSourceColor(countries.find(c => getMetricValue(metric, c).source)?.code ? getMetricValue(metric, countries.find(c => getMetricValue(metric, c).source)!).source || undefined : undefined) } }
                             />
                             <div className="flex items-center space-x-2">
                               <span className="text-sm sm:text-base mr-2 opacity-70">{getMetricIcon(metric)}</span>
@@ -1066,14 +1129,14 @@ const CompactSectionTable = ({
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     toggleTooltip(`tooltip-${metricId}`);
-                                  }}
+                                  } }
                                 />
                                 <div className={`absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 dark:bg-gray-700 text-white text-xs sm:text-sm rounded-lg shadow-lg transition-opacity duration-200 z-10 w-48 sm:w-64 text-center ${
                                   activeTooltip === `tooltip-${metricId}` 
                                     ? 'opacity-100 pointer-events-auto' 
                                     : 'opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto'
                                 }`}>
-                                  {getMetricTooltip(metric)}
+                                  {getMetricTooltip(metric) }
                                   <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900 dark:border-t-gray-700"></div>
                                 </div>
                               </div>
@@ -1081,10 +1144,11 @@ const CompactSectionTable = ({
                           </div>
                         </td>
                         {countries.map(country => {
-                          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                          const { value, source } = getMetricValue(metric, country);
-                          const percentage = value && maxValue > 0 ? (value / maxValue) * 100 : 0;
-                          
+                          const { value, year, status } = getMetricValue(metric, country);
+                          const percentage = value !== null && maxValue > 0 ? (value / maxValue) * 100 : 0;
+                          // Only worth showing when the figure is old enough to mislead.
+                          const staleYear = year && Number(year) < new Date().getFullYear() - 2 ? year : null;
+
                           return (
                             <td key={country.code} className="px-3 sm:px-4 py-3 sm:py-4">
                               <div className="flex flex-col items-center space-y-2">
@@ -1093,43 +1157,56 @@ const CompactSectionTable = ({
                                 }`}>
                                   {loading ? (
                                     <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-blue-500"></div>
+                                  ) : status === 'failed' ? (
+                                    <span
+                                      className="text-amber-600 dark:text-amber-400"
+                                      title="This source could not be reached. The value may exist - reload to try again."
+                                    >
+                                      Unavailable
+                                    </span>
                                   ) : showAsPercentage ? (
                                     value !== null ? `${percentage.toFixed(1)}%` : 'N/A'
                                   ) : (
                                     formatMetricValue(metric, value)
-                                  )}
+                                  ) }
                                 </span>
+                                {!loading && value !== null && staleYear && (
+                                  <span className="text-[10px] text-gray-400 dark:text-gray-500 tabular-nums">
+                                    {staleYear}
+                                  </span>
+                                ) }
                                 {value !== null && value > 0 && maxValue > 0 && countries.length > 1 && (
                                   <div className="w-full max-w-[100px] bg-gray-200 dark:bg-gray-600 rounded-full h-1.5">
                                     <div 
                                       className="bg-gradient-to-r from-blue-500 to-blue-600 h-1.5 rounded-full transition-all duration-500 ease-out" 
-                                      style={{ width: `${Math.max(4, percentage)}%` }}
+                                      style={{ width: `${Math.max(4, percentage)}%` } }
                                     />
                                   </div>
-                                )}
+                                ) }
                               </div>
                             </td>
                           );
-                        })}
+                        }) }
                       </tr>
                     );
-                  })}
+                  }) }
                 </tbody>
               </table>
             </div>
             
-            {/* Section Sources */}
+            {/* Section Sources */ }
             {isExpanded && sectionSources.size > 0 && (
               <div className="px-4 sm:px-6 py-3 bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
                 <button
-                  onClick={() => setShowSources(!showSources)}
-                  className="w-full flex justify-between items-center text-left text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                  onClick={() => setShowSources(!showSources) }
+                  className="w-full flex justify-between items-center min-h-11 -my-2 py-2 text-left text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white touch-manipulation"
+                  aria-expanded={showSources}
                 >
                   <span>{showSources ? 'Hide' : 'Show'} Sources ({sectionSources.size})</span>
                   <ChevronDown
                     className={`w-4 h-4 transform transition-transform duration-200 ${
                       showSources ? 'rotate-180' : ''
-                    }`}
+                    }` }
                   />
                 </button>
                 {showSources && (
@@ -1138,7 +1215,7 @@ const CompactSectionTable = ({
                       <div key={organization} className="flex items-start space-x-2">
                       <div 
                           className="w-2 h-2 rounded-full flex-shrink-0 mt-1.5" 
-                        style={{ backgroundColor: getSourceColor(organization) }}
+                        style={{ backgroundColor: getSourceColor(organization) } }
                       />
                         <div className="text-xs">
                           <span className="font-semibold text-gray-800 dark:text-gray-200">{organization}</span>
@@ -1146,150 +1223,21 @@ const CompactSectionTable = ({
                           <ul className="list-disc list-inside mt-1 space-y-1">
                             {Array.from(details).map((detail, index) => (
                                 <li key={index} className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                                  {detail}
+                                  {detail }
                                 </li>
-                            ))}
+                            )) }
                           </ul>
-                          )}
+                          ) }
                         </div>
                     </div>
-                  ))}
+                  )) }
                 </div>
-                )}
+                ) }
               </div>
-            )}
+            ) }
           </div>
         </div>
-      )}
-    </div>
-  );
-};
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const MetricTable = ({ title, countries, getValue, getSource, formatValue, loading, activeTooltip, toggleTooltip }: {
-  title: string;
-  countries: Country[];
-  getValue: (country: Country) => number | null;
-  getSource: (country: Country) => string | null;
-  formatValue: (value: number) => string;
-  loading?: boolean;
-  activeTooltip?: string | null;
-  toggleTooltip?: (tooltipId: string) => void;
-}) => {
-  // Create a unique ID from the title
-  const metricId = title.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
-  const data = countries
-    .map(country => ({ 
-      country, 
-      value: getValue(country)
-    }))
-    .sort((a, b) => (b.value || 0) - (a.value || 0));
-
-  const maxValue = Math.max(...data.map(d => d.value || 0));
-  const showComparison = countries.length > 1 && data.some(d => d.value !== null && d.value > 0);
-
-  return (
-    <div id={`metric-${metricId}`} className="mb-8 scroll-mt-24 transition-all duration-300">
-      <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center">
-        <span className="text-sm sm:text-base mr-2 opacity-70">{getMetricIcon(title)}</span>
-        <span className="text-gray-900 dark:text-white">
-          {title}
-        </span>
-        <div className="group relative ml-2 tooltip-container">
-          <HelpCircle 
-            size={14} 
-            className="text-gray-400 dark:text-gray-500 hover:text-blue-500 dark:hover:text-blue-400 cursor-pointer transition-colors duration-200" 
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleTooltip?.(`tooltip-${metricId}`);
-            }}
-          />
-          <div className={`absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 dark:bg-gray-700 text-white text-xs sm:text-sm rounded-lg shadow-lg transition-opacity duration-200 z-10 w-48 sm:w-64 text-center ${
-            activeTooltip === `tooltip-${metricId}` 
-              ? 'opacity-100 pointer-events-auto' 
-              : 'opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto'
-          }`}>
-            {getMetricTooltip(title)}
-            <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900 dark:border-t-gray-700"></div>
-          </div>
-        </div>
-      </h3>
-      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[320px] sm:min-w-[500px]">
-            <thead>
-              <tr className="border-b border-gray-200 dark:border-gray-600">
-                <th className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 text-left text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700">
-                  Country
-                </th>
-                <th className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 text-left text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700">
-                  Value
-                </th>
-                {showComparison && (
-                  <th className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 text-left text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700">
-                    Comparison
-                  </th>
-                )}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100 dark:divide-gray-600">
-              {data.map(({ country, value }) => (
-                <tr 
-                  key={country.code} 
-                  className="hover:bg-gray-50/50 dark:hover:bg-gray-700/30 transition-colors duration-150"
-                >
-                  <td className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4">
-                    <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-3">
-                      <Image 
-                          src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
-                          alt={`${country.name} flag`}
-                          width={20}
-                          height={15}
-                          className="w-4 h-auto sm:w-5 mr-1 sm:mr-2"
-                        />
-                      <span className="text-xs sm:text-sm font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                        {country.name}
-                      </span>
-                    </div>
-                  </td>
-                  <td className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4">
-                    <span className={`text-xs sm:text-sm font-medium ${
-                      value !== null ? 'text-gray-900 dark:text-white' : 'text-gray-400 dark:text-gray-500'
-                    }`}>
-                      {loading ? (
-                        <span className="flex items-center">
-                          <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-blue-500 mr-2"></div>
-                          <span className="hidden sm:inline">Loading...</span>
-                          <span className="sm:hidden">...</span>
-                        </span>
-                      ) : value !== null ? formatValue(value) : "N/A"}
-                    </span>
-                  </td>
-                  {showComparison && (
-                    <td className="px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4">
-                      {value !== null && value > 0 && maxValue > 0 ? (
-                        <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-3">
-                          <div className="flex-1 bg-gray-200 dark:bg-gray-600 rounded-full h-2 sm:h-3 max-w-[60px] sm:max-w-[100px] md:max-w-[140px]">
-                            <div 
-                              className="bg-gradient-to-r from-blue-500 to-blue-600 h-2 sm:h-3 rounded-full transition-all duration-500 ease-out shadow-sm" 
-                              style={{ width: `${Math.max(8, (value / maxValue) * 100)}%` }}
-                            ></div>
-                          </div>
-                          <span className="text-xs text-gray-500 dark:text-gray-400 font-medium min-w-[20px] sm:min-w-[25px] md:min-w-[35px] text-right">
-                            {((value / maxValue) * 100).toFixed(0)}%
-                          </span>
-                        </div>
-                      ) : (
-                        <span className="text-xs text-gray-400 italic">—</span>
-                      )}
-                    </td>
-                  )}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      ) }
     </div>
   );
 };
@@ -1298,7 +1246,8 @@ const CollapsibleInfoSection = ({ title, children, isExpanded, onToggle, titleCl
   return (
     <div>
       <button
-        onClick={onToggle}
+        onClick={onToggle }
+        aria-expanded={isExpanded}
         className="w-full text-left sm:pointer-events-none"
       >
         <h4 className={`text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-4 border-b border-gray-200 dark:border-gray-600 pb-2 flex justify-between items-center ${titleClassName}`}>
@@ -1307,7 +1256,7 @@ const CollapsibleInfoSection = ({ title, children, isExpanded, onToggle, titleCl
         </h4>
       </button>
       <div className={`sm:block ${isExpanded ? 'block' : 'hidden'}`}>
-        {children}
+        {children }
       </div>
     </div>
   );
@@ -1361,9 +1310,65 @@ const parseAlcoholOther = (text: string | null | undefined): number | null => {
   return match ? parseFloat(match[1]) : null;
 };
 
+/** Default view when the URL names no countries. */
+const DEFAULT_SELECTION = ['US'];
+
+/**
+ * Read a country selection out of the query string, e.g. `?countries=US,BR,JP`.
+ *
+ * Unknown or duplicate codes are dropped rather than rejected, so a hand-edited or
+ * out-of-date link still opens on whatever it got right.
+ */
+function selectionFromSearch(search: string): Country[] {
+  const raw = new URLSearchParams(search).get('countries');
+  const codes = (raw ? raw.split(',') : DEFAULT_SELECTION)
+    .map(code => code.trim().toUpperCase())
+    .filter(Boolean);
+
+  const seen = new Set<string>();
+  const resolved: Country[] = [];
+  for (const code of codes) {
+    if (seen.has(code)) continue;
+    const country = getCountry(code);
+    if (country) {
+      seen.add(code);
+      resolved.push(country);
+    }
+    if (resolved.length === MAX_COMPARISON) break;
+  }
+
+  return resolved.length ? resolved : [getCountry(DEFAULT_SELECTION[0])!];
+}
+
 export default function HomePage() {
-  const [selectedCountries, setSelectedCountries] = useState<Country[]>([countries[0]]);
+  // Starts at the default rather than reading the URL here: this page is
+  // statically prerendered, so the first client render has to match the server's
+  // HTML. The URL is adopted on mount instead, just below.
+  const [selectedCountries, setSelectedCountries] = useState<Country[]>(
+    () => [getCountry(DEFAULT_SELECTION[0])!]
+  );
+  /**
+   * False until the query string has been read. The data effect waits on this:
+   * otherwise the default selection would kick off a full fetch that the URL's
+   * selection immediately supersedes.
+   */
+  const [urlAdopted, setUrlAdopted] = useState(false);
   const [countryStats, setCountryStats] = useState<Record<string, CountryStats>>({});
+  /**
+   * Every country fetched this session, keyed by code. Selecting a country that is
+   * already here costs nothing.
+   */
+  const statsCacheRef = useRef<Record<string, CountryStats>>({});
+
+  /** Narrow the session cache down to the countries currently on screen. */
+  const pickStats = (selection: Country[]): Record<string, CountryStats> => {
+    const picked: Record<string, CountryStats> = {};
+    for (const country of selection) {
+      const stats = statsCacheRef.current[country.code];
+      if (stats) picked[country.code] = stats;
+    }
+    return picked;
+  };
   const [loading, setLoading] = useState(false);
   const [loadingStates, setLoadingStates] = useState<Record<string, Record<string, boolean>>>({});
   const [error, setError] = useState<string | null>(null);
@@ -1530,6 +1535,36 @@ export default function HomePage() {
     }, 150);
   };
 
+  // Adopt the selection named in the query string, once, after hydration.
+  useEffect(() => {
+    setSelectedCountries(selectionFromSearch(window.location.search));
+    setUrlAdopted(true);
+  }, []);
+
+  // Keep the query string in step with the selection so a comparison can be
+  // bookmarked, shared or reloaded. `replaceState` rather than `pushState`: each
+  // added country should not become its own back-button step.
+  useEffect(() => {
+    if (!urlAdopted) return;
+
+    const codes = selectedCountries.map(c => c.code).join(',');
+    const url = new URL(window.location.href);
+
+    if (url.searchParams.get('countries') === codes) return;
+
+    url.searchParams.set('countries', codes);
+    window.history.replaceState(null, '', url);
+  }, [selectedCountries, urlAdopted]);
+
+  // Back/forward should move between comparisons, not just scroll position.
+  useEffect(() => {
+    const handlePopState = () => {
+      setSelectedCountries(selectionFromSearch(window.location.search));
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   useEffect(() => {
     // Initialize dark mode from localStorage or system preference
     if (typeof window !== 'undefined') {
@@ -1549,38 +1584,65 @@ export default function HomePage() {
     }, [darkMode]);
 
   useEffect(() => {
+    // Only the two scroll-position toggles need the scroll event, and reading
+    // `scrollY` alone does not force layout. Coalesce to one read per frame.
+    let frame = 0;
     const handleScroll = () => {
-      const scrollY = window.scrollY;
-              setShowScrollTop(scrollY > 400);
-      
-      // Show sticky nav when scrolled past initial navigation
-      setShowStickyNav(scrollY > 600);
-      
-      // Determine active section based on scroll position
-      const sectionElements = sections.map(section => ({
-        id: section.id,
-        element: document.getElementById(section.id),
-        offset: document.getElementById(section.id)?.offsetTop || 0
-      }));
-      
-      const currentSection = sectionElements
-        .filter(section => section.element)
-        .find((section, index, arr) => {
-          const nextSection = arr[index + 1];
-          const sectionTop = section.offset - 200; // Account for header
-          const sectionBottom = nextSection ? nextSection.offset - 200 : document.body.scrollHeight;
-          
-          return scrollY >= sectionTop && scrollY < sectionBottom;
-        });
-      
-      if (currentSection) {
-        setActiveSection(currentSection.id);
-      }
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        const scrollY = window.scrollY;
+        setShowScrollTop(scrollY > 400);
+        setShowStickyNav(scrollY > 600);
+      });
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
   }, []);
+
+  // Which section is currently in view. This used to be recomputed inside the
+  // scroll handler, calling getElementById and reading offsetTop for all seven
+  // sections on every scroll event - a forced synchronous layout per frame.
+  // IntersectionObserver gets the same answer from the browser for free.
+  useEffect(() => {
+    const elements = sections
+      .map(section => document.getElementById(section.id))
+      .filter((el): el is HTMLElement => el !== null);
+
+    if (elements.length === 0) return;
+
+    const visible = new Map<string, number>();
+
+    const observer = new IntersectionObserver(
+      entries => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            visible.set(entry.target.id, entry.intersectionRatio);
+          } else {
+            visible.delete(entry.target.id);
+          }
+        }
+
+        if (visible.size === 0) return;
+
+        // Nearest to the top of the viewport wins, matching document order.
+        const active = sections.find(section => visible.has(section.id));
+        if (active) setActiveSection(active.id);
+      },
+      // Bias the band towards the upper part of the viewport so the highlighted
+      // section is the one the reader is actually looking at.
+      { rootMargin: '-20% 0px -70% 0px', threshold: [0, 0.25, 0.5, 1] }
+    );
+
+    elements.forEach(el => observer.observe(el));
+    return () => observer.disconnect();
+  }, [selectedCountries.length]);
 
   useEffect(() => {
     // Auto-select first country when country info is expanded
@@ -1611,15 +1673,35 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
+    let cancelled = false;
+
     const loadData = async () => {
-      if (selectedCountries.length === 0) return;
+      // Wait for the query string to be applied so the default selection does not
+      // trigger a fetch that is about to be replaced.
+      if (!urlAdopted) return;
+
+      if (selectedCountries.length === 0) {
+        setCountryStats({});
+        return;
+      }
+
+      // Adding a country used to refetch every country from scratch, so building
+      // up a five-way comparison cost five full rounds of requests. Only the
+      // countries we have never loaded need fetching.
+      const pending = selectedCountries.filter(c => !statsCacheRef.current[c.code]);
+
+      if (pending.length === 0) {
+        setCountryStats(pickStats(selectedCountries));
+        setLoading(false);
+        return;
+      }
 
       setLoading(true);
       setError(null);
 
       // Initialize loading states for all countries and metrics
-      const initialLoadingStates: Record<string, Record<string, boolean>> = {};
-      selectedCountries.forEach(country => {
+      const initialLoadingStates: Record<string, Record<string, boolean>> = { };
+      pending.forEach(country => {
         initialLoadingStates[country.code] = {
           worldBank: true,
           restCountries: true,
@@ -1645,10 +1727,8 @@ export default function HomePage() {
       setLoadingStates(initialLoadingStates);
 
       try {
-        console.log('Loading data for countries:', selectedCountries.map(c => c.name));
         
-        const fetchPromises = selectedCountries.map(async (country) => {
-          console.log(`Fetching data for ${country.name} (${country.code})`);
+        const fetchPromises = pending.map(async (country) => {
           
           try {
             // Helper function to fetch data and update loading state
@@ -1666,25 +1746,7 @@ export default function HomePage() {
 
             // Fetch all data sources in parallel with individual loading tracking
             const [worldBankData, restCountriesData, factbookData, climateData, comtradeData, crimeData, hdiData, touristsData, schoolingYearsData, taxRevenueData, extremePovertyData, migrantsData, caloricSupplyData, incomeGroupData, incomeShareRichest1Data, incomeSharePoorest50Data, armedForcesPersonnelData, terrorismDeathsData, politicalRegimeData] = await Promise.all([
-              (async () => {
-                try {
-                  const response = await fetch('/api/worldbank', {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                      country: country.code
-                    })
-                  });
-                  const data = response.ok ? await response.json() : null;
-                  setMetricLoading(country.code, 'worldBank', false);
-                  return data;
-                } catch {
-                  setMetricLoading(country.code, 'worldBank', false);
-                  return null;
-                }
-              })(),
+              fetchWithLoading(`/api/worldbank?country=${country.code}`, 'worldBank'),
               fetchWithLoading(`/api/restcountries?country=${country.code}`, 'restCountries'),
               fetchWithLoading(`/api/factbook?country=${country.code}`, 'factbook'),
               fetchWithLoading(`/api/climate?country=${country.code}`, 'climate'),
@@ -1708,10 +1770,7 @@ export default function HomePage() {
 
 
             // Debug logs
-            console.log(`REST Countries data for ${country.name}:`, restCountriesData);
-            console.log(`Factbook data for ${country.name}:`, factbookData);
             if (factbookData?.militaryExpenditure) {
-              console.log(`Military expenditure for ${country.name}:`, factbookData.militaryExpenditure);
             }
 
             // Add fallback climate data if API fails
@@ -1749,12 +1808,6 @@ export default function HomePage() {
               }
             }
 
-            console.log(`Data loaded for ${country.name}:`, {
-              worldBank: !!worldBankData,
-              restCountries: !!restCountriesData,
-              factbook: !!factbookData,
-              climate: !!climateData
-            });
 
                          // Process REST Countries data properly
             let processedRestCountriesData = null;
@@ -1810,27 +1863,34 @@ export default function HomePage() {
         });
 
         const statsResults = await Promise.all(fetchPromises);
-        console.log('Loaded stats:', statsResults);
-        
-        const newCountryStats: Record<string, CountryStats> = {};
-        selectedCountries.forEach((country, index) => {
+        if (cancelled) return;
+
+        pending.forEach((country, index) => {
           if (statsResults[index]) {
-            newCountryStats[country.code] = statsResults[index];
+            statsCacheRef.current[country.code] = statsResults[index];
           }
         });
 
-        setCountryStats(newCountryStats);
-        console.log('Final country stats:', newCountryStats);
+        setCountryStats(pickStats(selectedCountries));
       } catch (error) {
         console.error('Error fetching data:', error);
-        setError('Failed to load country data. Please try again.');
+        if (!cancelled) setError('Could not load country data. Check your connection and try again.');
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     };
 
     loadData();
-  }, [selectedCountries]);
+
+    // A fast sequence of selections must not let an earlier response overwrite a
+    // later one.
+    return () => {
+      cancelled = true;
+    };
+    // Keyed on the codes rather than the array, so an identical selection
+    // rendered as a new array does not retrigger the fetch.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedCountries.map(c => c.code).join(','), urlAdopted]);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const formatNumber = (num: number | null): string => {
@@ -1921,7 +1981,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      {/* Header */}
+      {/* Header */ }
       <div className="bg-white dark:bg-gray-800 shadow-lg border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8">
           <div className="text-center relative">
@@ -1935,15 +1995,15 @@ export default function HomePage() {
                 <span className="sm:hidden">Top 10</span>
               </Link>
               <button
-                onClick={() => setDarkMode(!darkMode)}
-                className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200"
+                onClick={() => setDarkMode(!darkMode) }
+                className="flex items-center justify-center min-w-11 min-h-11 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200 touch-manipulation"
                 aria-label="Toggle dark mode"
               >
                 {darkMode ? (
                   <Sun className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500" />
                 ) : (
                   <Moon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
-                )}
+                ) }
               </button>
             </div>
             
@@ -1957,27 +2017,27 @@ export default function HomePage() {
               <div className="mt-4 text-blue-600 dark:text-blue-400 text-sm sm:text-base">
                 Loading country data...
               </div>
-            )}
+            ) }
             {error && (
               <div className="mt-4 text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 p-3 rounded-lg text-sm sm:text-base">
-                Error: {error}
+                Error: {error }
               </div>
-            )}
+            ) }
           </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-8">
-        {/* Country Selection */}
+        {/* Country Selection */ }
         <div className="mb-8">
           <CountryDropdown
-            selectedCountries={selectedCountries}
-            onSelect={handleCountrySelect}
-            countries={countries}
+            selectedCountries={selectedCountries }
+            onSelect={handleCountrySelect }
+            countries={countries }
           />
         </div>
 
-        {/* Expandable Navigation (Desktop) */}
+        {/* Expandable Navigation (Desktop) */ }
         <div className="mb-8 hidden lg:block">
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
             {sections.map((section) => {
@@ -1987,24 +2047,24 @@ export default function HomePage() {
               
               return (
                 <div key={section.id} className="border-b border-gray-100 dark:border-gray-700 last:border-b-0">
-                  {/* Section Header */}
+                  {/* Section Header */ }
                   <div className="flex items-center">
                     <button
-                      onClick={() => scrollToSection(section.id)}
+                      onClick={() => scrollToSection(section.id) }
                       className="flex-1 flex items-center space-x-3 px-6 py-4 text-left font-medium transition-all duration-200 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700"
                     >
                       <Icon size={18} />
                       <span>{section.label}</span>
                     </button>
                     
-                    {/* Expand/Collapse Button */}
+                    {/* Expand/Collapse Button */ }
                     <button
-                      onClick={() => toggleSectionExpansion(section.id)}
-                      className="px-4 py-4 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200"
-                      aria-label={`${isExpanded ? 'Collapse' : 'Expand'} ${section.label} metrics`}
+                      onClick={() => toggleSectionExpansion(section.id) }
+                      className="flex items-center justify-center min-w-11 min-h-11 px-4 py-4 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 touch-manipulation"
+                      aria-label={`${isExpanded ? 'Collapse' : 'Expand'} ${section.label} metrics` }
                     >
                       <svg 
-                        className={`w-4 h-4 transform transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+                        className={`w-4 h-4 transform transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}` }
                         fill="none" 
                         stroke="currentColor" 
                         viewBox="0 0 24 24"
@@ -2014,35 +2074,35 @@ export default function HomePage() {
                     </button>
                   </div>
                   
-                  {/* Expandable Metrics List */}
+                  {/* Expandable Metrics List */ }
                   {isExpanded && (
                     <div className="px-6 pb-4 bg-gray-50 dark:bg-gray-700/30">
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                         {metrics.map((metric, index) => (
                           <button
-                            key={index}
-                            onClick={() => scrollToMetric(metric)}
+                            key={index }
+                            onClick={() => scrollToMetric(metric) }
                             className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400 py-1 px-2 rounded-md hover:bg-white dark:hover:bg-gray-600 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200 text-left group"
                           >
                             <div className="w-1.5 h-1.5 bg-blue-400 rounded-full flex-shrink-0 group-hover:bg-blue-500"></div>
                             <span className="group-hover:underline">{metric}</span>
                           </button>
-                        ))}
+                        )) }
                       </div>
                       {metrics.length === 0 && (
                         <p className="text-sm text-gray-500 dark:text-gray-400 italic">
                           No specific metrics available
                         </p>
-                      )}
+                      ) }
                     </div>
-                  )}
+                  ) }
                 </div>
               );
-            })}
+            }) }
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Navigation */ }
         <div className="mb-8 lg:hidden">
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
             {sections.map((section) => {
@@ -2052,24 +2112,24 @@ export default function HomePage() {
               
               return (
                 <div key={section.id} className="border-b border-gray-100 dark:border-gray-700 last:border-b-0">
-                  {/* Section Header */}
+                  {/* Section Header */ }
                   <div className="flex items-center">
                     <button
-                      onClick={() => scrollToSection(section.id)}
+                      onClick={() => scrollToSection(section.id) }
                       className="flex-1 flex items-center space-x-3 px-4 py-3 text-left font-medium transition-all duration-200 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700"
                     >
                       <Icon size={16} />
                       <span className="text-sm">{section.label}</span>
                     </button>
                     
-                    {/* Expand/Collapse Button */}
+                    {/* Expand/Collapse Button */ }
                     <button
-                      onClick={() => toggleSectionExpansion(section.id)}
-                      className="px-3 py-3 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200"
-                      aria-label={`${isExpanded ? 'Collapse' : 'Expand'} ${section.label} metrics`}
+                      onClick={() => toggleSectionExpansion(section.id) }
+                      className="flex items-center justify-center min-w-11 min-h-11 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 touch-manipulation"
+                      aria-label={`${isExpanded ? 'Collapse' : 'Expand'} ${section.label} metrics` }
                     >
                       <svg 
-                        className={`w-3 h-3 transform transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+                        className={`w-3 h-3 transform transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}` }
                         fill="none" 
                         stroke="currentColor" 
                         viewBox="0 0 24 24"
@@ -2079,39 +2139,39 @@ export default function HomePage() {
                     </button>
                   </div>
                   
-                  {/* Expandable Metrics List */}
+                  {/* Expandable Metrics List */ }
                   {isExpanded && (
                     <div className="px-4 pb-3 bg-gray-50 dark:bg-gray-700/30">
                       <div className="grid grid-cols-1 gap-1">
                         {metrics.map((metric, index) => (
                           <button
-                            key={index}
-                            onClick={() => scrollToMetric(metric)}
+                            key={index }
+                            onClick={() => scrollToMetric(metric) }
                             className="flex items-center space-x-2 text-xs text-gray-600 dark:text-gray-400 py-1 px-2 rounded-md hover:bg-white dark:hover:bg-gray-600 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200 text-left group"
                           >
                             <div className="w-1 h-1 bg-blue-400 rounded-full flex-shrink-0 group-hover:bg-blue-500"></div>
                             <span className="group-hover:underline">{metric}</span>
                           </button>
-                        ))}
+                        )) }
                       </div>
                       {metrics.length === 0 && (
                         <p className="text-xs text-gray-500 dark:text-gray-400 italic">
                           No specific metrics available
                         </p>
-                      )}
+                      ) }
                     </div>
-                  )}
+                  ) }
                 </div>
               );
-            })}
+            }) }
           </div>
         </div>
 
-        {/* Collapsible Country Info */}
+        {/* Collapsible Country Info */ }
         {selectedCountries.length > 0 && (
           <div className="mb-8">
             <button
-              onClick={() => setCountryInfoExpanded(!countryInfoExpanded)}
+              onClick={() => setCountryInfoExpanded(!countryInfoExpanded) }
               className="w-full bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-shadow duration-200"
             >
               <div className="flex items-center justify-between">
@@ -2122,46 +2182,46 @@ export default function HomePage() {
                   </h2>
                 </div>
                 <div className="flex items-center space-x-2">
-                  {/* Desktop view: Show flags and country names */}
+                  {/* Desktop view: Show flags and country names */ }
                   <div className="hidden sm:flex space-x-2">
                     {selectedCountries.slice(0, 3).map((country) => (
                       <div key={country.code} className="flex items-center space-x-1">
                         <Image 
-                          src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
-                          alt={`${country.name} flag`}
-                          width={20}
-                          height={15}
+                          src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png` }
+                          alt={`${country.name} flag` }
+                          width={20 }
+                          height={15 }
                           className="w-5 h-auto mr-1"
                         />
                         <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                          {country.name}
+                          {country.name }
                         </span>
                       </div>
-                    ))}
+                    )) }
                     {selectedCountries.length > 3 && (
                       <span className="text-sm text-gray-500 dark:text-gray-400">
                         +{selectedCountries.length - 3} more
                       </span>
-                    )}
+                    ) }
                   </div>
                   
-                  {/* Mobile view: Show flags only */}
+                  {/* Mobile view: Show flags only */ }
                   <div className="sm:hidden flex space-x-1">
                     {selectedCountries.slice(0, 5).map((country) => (
                       <Image 
-                        key={country.code}
-                        src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
-                        alt={`${country.name} flag`}
-                        width={16}
-                        height={12}
+                        key={country.code }
+                        src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png` }
+                        alt={`${country.name} flag` }
+                        width={16 }
+                        height={12 }
                         className="w-4 h-auto"
                       />
-                    ))}
+                    )) }
                     {selectedCountries.length > 5 && (
                       <span className="text-xs text-gray-500 dark:text-gray-400 ml-1">
-                        +{selectedCountries.length - 5}
+                        +{selectedCountries.length - 5 }
                       </span>
-                    )}
+                    ) }
                   </div>
                   
                   <div className={`transform transition-transform duration-200 ${countryInfoExpanded ? 'rotate-180' : ''}`}>
@@ -2173,7 +2233,7 @@ export default function HomePage() {
             
             {countryInfoExpanded && (
               <div className="mt-4 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-100 dark:border-gray-700">
-                {/* Country Selection Cards */}
+                {/* Country Selection Cards */ }
                 <div className="mb-6">
                   <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                     Select a country to view detailed information:
@@ -2183,17 +2243,17 @@ export default function HomePage() {
                       const isSelected = selectedCountryInfo === country.code;
                       return (
                         <button
-                          key={country.code}
-                          onClick={() => setSelectedCountryInfo(country.code)}
+                          key={country.code }
+                          onClick={() => setSelectedCountryInfo(country.code) }
                           className={`
                             relative flex items-center space-x-2 sm:space-x-3 p-3 sm:p-4 rounded-xl border-2 transition-all duration-200 
                             ${isSelected 
                               ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 shadow-lg transform scale-105' 
                               : 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-500 hover:shadow-md'
                             }
-                          `}
+                          ` }
                         >
-                          {/* Selection Indicator */}
+                          {/* Selection Indicator */ }
                           <div className={`
                             flex-shrink-0 w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 flex items-center justify-center transition-all duration-200
                             ${isSelected 
@@ -2203,16 +2263,16 @@ export default function HomePage() {
                           `}>
                             {isSelected && (
                               <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-white"></div>
-                            )}
+                            ) }
                           </div>
                           
-                          {/* Country Info */}
+                          {/* Country Info */ }
                           <div className="flex items-center space-x-2 sm:space-x-3 flex-1 min-w-0">
                             <Image 
-                              src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
-                              alt={`${country.name} flag`}
-                              width={24}
-                              height={18}
+                              src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png` }
+                              alt={`${country.name} flag` }
+                              width={24 }
+                              height={18 }
                               className="w-5 h-auto sm:w-6"
                             />
                             <span className={`
@@ -2222,25 +2282,25 @@ export default function HomePage() {
                                 : 'text-gray-900 dark:text-white'
                               }
                             `}>
-                              {country.name}
+                              {country.name }
                             </span>
                           </div>
                           
-                          {/* Selected Badge */}
+                          {/* Selected Badge */ }
                           {isSelected && (
                             <div className="absolute -top-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 bg-blue-500 rounded-full flex items-center justify-center">
                               <svg className="w-2 h-2 sm:w-2.5 sm:h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                               </svg>
                             </div>
-                          )}
+                          ) }
                         </button>
                       );
-                    })}
+                    }) }
                   </div>
                 </div>
 
-                {/* Country Information Display */}
+                {/* Country Information Display */ }
                 {selectedCountryInfo && (() => {
                   const stats = countryStats[selectedCountryInfo];
                   const restData = stats?.enhancedInfo?.restCountriesData;
@@ -2253,16 +2313,16 @@ export default function HomePage() {
                     <div className="space-y-6">
                       <div className="flex items-center space-x-3 mb-6">
                         <Image 
-                          src={`https://flagcdn.com/w40/${selectedCountry?.code.toLowerCase()}.png`}
-                          alt={`${selectedCountry?.name} flag`}
-                          width={32}
-                          height={24}
+                          src={`https://flagcdn.com/w40/${selectedCountry?.code.toLowerCase()}.png` }
+                          alt={`${selectedCountry?.name} flag` }
+                          width={32 }
+                          height={24 }
                           className="w-8 h-auto"
                         />
                         <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{selectedCountry?.name}</h3>
                       </div>
                       
-                      {/* Basic Information */}
+                      {/* Basic Information */ }
                       <CollapsibleInfoSection title="Basic Information" isExpanded={infoSectionsExpanded.basic} onToggle={() => toggleInfoSection('basic')}>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                           <div className="space-y-2">
@@ -2271,7 +2331,7 @@ export default function HomePage() {
                               Region
                             </h5>
                             <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
-                              {restData?.region || 'N/A'} {restData?.subregion && `/ ${restData.subregion}`}
+                              {restData?.region || 'N/A'} {restData?.subregion && `/ ${restData.subregion}` }
                             </p>
                           </div>
                           
@@ -2281,7 +2341,7 @@ export default function HomePage() {
                               Capital
                             </h5>
                             <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
-                              {restData?.capital?.join(', ') || 'N/A'}
+                              {restData?.capital?.join(', ') || 'N/A' }
                             </p>
                           </div>
                           
@@ -2306,7 +2366,7 @@ export default function HomePage() {
                               </a>
                             ) : (
                               <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm">Map link not available</p>
-                            )}
+                            ) }
                           </div>
                           
                           <div className="space-y-2">
@@ -2317,7 +2377,7 @@ export default function HomePage() {
                             <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
                               {restData?.currencies ? Object.entries(restData.currencies).map(([code, currency]) => 
                                 `${currency.name} (${code})`
-                              ).join(', ') : 'N/A'}
+                              ).join(', ') : 'N/A' }
                             </p>
                           </div>
                           
@@ -2327,12 +2387,12 @@ export default function HomePage() {
                               Internet Country Code
                             </h5>
                             <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
-                              {factbook?.internetCountryCode || 'N/A'}
+                              {factbook?.internetCountryCode || 'N/A' }
                               {factbook?.internetCountryCode && (
                                 <span className="text-xs text-gray-500 dark:text-gray-400 block">
                                   Top-level domain
                                 </span>
-                              )}
+                              ) }
                             </p>
                           </div>
                           
@@ -2342,7 +2402,7 @@ export default function HomePage() {
                               Population
                             </h5>
                             <p className="text-gray-700 dark:text-gray-300">
-                              {totalPopulation ? formatPopulation(totalPopulation) : 'N/A'}
+                              {totalPopulation ? formatPopulation(totalPopulation) : 'N/A' }
                             </p>
                           </div>
                           
@@ -2352,7 +2412,7 @@ export default function HomePage() {
                               Area
                             </h5>
                             <p className="text-gray-700 dark:text-gray-300">
-                              {factbook?.area ? formatArea(factbook.area) : 'N/A'}
+                              {factbook?.area ? formatArea(factbook.area) : 'N/A' }
                             </p>
                           </div>
 
@@ -2363,13 +2423,13 @@ export default function HomePage() {
                             </h5>
                             <p className="text-gray-700 dark:text-gray-300">
                               {totalPopulation && factbook?.area ? 
-                                formatPopulationDensity(totalPopulation / factbook.area) : 'N/A'}
+                                formatPopulationDensity(totalPopulation / factbook.area) : 'N/A' }
                             </p>
                           </div>
                         </div>
                       </CollapsibleInfoSection>
 
-                      {/* Demographics */}
+                      {/* Demographics */ }
                       {(factbook?.malePopulation || factbook?.femalePopulation || factbook?.ethnicGroups || factbook?.religions) && (
                         <CollapsibleInfoSection title="Demographics" isExpanded={infoSectionsExpanded.demographics} onToggle={() => toggleInfoSection('demographics')}>
                           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -2378,40 +2438,40 @@ export default function HomePage() {
                                 <h5 className="font-semibold text-gray-900 dark:text-white">Male Population</h5>
                                 <p className="text-gray-700 dark:text-gray-300">{formatPopulation(factbook.malePopulation)}</p>
                               </div>
-                            )}
+                            ) }
                             
                             {factbook?.femalePopulation && (
                               <div className="space-y-2">
                                 <h5 className="font-semibold text-gray-900 dark:text-white">Female Population</h5>
                                 <p className="text-gray-700 dark:text-gray-300">{formatPopulation(factbook.femalePopulation)}</p>
                               </div>
-                            )}
+                            ) }
                             
                             {factbook?.medianAge && (
                               <div className="space-y-2">
                                 <h5 className="font-semibold text-gray-900 dark:text-white">Median Age</h5>
                                 <p className="text-gray-700 dark:text-gray-300">{factbook.medianAge}</p>
                               </div>
-                            )}
+                            ) }
                             
                             {factbook?.ethnicGroups && (
                               <div className="space-y-2 md:col-span-2 lg:col-span-3">
                                 <h5 className="font-semibold text-gray-900 dark:text-white">Ethnic Groups</h5>
                                 <p className="text-gray-700 dark:text-gray-300 text-sm">{factbook.ethnicGroups}</p>
                               </div>
-                            )}
+                            ) }
                             
                             {factbook?.religions && (
                               <div className="space-y-2 md:col-span-2 lg:col-span-3">
                                 <h5 className="font-semibold text-gray-900 dark:text-white">Religions</h5>
                                 <p className="text-gray-700 dark:text-gray-300 text-sm">{factbook.religions}</p>
                               </div>
-                            )}
+                            ) }
                           </div>
                         </CollapsibleInfoSection>
-                      )}
+                      ) }
 
-                      {/* Geography & Climate */}
+                      {/* Geography & Climate */ }
                       {(factbook?.location || factbook?.climate || factbook?.naturalResources) && (
                         <CollapsibleInfoSection title="Geography & Climate" isExpanded={infoSectionsExpanded.geography} onToggle={() => toggleInfoSection('geography')}>
                           <div className="space-y-4">
@@ -2420,26 +2480,26 @@ export default function HomePage() {
                                 <h5 className="font-semibold text-gray-900 dark:text-white">Location</h5>
                                 <p className="text-gray-700 dark:text-gray-300 text-sm">{factbook.location}</p>
                               </div>
-                            )}
+                            ) }
                             
                             {factbook?.climate && (
                               <div className="space-y-2">
                                 <h5 className="font-semibold text-gray-900 dark:text-white">Climate</h5>
                                 <p className="text-gray-700 dark:text-gray-300 text-sm">{factbook.climate}</p>
                               </div>
-                            )}
+                            ) }
                             
                             {factbook?.naturalResources && (
                               <div className="space-y-2">
                                 <h5 className="font-semibold text-gray-900 dark:text-white">Natural Resources</h5>
                                 <p className="text-gray-700 dark:text-gray-300 text-sm">{factbook.naturalResources}</p>
                               </div>
-                            )}
+                            ) }
                           </div>
                         </CollapsibleInfoSection>
-                      )}
+                      ) }
 
-                      {/* Government & Politics */}
+                      {/* Government & Politics */ }
                       {(factbook?.etymology || factbook?.suffrage || stats?.enhancedInfo?.politicalRegimeData) && (
                         <CollapsibleInfoSection title="Government & Politics" isExpanded={infoSectionsExpanded.government} onToggle={() => toggleInfoSection('government')}>
                           <div className="space-y-4">
@@ -2456,29 +2516,29 @@ export default function HomePage() {
                                     if (value === 2) return 'Electoral Democracy';
                                     if (value === 3) return 'Liberal Democracy';
                                     return stats.enhancedInfo.politicalRegimeData.value || 'N/A';
-                                  })()}
+                                  })() }
                                 </p>
                               </div>
-                            )}
+                            ) }
                             
                             {factbook?.etymology && (
                               <div className="space-y-2">
                                 <h5 className="font-semibold text-gray-900 dark:text-white">Etymology</h5>
                                 <p className="text-gray-700 dark:text-gray-300 text-sm">{factbook.etymology}</p>
                               </div>
-                            )}
+                            ) }
                             
                             {factbook?.suffrage && (
                               <div className="space-y-2">
                                 <h5 className="font-semibold text-gray-900 dark:text-white">Suffrage</h5>
                                 <p className="text-gray-700 dark:text-gray-300 text-sm">{factbook.suffrage}</p>
                               </div>
-                            )}
+                            ) }
                           </div>
                         </CollapsibleInfoSection>
-                      )}
+                      ) }
 
-                      {/* Languages & Timezones */}
+                      {/* Languages & Timezones */ }
                       {(restData?.languages || restData?.timezones) && (
                         <CollapsibleInfoSection title="Languages & Timezones" isExpanded={infoSectionsExpanded.languages} onToggle={() => toggleInfoSection('languages')}>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -2486,24 +2546,24 @@ export default function HomePage() {
                               <div className="space-y-2">
                                 <h5 className="font-semibold text-gray-900 dark:text-white">Languages</h5>
                                 <p className="text-gray-700 dark:text-gray-300 text-sm">
-                                  {Object.values(restData.languages).join(', ')}
+                                  {Object.values(restData.languages).join(', ') }
                                 </p>
                               </div>
-                            )}
+                            ) }
                             
                             {restData?.timezones && (
                               <div className="space-y-2">
                                 <h5 className="font-semibold text-gray-900 dark:text-white">Timezones</h5>
                                 <p className="text-gray-700 dark:text-gray-300 text-sm">
-                                  {restData.timezones.join(', ')}
+                                  {restData.timezones.join(', ') }
                                 </p>
                               </div>
-                            )}
+                            ) }
                           </div>
                         </CollapsibleInfoSection>
-                      )}
+                      ) }
 
-                      {/* Economic Information */}
+                      {/* Economic Information */ }
                       {(factbook?.industries || factbook?.agriculturalProducts || stats?.enhancedInfo?.incomeGroupData) && (
                         <CollapsibleInfoSection title="Economic Information" isExpanded={infoSectionsExpanded.economy} onToggle={() => toggleInfoSection('economy')}>
                           <div className="space-y-4">
@@ -2514,29 +2574,29 @@ export default function HomePage() {
                                   World Bank Income Group
                                 </h5>
                                 <p className="text-gray-700 dark:text-gray-300">
-                                  {stats.enhancedInfo.incomeGroupData.value || 'N/A'}
+                                  {stats.enhancedInfo.incomeGroupData.value || 'N/A' }
                                 </p>
                               </div>
-                            )}
+                            ) }
                             
                             {factbook?.industries && (
                               <div className="space-y-2">
                                 <h5 className="font-semibold text-gray-900 dark:text-white">Industries</h5>
                                 <p className="text-gray-700 dark:text-gray-300 text-sm">{factbook.industries}</p>
                               </div>
-                            )}
+                            ) }
                             
                             {factbook?.agriculturalProducts && (
                               <div className="space-y-2">
                                 <h5 className="font-semibold text-gray-900 dark:text-white">Agricultural Products</h5>
                                 <p className="text-gray-700 dark:text-gray-300 text-sm">{factbook.agriculturalProducts}</p>
                               </div>
-                            )}
+                            ) }
                           </div>
                         </CollapsibleInfoSection>
-                      )}
+                      ) }
 
-                      {/* Sources Section */}
+                      {/* Sources Section */ }
                       <div className="border-t border-gray-200 dark:border-gray-600 pt-6">
                         <CollapsibleInfoSection 
                           title={
@@ -2546,17 +2606,17 @@ export default function HomePage() {
                             </span>
                           } 
                           isExpanded={infoSectionsExpanded.sources} 
-                          onToggle={() => toggleInfoSection('sources')}
+                          onToggle={() => toggleInfoSection('sources') }
                           titleClassName="border-none"
                         >
                           <div className="bg-gray-50 dark:bg-gray-700/30 rounded-lg p-4">
                             <div className="space-y-3">
-                              {/* Rest Countries API */}
+                              {/* Rest Countries API */ }
                               {restData && (
                                 <div className="flex items-start space-x-3">
                                   <div 
                                     className="w-2 h-2 rounded-full mt-2 flex-shrink-0"
-                                    style={{ backgroundColor: getSourceColor('RestCountries') }}
+                                    style={{ backgroundColor: getSourceColor('RestCountries') } }
                                   ></div>
                                   <div>
                                     <p className="text-sm text-gray-700 dark:text-gray-300">
@@ -2567,14 +2627,14 @@ export default function HomePage() {
                                     </p>
                                   </div>
                                 </div>
-                              )}
+                              ) }
                               
-                              {/* CIA World Factbook Source */}
+                              {/* CIA World Factbook Source */ }
                               {factbook && (
                                 <div className="flex items-start space-x-3">
                                   <div 
                                     className="w-2 h-2 rounded-full mt-2 flex-shrink-0"
-                                    style={{ backgroundColor: getSourceColor(factbook.source) }}
+                                    style={{ backgroundColor: getSourceColor(factbook.source) } }
                                   ></div>
                                   <div>
                                     <p className="text-sm text-gray-700 dark:text-gray-300">
@@ -2585,14 +2645,14 @@ export default function HomePage() {
                                     </p>
                                   </div>
                                 </div>
-                              )}
+                              ) }
                               
-                              {/* Political Regime Source */}
+                              {/* Political Regime Source */ }
                               {stats?.enhancedInfo?.politicalRegimeData && (
                                 <div className="flex items-start space-x-3">
                                   <div 
                                     className="w-2 h-2 rounded-full mt-2 flex-shrink-0"
-                                    style={{ backgroundColor: getSourceColor(stats.enhancedInfo.politicalRegimeData.source) }}
+                                    style={{ backgroundColor: getSourceColor(stats.enhancedInfo.politicalRegimeData.source) } }
                                   ></div>
                                   <div>
                                     <p className="text-sm text-gray-700 dark:text-gray-300">
@@ -2603,14 +2663,14 @@ export default function HomePage() {
                                     </p>
                                   </div>
                                 </div>
-                              )}
+                              ) }
                               
-                              {/* World Bank Income Group Source */}
+                              {/* World Bank Income Group Source */ }
                               {stats?.enhancedInfo?.incomeGroupData && (
                                 <div className="flex items-start space-x-3">
                                   <div 
                                     className="w-2 h-2 rounded-full mt-2 flex-shrink-0"
-                                    style={{ backgroundColor: getSourceColor(stats.enhancedInfo.incomeGroupData.source) }}
+                                    style={{ backgroundColor: getSourceColor(stats.enhancedInfo.incomeGroupData.source) } }
                                   ></div>
                                   <div>
                                     <p className="text-sm text-gray-700 dark:text-gray-300">
@@ -2621,20 +2681,20 @@ export default function HomePage() {
                                     </p>
                                   </div>
                                 </div>
-                              )}
+                              ) }
                             </div>
                           </div>
                         </CollapsibleInfoSection>
                       </div>
                     </div>
                   );
-                })()}
+                })() }
               </div>
-            )}
+            ) }
           </div>
-        )}
+        ) }
 
-        {/* Content */}
+        {/* Content */ }
         {selectedCountries.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-xl text-gray-500 dark:text-gray-400">
@@ -2643,63 +2703,63 @@ export default function HomePage() {
           </div>
         ) : (
           <div className="space-y-16">
-            {/* Overview Section */}
+            {/* Overview Section */ }
             <CompactSectionTable
               sectionId="overview"
               title="Overview"
-              metrics={sectionMetrics.overview}
-              countries={selectedCountries}
-              countryStats={countryStats}
-              loading={loading}
-              activeTooltip={activeTooltip}
-              toggleTooltip={toggleTooltip}
-              isExpanded={contentSectionsExpanded.overview}
-              onToggle={() => toggleContentSectionExpansion('overview')}
+              metrics={sectionMetrics.overview }
+              countries={selectedCountries }
+              countryStats={countryStats }
+              loading={loading }
+              activeTooltip={activeTooltip }
+              toggleTooltip={toggleTooltip }
+              isExpanded={contentSectionsExpanded.overview }
+              onToggle={() => toggleContentSectionExpansion('overview') }
             />
 
-            {/* Economy & Development Section */}
+            {/* Economy & Development Section */ }
             <CompactSectionTable
               sectionId="economy"
               title="Economy & Development"
-              metrics={sectionMetrics.economy}
-              countries={selectedCountries}
-              countryStats={countryStats}
-              loading={loading}
-              activeTooltip={activeTooltip}
-              toggleTooltip={toggleTooltip}
-              isExpanded={contentSectionsExpanded.economy}
-              onToggle={() => toggleContentSectionExpansion('economy')}
+              metrics={sectionMetrics.economy }
+              countries={selectedCountries }
+              countryStats={countryStats }
+              loading={loading }
+              activeTooltip={activeTooltip }
+              toggleTooltip={toggleTooltip }
+              isExpanded={contentSectionsExpanded.economy }
+              onToggle={() => toggleContentSectionExpansion('economy') }
             />
 
-            {/* Social & Environment Section */}
+            {/* Social & Environment Section */ }
             <CompactSectionTable
               sectionId="social"
               title="Social & Environment"
-              metrics={sectionMetrics.social}
-              countries={selectedCountries}
-              countryStats={countryStats}
-              loading={loading}
-              activeTooltip={activeTooltip}
-              toggleTooltip={toggleTooltip}
-              isExpanded={contentSectionsExpanded.social}
-              onToggle={() => toggleContentSectionExpansion('social')}
+              metrics={sectionMetrics.social }
+              countries={selectedCountries }
+              countryStats={countryStats }
+              loading={loading }
+              activeTooltip={activeTooltip }
+              toggleTooltip={toggleTooltip }
+              isExpanded={contentSectionsExpanded.social }
+              onToggle={() => toggleContentSectionExpansion('social') }
             />
 
-            {/* Trade Section */}
+            {/* Trade Section */ }
             <CompactSectionTable
               sectionId="trade"
               title="Trade"
-              metrics={sectionMetrics.trade}
-              countries={selectedCountries}
-              countryStats={countryStats}
-              loading={loading}
-              activeTooltip={activeTooltip}
-              toggleTooltip={toggleTooltip}
-              isExpanded={contentSectionsExpanded.trade}
-              onToggle={() => toggleContentSectionExpansion('trade')}
+              metrics={sectionMetrics.trade }
+              countries={selectedCountries }
+              countryStats={countryStats }
+              loading={loading }
+              activeTooltip={activeTooltip }
+              toggleTooltip={toggleTooltip }
+              isExpanded={contentSectionsExpanded.trade }
+              onToggle={() => toggleContentSectionExpansion('trade') }
             />
 
-            {/* Detailed Trade Dashboard */}
+            {/* Detailed Trade Dashboard */ }
             <section id="trade-details" className="scroll-mt-8">
               <div className="mb-12 relative">
                 <div className="flex items-center mb-3">
@@ -2714,7 +2774,7 @@ export default function HomePage() {
               </div>
               
               <div className="space-y-8">
-                {/* Country Selection for Trade Data */}
+                {/* Country Selection for Trade Data */ }
                 {selectedCountries.length > 0 && (
                   <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 p-6">
                     <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
@@ -2725,17 +2785,17 @@ export default function HomePage() {
                         const isSelected = selectedTradeCountry === country.code;
                         return (
                           <button
-                            key={country.code}
-                            onClick={() => setSelectedTradeCountry(country.code)}
+                            key={country.code }
+                            onClick={() => setSelectedTradeCountry(country.code) }
                             className={`
                               relative flex items-center space-x-3 p-4 rounded-xl border-2 transition-all duration-200 
                               ${isSelected 
                                 ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 shadow-lg transform scale-105' 
                                 : 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-500 hover:shadow-md'
                               }
-                            `}
+                            ` }
                           >
-                            {/* Selection Indicator */}
+                            {/* Selection Indicator */ }
                             <div className={`
                               flex-shrink-0 w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all duration-200
                               ${isSelected 
@@ -2745,16 +2805,16 @@ export default function HomePage() {
                             `}>
                               {isSelected && (
                                 <div className="w-2 h-2 rounded-full bg-white"></div>
-                              )}
+                              ) }
                             </div>
                             
-                            {/* Country Info */}
+                            {/* Country Info */ }
                             <div className="flex items-center space-x-3 flex-1 min-w-0">
                               <Image 
-                                src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
-                                alt={`${country.name} flag`}
-                                width={20}
-                                height={15}
+                                src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png` }
+                                alt={`${country.name} flag` }
+                                width={20 }
+                                height={15 }
                                 className="w-5 h-auto mr-3"
                               />
                               <span className={`
@@ -2764,26 +2824,26 @@ export default function HomePage() {
                                   : 'text-gray-900 dark:text-white'
                                 }
                               `}>
-                                {country.name}
+                                {country.name }
                               </span>
                             </div>
                             
-                            {/* Selected Badge */}
+                            {/* Selected Badge */ }
                             {isSelected && (
                               <div className="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
                                 <svg className="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
                                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                                 </svg>
                               </div>
-                            )}
+                            ) }
                           </button>
                         );
-                      })}
+                      }) }
                     </div>
                   </div>
-                )}
+                ) }
 
-                {/* Detailed Trade Data Display */}
+                {/* Detailed Trade Data Display */ }
                 {selectedTradeCountry && (() => {
                   const stats = countryStats[selectedTradeCountry];
                   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -2793,15 +2853,15 @@ export default function HomePage() {
                   
                   return (
                     <div key={selectedTradeCountry} className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden">
-                      {/* Country Header */}
+                      {/* Country Header */ }
                       <div className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 px-6 py-4 border-b border-gray-200 dark:border-gray-600">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center">
                             <Image 
-                              src={`https://flagcdn.com/w40/${selectedCountry?.code.toLowerCase()}.png`}
-                              alt={`${selectedCountry?.name} flag`}
-                              width={24}
-                              height={18}
+                              src={`https://flagcdn.com/w40/${selectedCountry?.code.toLowerCase()}.png` }
+                              alt={`${selectedCountry?.name} flag` }
+                              width={24 }
+                              height={18 }
                               className="w-6 h-auto mr-3"
                             />
                             <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{selectedCountry?.name}</h3>
@@ -2810,24 +2870,24 @@ export default function HomePage() {
                             <div className="text-sm text-gray-600 dark:text-gray-400">
                               Data from {comtrade.year} • UN Comtrade
                             </div>
-                          )}
+                          ) }
                         </div>
                       </div>
                       
                       <div className="p-6">
-                        {/* Trade Overview */}
+                        {/* Trade Overview */ }
                         {comtrade && (
                           <div className="mb-8 grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg border border-green-200 dark:border-green-800">
                               <h4 className="text-sm font-semibold text-green-800 dark:text-green-300 mb-2">Total Exports</h4>
                               <p className="text-2xl font-bold text-green-900 dark:text-green-100">
-                                {comtrade.totalExports?.formatted || 'N/A'}
+                                {comtrade.totalExports?.formatted || 'N/A' }
                               </p>
                             </div>
                             <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
                               <h4 className="text-sm font-semibold text-blue-800 dark:text-blue-300 mb-2">Total Imports</h4>
                               <p className="text-2xl font-bold text-blue-900 dark:text-blue-100">
-                                {comtrade.totalImports?.formatted || 'N/A'}
+                                {comtrade.totalImports?.formatted || 'N/A' }
                               </p>
                             </div>
                             <div className={`p-4 rounded-lg border ${
@@ -2847,14 +2907,14 @@ export default function HomePage() {
                                   ? 'text-emerald-900 dark:text-emerald-100'
                                   : 'text-red-900 dark:text-red-100'
                               }`}>
-                                {comtrade.tradeBalance?.status === 'surplus' ? '+' : '-'}
-                                {comtrade.tradeBalance?.formatted || 'N/A'}
+                                {comtrade.tradeBalance?.status === 'surplus' ? '+' : '-' }
+                                {comtrade.tradeBalance?.formatted || 'N/A' }
                               </p>
                             </div>
                           </div>
-                        )}
+                        ) }
 
-                        {/* Trade Commodities Section */}
+                        {/* Trade Commodities Section */ }
                         {((comtrade?.topExportCommodities && comtrade.topExportCommodities.length > 0) || (comtrade?.topImportCommodities && comtrade.topImportCommodities.length > 0)) && (
                           <div className="mb-8">
                             <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
@@ -2862,7 +2922,7 @@ export default function HomePage() {
                               Trade Commodities
                             </h4>
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                              {/* Export Commodities */}
+                              {/* Export Commodities */ }
                               {comtrade?.topExportCommodities && comtrade.topExportCommodities.length > 0 && (
                                 <div>
                                   <h5 className="text-md font-semibold text-gray-800 dark:text-gray-200 mb-3">
@@ -2873,19 +2933,19 @@ export default function HomePage() {
                                       <div key={index} className="p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
                                         <div className="flex items-center">
                                           <span className="w-5 h-5 bg-green-500 text-white text-xs font-bold rounded-full flex items-center justify-center mr-3">
-                                            {index + 1}
+                                            {index + 1 }
                                           </span>
                                           <span className="text-gray-900 dark:text-white font-medium">
-                                            {commodity.commodity}
+                                            {commodity.commodity }
                                           </span>
                                         </div>
                                       </div>
-                                    ))}
+                                    )) }
                                   </div>
                                 </div>
-                              )}
+                              ) }
                               
-                              {/* Import Commodities */}
+                              {/* Import Commodities */ }
                               {comtrade?.topImportCommodities && comtrade.topImportCommodities.length > 0 && (
                                 <div>
                                   <h5 className="text-md font-semibold text-gray-800 dark:text-gray-200 mb-3">
@@ -2896,24 +2956,24 @@ export default function HomePage() {
                                       <div key={index} className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
                                         <div className="flex items-center">
                                           <span className="w-5 h-5 bg-blue-500 text-white text-xs font-bold rounded-full flex items-center justify-center mr-3">
-                                            {index + 1}
+                                            {index + 1 }
                                           </span>
                                           <span className="text-gray-900 dark:text-white font-medium">
-                                            {commodity.commodity}
+                                            {commodity.commodity }
                                           </span>
                                         </div>
                                       </div>
-                                    ))}
+                                    )) }
                                   </div>
                                 </div>
-                              )}
+                              ) }
                             </div>
                           </div>
-                        )}
+                        ) }
 
-                        {/* Trade Partners and Traditional Commodities Grid */}
+                        {/* Trade Partners and Traditional Commodities Grid */ }
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                          {/* Top Export Partners */}
+                          {/* Top Export Partners */ }
                           {comtrade?.topExportPartners && comtrade.topExportPartners.length > 0 && (
                             <div>
                               <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
@@ -2925,22 +2985,22 @@ export default function HomePage() {
                                   <div key={index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                                     <div className="flex items-center">
                                       <span className="w-6 h-6 bg-blue-500 text-white text-xs font-bold rounded-full flex items-center justify-center mr-3">
-                                        {index + 1}
+                                        {index + 1 }
                                       </span>
                                       <span className="font-medium text-gray-900 dark:text-white">{partner.country}</span>
                                     </div>
                                     <div className="text-right">
                                       <div className="font-semibold text-gray-900 dark:text-white">
-                                        {partner.formatted || 'N/A'}
+                                        {partner.formatted || 'N/A' }
                                       </div>
                                     </div>
                                   </div>
-                                ))}
+                                )) }
                               </div>
                             </div>
-                          )}
+                          ) }
 
-                          {/* Top Import Partners */}
+                          {/* Top Import Partners */ }
                           {comtrade?.topImportPartners && comtrade.topImportPartners.length > 0 && (
                             <div>
                               <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
@@ -2952,23 +3012,23 @@ export default function HomePage() {
                                   <div key={index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                                     <div className="flex items-center">
                                       <span className="w-6 h-6 bg-green-500 text-white text-xs font-bold rounded-full flex items-center justify-center mr-3">
-                                        {index + 1}
+                                        {index + 1 }
                                       </span>
                                       <span className="font-medium text-gray-900 dark:text-white">{partner.country}</span>
                                     </div>
                                     <div className="text-right">
                                       <div className="font-semibold text-gray-900 dark:text-white">
-                                        {partner.formatted || 'N/A'}
+                                        {partner.formatted || 'N/A' }
                                       </div>
                                     </div>
                                   </div>
-                                ))}
+                                )) }
                               </div>
                             </div>
-                          )}
+                          ) }
                         </div>
 
-                        {/* Show message if no data */}
+                        {/* Show message if no data */ }
                         {!comtrade && (
                           <div className="text-center py-8 text-gray-500 dark:text-gray-400">
                             {loading ? (
@@ -2978,49 +3038,49 @@ export default function HomePage() {
                               </span>
                             ) : (
                               "Trade data not available"
-                            )}
+                            ) }
                           </div>
-                        )}
+                        ) }
                       </div>
                     </div>
                   );
-                })()}
+                })() }
               </div>
             </section>
 
-            {/* Safety & Crime Section */}
+            {/* Safety & Crime Section */ }
             <CompactSectionTable
               sectionId="safety"
               title="Safety & Crime"
-              metrics={sectionMetrics.safety}
-              countries={selectedCountries}
-              countryStats={countryStats}
-              loading={loading}
-              activeTooltip={activeTooltip}
-              toggleTooltip={toggleTooltip}
-              isExpanded={contentSectionsExpanded.safety}
-              onToggle={() => toggleContentSectionExpansion('safety')}
+              metrics={sectionMetrics.safety }
+              countries={selectedCountries }
+              countryStats={countryStats }
+              loading={loading }
+              activeTooltip={activeTooltip }
+              toggleTooltip={toggleTooltip }
+              isExpanded={contentSectionsExpanded.safety }
+              onToggle={() => toggleContentSectionExpansion('safety') }
             />
 
-            {/* Climate Section */}
+            {/* Climate Section */ }
             <CompactSectionTable
               sectionId="climate"
               title="Climate"
-              metrics={sectionMetrics.climate}
-              countries={selectedCountries}
-              countryStats={countryStats}
-              loading={loading}
-              activeTooltip={activeTooltip}
-              toggleTooltip={toggleTooltip}
-              isExpanded={contentSectionsExpanded.climate}
-              onToggle={() => toggleContentSectionExpansion('climate')}
+              metrics={sectionMetrics.climate }
+              countries={selectedCountries }
+              countryStats={countryStats }
+              loading={loading }
+              activeTooltip={activeTooltip }
+              toggleTooltip={toggleTooltip }
+              isExpanded={contentSectionsExpanded.climate }
+              onToggle={() => toggleContentSectionExpansion('climate') }
             />
 
-            {/* Sources Section */}
+            {/* Sources Section */ }
             <section id="sources" className="scroll-mt-8">
               <div className="mb-12">
                 <button
-                  onClick={() => toggleSectionExpansion('sources')}
+                  onClick={() => toggleSectionExpansion('sources') }
                   className="w-full text-left group"
                 >
                   <div className="flex items-center justify-between">
@@ -3124,13 +3184,13 @@ export default function HomePage() {
                     </div>
                   </div>
                 </div>
-              )}
+              ) }
             </section>
           </div>
-        )}
+        ) }
       </div>
 
-      {/* Floating Sticky Navigation */}
+      {/* Floating Sticky Navigation */ }
       {showStickyNav && (
         <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-40 transition-all duration-300">
           <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-full shadow-xl border border-gray-200/50 dark:border-gray-700/50 px-2 py-2">
@@ -3140,36 +3200,36 @@ export default function HomePage() {
                 const isActive = activeSection === section.id;
                 return (
                   <button
-                    key={section.id}
-                    onClick={() => scrollToSection(section.id)}
+                    key={section.id }
+                    onClick={() => scrollToSection(section.id) }
                     className={`
                       group relative flex items-center justify-center p-3 rounded-full transition-all duration-200
                       ${isActive 
                         ? 'bg-blue-500 text-white shadow-lg scale-110' 
                         : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 hover:scale-105'
                       }
-                    `}
-                    title={section.label}
+                    ` }
+                    title={section.label }
                   >
                     <Icon size={18} />
                     
-                    {/* Tooltip */}
+                    {/* Tooltip */ }
                     <div className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
                       <div className="bg-gray-900 dark:bg-gray-700 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
-                        {section.label}
+                        {section.label }
                         <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-gray-900 dark:border-b-gray-700"></div>
                       </div>
                     </div>
                   </button>
                 );
-              })}
+              }) }
             </div>
           </div>
         </div>
-      )}
+      ) }
 
-      {/* Scroll to Top Button */}
-      {/* Footer */}
+      {/* Scroll to Top Button */ }
+      {/* Footer */ }
       <footer className="py-6 px-4 bg-gray-900 border-t border-gray-700 mt-12">
         <div className="max-w-7xl mx-auto text-center">
           <div className="flex items-center justify-center space-x-1 text-gray-400 text-sm mb-2">
@@ -3178,7 +3238,7 @@ export default function HomePage() {
             <span>by Marco Quantrill</span>
           </div>
           
-          <div className="flex items-center justify-center space-x-4 text-xs text-gray-500">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-gray-500">
             <a 
               href="https://mquantrillc.github.io/" 
               target="_blank" 
@@ -3215,13 +3275,13 @@ export default function HomePage() {
 
       {showScrollTop && (
         <button
-          onClick={scrollToTop}
+          onClick={scrollToTop }
           className="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 z-50"
           aria-label="Scroll to top"
         >
           <ArrowUp className="w-6 h-6" />
         </button>
-      )}
+      ) }
     </div>
   );
 } 

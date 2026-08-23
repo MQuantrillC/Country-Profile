@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local editor/agent config
+/.claude/
+
+# generated crime data - rebuild with: npm run convert-crime-data
+/src/data/crime/

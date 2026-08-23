@@ -1,7 +1,16 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import type { NextConfig } from 'next';
+
+const nextConfig: NextConfig = {
   images: {
-    domains: ['flagcdn.com'],
+    // `images.domains` is deprecated; remotePatterns is the supported form and is
+    // narrower - it pins the protocol and path rather than trusting a whole host.
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'flagcdn.com',
+        pathname: '/**',
+      },
+    ],
   },
 };
 

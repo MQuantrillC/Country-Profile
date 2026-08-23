@@ -4,7 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BarChart3, TrendingUp, Globe, Trophy, Medal, Award, TrendingDown, ArrowLeft, RefreshCw, Zap, Database, Filter, Search, Heart, ExternalLink } from 'lucide-react';
-import { countries, fromIso3 } from '@/utils/countries';
+import { getCountry } from '@/utils/countries';
+import { rankingMetrics, type RankingMetric, type RankingsPayload } from '@/lib/rankingMetrics';
 
 interface CountryRanking {
   name: string;
@@ -15,44 +16,6 @@ interface CountryRanking {
   source: string;
 }
 
-interface MetricDefinition {
-  id: string;
-  title: string;
-  category: string;
-  unit: string;
-  description: string;
-  higherIsBetter: boolean;
-}
-
-// ONLY working World Bank metrics - optimized for ultra-fast bulk loading
-const worldBankMetrics: MetricDefinition[] = [
-  // Economy
-  { id: 'gdp', title: 'GDP', category: 'Economy', unit: 'USD', description: 'Gross Domestic Product', higherIsBetter: true },
-  { id: 'gdpPerCapita', title: 'GDP Per Capita', category: 'Economy', unit: 'USD', description: 'GDP per person', higherIsBetter: true },
-  { id: 'gniPerCapita', title: 'GNI Per Capita', category: 'Economy', unit: 'USD', description: 'Gross National Income per person', higherIsBetter: true },
-  { id: 'tradeGDP', title: 'Trade as % of GDP', category: 'Economy', unit: '%', description: 'Trade as percentage of GDP', higherIsBetter: true },
-  { id: 'unemploymentRate', title: 'Unemployment Rate', category: 'Economy', unit: '%', description: 'Unemployment as % of labor force', higherIsBetter: false },
-  
-  // Demographics
-  { id: 'population', title: 'Population', category: 'Demographics', unit: 'people', description: 'Total population', higherIsBetter: true },
-  { id: 'lifeExpectancy', title: 'Life Expectancy', category: 'Demographics', unit: 'years', description: 'Life expectancy at birth', higherIsBetter: true },
-  { id: 'fertilityRate', title: 'Fertility Rate', category: 'Demographics', unit: 'births/woman', description: 'Births per woman', higherIsBetter: true },
-  { id: 'urbanPopPct', title: 'Urban Population %', category: 'Demographics', unit: '%', description: 'Urban population percentage', higherIsBetter: true },
-  
-  // Education & Social
-  { id: 'educationSpendPctGDP', title: 'Education Spending % of GDP', category: 'Education', unit: '%', description: 'Education expenditure as % of GDP', higherIsBetter: true },
-  { id: 'internetUsers', title: 'Internet Users %', category: 'Technology', unit: '%', description: 'Internet users as % of population', higherIsBetter: true },
-  
-  // Environment
-  { id: 'forestPct', title: 'Forest Coverage %', category: 'Environment', unit: '%', description: 'Forest area as % of land', higherIsBetter: true },
-  { id: 'agriculturalLandPct', title: 'Agricultural Land %', category: 'Environment', unit: '%', description: 'Agricultural land as % of total', higherIsBetter: true },
-  
-  // Safety
-  { id: 'homicideRate', title: 'Homicide Rate', category: 'Safety', unit: 'per 100k', description: 'Intentional homicides per 100,000', higherIsBetter: true },
-  
-  // Calculated metrics (derived from other World Bank data)
-  { id: 'ruralPopPct', title: 'Rural Population %', category: 'Demographics', unit: '%', description: 'Rural population percentage (100 - Urban %)', higherIsBetter: true }
-];
 
 interface BulkDataCache {
   [metricId: string]: CountryRanking[];
@@ -60,331 +23,80 @@ interface BulkDataCache {
 
 interface LoadingState {
   isLoading: boolean;
-  loadedMetrics: number;
-  totalMetrics: number;
-  currentMetric: string;
+  /** Metric ids the World Bank returned nothing for. */
   failed: string[];
-}
-
-interface WorldBankEntry {
-  countryId: string;
-  countryName?: string;
-  value?: number;
-  year?: string;
+  /** Set when the whole request failed, as opposed to individual metrics. */
+  error: string | null;
 }
 
 export default function Top10Page() {
-  const [selectedMetric, setSelectedMetric] = useState<MetricDefinition>(worldBankMetrics[0]);
+  const [selectedMetric, setSelectedMetric] = useState<RankingMetric>(rankingMetrics[0]);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchTerm, setSearchTerm] = useState('');
   const [bulkCache, setBulkCache] = useState<BulkDataCache>({});
   const [loadingState, setLoadingState] = useState<LoadingState>({
     isLoading: true,
-    loadedMetrics: 0,
-    totalMetrics: worldBankMetrics.length,
-    currentMetric: '',
-    failed: []
+    failed: [],
+    error: null,
   });
   const [showHighest, setShowHighest] = useState(true);
   const [showMetricDropdown, setShowMetricDropdown] = useState(true);
 
-  const categories = ['All', ...Array.from(new Set(worldBankMetrics.map(m => m.category)))];
+  const categories = ['All', ...Array.from(new Set(rankingMetrics.map(m => m.category)))];
 
-  const filteredMetrics = worldBankMetrics.filter(metric => {
+  const filteredMetrics = rankingMetrics.filter(metric => {
     const matchesCategory = selectedCategory === 'All' || metric.category === selectedCategory;
     const matchesSearch = metric.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          metric.description.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
-  // Ultra-fast bulk data loader
-  const loadAllWorldBankData = async () => {
-    
-    const newCache: BulkDataCache = {};
-    const failedMetrics: string[] = [];
-    
-    setLoadingState(prev => ({ ...prev, isLoading: true, loadedMetrics: 0, failed: [] }));
+  // One request for every metric. The route batches the World Bank calls, strips
+  // aggregates and sorts, so there is nothing left to sift through here.
+  const loadRankings = async () => {
+    setLoadingState({ isLoading: true, failed: [], error: null });
 
-    // Skip metrics we derive from others rather than fetch.
-    const apiMetrics = worldBankMetrics.filter(metric => metric.id !== 'ruralPopPct');
+    try {
+      const response = await fetch('/api/rankings');
+      if (!response.ok) throw new Error(`Rankings request failed: ${response.status}`);
 
-    const loadMetric = async (metric: MetricDefinition) => {
-      try {
-        setLoadingState(prev => ({ ...prev, currentMetric: metric.title }));
-        
-        const response = await fetch(`/api/worldbank-single?metric=${metric.id}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
+      const payload: RankingsPayload = await response.json();
 
-        if (!response.ok) {
-          throw new Error(`API error: ${response.status}`);
-        }
-
-        const data = await response.json();
-        
-        if (data.error || !data.data || !Array.isArray(data.data)) {
-          console.warn(`⚠️ No data for ${metric.title}:`, data.error || 'No data array');
-          failedMetrics.push(metric.id);
-          return { metricId: metric.id, rankings: [] };
-        }
-
-        // Map countries to our format with improved mapping
-
-        // Additional mappings for common name variations
-        const nameMapping: Record<string, string> = {
-          'Korea, Rep.': 'KR',
-          'Korea, Republic of': 'KR',
-          'South Korea': 'KR',
-          'Russian Federation': 'RU',
-          'United Kingdom': 'GB',
-          'United States': 'US',
-          'North Macedonia': 'MK',
-          'Macedonia, FYR': 'MK',
-          'Iran, Islamic Rep.': 'IR',
-          'Egypt, Arab Rep.': 'EG',
-          'Venezuela, RB': 'VE',
-          'Yemen, Rep.': 'YE',
-          'Congo, Dem. Rep.': 'CD',
-          'Congo, Rep.': 'CG',
-          'Slovak Republic': 'SK',
-          'Czech Republic': 'CZ',
-          'Kyrgyz Republic': 'KG',
-          'Lao PDR': 'LA',
-          'Brunei Darussalam': 'BN',
-          'Cabo Verde': 'CV',
-          'Gambia, The': 'GM',
-          'Bahamas, The': 'BS',
-          'Micronesia, Fed. Sts.': 'FM',
-          'St. Lucia': 'LC',
-          'St. Vincent and the Grenadines': 'VC',
-          'St. Kitts and Nevis': 'KN'
-        };
-
-        const rankings: CountryRanking[] = [];
-        
-        
-        data.data.forEach((entry: WorldBankEntry) => {
-          let matchingCountry = null;
-          
-          // Skip World Bank regional aggregates and groups - these contain country names but aren't actual countries
-          const isRegionalAggregate = entry.countryName && (
-            // World Bank regional/income groups
-            entry.countryName.includes('income') ||
-            entry.countryName.includes('IDA & IBRD') ||
-            entry.countryName.includes('OECD') ||
-            entry.countryName.includes('World') ||
-            entry.countryName.includes('demographic dividend') ||
-            entry.countryName.includes('Arab World') ||
-            entry.countryName.includes('Sub-Saharan Africa') ||
-            entry.countryName.includes('Latin America') ||
-            entry.countryName.includes('South Asia') ||
-            entry.countryName.includes('East Asia') ||
-            entry.countryName.includes('Europe & Central Asia') ||
-            entry.countryName.includes('Middle East, North Africa') ||
-            entry.countryName.includes('Caribbean') ||
-            entry.countryName.includes('Pacific') ||
-            entry.countryName.includes('excluding') ||
-            entry.countryName.includes('total') ||
-            // Specific aggregates that contain country names
-            entry.countryName.includes(', ') && entry.countryName.includes(' & ') ||
-            // Multi-character country IDs indicate aggregates
-            entry.countryId && entry.countryId.length > 3
-          );
-          
-          if (isRegionalAggregate) {
-            // Log regional aggregates that might be confusing
-            if (metric.id === 'gdp' || metric.id === 'population') {
-            }
-            return; // Skip this entry entirely
-          }
-          
-          // Method 1: resolve the World Bank's ISO3 id via the shared country
-          // table. This replaces a hand-written reverse map that only listed a
-          // subset of countries.
-          matchingCountry = fromIso3(entry.countryId) ?? null;
-          
-          // Method 2: Try name-based mapping
-          if (!matchingCountry && entry.countryName) {
-            const mappedCode = nameMapping[entry.countryName];
-            if (mappedCode) {
-              matchingCountry = countries.find(c => c.code === mappedCode);
-            }
-          }
-          
-          // Method 3: Try exact name match
-          if (!matchingCountry && entry.countryName) {
-            matchingCountry = countries.find(c => 
-              c.name.toLowerCase() === entry.countryName!.toLowerCase()
-            );
-          }
-          
-          // Method 4: Handle China specifically to avoid SAR confusion
-          if (!matchingCountry && entry.countryName) {
-            // For China, prioritize exact "China" match over SAR regions
-            if (entry.countryName === 'China' || entry.countryId === 'CHN') {
-              matchingCountry = countries.find(c => c.code === 'CN');
-            }
-            // For Hong Kong SAR, map to HK
-            else if (entry.countryName === 'Hong Kong SAR, China' || entry.countryId === 'HKG') {
-              matchingCountry = countries.find(c => c.code === 'HK');
-            }
-            // For Macao SAR, map to MO
-            else if (entry.countryName === 'Macao SAR, China' || entry.countryId === 'MAC') {
-              matchingCountry = countries.find(c => c.code === 'MO');
-            }
-          }
-          
-          // Method 5: Try partial name match (very restrictive to avoid false positives)
-          if (!matchingCountry && entry.countryName && entry.countryName.length > 5) {
-            // Skip partial matching for entries that might be aggregates or contain multiple country names
-            if (!entry.countryName.includes('China') && 
-                !entry.countryName.includes(',') && 
-                !entry.countryName.includes('&') &&
-                !entry.countryName.includes(' and ')) {
-              matchingCountry = countries.find(c => {
-                const countryLower = c.name.toLowerCase();
-                const entryLower = entry.countryName!.toLowerCase();
-                
-                // Must be substantial match to avoid false positives
-                return countryLower.includes(entryLower) || entryLower.includes(countryLower);
-              });
-            }
-          }
-
-          if (matchingCountry && typeof entry.value === 'number' && entry.value > 0) {
-            
-            rankings.push({
-              name: matchingCountry.name,
-              code: matchingCountry.code,
-              flag: matchingCountry.flag,
+      const cache: BulkDataCache = {};
+      for (const [metricId, entries] of Object.entries(payload.metrics)) {
+        cache[metricId] = entries
+          .map((entry) => {
+            const country = getCountry(entry.code);
+            if (!country) return null;
+            return {
+              name: country.name,
+              code: country.code,
+              flag: country.flag,
               value: entry.value,
-              year: entry.year || 'N/A',
-              source: 'World Bank'
-            });
-          } else if (!matchingCountry && entry.countryName) {
-            // Only log if it's a significant economy we might care about
-            if (entry.value && entry.value > 10000000000) { // > $10B GDP
-              console.warn(`⚠️ No match for significant country: ${entry.countryName} (ID: ${entry.countryId}) - Value: ${entry.value}`);
-            }
-          }
-        });
-
-        // Ensure we have valid data and sort properly
-        const validRankings = rankings.filter(r => r.value && r.value > 0);
-        
-        // Deduplicate by country code - keep the entry with the highest value for each country
-        const deduplicatedRankings = validRankings.reduce((acc: CountryRanking[], current) => {
-          const existingIndex = acc.findIndex(r => r.code === current.code);
-          
-          if (existingIndex === -1) {
-            // New country, add it
-            acc.push(current);
-          } else {
-            // Country exists, keep the one with higher value (or more recent year if values are equal)
-            const existing = acc[existingIndex];
-            const shouldReplace = current.value > existing.value || 
-              (current.value === existing.value && parseInt(current.year) > parseInt(existing.year));
-            
-            if (shouldReplace) {
-              // Debug duplicate detection
-              if (metric.id === 'gdp' || metric.id === 'population') {
-              }
-              acc[existingIndex] = current;
-            }
-          }
-          
-          return acc;
-        }, []);
-        
-        // Store the full, deduplicated list in the cache, NOT just the top 10
-        const sortedRankings = deduplicatedRankings.sort((a, b) => b.value - a.value); // Default sort for consistency
-        
-
-        
-        setLoadingState(prev => ({ 
-          ...prev, 
-          loadedMetrics: prev.loadedMetrics + 1
-        }));
-
-        return { metricId: metric.id, rankings: sortedRankings };
-
-      } catch (error) {
-        console.error(`❌ Failed to load ${metric.title}:`, error);
-        failedMetrics.push(metric.id);
-        setLoadingState(prev => ({ 
-          ...prev, 
-          loadedMetrics: prev.loadedMetrics + 1
-        }));
-        return { metricId: metric.id, rankings: [] };
+              year: entry.year,
+              source: payload.source,
+            };
+          })
+          .filter((r): r is CountryRanking => r !== null);
       }
-    };
 
-    // Each of these is a whole-world query covering every country and a decade of
-    // observations. Firing all fourteen at once made the World Bank rate-limit us,
-    // and it signals that with HTTP 200 and an error body - so several metrics came
-    // back empty. A small concurrency window keeps the page fast without tripping it.
-    const CONCURRENCY = 4;
-    const results: { metricId: string; rankings: CountryRanking[] }[] = [];
-
-    for (let i = 0; i < apiMetrics.length; i += CONCURRENCY) {
-      const window = apiMetrics.slice(i, i + CONCURRENCY);
-      results.push(...(await Promise.all(window.map(loadMetric))));
-    }
-    
-    // Build cache
-    results.forEach(({ metricId, rankings }) => {
-      newCache[metricId] = rankings;
-    });
-
-    // Calculate derived metrics (Rural Population %)
-    if (newCache['urbanPopPct']) {
-      const ruralRankings: CountryRanking[] = newCache['urbanPopPct'].map(urbanEntry => {
-        const ruralPercent = Math.max(0, 100 - urbanEntry.value);
-        
-        // Debug for specific problematic countries
-        if (urbanEntry.name === 'Iceland' || urbanEntry.name === 'Belgium') {
-        }
-        
-        return {
-          ...urbanEntry,
-          value: ruralPercent, // Rural % = 100 - Urban %
-          source: 'World Bank (Calculated)'
-        };
+      setBulkCache(cache);
+      setLoadingState({ isLoading: false, failed: payload.unavailable, error: null });
+    } catch (error) {
+      console.error('Could not load rankings:', error);
+      setLoadingState({
+        isLoading: false,
+        failed: [],
+        error: 'Rankings could not be loaded. Check your connection and try again.',
       });
-      
-      // Sort rural population rankings (higher rural % first)
-      const sortedRuralRankings = ruralRankings
-        .sort((a, b) => b.value - a.value) // Highest rural % first
-        .slice(0, 10);
-      
-      newCache['ruralPopPct'] = sortedRuralRankings;
-    }
-
-    // Use functional update to prevent race conditions
-    setBulkCache(prevCache => {
-      // Merge with existing cache to preserve any previous data
-      return { ...prevCache, ...newCache };
-    });
-    
-    setLoadingState(prev => ({ 
-      ...prev, 
-      isLoading: false, 
-      failed: failedMetrics,
-      currentMetric: ''
-    }));
-
-    if (failedMetrics.length > 0) {
-      console.warn('⚠️ Failed metrics:', failedMetrics);
     }
   };
 
   // Load all data on component mount
   useEffect(() => {
-    loadAllWorldBankData();
+    loadRankings();
   }, []);
+
 
   // Get current rankings (instant after initial load)
   const getCurrentRankings = (): CountryRanking[] => {
@@ -481,7 +193,7 @@ export default function Top10Page() {
   };
 
   const currentRankings = getCurrentRankings();
-  const loadingProgress = loadingState.totalMetrics > 0 ? (loadingState.loadedMetrics / loadingState.totalMetrics) * 100 : 0;
+  const rankedCount = selectedMetric ? (bulkCache[selectedMetric.id]?.length ?? 0) : 0;
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-900 text-white font-sans">
@@ -507,7 +219,7 @@ export default function Top10Page() {
             </div>
             <div className="flex items-center space-x-2 w-full sm:w-auto">
               <button
-                onClick={loadAllWorldBankData}
+                onClick={loadRankings}
                 disabled={loadingState.isLoading}
                 className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-3 sm:px-4 py-2 rounded-lg transition-colors duration-200"
               >
@@ -517,31 +229,24 @@ export default function Top10Page() {
             </div>
           </div>
 
-          {/* Ultra-fast loading indicator */}
           {loadingState.isLoading && (
-            <div className="mt-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center space-x-3">
-                  <Zap className="text-blue-500 animate-pulse" size={20} />
-                  <span className="font-semibold text-blue-700 dark:text-blue-300">
-                    Loading data: {loadingState.loadedMetrics}/{loadingState.totalMetrics} metrics
-                  </span>
-                </div>
-                <span className="text-sm text-blue-600 dark:text-blue-400">
-                  {loadingProgress.toFixed(0)}%
-                </span>
-              </div>
-              <div className="w-full bg-blue-200 dark:bg-blue-800 rounded-full h-2 mb-2">
-                <div 
-                  className="bg-blue-500 h-2 rounded-full transition-all duration-300 ease-out"
-                  style={{ width: `${loadingProgress}%` }}
-                ></div>
-              </div>
-              {loadingState.currentMetric && (
-                <div className="text-sm text-blue-600 dark:text-blue-400">
-                  Currently loading: {loadingState.currentMetric}
-                </div>
-              )}
+            <div className="mt-4 flex items-center space-x-3 rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-800 dark:bg-blue-900/20">
+              <Zap className="animate-pulse text-blue-500" size={20} />
+              <span className="font-semibold text-blue-700 dark:text-blue-300">
+                Loading rankings for {rankingMetrics.length} metrics...
+              </span>
+            </div>
+          )}
+
+          {loadingState.error && (
+            <div className="mt-4 flex items-center justify-between rounded-lg border border-amber-300 bg-amber-50 p-4 dark:border-amber-700 dark:bg-amber-900/20">
+              <span className="text-amber-800 dark:text-amber-200">{loadingState.error}</span>
+              <button
+                onClick={loadRankings}
+                className="ml-4 rounded-lg bg-amber-600 px-3 py-1.5 text-sm text-white hover:bg-amber-700"
+              >
+                Try again
+              </button>
             </div>
           )}
 
@@ -551,7 +256,7 @@ export default function Top10Page() {
               <div className="flex items-center space-x-3">
                 <Database className="text-green-500" size={20} />
                 <span className="font-semibold text-green-700 dark:text-green-300">
-                  ✅ All data loaded! {worldBankMetrics.length - loadingState.failed.length}/{worldBankMetrics.length} metrics available
+                  ✅ All data loaded! {rankingMetrics.length - loadingState.failed.length}/{rankingMetrics.length} metrics available
                 </span>
 
               </div>
@@ -568,8 +273,8 @@ export default function Top10Page() {
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white flex items-center">
                   <Filter className="mr-2" size={20} />
-                  <span className="hidden sm:inline">Select Metric ({worldBankMetrics.length} available)</span>
-                  <span className="sm:hidden">Metrics ({worldBankMetrics.length})</span>
+                  <span className="hidden sm:inline">Select Metric ({rankingMetrics.length} available)</span>
+                  <span className="sm:hidden">Metrics ({rankingMetrics.length})</span>
                 </h2>
                 <button
                   onClick={() => setShowMetricDropdown(!showMetricDropdown)}
@@ -706,7 +411,7 @@ export default function Top10Page() {
                         <span className="text-sm">🏦 World Bank</span>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <span className="text-sm">{countries.length} countries analyzed</span>
+                        <span className="text-sm">{currentRankings.length > 0 ? rankedCount : 0} countries ranked</span>
                       </div>
                     </div>
                   </div>
@@ -731,10 +436,7 @@ export default function Top10Page() {
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
                     <div className="text-center">
                       <div className="text-gray-600 dark:text-gray-400 mb-2 text-sm sm:text-base">
-                        Loading all World Bank metrics in parallel...
-                      </div>
-                      <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                        Bulk loading: {loadingState.loadedMetrics}/{loadingState.totalMetrics} complete
+                        Loading rankings...
                       </div>
                     </div>
                   </div>

@@ -12,6 +12,7 @@ import {
   chunk,
   fetchWorldBank,
   indicatorUrl,
+  isErrorEnvelope,
   latestByIndicator,
   observationsFrom,
   MAX_INDICATORS_PER_REQUEST,
@@ -113,15 +114,16 @@ async function fetchBatch(
 
   if (!payload) return null;
 
-  const rows = observationsFrom(payload);
-
   // The API answers an unrecognised indicator code by rejecting the whole query
-  // with `{message: [...]}` rather than omitting that series. A single retired
-  // code would therefore blank out every indicator batched alongside it, so an
-  // empty result from a multi-indicator batch is treated as suspect.
-  if (rows.length === 0 && batch.length > 1) return null;
+  // with `{message: [...]}` rather than omitting that series, so a single retired
+  // code would otherwise blank out every indicator batched alongside it.
+  //
+  // Detecting that envelope specifically - rather than treating any empty result
+  // as suspect - matters: a country that genuinely has no data for a batch would
+  // otherwise trigger a pointless retry of every indicator on its own.
+  if (isErrorEnvelope(payload)) return null;
 
-  return rows;
+  return observationsFrom(payload);
 }
 
 /**

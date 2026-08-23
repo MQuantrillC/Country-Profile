@@ -39,6 +39,8 @@ The app runs at http://localhost:3000.
 | `npm start` | Serve a production build |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | TypeScript, no emit |
+| `npm test` | Run the test suite (vitest) |
+| `npm run test:watch` | Tests in watch mode |
 | `npm run convert-crime-data` | Rebuild `src/data/crime/` from the UNODC spreadsheet |
 | `npm run generate-countries` | Rebuild the country table from upstream reference data |
 
@@ -46,7 +48,7 @@ The app runs at http://localhost:3000.
 
 | Source | Provides | How it is reached |
 | --- | --- | --- |
-| World Bank Open Data | 31 development indicators | Live API, batched, cached 24h |
+| World Bank Open Data | 31 development indicators (profile), 15 (rankings) | Live API, batched, cached 24h |
 | World Bank Climate Knowledge Portal | Temperature and hot/cold day counts | Live API, cached 24h |
 | CIA World Factbook | Demographics, trade, infrastructure, military | Live JSON mirror, cached 24h |
 | Our World in Data | Poverty, schooling, tourism, migration, regime type | Live API, cached 24h |
@@ -68,18 +70,32 @@ dependency, no outage.
 ```
 src/
   app/
-    page.tsx            Comparison view
-    top10/page.tsx      Global rankings
-    api/                Route handlers, one per upstream source
+    page.tsx              Comparison view (composition + country info panel)
+    top10/page.tsx        Global rankings
+    api/                  Route handlers, one per upstream source
+  components/
+    CountryPicker         Search and multi-select, with coverage notes
+    MetricSection         One collapsible table of metrics by country
+    CollapsibleInfoSection
+  hooks/
+    useCountryData.ts     Fetches and caches per country
   lib/
-    countries.ts        Full country table (server)
-    countryList.ts      Slim country list (client bundle)
-    factbook.js         Factbook parsing, callable without HTTP
-    worldBankQuery.ts   URL building and response narrowing
-  data/                 countries.json committed; crime/ generated
-scripts/                Data generation
-data-sources/           Raw inputs for the generators
+    countries.ts          Full country table (server)
+    countryList.ts        Slim country list (client bundle)
+    metricCatalog.tsx     Sections, icons, tooltips, value formatting
+    rankingMetrics.ts     Metric definitions shared by page and route
+    factbook.js           Factbook parsing, callable without HTTP
+    factbookParsers.ts    Pulls numbers out of Factbook prose
+    worldBankQuery.ts     URL building, batching, response narrowing
+  types/country.ts        Shapes returned by the API routes
+  data/                   countries.json committed; crime/ generated
+scripts/                  Data generation
+data-sources/             Raw inputs for the generators
 ```
+
+Tests live next to what they cover (`*.test.ts`) and run in Node — they cover the
+query building, the country table, value formatting, the Factbook parsers, and the
+World Bank batching and rankings routes against mocked upstream responses.
 
 ## Sharing a comparison
 
@@ -94,5 +110,8 @@ The selection lives in the query string, so any comparison can be linked:
 1. Add the indicator code to `indicators` in `src/utils/worldBank.ts` (World Bank
    metrics) or extend the relevant route.
 2. Add the metric title to `sectionMetrics` in `src/app/page.tsx`.
-3. Add a case to `resolveMetric` and to `formatMetricValue`.
-4. Add an icon in `getMetricIcon` and a description in `getMetricTooltip`.
+3. Add a case to `resolveMetric` in `src/components/MetricSection.tsx`.
+4. Add the icon, tooltip and value formatting in `src/lib/metricCatalog.tsx`.
+
+For a metric on the rankings page, add one entry to `src/lib/rankingMetrics.ts` —
+the route and the page both read from it.

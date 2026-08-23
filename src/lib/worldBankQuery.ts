@@ -140,6 +140,23 @@ export function observationsFrom(payload: unknown): WorldBankObservation[] {
 }
 
 /**
+ * Whether a response is the API's error envelope.
+ *
+ * An unrecognised indicator code is not reported as an HTTP error: the API returns
+ * 200 with `[{message: [...]}]` and no row array, which means one retired code
+ * blanks out every indicator batched alongside it. This has to be told apart from a
+ * legitimately empty result, or a country with no data would trigger a pointless
+ * retry of every indicator individually.
+ */
+export function isErrorEnvelope(payload: unknown): boolean {
+  if (!Array.isArray(payload) || payload.length === 0) return true;
+  const head = payload[0] as { message?: unknown } | null;
+  if (head && typeof head === 'object' && 'message' in head) return true;
+  // A well-formed response always carries a row array in second position.
+  return payload.length < 2 || !Array.isArray(payload[1]);
+}
+
+/**
  * Pick the most recent non-null observation per indicator.
  *
  * Rows come back newest-first per indicator, but that is not guaranteed when several

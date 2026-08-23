@@ -362,7 +362,7 @@ export default function HomePage() {
             <div className="absolute top-0 right-0 flex items-center space-x-1 sm:space-x-2">
               <Link
                 href="/top10"
-                className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200 text-xs sm:text-sm font-medium"
+                className="flex min-h-11 items-center space-x-1 rounded-lg bg-blue-600 px-3 py-2 text-xs font-medium text-white transition-colors duration-200 hover:bg-blue-700 sm:space-x-2 sm:px-4 sm:text-sm touch-manipulation"
               >
                 <BarChart3 className="w-3 h-3 sm:w-4 sm:h-4" />
                 <span className="hidden sm:inline">Top 10 Rankings</span>
@@ -1618,7 +1618,7 @@ export default function HomePage() {
             <span>by Marco Quantrill</span>
           </div>
           
-          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-gray-500">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-gray-500 [&_a]:inline-flex [&_a]:min-h-11 [&_a]:items-center">
             <a 
               href="https://mquantrillc.github.io/" 
               target="_blank" 

@@ -204,7 +204,7 @@ export default function Top10Page() {
             <div className="flex items-center space-x-2 sm:space-x-4">
               <Link 
                 href="/"
-                className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 transition-colors duration-200"
+                className="flex min-h-11 items-center space-x-2 text-blue-600 transition-colors duration-200 hover:text-blue-800 touch-manipulation"
               >
                 <ArrowLeft size={20} />
                 <span className="hidden sm:inline">Back to Comparison</span>
@@ -221,7 +221,7 @@ export default function Top10Page() {
               <button
                 onClick={loadRankings}
                 disabled={loadingState.isLoading}
-                className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-3 sm:px-4 py-2 rounded-lg transition-colors duration-200"
+                className="flex min-h-11 items-center space-x-2 rounded-lg bg-blue-600 px-3 py-2 text-white transition-colors duration-200 hover:bg-blue-700 disabled:bg-gray-400 sm:px-4 touch-manipulation"
               >
                 <RefreshCw size={16} className={loadingState.isLoading ? 'animate-spin' : ''} />
                 <span className="text-sm">Refresh</span>
@@ -278,7 +278,7 @@ export default function Top10Page() {
                 </h2>
                 <button
                   onClick={() => setShowMetricDropdown(!showMetricDropdown)}
-                  className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-transform duration-200"
+                  className="flex items-center justify-center min-w-11 min-h-11 -mr-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-transform duration-200 touch-manipulation"
                   style={{ transform: showMetricDropdown ? 'rotate(180deg)' : 'rotate(0deg)' }}
                 >
                   ▼
@@ -418,7 +418,7 @@ export default function Top10Page() {
                   <div className="flex flex-col space-y-2 w-full sm:w-auto">
                     <button
                       onClick={() => setShowHighest(!showHighest)}
-                      className="flex items-center justify-center space-x-2 bg-white/20 hover:bg-white/30 px-3 sm:px-4 py-2 rounded-lg transition-colors duration-200"
+                      className="flex min-h-11 items-center justify-center space-x-2 rounded-lg bg-white/20 px-3 py-2 transition-colors duration-200 hover:bg-white/30 sm:px-4 touch-manipulation"
                     >
                       {showHighest ? <TrendingDown size={16} /> : <TrendingUp size={16} />}
                       <span className="text-sm">
@@ -512,7 +512,7 @@ export default function Top10Page() {
             <span>by Marco Quantrill</span>
           </div>
           
-          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-gray-500">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-gray-500 [&_a]:inline-flex [&_a]:min-h-11 [&_a]:items-center">
             <a 
               href="https://mquantrillc.github.io/" 
               target="_blank" 

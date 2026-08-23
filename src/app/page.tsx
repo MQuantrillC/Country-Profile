@@ -1620,7 +1620,7 @@ export default function HomePage() {
           
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-gray-500 [&_a]:inline-flex [&_a]:min-h-11 [&_a]:items-center">
             <a 
-              href="https://mquantrillc.github.io/" 
+              href="https://marco-portfolio-azure.vercel.app/" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center space-x-1 hover:text-gray-300 transition-colors"

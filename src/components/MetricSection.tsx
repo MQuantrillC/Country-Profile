@@ -5,7 +5,8 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { HelpCircle, ChevronDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
+import { MetricTooltip } from './MetricTooltip';
 import type { Country } from '../utils/countries';
 import type { CountryStats, DataWithSource, MetricReading, PartialReading } from '../types/country';
 import { getMetricIcon, getMetricTooltip, getSourceColor, formatMetricValue } from '../lib/metricCatalog';
@@ -340,24 +341,13 @@ export const MetricSection = ({
                             <div className="flex items-center space-x-2">
                               <span className="text-sm sm:text-base mr-2 opacity-70">{getMetricIcon(metric)}</span>
                               <span className="text-sm sm:text-base font-medium text-gray-900 dark:text-white">{metric}</span>
-                              <div className="group relative tooltip-container">
-                                <HelpCircle 
-                                  size={14} 
-                                  className="text-gray-400 dark:text-gray-500 hover:text-blue-500 dark:hover:text-blue-400 cursor-pointer transition-colors duration-200" 
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    toggleTooltip(`tooltip-${metricId}`);
-                                  } }
-                                />
-                                <div className={`absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 dark:bg-gray-700 text-white text-xs sm:text-sm rounded-lg shadow-lg transition-opacity duration-200 z-10 w-48 sm:w-64 text-center ${
-                                  activeTooltip === `tooltip-${metricId}` 
-                                    ? 'opacity-100 pointer-events-auto' 
-                                    : 'opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto'
-                                }`}>
-                                  {getMetricTooltip(metric) }
-                                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900 dark:border-t-gray-700"></div>
-                                </div>
-                              </div>
+                              <MetricTooltip
+                                label={metric}
+                                text={getMetricTooltip(metric)}
+                                open={activeTooltip === `tooltip-${metricId}`}
+                                onToggle={() => toggleTooltip(`tooltip-${metricId}`)}
+                                onClose={() => toggleTooltip(`tooltip-${metricId}`)}
+                              />
                             </div>
                           </div>
                         </td>

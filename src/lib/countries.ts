@@ -34,6 +34,13 @@ export interface Country {
   /** Distinct UTC offsets, e.g. ["UTC-05:00", "UTC-06:00"]. */
   timezones: string[];
   googleMaps: string | null;
+  /**
+   * [latitude, longitude] of the capital.
+   *
+   * Climate is sampled here rather than at the country centroid, which for large
+   * or mountainous countries is nowhere near where the population lives.
+   */
+  capitalCoords: [number, number] | null;
   /** CIA GEC code; null when the Factbook has no entry for this country. */
   gec: string | null;
   coverage: CountryCoverage;
@@ -76,4 +83,19 @@ export function hasCoverage(
   dataset: keyof CountryCoverage
 ): boolean {
   return getCountry(code)?.coverage[dataset] ?? false;
+}
+
+const byCcn3 = new Map(
+  countries.filter((c) => c.ccn3).map((c) => [c.ccn3 as string, c])
+);
+
+/**
+ * Resolve an ISO 3166-1 numeric (M49) code to its country.
+ *
+ * UN Comtrade identifies trade partners by M49, so this is what turns a partner
+ * code in a trade response back into a name and a flag.
+ */
+export function fromCcn3(ccn3: string | null | undefined): Country | undefined {
+  if (!ccn3) return undefined;
+  return byCcn3.get(ccn3.padStart(3, '0'));
 }

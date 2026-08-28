@@ -61,6 +61,56 @@ function toUtcOffsets(timezones) {
   return [...offsets].sort();
 }
 
+const GEOCODE_URL = 'https://geocoding-api.open-meteo.com/v1/search';
+
+/**
+ * Resolve a capital city to coordinates.
+ *
+ * Climate has to be sampled where the people are. Sampling the country centroid
+ * instead puts Peru high in the Andes (5 C in January, when Lima is about 22 C),
+ * Japan in the mountains of central Honshu and Iceland on an interior glacier -
+ * technically the middle of the country, and wrong about the country.
+ *
+ * Resolved once at build time, so no geocoding happens on a request.
+ */
+async function geocodeCapital(capital, iso2) {
+  if (!capital) return null;
+
+  try {
+    const url = `${GEOCODE_URL}?name=${encodeURIComponent(capital)}&count=10&language=en&format=json`;
+    const response = await fetch(url);
+    if (!response.ok) return null;
+
+    const { results } = await response.json();
+    if (!Array.isArray(results) || results.length === 0) return null;
+
+    // Capital names are not unique across countries, so prefer the hit in the
+    // right country before falling back to the most prominent one.
+    const match = results.find((r) => r.country_code === iso2) ?? results[0];
+    return typeof match.latitude === 'number' ? [match.latitude, match.longitude] : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Resolve capitals a few at a time, to stay friendly to a free endpoint. */
+async function geocodeAll(entries) {
+  const coords = new Map();
+  const BATCH = 8;
+
+  for (let i = 0; i < entries.length; i += BATCH) {
+    const batch = entries.slice(i, i + BATCH);
+    const resolved = await Promise.all(batch.map((e) => geocodeCapital(e.capital, e.code)));
+    batch.forEach((e, j) => {
+      if (resolved[j]) coords.set(e.code, resolved[j]);
+    });
+    process.stdout.write(`\r  geocoding capitals ${Math.min(i + BATCH, entries.length)}/${entries.length}`);
+  }
+
+  process.stdout.write('\n');
+  return coords;
+}
+
 async function main() {
   console.log('Fetching reference datasets...');
   const [mledoze, dr5hn] = await Promise.all([
@@ -125,6 +175,13 @@ async function main() {
     })
     .sort((a, b) => a.name.localeCompare(b.name));
 
+  const capitalCoords = await geocodeAll(
+    countries.map((c) => ({ code: c.code, capital: c.capital[0] }))
+  );
+  for (const country of countries) {
+    country.capitalCoords = capitalCoords.get(country.code) ?? null;
+  }
+
   fs.writeFileSync(OUTPUT, JSON.stringify(countries, null, 2) + '\n');
 
   // The picker only needs a name, a flag and the coverage flags. Shipping the full
@@ -149,6 +206,7 @@ async function main() {
   console.log(`  with languages: ${count((c) => Object.keys(c.languages).length)}`);
   console.log(`  Factbook coverage: ${count((c) => c.coverage.factbook)}`);
   console.log(`  Crime coverage:    ${count((c) => c.coverage.crime)}`);
+  console.log(`  capital coordinates: ${count((c) => c.capitalCoords)}`);
 }
 
 main().catch((error) => {

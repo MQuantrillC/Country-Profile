@@ -31,7 +31,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      34.52813,
+      69.17233
+    ]
   },
   {
     "code": "AL",
@@ -63,7 +67,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      41.32744,
+      19.81866
+    ]
   },
   {
     "code": "DZ",
@@ -95,7 +103,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      36.73225,
+      3.08746
+    ]
   },
   {
     "code": "AD",
@@ -127,7 +139,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      42.50779,
+      1.52109
+    ]
   },
   {
     "code": "AO",
@@ -159,7 +175,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -8.83682,
+      13.23432
+    ]
   },
   {
     "code": "AG",
@@ -191,7 +211,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      43.00114,
+      -84.55915
+    ]
   },
   {
     "code": "AR",
@@ -224,7 +248,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -34.61315,
+      -58.37723
+    ]
   },
   {
     "code": "AM",
@@ -256,7 +284,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      40.17765,
+      44.5126
+    ]
   },
   {
     "code": "AU",
@@ -293,7 +325,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -35.28346,
+      149.12807
+    ]
   },
   {
     "code": "AT",
@@ -325,7 +361,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      48.20849,
+      16.37208
+    ]
   },
   {
     "code": "AZ",
@@ -358,7 +398,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      40.37767,
+      49.89201
+    ]
   },
   {
     "code": "BS",
@@ -394,7 +438,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      25.05823,
+      -77.34306
+    ]
   },
   {
     "code": "BH",
@@ -426,7 +474,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      26.22787,
+      50.58565
+    ]
   },
   {
     "code": "BD",
@@ -458,7 +510,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      23.7104,
+      90.40744
+    ]
   },
   {
     "code": "BB",
@@ -490,7 +546,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      13.10732,
+      -59.62021
+    ]
   },
   {
     "code": "BY",
@@ -523,7 +583,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      53.90019,
+      27.56653
+    ]
   },
   {
     "code": "BE",
@@ -557,7 +621,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      50.85045,
+      4.34878
+    ]
   },
   {
     "code": "BZ",
@@ -591,7 +659,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      17.25376,
+      -88.76401
+    ]
   },
   {
     "code": "BJ",
@@ -623,7 +695,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": false
-    }
+    },
+    "capitalCoords": [
+      6.49646,
+      2.60359
+    ]
   },
   {
     "code": "BT",
@@ -659,7 +735,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      27.46609,
+      89.64191
+    ]
   },
   {
     "code": "BO",
@@ -694,7 +774,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -19.03332,
+      -65.26274
+    ]
   },
   {
     "code": "BA",
@@ -728,7 +812,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      43.84864,
+      18.35644
+    ]
   },
   {
     "code": "BW",
@@ -761,7 +849,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -24.65451,
+      25.90859
+    ]
   },
   {
     "code": "BR",
@@ -796,7 +888,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -15.77972,
+      -47.92972
+    ]
   },
   {
     "code": "BN",
@@ -832,7 +928,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      4.89035,
+      114.94006
+    ]
   },
   {
     "code": "BG",
@@ -864,7 +964,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      42.69751,
+      23.32415
+    ]
   },
   {
     "code": "BF",
@@ -896,7 +1000,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": false
-    }
+    },
+    "capitalCoords": [
+      12.36566,
+      -1.53388
+    ]
   },
   {
     "code": "BI",
@@ -929,7 +1037,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -3.42708,
+      29.92463
+    ]
   },
   {
     "code": "KH",
@@ -965,7 +1077,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      11.56245,
+      104.91601
+    ]
   },
   {
     "code": "CM",
@@ -998,7 +1114,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      3.86667,
+      11.51667
+    ]
   },
   {
     "code": "CA",
@@ -1036,7 +1156,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      45.41117,
+      -75.69812
+    ]
   },
   {
     "code": "CV",
@@ -1068,7 +1192,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      14.93152,
+      -23.51254
+    ]
   },
   {
     "code": "CF",
@@ -1101,7 +1229,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": false
-    }
+    },
+    "capitalCoords": [
+      4.36122,
+      18.55496
+    ]
   },
   {
     "code": "TD",
@@ -1134,7 +1266,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": false
-    }
+    },
+    "capitalCoords": [
+      12.10672,
+      15.0444
+    ]
   },
   {
     "code": "CL",
@@ -1167,7 +1303,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -33.45694,
+      -70.64827
+    ]
   },
   {
     "code": "CN",
@@ -1200,7 +1340,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      39.9075,
+      116.39723
+    ]
   },
   {
     "code": "CO",
@@ -1232,7 +1376,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      4.60971,
+      -74.08175
+    ]
   },
   {
     "code": "KM",
@@ -1266,7 +1414,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": false
-    }
+    },
+    "capitalCoords": [
+      -11.70216,
+      43.25506
+    ]
   },
   {
     "code": "CG",
@@ -1300,7 +1452,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": false
-    }
+    },
+    "capitalCoords": [
+      -4.26613,
+      15.28318
+    ]
   },
   {
     "code": "CR",
@@ -1332,7 +1488,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      9.93388,
+      -84.08489
+    ]
   },
   {
     "code": "HR",
@@ -1364,7 +1524,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      45.81444,
+      15.97798
+    ]
   },
   {
     "code": "CU",
@@ -1400,7 +1564,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      23.13302,
+      -82.38304
+    ]
   },
   {
     "code": "CY",
@@ -1433,7 +1601,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      35.17284,
+      33.35397
+    ]
   },
   {
     "code": "CZ",
@@ -1466,7 +1638,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      50.08804,
+      14.42076
+    ]
   },
   {
     "code": "DK",
@@ -1498,7 +1674,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      55.67594,
+      12.56553
+    ]
   },
   {
     "code": "DJ",
@@ -1531,7 +1711,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": false
-    }
+    },
+    "capitalCoords": [
+      11.58901,
+      43.14503
+    ]
   },
   {
     "code": "DM",
@@ -1563,7 +1747,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      15.30174,
+      -61.38808
+    ]
   },
   {
     "code": "DO",
@@ -1595,7 +1783,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      18.47186,
+      -69.89232
+    ]
   },
   {
     "code": "CD",
@@ -1632,7 +1824,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": false
-    }
+    },
+    "capitalCoords": [
+      -4.32758,
+      15.31357
+    ]
   },
   {
     "code": "EC",
@@ -1665,7 +1861,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -0.22985,
+      -78.52495
+    ]
   },
   {
     "code": "EG",
@@ -1697,7 +1897,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      30.06263,
+      31.24967
+    ]
   },
   {
     "code": "SV",
@@ -1729,7 +1933,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      13.68935,
+      -89.18718
+    ]
   },
   {
     "code": "GQ",
@@ -1763,7 +1971,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": false
-    }
+    },
+    "capitalCoords": [
+      3.75578,
+      8.78166
+    ]
   },
   {
     "code": "ER",
@@ -1797,7 +2009,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      15.33805,
+      38.93184
+    ]
   },
   {
     "code": "EE",
@@ -1829,7 +2045,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      59.43696,
+      24.75353
+    ]
   },
   {
     "code": "SZ",
@@ -1866,7 +2086,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -26.46667,
+      31.2
+    ]
   },
   {
     "code": "ET",
@@ -1898,7 +2122,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      9.02497,
+      38.74689
+    ]
   },
   {
     "code": "FJ",
@@ -1932,7 +2160,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -18.13683,
+      178.42531
+    ]
   },
   {
     "code": "FI",
@@ -1965,7 +2197,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      60.16952,
+      24.93545
+    ]
   },
   {
     "code": "FR",
@@ -1997,7 +2233,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      48.85341,
+      2.3488
+    ]
   },
   {
     "code": "GA",
@@ -2029,7 +2269,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": false
-    }
+    },
+    "capitalCoords": [
+      0.39241,
+      9.45356
+    ]
   },
   {
     "code": "GM",
@@ -2061,7 +2305,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": false
-    }
+    },
+    "capitalCoords": [
+      13.45274,
+      -16.57803
+    ]
   },
   {
     "code": "GE",
@@ -2093,7 +2341,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      41.69143,
+      44.83412
+    ]
   },
   {
     "code": "DE",
@@ -2125,7 +2377,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      52.52437,
+      13.41053
+    ]
   },
   {
     "code": "GH",
@@ -2157,7 +2413,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      5.55602,
+      -0.1969
+    ]
   },
   {
     "code": "GR",
@@ -2189,7 +2449,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      37.98376,
+      23.72784
+    ]
   },
   {
     "code": "GD",
@@ -2221,7 +2485,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      12.05288,
+      -61.75226
+    ]
   },
   {
     "code": "GT",
@@ -2253,7 +2521,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      14.64072,
+      -90.51327
+    ]
   },
   {
     "code": "GN",
@@ -2285,7 +2557,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": false
-    }
+    },
+    "capitalCoords": [
+      9.53795,
+      -13.67729
+    ]
   },
   {
     "code": "GW",
@@ -2318,7 +2594,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      11.86357,
+      -15.59767
+    ]
   },
   {
     "code": "GY",
@@ -2350,7 +2630,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      6.80448,
+      -58.15527
+    ]
   },
   {
     "code": "HT",
@@ -2383,7 +2667,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      18.54349,
+      -72.33881
+    ]
   },
   {
     "code": "HN",
@@ -2415,7 +2703,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      14.0818,
+      -87.20681
+    ]
   },
   {
     "code": "HU",
@@ -2447,7 +2739,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      47.49835,
+      19.04045
+    ]
   },
   {
     "code": "IS",
@@ -2479,7 +2775,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      64.13548,
+      -21.89541
+    ]
   },
   {
     "code": "IN",
@@ -2513,7 +2813,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      28.62137,
+      77.2148
+    ]
   },
   {
     "code": "ID",
@@ -2547,7 +2851,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -6.21462,
+      106.84513
+    ]
   },
   {
     "code": "IR",
@@ -2579,7 +2887,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      35.69439,
+      51.42151
+    ]
   },
   {
     "code": "IQ",
@@ -2613,7 +2925,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      33.34058,
+      44.40088
+    ]
   },
   {
     "code": "IE",
@@ -2646,7 +2962,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      53.33306,
+      -6.24889
+    ]
   },
   {
     "code": "IL",
@@ -2679,7 +2999,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      31.76904,
+      35.21633
+    ]
   },
   {
     "code": "IT",
@@ -2711,7 +3035,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      41.89193,
+      12.51133
+    ]
   },
   {
     "code": "CI",
@@ -2743,7 +3071,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": false
-    }
+    },
+    "capitalCoords": [
+      6.82055,
+      -5.27674
+    ]
   },
   {
     "code": "JM",
@@ -2776,7 +3108,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      17.99702,
+      -76.79358
+    ]
   },
   {
     "code": "JP",
@@ -2808,7 +3144,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      35.6895,
+      139.69171
+    ]
   },
   {
     "code": "JO",
@@ -2840,7 +3180,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      31.95522,
+      35.94503
+    ]
   },
   {
     "code": "KZ",
@@ -2874,7 +3218,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      51.1801,
+      71.44598
+    ]
   },
   {
     "code": "KE",
@@ -2907,7 +3255,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -1.28333,
+      36.81667
+    ]
   },
   {
     "code": "KI",
@@ -2946,7 +3298,8 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": null
   },
   {
     "code": "KW",
@@ -2978,7 +3331,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      29.367,
+      47.97429
+    ]
   },
   {
     "code": "KG",
@@ -3011,7 +3368,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      42.87,
+      74.59
+    ]
   },
   {
     "code": "LA",
@@ -3043,7 +3404,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": false
-    }
+    },
+    "capitalCoords": [
+      17.96667,
+      102.6
+    ]
   },
   {
     "code": "LV",
@@ -3075,7 +3440,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      56.946,
+      24.10589
+    ]
   },
   {
     "code": "LB",
@@ -3108,7 +3477,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      33.89332,
+      35.50157
+    ]
   },
   {
     "code": "LS",
@@ -3145,7 +3518,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -29.31667,
+      27.48333
+    ]
   },
   {
     "code": "LR",
@@ -3177,7 +3554,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      6.30054,
+      -10.7969
+    ]
   },
   {
     "code": "LY",
@@ -3209,7 +3590,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": false
-    }
+    },
+    "capitalCoords": [
+      32.88743,
+      13.18733
+    ]
   },
   {
     "code": "LI",
@@ -3241,7 +3626,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      47.14151,
+      9.52154
+    ]
   },
   {
     "code": "LT",
@@ -3273,7 +3662,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      54.68916,
+      25.2798
+    ]
   },
   {
     "code": "LU",
@@ -3307,7 +3700,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      49.75,
+      6.16667
+    ]
   },
   {
     "code": "MG",
@@ -3340,7 +3737,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -18.91368,
+      47.53613
+    ]
   },
   {
     "code": "MW",
@@ -3373,7 +3774,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -13.96692,
+      33.78725
+    ]
   },
   {
     "code": "MY",
@@ -3406,7 +3811,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      3.1412,
+      101.68653
+    ]
   },
   {
     "code": "MV",
@@ -3438,7 +3847,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      4.17521,
+      73.50916
+    ]
   },
   {
     "code": "ML",
@@ -3470,7 +3883,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": false
-    }
+    },
+    "capitalCoords": [
+      12.60915,
+      -7.97522
+    ]
   },
   {
     "code": "MT",
@@ -3503,7 +3920,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      35.89968,
+      14.5148
+    ]
   },
   {
     "code": "MH",
@@ -3536,7 +3957,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      7.08971,
+      171.38026
+    ]
   },
   {
     "code": "MR",
@@ -3568,7 +3993,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      18.08581,
+      -15.9785
+    ]
   },
   {
     "code": "MU",
@@ -3602,7 +4031,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -20.16194,
+      57.49889
+    ]
   },
   {
     "code": "MX",
@@ -3637,7 +4070,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      19.42847,
+      -99.12766
+    ]
   },
   {
     "code": "FM",
@@ -3665,7 +4102,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      6.92477,
+      158.16109
+    ]
   },
   {
     "code": "MD",
@@ -3697,7 +4138,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      47.00902,
+      28.85938
+    ]
   },
   {
     "code": "MC",
@@ -3729,7 +4174,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      43.73718,
+      7.42145
+    ]
   },
   {
     "code": "MN",
@@ -3762,7 +4211,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      47.90771,
+      106.88324
+    ]
   },
   {
     "code": "ME",
@@ -3794,7 +4247,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      42.44124,
+      19.26309
+    ]
   },
   {
     "code": "MA",
@@ -3827,7 +4284,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      34.01325,
+      -6.83255
+    ]
   },
   {
     "code": "MZ",
@@ -3859,7 +4320,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -25.96553,
+      32.58322
+    ]
   },
   {
     "code": "MM",
@@ -3891,7 +4356,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      19.73661,
+      96.20719
+    ]
   },
   {
     "code": "NA",
@@ -3935,7 +4404,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -22.55941,
+      17.08323
+    ]
   },
   {
     "code": "NR",
@@ -3968,7 +4441,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": false
-    }
+    },
+    "capitalCoords": [
+      -0.55085,
+      166.9252
+    ]
   },
   {
     "code": "NP",
@@ -4000,7 +4477,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      27.70169,
+      85.3206
+    ]
   },
   {
     "code": "NL",
@@ -4032,7 +4513,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      52.37403,
+      4.88969
+    ]
   },
   {
     "code": "NZ",
@@ -4067,7 +4552,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -41.28664,
+      174.77557
+    ]
   },
   {
     "code": "NI",
@@ -4099,7 +4588,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      12.13282,
+      -86.2504
+    ]
   },
   {
     "code": "NE",
@@ -4131,7 +4624,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      13.51366,
+      2.1098
+    ]
   },
   {
     "code": "NG",
@@ -4163,7 +4660,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      9.05785,
+      7.49508
+    ]
   },
   {
     "code": "KP",
@@ -4195,7 +4696,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": false
-    }
+    },
+    "capitalCoords": [
+      39.03385,
+      125.75432
+    ]
   },
   {
     "code": "MK",
@@ -4227,7 +4732,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      41.99646,
+      21.43141
+    ]
   },
   {
     "code": "NO",
@@ -4261,7 +4770,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      59.91273,
+      10.74609
+    ]
   },
   {
     "code": "OM",
@@ -4293,7 +4806,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      23.58413,
+      58.40778
+    ]
   },
   {
     "code": "PK",
@@ -4326,7 +4843,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      33.72148,
+      73.04329
+    ]
   },
   {
     "code": "PW",
@@ -4359,7 +4880,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      7.50077,
+      134.6238
+    ]
   },
   {
     "code": "PA",
@@ -4395,7 +4920,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      8.9936,
+      -79.51973
+    ]
   },
   {
     "code": "PG",
@@ -4430,7 +4959,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -9.47723,
+      147.1509
+    ]
   },
   {
     "code": "PY",
@@ -4463,7 +4996,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -25.28646,
+      -57.647
+    ]
   },
   {
     "code": "PE",
@@ -4497,7 +5034,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -12.04318,
+      -77.02824
+    ]
   },
   {
     "code": "PH",
@@ -4530,7 +5071,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      14.6042,
+      120.9822
+    ]
   },
   {
     "code": "PL",
@@ -4562,7 +5107,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      52.22977,
+      21.01178
+    ]
   },
   {
     "code": "PT",
@@ -4595,7 +5144,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      38.72509,
+      -9.1498
+    ]
   },
   {
     "code": "QA",
@@ -4627,7 +5180,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      25.28545,
+      51.53096
+    ]
   },
   {
     "code": "RO",
@@ -4659,7 +5216,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      44.43225,
+      26.10626
+    ]
   },
   {
     "code": "RU",
@@ -4701,7 +5262,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      55.75204,
+      37.61781
+    ]
   },
   {
     "code": "RW",
@@ -4735,7 +5300,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -1.94995,
+      30.05885
+    ]
   },
   {
     "code": "KN",
@@ -4767,7 +5336,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      17.2955,
+      -62.72499
+    ]
   },
   {
     "code": "LC",
@@ -4799,7 +5372,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      13.9957,
+      -61.00614
+    ]
   },
   {
     "code": "VC",
@@ -4831,7 +5408,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      13.15527,
+      -61.22742
+    ]
   },
   {
     "code": "WS",
@@ -4864,7 +5445,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -13.83333,
+      -171.76666
+    ]
   },
   {
     "code": "SM",
@@ -4896,7 +5481,8 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": null
   },
   {
     "code": "ST",
@@ -4928,7 +5514,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      0.33756,
+      6.7299
+    ]
   },
   {
     "code": "SA",
@@ -4960,7 +5550,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      24.68773,
+      46.72185
+    ]
   },
   {
     "code": "SN",
@@ -4992,7 +5586,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": false
-    }
+    },
+    "capitalCoords": [
+      14.6937,
+      -17.44406
+    ]
   },
   {
     "code": "RS",
@@ -5024,7 +5622,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      44.80401,
+      20.46513
+    ]
   },
   {
     "code": "SC",
@@ -5058,7 +5660,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -4.62001,
+      55.45501
+    ]
   },
   {
     "code": "SL",
@@ -5090,7 +5696,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      8.48714,
+      -13.2356
+    ]
   },
   {
     "code": "SG",
@@ -5125,7 +5735,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      1.28967,
+      103.85007
+    ]
   },
   {
     "code": "SK",
@@ -5157,7 +5771,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      48.14816,
+      17.10674
+    ]
   },
   {
     "code": "SI",
@@ -5189,7 +5807,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      46.05108,
+      14.50513
+    ]
   },
   {
     "code": "SB",
@@ -5221,7 +5843,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -9.43333,
+      159.95
+    ]
   },
   {
     "code": "SO",
@@ -5254,7 +5880,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": false
-    }
+    },
+    "capitalCoords": [
+      2.03711,
+      45.34375
+    ]
   },
   {
     "code": "ZA",
@@ -5298,7 +5928,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -25.74486,
+      28.18783
+    ]
   },
   {
     "code": "KR",
@@ -5330,7 +5964,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      37.566,
+      126.9784
+    ]
   },
   {
     "code": "SS",
@@ -5362,7 +6000,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      4.85165,
+      31.58247
+    ]
   },
   {
     "code": "ES",
@@ -5395,7 +6037,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      40.4165,
+      -3.70256
+    ]
   },
   {
     "code": "LK",
@@ -5428,7 +6074,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      6.93548,
+      79.84868
+    ]
   },
   {
     "code": "SD",
@@ -5461,7 +6111,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": false
-    }
+    },
+    "capitalCoords": [
+      15.55177,
+      32.53241
+    ]
   },
   {
     "code": "SR",
@@ -5493,7 +6147,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      5.86638,
+      -55.16682
+    ]
   },
   {
     "code": "SE",
@@ -5525,7 +6183,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      59.32938,
+      18.06871
+    ]
   },
   {
     "code": "CH",
@@ -5560,7 +6222,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      46.94809,
+      7.44744
+    ]
   },
   {
     "code": "SY",
@@ -5592,7 +6258,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      33.5102,
+      36.29128
+    ]
   },
   {
     "code": "TJ",
@@ -5625,7 +6295,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      38.53575,
+      68.77905
+    ]
   },
   {
     "code": "TZ",
@@ -5658,7 +6332,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -6.17221,
+      35.73947
+    ]
   },
   {
     "code": "TH",
@@ -5690,7 +6368,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      13.75398,
+      100.50144
+    ]
   },
   {
     "code": "TL",
@@ -5723,7 +6405,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -8.55861,
+      125.57361
+    ]
   },
   {
     "code": "TG",
@@ -5755,7 +6441,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": false
-    }
+    },
+    "capitalCoords": [
+      6.12874,
+      1.22154
+    ]
   },
   {
     "code": "TO",
@@ -5788,7 +6478,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -21.13683,
+      -175.20114
+    ]
   },
   {
     "code": "TT",
@@ -5820,7 +6514,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      10.66668,
+      -61.51889
+    ]
   },
   {
     "code": "TN",
@@ -5852,7 +6550,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      36.81897,
+      10.16579
+    ]
   },
   {
     "code": "TR",
@@ -5884,7 +6586,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      39.91987,
+      32.85427
+    ]
   },
   {
     "code": "TM",
@@ -5917,7 +6623,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      37.95,
+      58.38333
+    ]
   },
   {
     "code": "TV",
@@ -5954,7 +6664,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -8.52425,
+      179.19417
+    ]
   },
   {
     "code": "UG",
@@ -5987,7 +6701,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      0.31628,
+      32.58219
+    ]
   },
   {
     "code": "UA",
@@ -6020,7 +6738,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      50.45466,
+      30.5238
+    ]
   },
   {
     "code": "AE",
@@ -6052,7 +6774,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      24.45118,
+      54.39696
+    ]
   },
   {
     "code": "GB",
@@ -6084,7 +6810,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": false
-    }
+    },
+    "capitalCoords": [
+      51.50853,
+      -0.12574
+    ]
   },
   {
     "code": "US",
@@ -6121,7 +6851,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      38.89511,
+      -77.03637
+    ]
   },
   {
     "code": "UY",
@@ -6153,7 +6887,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -34.90328,
+      -56.18816
+    ]
   },
   {
     "code": "UZ",
@@ -6186,7 +6924,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      41.26465,
+      69.21627
+    ]
   },
   {
     "code": "VU",
@@ -6220,7 +6962,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -17.73648,
+      168.31366
+    ]
   },
   {
     "code": "VA",
@@ -6253,7 +6999,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": false
-    }
+    },
+    "capitalCoords": [
+      41.90268,
+      12.45414
+    ]
   },
   {
     "code": "VE",
@@ -6285,7 +7035,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      10.48801,
+      -66.87919
+    ]
   },
   {
     "code": "VN",
@@ -6317,7 +7071,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      21.0245,
+      105.84117
+    ]
   },
   {
     "code": "YE",
@@ -6349,7 +7107,11 @@
       "worldBank": true,
       "factbook": true,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      15.47626,
+      44.21974
+    ]
   },
   {
     "code": "ZM",
@@ -6381,7 +7143,11 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -15.40669,
+      28.28713
+    ]
   },
   {
     "code": "ZW",
@@ -6459,6 +7225,10 @@
       "worldBank": true,
       "factbook": false,
       "crime": true
-    }
+    },
+    "capitalCoords": [
+      -17.82772,
+      31.05337
+    ]
   }
 ]

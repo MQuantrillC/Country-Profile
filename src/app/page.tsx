@@ -13,6 +13,7 @@ import { useCountryData } from '../hooks/useCountryData';
 import { MetricSection } from '../components/MetricSection';
 import { CollapsibleInfoSection } from '../components/CollapsibleInfoSection';
 import { PopulationPyramid } from '../components/charts/PopulationPyramid';
+import { CountryContext } from '../components/CountryContext';
 import { parseAgeBands } from '../lib/factbookParsers';
 import { sections, sectionMetrics, sourceColors, getSourceColor } from '../lib/metricCatalog';
 
@@ -705,6 +706,10 @@ export default function HomePage() {
                       </div>
                       
                       {/* Basic Information */ }
+                      <div className="mb-6">
+                        <CountryContext code={selectedCountryInfo} name={selectedCountry?.name ?? ''} />
+                      </div>
+
                       <CollapsibleInfoSection title="Basic Information" isExpanded={infoSectionsExpanded.basic} onToggle={() => toggleInfoSection('basic')}>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                           <div className="space-y-2">

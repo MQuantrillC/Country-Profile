@@ -43,6 +43,7 @@ The app runs at http://localhost:3000.
 | `npm run test:watch` | Tests in watch mode |
 | `npm run convert-crime-data` | Rebuild `src/data/crime/` from the UNODC spreadsheet |
 | `npm run generate-countries` | Rebuild the country table from upstream reference data |
+| `npm run generate-map` | Rebuild the pre-projected map outlines |
 
 ## Data sources
 
@@ -54,6 +55,50 @@ The app runs at http://localhost:3000.
 | Our World in Data | Poverty, schooling, tourism, migration, regime type | Live API, cached 24h |
 | UNODC | Homicide, arrests, convictions, prison deaths | Bundled, generated from spreadsheet |
 | mledoze/countries + dr5hn | Capital, currency, language, timezone | Bundled, generated at build time |
+| Wikipedia | One-paragraph country description | Live API, cached 24h |
+| Open-Meteo | Monthly temperature and rainfall at the capital | Live API, cached 24h |
+| open.er-api.com | Exchange rate against the US dollar | Live API, cached 24h |
+| Nager.Date | Upcoming public holidays | Live API, cached 24h |
+| IMF DataMapper | Real GDP growth, actual and projected | Live API, cached 24h |
+| USGS | Magnitude 6+ earthquakes near the capital | Live API, cached 24h |
+| UN Comtrade | Real bilateral export partners | Live API (public preview), cached 24h |
+| world-atlas | Country boundaries for the map | Bundled, pre-projected at build time |
+
+### Sources considered and rejected
+
+**Ember** (electricity generation) now requires an API key. The World Bank's
+`EG.ELC.*` indicators carry the same generation shares with no key, so the energy
+mix comes from there instead - slightly older vintage, no signup.
+
+**OpenAQ** (air quality) requires an API key and its v2 endpoints are retired, so
+air quality is not included. Adding it means creating an OpenAQ account and
+supplying `OPENAQ_API_KEY`.
+
+**UN Comtrade's** public preview endpoint caps responses at 500 rows. For large
+reporters such as Germany the aggregate rows fall outside that cap, and some
+reporters (France) are absent entirely, so the trade block appears for roughly two
+thirds of countries and is omitted for the rest rather than shown wrong.
+
+## Charts
+
+All charts are hand-written SVG rather than a charting library. Six simple forms did
+not justify roughly 100 kB of bundle on a page that has to work on a phone; the six
+together cost about 6 kB.
+
+| Chart | Where | Fed by |
+| --- | --- | --- |
+| Sparkline | Every metric cell | The World Bank series already fetched |
+| Trend lines | Expanded metric row | The same series, per country |
+| Distribution strip | Expanded metric row | `/api/rankings` |
+| Scatter | Rankings page | `/api/rankings` |
+| Choropleth | Rankings page | `/api/rankings` + bundled outlines |
+| Population pyramid | Country information | CIA Factbook age structure |
+
+Colour is validated rather than chosen. Five categorical slots pass the
+colour-vision checks on adjacent pairs but fail on all-pairs, so the all-pairs forms
+(scatter, choropleth) do not encode identity in colour at all - the scatter
+highlights in one accent with direct labels, and the choropleth uses a sequential
+single-hue ramp. See the comment at the top of `src/lib/chartTheme.ts`.
 
 ### Why some data is bundled
 

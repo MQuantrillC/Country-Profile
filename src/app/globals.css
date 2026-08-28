@@ -33,3 +33,52 @@ body {
   font-weight: normal;
   line-height: 1;
 }
+
+/* Chart palette.
+ *
+ * The validated categorical instance from the dataviz reference. Both modes are
+ * selected, not derived: the dark column is the same eight hues re-stepped for the
+ * dark surface. The app toggles dark mode with a `dark` class on <html>, so these
+ * follow that convention rather than a data-theme attribute.
+ *
+ * Slots are assigned by a country's position in the selection and never cycled, so
+ * a country keeps its colour as others are added or removed.
+ */
+:root {
+  --series-1: #2a78d6; /* blue */
+  --series-2: #eb6834; /* orange */
+  --series-3: #1baf7a; /* aqua */
+  --series-4: #eda100; /* yellow */
+  --series-5: #e87ba4; /* magenta */
+
+  --chart-neutral: #cbd5e1;
+  --chart-grid: #e5e7eb;
+  --chart-axis-text: #6b7280;
+
+  /* Sequential ramp for the choropleth, whose job is magnitude, not identity. */
+  --ramp-0: #eff6ff;
+  --ramp-1: #bfdbfe;
+  --ramp-2: #7fb2ea;
+  --ramp-3: #4a8fdd;
+  --ramp-4: #2a78d6;
+  --ramp-5: #1b4f8f;
+}
+
+.dark {
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+
+  --chart-neutral: #475569;
+  --chart-grid: #374151;
+  --chart-axis-text: #9ca3af;
+
+  --ramp-0: #14263d;
+  --ramp-1: #1b3d63;
+  --ramp-2: #23568c;
+  --ramp-3: #2a6fb5;
+  --ramp-4: #3987e5;
+  --ramp-5: #7fb2ea;
+}

@@ -50,3 +50,40 @@ export const parseAlcoholOther = (text: string | null | undefined): number | nul
 };
 
 /** Default view when the URL names no countries. */
+
+/** One age band with its male and female headcounts. */
+export interface AgeBand {
+  label: string;
+  male: number;
+  female: number;
+}
+
+/**
+ * Parse the Factbook's age-structure prose into bands.
+ *
+ * The source reads:
+ *   "0-14 years: 25.8% (male 4,293,229/female 4,119,269); 15-64 years: ..."
+ *
+ * Band count varies by country - most give three, some five - so this returns
+ * whatever it finds rather than assuming a fixed set.
+ */
+export function parseAgeBands(text: string | null | undefined): AgeBand[] {
+  if (!text) return [];
+
+  const bands: AgeBand[] = [];
+
+  for (const part of text.split(';')) {
+    const label = part.split(':')[0]?.trim();
+    // Counts carry thousands separators and the pair is slash-delimited.
+    const counts = part.match(/male\s+([\d,]+)\s*\/\s*female\s+([\d,]+)/i);
+    if (!label || !counts) continue;
+
+    const male = Number(counts[1].replace(/,/g, ''));
+    const female = Number(counts[2].replace(/,/g, ''));
+    if (!Number.isFinite(male) || !Number.isFinite(female)) continue;
+
+    bands.push({ label, male, female });
+  }
+
+  return bands;
+}

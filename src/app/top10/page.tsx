@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { BarChart3, TrendingUp, Globe, Trophy, Medal, Award, TrendingDown, ArrowLeft, RefreshCw, Zap, Database, Filter, Search, Heart, ExternalLink } from 'lucide-react';
 import { getCountry } from '@/utils/countries';
 import { rankingMetrics, type RankingMetric, type RankingsPayload } from '@/lib/rankingMetrics';
+import { RankingsExplorer } from '@/components/RankingsExplorer';
 
 interface CountryRanking {
   name: string;
@@ -40,6 +41,10 @@ export default function Top10Page() {
     error: null,
   });
   const [showHighest, setShowHighest] = useState(true);
+  /** List is the ranked table; map and scatter read the same payload differently. */
+  const [view, setView] = useState<'list' | 'map' | 'scatter'>('list');
+  /** The unshaped payload, which the map and scatter views read directly. */
+  const [payload, setPayload] = useState<RankingsPayload | null>(null);
   const [showMetricDropdown, setShowMetricDropdown] = useState(true);
 
   const categories = ['All', ...Array.from(new Set(rankingMetrics.map(m => m.category)))];
@@ -81,6 +86,7 @@ export default function Top10Page() {
       }
 
       setBulkCache(cache);
+      setPayload(payload);
       setLoadingState({ isLoading: false, failed: payload.unavailable, error: null });
     } catch (error) {
       console.error('Could not load rankings:', error);
@@ -416,6 +422,21 @@ export default function Top10Page() {
                     </div>
                   </div>
                   <div className="flex flex-col space-y-2 w-full sm:w-auto">
+                    <div className="inline-flex rounded-lg bg-white/15 p-0.5" role="tablist" aria-label="Rankings view">
+                      {(['list', 'map', 'scatter'] as const).map((option) => (
+                        <button
+                          key={option}
+                          role="tab"
+                          aria-selected={view === option}
+                          onClick={() => setView(option)}
+                          className={`min-h-9 flex-1 rounded-md px-3 text-sm capitalize transition-colors touch-manipulation ${
+                            view === option ? 'bg-white text-blue-700' : 'text-white hover:bg-white/10'
+                          }`}
+                        >
+                          {option}
+                        </button>
+                      ))}
+                    </div>
                     <button
                       onClick={() => setShowHighest(!showHighest)}
                       className="flex min-h-11 items-center justify-center space-x-2 rounded-lg bg-white/20 px-3 py-2 transition-colors duration-200 hover:bg-white/30 sm:px-4 touch-manipulation"
@@ -440,6 +461,13 @@ export default function Top10Page() {
                       </div>
                     </div>
                   </div>
+                ) : view !== 'list' && payload ? (
+                  <RankingsExplorer
+                    view={view}
+                    payload={payload}
+                    metric={selectedMetric}
+                    formatValue={formatValue}
+                  />
                 ) : currentRankings.length === 0 ? (
                   <div className="text-center py-12">
                     <div className="text-gray-500 dark:text-gray-400 mb-2 text-sm sm:text-base">

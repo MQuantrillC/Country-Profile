@@ -21,6 +21,8 @@ export interface Country {
   code: string;
   /** ISO 3166-1 alpha-3, which is how World Bank rows identify a country. */
   iso3: string;
+  /** ISO 3166-1 numeric (M49); joins the country to its map boundary. */
+  ccn3: string | null;
   name: string;
   flag: string;
   coverage: CountryCoverage;

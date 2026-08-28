@@ -15,7 +15,9 @@ import {
   isErrorEnvelope,
   latestByIndicator,
   observationsFrom,
+  seriesByIndicator,
   MAX_INDICATORS_PER_REQUEST,
+  type SeriesPoint,
   type WorldBankObservation,
 } from '../lib/worldBankQuery';
 
@@ -73,6 +75,14 @@ export interface DataWithSource {
    * "the request failed". Without it both render as N/A and the UI cannot say why.
    */
   status: 'ok' | 'no-data' | 'failed';
+  /**
+   * Every observation in the requested window, oldest first.
+   *
+   * The multi-year window is fetched regardless, so keeping the series costs
+   * nothing over the wire. It is what feeds the sparklines and trend charts
+   * without a second round trip.
+   */
+  series: SeriesPoint[];
 }
 
 export type CountryStats = Record<MetricKey, DataWithSource>;
@@ -84,6 +94,7 @@ function emptyMetric(status: 'no-data' | 'failed'): DataWithSource {
     source: WDI_SOURCE,
     sourceOrganization: WDI_ORGANIZATION,
     status,
+    series: [],
   };
 }
 
@@ -161,7 +172,9 @@ export async function fetchCountryStats(countryCode: string): Promise<CountrySta
     return allMetrics('failed');
   }
 
-  const latest = latestByIndicator(results.flatMap((rows) => rows ?? []));
+  const rows = results.flatMap((r) => r ?? []);
+  const latest = latestByIndicator(rows);
+  const series = seriesByIndicator(rows);
 
   const stats = {} as CountryStats;
   for (const [key, code] of Object.entries(indicators) as [MetricKey, string][]) {
@@ -173,6 +186,7 @@ export async function fetchCountryStats(countryCode: string): Promise<CountrySta
           source: WDI_SOURCE,
           sourceOrganization: WDI_ORGANIZATION,
           status: 'ok',
+          series: series.get(code) ?? [],
         }
       : emptyMetric('no-data');
   }

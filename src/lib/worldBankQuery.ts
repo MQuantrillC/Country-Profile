@@ -180,3 +180,40 @@ export function latestByIndicator(
 
   return latest;
 }
+
+/** One observation reduced to just what a chart needs. */
+export interface SeriesPoint {
+  year: number;
+  value: number;
+}
+
+/**
+ * Group observations into an ascending time series per indicator.
+ *
+ * The API is already asked for a multi-year window, and the response carries every
+ * year in it. Keeping the series costs nothing extra over the wire and is what
+ * makes trend lines and sparklines possible without a second request.
+ */
+export function seriesByIndicator(
+  rows: WorldBankObservation[]
+): Map<string, SeriesPoint[]> {
+  const series = new Map<string, SeriesPoint[]>();
+
+  for (const row of rows) {
+    if (row?.value == null) continue;
+    const id = row.indicator?.id;
+    const year = Number(row.date);
+    if (!id || !Number.isFinite(year)) continue;
+
+    const points = series.get(id);
+    if (points) points.push({ year, value: row.value });
+    else series.set(id, [{ year, value: row.value }]);
+  }
+
+  // Oldest first, which is the order every chart wants to draw in.
+  for (const points of series.values()) {
+    points.sort((a, b) => a.year - b.year);
+  }
+
+  return series;
+}

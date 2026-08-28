@@ -5,7 +5,9 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, LineChart as LineChartIcon } from 'lucide-react';
+import { Sparkline } from './charts/Sparkline';
+import { MetricDetail } from './MetricDetail';
 import { MetricTooltip } from './MetricTooltip';
 import type { Country } from '../utils/countries';
 import type { CountryStats, DataWithSource, MetricReading, PartialReading } from '../types/country';
@@ -40,6 +42,8 @@ export const MetricSection = ({
 }) => {
   const [showSources, setShowSources] = useState(false);
   const [showAsPercentage, setShowAsPercentage] = useState(false);
+  /** Which metric's trend/distribution panel is open. One at a time. */
+  const [expandedMetric, setExpandedMetric] = useState<string | null>(null);
   
   const getWorldBankMetricValue = (data: DataWithSource | undefined | null): MetricReading => {
     return {
@@ -48,6 +52,7 @@ export const MetricSection = ({
       sourceDetail: data?.source ?? null,
       year: data?.year ?? null,
       status: data?.status ?? 'no-data',
+      series: data?.series ?? [],
     };
   };
 
@@ -224,6 +229,7 @@ export const MetricSection = ({
       sourceDetail: reading.sourceDetail ?? null,
       year: reading.year ?? null,
       status: reading.status ?? (reading.value != null ? 'ok' : 'no-data'),
+      series: reading.series ?? [],
     };
   };
 
@@ -330,8 +336,11 @@ export const MetricSection = ({
                     const metricId = `${sectionId}-${metric.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '')}`;
                     const maxValue = metricMaxValues[metric];
                     
+                    const isOpen = expandedMetric === metric;
+
                     return (
-                      <tr key={metric} id={metricId} className="hover:bg-gray-50/50 dark:hover:bg-gray-700/30 transition-colors duration-150">
+                      <React.Fragment key={metric}>
+                      <tr id={metricId} className="hover:bg-gray-50/50 dark:hover:bg-gray-700/30 transition-colors duration-150">
                         <td className="px-4 sm:px-6 py-3 sm:py-4">
                           <div className="flex items-center space-x-3">
                             <div 
@@ -341,6 +350,15 @@ export const MetricSection = ({
                             <div className="flex items-center space-x-2">
                               <span className="text-sm sm:text-base mr-2 opacity-70">{getMetricIcon(metric)}</span>
                               <span className="text-sm sm:text-base font-medium text-gray-900 dark:text-white">{metric}</span>
+                              <button
+                                type="button"
+                                onClick={() => setExpandedMetric(isOpen ? null : metric)}
+                                aria-expanded={isOpen}
+                                aria-label={`${isOpen ? 'Hide' : 'Show'} trend and distribution for ${metric}`}
+                                className="inline-flex min-h-8 min-w-8 items-center justify-center rounded p-1 text-gray-400 transition-colors hover:text-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:text-gray-500 dark:hover:text-blue-400"
+                              >
+                                <LineChartIcon size={14} />
+                              </button>
                               <MetricTooltip
                                 label={metric}
                                 text={getMetricTooltip(metric)}
@@ -352,7 +370,7 @@ export const MetricSection = ({
                           </div>
                         </td>
                         {countries.map(country => {
-                          const { value, year, status } = getMetricValue(metric, country);
+                          const { value, year, status, series } = getMetricValue(metric, country);
                           const percentage = value !== null && maxValue > 0 ? (value / maxValue) * 100 : 0;
                           // Only worth showing when the figure is old enough to mislead.
                           const staleYear = year && Number(year) < new Date().getFullYear() - 2 ? year : null;
@@ -383,6 +401,9 @@ export const MetricSection = ({
                                     {staleYear}
                                   </span>
                                 ) }
+                                {!loading && !showAsPercentage && (
+                                  <Sparkline series={series} label={`${metric}, ${country.name}`} />
+                                ) }
                                 {value !== null && value > 0 && maxValue > 0 && countries.length > 1 && (
                                   <div className="w-full max-w-[100px] bg-gray-200 dark:bg-gray-600 rounded-full h-1.5">
                                     <div 
@@ -396,6 +417,20 @@ export const MetricSection = ({
                           );
                         }) }
                       </tr>
+
+                      {isOpen && (
+                        <tr>
+                          <td colSpan={countries.length + 1} className="bg-gray-50 px-4 py-5 dark:bg-gray-900/40 sm:px-6">
+                            <MetricDetail
+                              metric={metric}
+                              countries={countries}
+                              getMetricValue={getMetricValue}
+                              formatValue={(v) => formatMetricValue(metric, v)}
+                            />
+                          </td>
+                        </tr>
+                      ) }
+                      </React.Fragment>
                     );
                   }) }
                 </tbody>

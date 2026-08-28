@@ -2,6 +2,7 @@
   {
     "code": "AF",
     "iso3": "AFG",
+    "ccn3": "004",
     "name": "Afghanistan",
     "officialName": "Islamic Republic of Afghanistan",
     "flag": "🇦🇫",
@@ -35,6 +36,7 @@
   {
     "code": "AL",
     "iso3": "ALB",
+    "ccn3": "008",
     "name": "Albania",
     "officialName": "Republic of Albania",
     "flag": "🇦🇱",
@@ -66,6 +68,7 @@
   {
     "code": "DZ",
     "iso3": "DZA",
+    "ccn3": "012",
     "name": "Algeria",
     "officialName": "People's Democratic Republic of Algeria",
     "flag": "🇩🇿",
@@ -97,6 +100,7 @@
   {
     "code": "AD",
     "iso3": "AND",
+    "ccn3": "020",
     "name": "Andorra",
     "officialName": "Principality of Andorra",
     "flag": "🇦🇩",
@@ -128,6 +132,7 @@
   {
     "code": "AO",
     "iso3": "AGO",
+    "ccn3": "024",
     "name": "Angola",
     "officialName": "Republic of Angola",
     "flag": "🇦🇴",
@@ -159,6 +164,7 @@
   {
     "code": "AG",
     "iso3": "ATG",
+    "ccn3": "028",
     "name": "Antigua and Barbuda",
     "officialName": "Antigua and Barbuda",
     "flag": "🇦🇬",
@@ -190,6 +196,7 @@
   {
     "code": "AR",
     "iso3": "ARG",
+    "ccn3": "032",
     "name": "Argentina",
     "officialName": "Argentine Republic",
     "flag": "🇦🇷",
@@ -222,6 +229,7 @@
   {
     "code": "AM",
     "iso3": "ARM",
+    "ccn3": "051",
     "name": "Armenia",
     "officialName": "Republic of Armenia",
     "flag": "🇦🇲",
@@ -253,6 +261,7 @@
   {
     "code": "AU",
     "iso3": "AUS",
+    "ccn3": "036",
     "name": "Australia",
     "officialName": "Commonwealth of Australia",
     "flag": "🇦🇺",
@@ -289,6 +298,7 @@
   {
     "code": "AT",
     "iso3": "AUT",
+    "ccn3": "040",
     "name": "Austria",
     "officialName": "Republic of Austria",
     "flag": "🇦🇹",
@@ -320,6 +330,7 @@
   {
     "code": "AZ",
     "iso3": "AZE",
+    "ccn3": "031",
     "name": "Azerbaijan",
     "officialName": "Republic of Azerbaijan",
     "flag": "🇦🇿",
@@ -352,6 +363,7 @@
   {
     "code": "BS",
     "iso3": "BHS",
+    "ccn3": "044",
     "name": "Bahamas",
     "officialName": "Commonwealth of the Bahamas",
     "flag": "🇧🇸",
@@ -387,6 +399,7 @@
   {
     "code": "BH",
     "iso3": "BHR",
+    "ccn3": "048",
     "name": "Bahrain",
     "officialName": "Kingdom of Bahrain",
     "flag": "🇧🇭",
@@ -418,6 +431,7 @@
   {
     "code": "BD",
     "iso3": "BGD",
+    "ccn3": "050",
     "name": "Bangladesh",
     "officialName": "People's Republic of Bangladesh",
     "flag": "🇧🇩",
@@ -449,6 +463,7 @@
   {
     "code": "BB",
     "iso3": "BRB",
+    "ccn3": "052",
     "name": "Barbados",
     "officialName": "Barbados",
     "flag": "🇧🇧",
@@ -480,6 +495,7 @@
   {
     "code": "BY",
     "iso3": "BLR",
+    "ccn3": "112",
     "name": "Belarus",
     "officialName": "Republic of Belarus",
     "flag": "🇧🇾",
@@ -512,6 +528,7 @@
   {
     "code": "BE",
     "iso3": "BEL",
+    "ccn3": "056",
     "name": "Belgium",
     "officialName": "Kingdom of Belgium",
     "flag": "🇧🇪",
@@ -545,6 +562,7 @@
   {
     "code": "BZ",
     "iso3": "BLZ",
+    "ccn3": "084",
     "name": "Belize",
     "officialName": "Belize",
     "flag": "🇧🇿",
@@ -578,6 +596,7 @@
   {
     "code": "BJ",
     "iso3": "BEN",
+    "ccn3": "204",
     "name": "Benin",
     "officialName": "Republic of Benin",
     "flag": "🇧🇯",
@@ -609,6 +628,7 @@
   {
     "code": "BT",
     "iso3": "BTN",
+    "ccn3": "064",
     "name": "Bhutan",
     "officialName": "Kingdom of Bhutan",
     "flag": "🇧🇹",
@@ -644,6 +664,7 @@
   {
     "code": "BO",
     "iso3": "BOL",
+    "ccn3": "068",
     "name": "Bolivia",
     "officialName": "Plurinational State of Bolivia",
     "flag": "🇧🇴",
@@ -678,6 +699,7 @@
   {
     "code": "BA",
     "iso3": "BIH",
+    "ccn3": "070",
     "name": "Bosnia and Herzegovina",
     "officialName": "Bosnia and Herzegovina",
     "flag": "🇧🇦",
@@ -711,6 +733,7 @@
   {
     "code": "BW",
     "iso3": "BWA",
+    "ccn3": "072",
     "name": "Botswana",
     "officialName": "Republic of Botswana",
     "flag": "🇧🇼",
@@ -743,6 +766,7 @@
   {
     "code": "BR",
     "iso3": "BRA",
+    "ccn3": "076",
     "name": "Brazil",
     "officialName": "Federative Republic of Brazil",
     "flag": "🇧🇷",
@@ -777,6 +801,7 @@
   {
     "code": "BN",
     "iso3": "BRN",
+    "ccn3": "096",
     "name": "Brunei",
     "officialName": "Nation of Brunei, Abode of Peace",
     "flag": "🇧🇳",
@@ -812,6 +837,7 @@
   {
     "code": "BG",
     "iso3": "BGR",
+    "ccn3": "100",
     "name": "Bulgaria",
     "officialName": "Republic of Bulgaria",
     "flag": "🇧🇬",
@@ -843,6 +869,7 @@
   {
     "code": "BF",
     "iso3": "BFA",
+    "ccn3": "854",
     "name": "Burkina Faso",
     "officialName": "Burkina Faso",
     "flag": "🇧🇫",
@@ -874,6 +901,7 @@
   {
     "code": "BI",
     "iso3": "BDI",
+    "ccn3": "108",
     "name": "Burundi",
     "officialName": "Republic of Burundi",
     "flag": "🇧🇮",
@@ -906,6 +934,7 @@
   {
     "code": "KH",
     "iso3": "KHM",
+    "ccn3": "116",
     "name": "Cambodia",
     "officialName": "Kingdom of Cambodia",
     "flag": "🇰🇭",
@@ -941,6 +970,7 @@
   {
     "code": "CM",
     "iso3": "CMR",
+    "ccn3": "120",
     "name": "Cameroon",
     "officialName": "Republic of Cameroon",
     "flag": "🇨🇲",
@@ -973,6 +1003,7 @@
   {
     "code": "CA",
     "iso3": "CAN",
+    "ccn3": "124",
     "name": "Canada",
     "officialName": "Canada",
     "flag": "🇨🇦",
@@ -1010,6 +1041,7 @@
   {
     "code": "CV",
     "iso3": "CPV",
+    "ccn3": "132",
     "name": "Cape Verde",
     "officialName": "Republic of Cabo Verde",
     "flag": "🇨🇻",
@@ -1041,6 +1073,7 @@
   {
     "code": "CF",
     "iso3": "CAF",
+    "ccn3": "140",
     "name": "Central African Republic",
     "officialName": "Central African Republic",
     "flag": "🇨🇫",
@@ -1073,6 +1106,7 @@
   {
     "code": "TD",
     "iso3": "TCD",
+    "ccn3": "148",
     "name": "Chad",
     "officialName": "Republic of Chad",
     "flag": "🇹🇩",
@@ -1105,6 +1139,7 @@
   {
     "code": "CL",
     "iso3": "CHL",
+    "ccn3": "152",
     "name": "Chile",
     "officialName": "Republic of Chile",
     "flag": "🇨🇱",
@@ -1137,6 +1172,7 @@
   {
     "code": "CN",
     "iso3": "CHN",
+    "ccn3": "156",
     "name": "China",
     "officialName": "People's Republic of China",
     "flag": "🇨🇳",
@@ -1169,6 +1205,7 @@
   {
     "code": "CO",
     "iso3": "COL",
+    "ccn3": "170",
     "name": "Colombia",
     "officialName": "Republic of Colombia",
     "flag": "🇨🇴",
@@ -1200,6 +1237,7 @@
   {
     "code": "KM",
     "iso3": "COM",
+    "ccn3": "174",
     "name": "Comoros",
     "officialName": "Union of the Comoros",
     "flag": "🇰🇲",
@@ -1233,6 +1271,7 @@
   {
     "code": "CG",
     "iso3": "COG",
+    "ccn3": "178",
     "name": "Congo",
     "officialName": "Republic of the Congo",
     "flag": "🇨🇬",
@@ -1266,6 +1305,7 @@
   {
     "code": "CR",
     "iso3": "CRI",
+    "ccn3": "188",
     "name": "Costa Rica",
     "officialName": "Republic of Costa Rica",
     "flag": "🇨🇷",
@@ -1297,6 +1337,7 @@
   {
     "code": "HR",
     "iso3": "HRV",
+    "ccn3": "191",
     "name": "Croatia",
     "officialName": "Republic of Croatia",
     "flag": "🇭🇷",
@@ -1328,6 +1369,7 @@
   {
     "code": "CU",
     "iso3": "CUB",
+    "ccn3": "192",
     "name": "Cuba",
     "officialName": "Republic of Cuba",
     "flag": "🇨🇺",
@@ -1363,6 +1405,7 @@
   {
     "code": "CY",
     "iso3": "CYP",
+    "ccn3": "196",
     "name": "Cyprus",
     "officialName": "Republic of Cyprus",
     "flag": "🇨🇾",
@@ -1395,6 +1438,7 @@
   {
     "code": "CZ",
     "iso3": "CZE",
+    "ccn3": "203",
     "name": "Czechia",
     "officialName": "Czech Republic",
     "flag": "🇨🇿",
@@ -1427,6 +1471,7 @@
   {
     "code": "DK",
     "iso3": "DNK",
+    "ccn3": "208",
     "name": "Denmark",
     "officialName": "Kingdom of Denmark",
     "flag": "🇩🇰",
@@ -1458,6 +1503,7 @@
   {
     "code": "DJ",
     "iso3": "DJI",
+    "ccn3": "262",
     "name": "Djibouti",
     "officialName": "Republic of Djibouti",
     "flag": "🇩🇯",
@@ -1490,6 +1536,7 @@
   {
     "code": "DM",
     "iso3": "DMA",
+    "ccn3": "212",
     "name": "Dominica",
     "officialName": "Commonwealth of Dominica",
     "flag": "🇩🇲",
@@ -1521,6 +1568,7 @@
   {
     "code": "DO",
     "iso3": "DOM",
+    "ccn3": "214",
     "name": "Dominican Republic",
     "officialName": "Dominican Republic",
     "flag": "🇩🇴",
@@ -1552,6 +1600,7 @@
   {
     "code": "CD",
     "iso3": "COD",
+    "ccn3": "180",
     "name": "DR Congo",
     "officialName": "Democratic Republic of the Congo",
     "flag": "🇨🇩",
@@ -1588,6 +1637,7 @@
   {
     "code": "EC",
     "iso3": "ECU",
+    "ccn3": "218",
     "name": "Ecuador",
     "officialName": "Republic of Ecuador",
     "flag": "🇪🇨",
@@ -1620,6 +1670,7 @@
   {
     "code": "EG",
     "iso3": "EGY",
+    "ccn3": "818",
     "name": "Egypt",
     "officialName": "Arab Republic of Egypt",
     "flag": "🇪🇬",
@@ -1651,6 +1702,7 @@
   {
     "code": "SV",
     "iso3": "SLV",
+    "ccn3": "222",
     "name": "El Salvador",
     "officialName": "Republic of El Salvador",
     "flag": "🇸🇻",
@@ -1682,6 +1734,7 @@
   {
     "code": "GQ",
     "iso3": "GNQ",
+    "ccn3": "226",
     "name": "Equatorial Guinea",
     "officialName": "Republic of Equatorial Guinea",
     "flag": "🇬🇶",
@@ -1715,6 +1768,7 @@
   {
     "code": "ER",
     "iso3": "ERI",
+    "ccn3": "232",
     "name": "Eritrea",
     "officialName": "State of Eritrea",
     "flag": "🇪🇷",
@@ -1748,6 +1802,7 @@
   {
     "code": "EE",
     "iso3": "EST",
+    "ccn3": "233",
     "name": "Estonia",
     "officialName": "Republic of Estonia",
     "flag": "🇪🇪",
@@ -1779,6 +1834,7 @@
   {
     "code": "SZ",
     "iso3": "SWZ",
+    "ccn3": "748",
     "name": "Eswatini",
     "officialName": "Kingdom of Eswatini",
     "flag": "🇸🇿",
@@ -1815,6 +1871,7 @@
   {
     "code": "ET",
     "iso3": "ETH",
+    "ccn3": "231",
     "name": "Ethiopia",
     "officialName": "Federal Democratic Republic of Ethiopia",
     "flag": "🇪🇹",
@@ -1846,6 +1903,7 @@
   {
     "code": "FJ",
     "iso3": "FJI",
+    "ccn3": "242",
     "name": "Fiji",
     "officialName": "Republic of Fiji",
     "flag": "🇫🇯",
@@ -1879,6 +1937,7 @@
   {
     "code": "FI",
     "iso3": "FIN",
+    "ccn3": "246",
     "name": "Finland",
     "officialName": "Republic of Finland",
     "flag": "🇫🇮",
@@ -1911,6 +1970,7 @@
   {
     "code": "FR",
     "iso3": "FRA",
+    "ccn3": "250",
     "name": "France",
     "officialName": "French Republic",
     "flag": "🇫🇷",
@@ -1942,6 +2002,7 @@
   {
     "code": "GA",
     "iso3": "GAB",
+    "ccn3": "266",
     "name": "Gabon",
     "officialName": "Gabonese Republic",
     "flag": "🇬🇦",
@@ -1973,6 +2034,7 @@
   {
     "code": "GM",
     "iso3": "GMB",
+    "ccn3": "270",
     "name": "Gambia",
     "officialName": "Republic of the Gambia",
     "flag": "🇬🇲",
@@ -2004,6 +2066,7 @@
   {
     "code": "GE",
     "iso3": "GEO",
+    "ccn3": "268",
     "name": "Georgia",
     "officialName": "Georgia",
     "flag": "🇬🇪",
@@ -2035,6 +2098,7 @@
   {
     "code": "DE",
     "iso3": "DEU",
+    "ccn3": "276",
     "name": "Germany",
     "officialName": "Federal Republic of Germany",
     "flag": "🇩🇪",
@@ -2066,6 +2130,7 @@
   {
     "code": "GH",
     "iso3": "GHA",
+    "ccn3": "288",
     "name": "Ghana",
     "officialName": "Republic of Ghana",
     "flag": "🇬🇭",
@@ -2097,6 +2162,7 @@
   {
     "code": "GR",
     "iso3": "GRC",
+    "ccn3": "300",
     "name": "Greece",
     "officialName": "Hellenic Republic",
     "flag": "🇬🇷",
@@ -2128,6 +2194,7 @@
   {
     "code": "GD",
     "iso3": "GRD",
+    "ccn3": "308",
     "name": "Grenada",
     "officialName": "Grenada",
     "flag": "🇬🇩",
@@ -2159,6 +2226,7 @@
   {
     "code": "GT",
     "iso3": "GTM",
+    "ccn3": "320",
     "name": "Guatemala",
     "officialName": "Republic of Guatemala",
     "flag": "🇬🇹",
@@ -2190,6 +2258,7 @@
   {
     "code": "GN",
     "iso3": "GIN",
+    "ccn3": "324",
     "name": "Guinea",
     "officialName": "Republic of Guinea",
     "flag": "🇬🇳",
@@ -2221,6 +2290,7 @@
   {
     "code": "GW",
     "iso3": "GNB",
+    "ccn3": "624",
     "name": "Guinea-Bissau",
     "officialName": "Republic of Guinea-Bissau",
     "flag": "🇬🇼",
@@ -2253,6 +2323,7 @@
   {
     "code": "GY",
     "iso3": "GUY",
+    "ccn3": "328",
     "name": "Guyana",
     "officialName": "Co-operative Republic of Guyana",
     "flag": "🇬🇾",
@@ -2284,6 +2355,7 @@
   {
     "code": "HT",
     "iso3": "HTI",
+    "ccn3": "332",
     "name": "Haiti",
     "officialName": "Republic of Haiti",
     "flag": "🇭🇹",
@@ -2316,6 +2388,7 @@
   {
     "code": "HN",
     "iso3": "HND",
+    "ccn3": "340",
     "name": "Honduras",
     "officialName": "Republic of Honduras",
     "flag": "🇭🇳",
@@ -2347,6 +2420,7 @@
   {
     "code": "HU",
     "iso3": "HUN",
+    "ccn3": "348",
     "name": "Hungary",
     "officialName": "Hungary",
     "flag": "🇭🇺",
@@ -2378,6 +2452,7 @@
   {
     "code": "IS",
     "iso3": "ISL",
+    "ccn3": "352",
     "name": "Iceland",
     "officialName": "Iceland",
     "flag": "🇮🇸",
@@ -2409,6 +2484,7 @@
   {
     "code": "IN",
     "iso3": "IND",
+    "ccn3": "356",
     "name": "India",
     "officialName": "Republic of India",
     "flag": "🇮🇳",
@@ -2442,6 +2518,7 @@
   {
     "code": "ID",
     "iso3": "IDN",
+    "ccn3": "360",
     "name": "Indonesia",
     "officialName": "Republic of Indonesia",
     "flag": "🇮🇩",
@@ -2475,6 +2552,7 @@
   {
     "code": "IR",
     "iso3": "IRN",
+    "ccn3": "364",
     "name": "Iran",
     "officialName": "Islamic Republic of Iran",
     "flag": "🇮🇷",
@@ -2506,6 +2584,7 @@
   {
     "code": "IQ",
     "iso3": "IRQ",
+    "ccn3": "368",
     "name": "Iraq",
     "officialName": "Republic of Iraq",
     "flag": "🇮🇶",
@@ -2539,6 +2618,7 @@
   {
     "code": "IE",
     "iso3": "IRL",
+    "ccn3": "372",
     "name": "Ireland",
     "officialName": "Republic of Ireland",
     "flag": "🇮🇪",
@@ -2571,6 +2651,7 @@
   {
     "code": "IL",
     "iso3": "ISR",
+    "ccn3": "376",
     "name": "Israel",
     "officialName": "State of Israel",
     "flag": "🇮🇱",
@@ -2603,6 +2684,7 @@
   {
     "code": "IT",
     "iso3": "ITA",
+    "ccn3": "380",
     "name": "Italy",
     "officialName": "Italian Republic",
     "flag": "🇮🇹",
@@ -2634,6 +2716,7 @@
   {
     "code": "CI",
     "iso3": "CIV",
+    "ccn3": "384",
     "name": "Ivory Coast",
     "officialName": "Republic of Côte d'Ivoire",
     "flag": "🇨🇮",
@@ -2665,6 +2748,7 @@
   {
     "code": "JM",
     "iso3": "JAM",
+    "ccn3": "388",
     "name": "Jamaica",
     "officialName": "Jamaica",
     "flag": "🇯🇲",
@@ -2697,6 +2781,7 @@
   {
     "code": "JP",
     "iso3": "JPN",
+    "ccn3": "392",
     "name": "Japan",
     "officialName": "Japan",
     "flag": "🇯🇵",
@@ -2728,6 +2813,7 @@
   {
     "code": "JO",
     "iso3": "JOR",
+    "ccn3": "400",
     "name": "Jordan",
     "officialName": "Hashemite Kingdom of Jordan",
     "flag": "🇯🇴",
@@ -2759,6 +2845,7 @@
   {
     "code": "KZ",
     "iso3": "KAZ",
+    "ccn3": "398",
     "name": "Kazakhstan",
     "officialName": "Republic of Kazakhstan",
     "flag": "🇰🇿",
@@ -2792,6 +2879,7 @@
   {
     "code": "KE",
     "iso3": "KEN",
+    "ccn3": "404",
     "name": "Kenya",
     "officialName": "Republic of Kenya",
     "flag": "🇰🇪",
@@ -2824,6 +2912,7 @@
   {
     "code": "KI",
     "iso3": "KIR",
+    "ccn3": "296",
     "name": "Kiribati",
     "officialName": "Independent and Sovereign Republic of Kiribati",
     "flag": "🇰🇮",
@@ -2862,6 +2951,7 @@
   {
     "code": "KW",
     "iso3": "KWT",
+    "ccn3": "414",
     "name": "Kuwait",
     "officialName": "State of Kuwait",
     "flag": "🇰🇼",
@@ -2893,6 +2983,7 @@
   {
     "code": "KG",
     "iso3": "KGZ",
+    "ccn3": "417",
     "name": "Kyrgyzstan",
     "officialName": "Kyrgyz Republic",
     "flag": "🇰🇬",
@@ -2925,6 +3016,7 @@
   {
     "code": "LA",
     "iso3": "LAO",
+    "ccn3": "418",
     "name": "Laos",
     "officialName": "Lao People's Democratic Republic",
     "flag": "🇱🇦",
@@ -2956,6 +3048,7 @@
   {
     "code": "LV",
     "iso3": "LVA",
+    "ccn3": "428",
     "name": "Latvia",
     "officialName": "Republic of Latvia",
     "flag": "🇱🇻",
@@ -2987,6 +3080,7 @@
   {
     "code": "LB",
     "iso3": "LBN",
+    "ccn3": "422",
     "name": "Lebanon",
     "officialName": "Lebanese Republic",
     "flag": "🇱🇧",
@@ -3019,6 +3113,7 @@
   {
     "code": "LS",
     "iso3": "LSO",
+    "ccn3": "426",
     "name": "Lesotho",
     "officialName": "Kingdom of Lesotho",
     "flag": "🇱🇸",
@@ -3055,6 +3150,7 @@
   {
     "code": "LR",
     "iso3": "LBR",
+    "ccn3": "430",
     "name": "Liberia",
     "officialName": "Republic of Liberia",
     "flag": "🇱🇷",
@@ -3086,6 +3182,7 @@
   {
     "code": "LY",
     "iso3": "LBY",
+    "ccn3": "434",
     "name": "Libya",
     "officialName": "State of Libya",
     "flag": "🇱🇾",
@@ -3117,6 +3214,7 @@
   {
     "code": "LI",
     "iso3": "LIE",
+    "ccn3": "438",
     "name": "Liechtenstein",
     "officialName": "Principality of Liechtenstein",
     "flag": "🇱🇮",
@@ -3148,6 +3246,7 @@
   {
     "code": "LT",
     "iso3": "LTU",
+    "ccn3": "440",
     "name": "Lithuania",
     "officialName": "Republic of Lithuania",
     "flag": "🇱🇹",
@@ -3179,6 +3278,7 @@
   {
     "code": "LU",
     "iso3": "LUX",
+    "ccn3": "442",
     "name": "Luxembourg",
     "officialName": "Grand Duchy of Luxembourg",
     "flag": "🇱🇺",
@@ -3212,6 +3312,7 @@
   {
     "code": "MG",
     "iso3": "MDG",
+    "ccn3": "450",
     "name": "Madagascar",
     "officialName": "Republic of Madagascar",
     "flag": "🇲🇬",
@@ -3244,6 +3345,7 @@
   {
     "code": "MW",
     "iso3": "MWI",
+    "ccn3": "454",
     "name": "Malawi",
     "officialName": "Republic of Malawi",
     "flag": "🇲🇼",
@@ -3276,6 +3378,7 @@
   {
     "code": "MY",
     "iso3": "MYS",
+    "ccn3": "458",
     "name": "Malaysia",
     "officialName": "Malaysia",
     "flag": "🇲🇾",
@@ -3308,6 +3411,7 @@
   {
     "code": "MV",
     "iso3": "MDV",
+    "ccn3": "462",
     "name": "Maldives",
     "officialName": "Republic of the Maldives",
     "flag": "🇲🇻",
@@ -3339,6 +3443,7 @@
   {
     "code": "ML",
     "iso3": "MLI",
+    "ccn3": "466",
     "name": "Mali",
     "officialName": "Republic of Mali",
     "flag": "🇲🇱",
@@ -3370,6 +3475,7 @@
   {
     "code": "MT",
     "iso3": "MLT",
+    "ccn3": "470",
     "name": "Malta",
     "officialName": "Republic of Malta",
     "flag": "🇲🇹",
@@ -3402,6 +3508,7 @@
   {
     "code": "MH",
     "iso3": "MHL",
+    "ccn3": "584",
     "name": "Marshall Islands",
     "officialName": "Republic of the Marshall Islands",
     "flag": "🇲🇭",
@@ -3434,6 +3541,7 @@
   {
     "code": "MR",
     "iso3": "MRT",
+    "ccn3": "478",
     "name": "Mauritania",
     "officialName": "Islamic Republic of Mauritania",
     "flag": "🇲🇷",
@@ -3465,6 +3573,7 @@
   {
     "code": "MU",
     "iso3": "MUS",
+    "ccn3": "480",
     "name": "Mauritius",
     "officialName": "Republic of Mauritius",
     "flag": "🇲🇺",
@@ -3498,6 +3607,7 @@
   {
     "code": "MX",
     "iso3": "MEX",
+    "ccn3": "484",
     "name": "Mexico",
     "officialName": "United Mexican States",
     "flag": "🇲🇽",
@@ -3532,6 +3642,7 @@
   {
     "code": "FM",
     "iso3": "FSM",
+    "ccn3": "583",
     "name": "Micronesia",
     "officialName": "Federated States of Micronesia",
     "flag": "🇫🇲",
@@ -3559,6 +3670,7 @@
   {
     "code": "MD",
     "iso3": "MDA",
+    "ccn3": "498",
     "name": "Moldova",
     "officialName": "Republic of Moldova",
     "flag": "🇲🇩",
@@ -3590,6 +3702,7 @@
   {
     "code": "MC",
     "iso3": "MCO",
+    "ccn3": "492",
     "name": "Monaco",
     "officialName": "Principality of Monaco",
     "flag": "🇲🇨",
@@ -3621,6 +3734,7 @@
   {
     "code": "MN",
     "iso3": "MNG",
+    "ccn3": "496",
     "name": "Mongolia",
     "officialName": "Mongolia",
     "flag": "🇲🇳",
@@ -3653,6 +3767,7 @@
   {
     "code": "ME",
     "iso3": "MNE",
+    "ccn3": "499",
     "name": "Montenegro",
     "officialName": "Montenegro",
     "flag": "🇲🇪",
@@ -3684,6 +3799,7 @@
   {
     "code": "MA",
     "iso3": "MAR",
+    "ccn3": "504",
     "name": "Morocco",
     "officialName": "Kingdom of Morocco",
     "flag": "🇲🇦",
@@ -3716,6 +3832,7 @@
   {
     "code": "MZ",
     "iso3": "MOZ",
+    "ccn3": "508",
     "name": "Mozambique",
     "officialName": "Republic of Mozambique",
     "flag": "🇲🇿",
@@ -3747,6 +3864,7 @@
   {
     "code": "MM",
     "iso3": "MMR",
+    "ccn3": "104",
     "name": "Myanmar",
     "officialName": "Republic of the Union of Myanmar",
     "flag": "🇲🇲",
@@ -3778,6 +3896,7 @@
   {
     "code": "NA",
     "iso3": "NAM",
+    "ccn3": "516",
     "name": "Namibia",
     "officialName": "Republic of Namibia",
     "flag": "🇳🇦",
@@ -3821,6 +3940,7 @@
   {
     "code": "NR",
     "iso3": "NRU",
+    "ccn3": "520",
     "name": "Nauru",
     "officialName": "Republic of Nauru",
     "flag": "🇳🇷",
@@ -3853,6 +3973,7 @@
   {
     "code": "NP",
     "iso3": "NPL",
+    "ccn3": "524",
     "name": "Nepal",
     "officialName": "Federal Democratic Republic of Nepal",
     "flag": "🇳🇵",
@@ -3884,6 +4005,7 @@
   {
     "code": "NL",
     "iso3": "NLD",
+    "ccn3": "528",
     "name": "Netherlands",
     "officialName": "Kingdom of the Netherlands",
     "flag": "🇳🇱",
@@ -3915,6 +4037,7 @@
   {
     "code": "NZ",
     "iso3": "NZL",
+    "ccn3": "554",
     "name": "New Zealand",
     "officialName": "New Zealand",
     "flag": "🇳🇿",
@@ -3949,6 +4072,7 @@
   {
     "code": "NI",
     "iso3": "NIC",
+    "ccn3": "558",
     "name": "Nicaragua",
     "officialName": "Republic of Nicaragua",
     "flag": "🇳🇮",
@@ -3980,6 +4104,7 @@
   {
     "code": "NE",
     "iso3": "NER",
+    "ccn3": "562",
     "name": "Niger",
     "officialName": "Republic of Niger",
     "flag": "🇳🇪",
@@ -4011,6 +4136,7 @@
   {
     "code": "NG",
     "iso3": "NGA",
+    "ccn3": "566",
     "name": "Nigeria",
     "officialName": "Federal Republic of Nigeria",
     "flag": "🇳🇬",
@@ -4042,6 +4168,7 @@
   {
     "code": "KP",
     "iso3": "PRK",
+    "ccn3": "408",
     "name": "North Korea",
     "officialName": "Democratic People's Republic of Korea",
     "flag": "🇰🇵",
@@ -4073,6 +4200,7 @@
   {
     "code": "MK",
     "iso3": "MKD",
+    "ccn3": "807",
     "name": "North Macedonia",
     "officialName": "Republic of North Macedonia",
     "flag": "🇲🇰",
@@ -4104,6 +4232,7 @@
   {
     "code": "NO",
     "iso3": "NOR",
+    "ccn3": "578",
     "name": "Norway",
     "officialName": "Kingdom of Norway",
     "flag": "🇳🇴",
@@ -4137,6 +4266,7 @@
   {
     "code": "OM",
     "iso3": "OMN",
+    "ccn3": "512",
     "name": "Oman",
     "officialName": "Sultanate of Oman",
     "flag": "🇴🇲",
@@ -4168,6 +4298,7 @@
   {
     "code": "PK",
     "iso3": "PAK",
+    "ccn3": "586",
     "name": "Pakistan",
     "officialName": "Islamic Republic of Pakistan",
     "flag": "🇵🇰",
@@ -4200,6 +4331,7 @@
   {
     "code": "PW",
     "iso3": "PLW",
+    "ccn3": "585",
     "name": "Palau",
     "officialName": "Republic of Palau",
     "flag": "🇵🇼",
@@ -4232,6 +4364,7 @@
   {
     "code": "PA",
     "iso3": "PAN",
+    "ccn3": "591",
     "name": "Panama",
     "officialName": "Republic of Panama",
     "flag": "🇵🇦",
@@ -4267,6 +4400,7 @@
   {
     "code": "PG",
     "iso3": "PNG",
+    "ccn3": "598",
     "name": "Papua New Guinea",
     "officialName": "Independent State of Papua New Guinea",
     "flag": "🇵🇬",
@@ -4301,6 +4435,7 @@
   {
     "code": "PY",
     "iso3": "PRY",
+    "ccn3": "600",
     "name": "Paraguay",
     "officialName": "Republic of Paraguay",
     "flag": "🇵🇾",
@@ -4333,6 +4468,7 @@
   {
     "code": "PE",
     "iso3": "PER",
+    "ccn3": "604",
     "name": "Peru",
     "officialName": "Republic of Peru",
     "flag": "🇵🇪",
@@ -4366,6 +4502,7 @@
   {
     "code": "PH",
     "iso3": "PHL",
+    "ccn3": "608",
     "name": "Philippines",
     "officialName": "Republic of the Philippines",
     "flag": "🇵🇭",
@@ -4398,6 +4535,7 @@
   {
     "code": "PL",
     "iso3": "POL",
+    "ccn3": "616",
     "name": "Poland",
     "officialName": "Republic of Poland",
     "flag": "🇵🇱",
@@ -4429,6 +4567,7 @@
   {
     "code": "PT",
     "iso3": "PRT",
+    "ccn3": "620",
     "name": "Portugal",
     "officialName": "Portuguese Republic",
     "flag": "🇵🇹",
@@ -4461,6 +4600,7 @@
   {
     "code": "QA",
     "iso3": "QAT",
+    "ccn3": "634",
     "name": "Qatar",
     "officialName": "State of Qatar",
     "flag": "🇶🇦",
@@ -4492,6 +4632,7 @@
   {
     "code": "RO",
     "iso3": "ROU",
+    "ccn3": "642",
     "name": "Romania",
     "officialName": "Romania",
     "flag": "🇷🇴",
@@ -4523,6 +4664,7 @@
   {
     "code": "RU",
     "iso3": "RUS",
+    "ccn3": "643",
     "name": "Russia",
     "officialName": "Russian Federation",
     "flag": "🇷🇺",
@@ -4564,6 +4706,7 @@
   {
     "code": "RW",
     "iso3": "RWA",
+    "ccn3": "646",
     "name": "Rwanda",
     "officialName": "Republic of Rwanda",
     "flag": "🇷🇼",
@@ -4597,6 +4740,7 @@
   {
     "code": "KN",
     "iso3": "KNA",
+    "ccn3": "659",
     "name": "Saint Kitts and Nevis",
     "officialName": "Federation of Saint Christopher and Nevis",
     "flag": "🇰🇳",
@@ -4628,6 +4772,7 @@
   {
     "code": "LC",
     "iso3": "LCA",
+    "ccn3": "662",
     "name": "Saint Lucia",
     "officialName": "Saint Lucia",
     "flag": "🇱🇨",
@@ -4659,6 +4804,7 @@
   {
     "code": "VC",
     "iso3": "VCT",
+    "ccn3": "670",
     "name": "Saint Vincent and the Grenadines",
     "officialName": "Saint Vincent and the Grenadines",
     "flag": "🇻🇨",
@@ -4690,6 +4836,7 @@
   {
     "code": "WS",
     "iso3": "WSM",
+    "ccn3": "882",
     "name": "Samoa",
     "officialName": "Independent State of Samoa",
     "flag": "🇼🇸",
@@ -4722,6 +4869,7 @@
   {
     "code": "SM",
     "iso3": "SMR",
+    "ccn3": "674",
     "name": "San Marino",
     "officialName": "Most Serene Republic of San Marino",
     "flag": "🇸🇲",
@@ -4753,6 +4901,7 @@
   {
     "code": "ST",
     "iso3": "STP",
+    "ccn3": "678",
     "name": "São Tomé and Príncipe",
     "officialName": "Democratic Republic of São Tomé and Príncipe",
     "flag": "🇸🇹",
@@ -4784,6 +4933,7 @@
   {
     "code": "SA",
     "iso3": "SAU",
+    "ccn3": "682",
     "name": "Saudi Arabia",
     "officialName": "Kingdom of Saudi Arabia",
     "flag": "🇸🇦",
@@ -4815,6 +4965,7 @@
   {
     "code": "SN",
     "iso3": "SEN",
+    "ccn3": "686",
     "name": "Senegal",
     "officialName": "Republic of Senegal",
     "flag": "🇸🇳",
@@ -4846,6 +4997,7 @@
   {
     "code": "RS",
     "iso3": "SRB",
+    "ccn3": "688",
     "name": "Serbia",
     "officialName": "Republic of Serbia",
     "flag": "🇷🇸",
@@ -4877,6 +5029,7 @@
   {
     "code": "SC",
     "iso3": "SYC",
+    "ccn3": "690",
     "name": "Seychelles",
     "officialName": "Republic of Seychelles",
     "flag": "🇸🇨",
@@ -4910,6 +5063,7 @@
   {
     "code": "SL",
     "iso3": "SLE",
+    "ccn3": "694",
     "name": "Sierra Leone",
     "officialName": "Republic of Sierra Leone",
     "flag": "🇸🇱",
@@ -4941,6 +5095,7 @@
   {
     "code": "SG",
     "iso3": "SGP",
+    "ccn3": "702",
     "name": "Singapore",
     "officialName": "Republic of Singapore",
     "flag": "🇸🇬",
@@ -4975,6 +5130,7 @@
   {
     "code": "SK",
     "iso3": "SVK",
+    "ccn3": "703",
     "name": "Slovakia",
     "officialName": "Slovak Republic",
     "flag": "🇸🇰",
@@ -5006,6 +5162,7 @@
   {
     "code": "SI",
     "iso3": "SVN",
+    "ccn3": "705",
     "name": "Slovenia",
     "officialName": "Republic of Slovenia",
     "flag": "🇸🇮",
@@ -5037,6 +5194,7 @@
   {
     "code": "SB",
     "iso3": "SLB",
+    "ccn3": "090",
     "name": "Solomon Islands",
     "officialName": "Solomon Islands",
     "flag": "🇸🇧",
@@ -5068,6 +5226,7 @@
   {
     "code": "SO",
     "iso3": "SOM",
+    "ccn3": "706",
     "name": "Somalia",
     "officialName": "Federal Republic of Somalia",
     "flag": "🇸🇴",
@@ -5100,6 +5259,7 @@
   {
     "code": "ZA",
     "iso3": "ZAF",
+    "ccn3": "710",
     "name": "South Africa",
     "officialName": "Republic of South Africa",
     "flag": "🇿🇦",
@@ -5143,6 +5303,7 @@
   {
     "code": "KR",
     "iso3": "KOR",
+    "ccn3": "410",
     "name": "South Korea",
     "officialName": "Republic of Korea",
     "flag": "🇰🇷",
@@ -5174,6 +5335,7 @@
   {
     "code": "SS",
     "iso3": "SSD",
+    "ccn3": "728",
     "name": "South Sudan",
     "officialName": "Republic of South Sudan",
     "flag": "🇸🇸",
@@ -5205,6 +5367,7 @@
   {
     "code": "ES",
     "iso3": "ESP",
+    "ccn3": "724",
     "name": "Spain",
     "officialName": "Kingdom of Spain",
     "flag": "🇪🇸",
@@ -5237,6 +5400,7 @@
   {
     "code": "LK",
     "iso3": "LKA",
+    "ccn3": "144",
     "name": "Sri Lanka",
     "officialName": "Democratic Socialist Republic of Sri Lanka",
     "flag": "🇱🇰",
@@ -5269,6 +5433,7 @@
   {
     "code": "SD",
     "iso3": "SDN",
+    "ccn3": "729",
     "name": "Sudan",
     "officialName": "Republic of the Sudan",
     "flag": "🇸🇩",
@@ -5301,6 +5466,7 @@
   {
     "code": "SR",
     "iso3": "SUR",
+    "ccn3": "740",
     "name": "Suriname",
     "officialName": "Republic of Suriname",
     "flag": "🇸🇷",
@@ -5332,6 +5498,7 @@
   {
     "code": "SE",
     "iso3": "SWE",
+    "ccn3": "752",
     "name": "Sweden",
     "officialName": "Kingdom of Sweden",
     "flag": "🇸🇪",
@@ -5363,6 +5530,7 @@
   {
     "code": "CH",
     "iso3": "CHE",
+    "ccn3": "756",
     "name": "Switzerland",
     "officialName": "Swiss Confederation",
     "flag": "🇨🇭",
@@ -5397,6 +5565,7 @@
   {
     "code": "SY",
     "iso3": "SYR",
+    "ccn3": "760",
     "name": "Syria",
     "officialName": "Syrian Arab Republic",
     "flag": "🇸🇾",
@@ -5428,6 +5597,7 @@
   {
     "code": "TJ",
     "iso3": "TJK",
+    "ccn3": "762",
     "name": "Tajikistan",
     "officialName": "Republic of Tajikistan",
     "flag": "🇹🇯",
@@ -5460,6 +5630,7 @@
   {
     "code": "TZ",
     "iso3": "TZA",
+    "ccn3": "834",
     "name": "Tanzania",
     "officialName": "United Republic of Tanzania",
     "flag": "🇹🇿",
@@ -5492,6 +5663,7 @@
   {
     "code": "TH",
     "iso3": "THA",
+    "ccn3": "764",
     "name": "Thailand",
     "officialName": "Kingdom of Thailand",
     "flag": "🇹🇭",
@@ -5523,6 +5695,7 @@
   {
     "code": "TL",
     "iso3": "TLS",
+    "ccn3": "626",
     "name": "Timor-Leste",
     "officialName": "Democratic Republic of Timor-Leste",
     "flag": "🇹🇱",
@@ -5555,6 +5728,7 @@
   {
     "code": "TG",
     "iso3": "TGO",
+    "ccn3": "768",
     "name": "Togo",
     "officialName": "Togolese Republic",
     "flag": "🇹🇬",
@@ -5586,6 +5760,7 @@
   {
     "code": "TO",
     "iso3": "TON",
+    "ccn3": "776",
     "name": "Tonga",
     "officialName": "Kingdom of Tonga",
     "flag": "🇹🇴",
@@ -5618,6 +5793,7 @@
   {
     "code": "TT",
     "iso3": "TTO",
+    "ccn3": "780",
     "name": "Trinidad and Tobago",
     "officialName": "Republic of Trinidad and Tobago",
     "flag": "🇹🇹",
@@ -5649,6 +5825,7 @@
   {
     "code": "TN",
     "iso3": "TUN",
+    "ccn3": "788",
     "name": "Tunisia",
     "officialName": "Tunisian Republic",
     "flag": "🇹🇳",
@@ -5680,6 +5857,7 @@
   {
     "code": "TR",
     "iso3": "TUR",
+    "ccn3": "792",
     "name": "Türkiye",
     "officialName": "Republic of Türkiye",
     "flag": "🇹🇷",
@@ -5711,6 +5889,7 @@
   {
     "code": "TM",
     "iso3": "TKM",
+    "ccn3": "795",
     "name": "Turkmenistan",
     "officialName": "Turkmenistan",
     "flag": "🇹🇲",
@@ -5743,6 +5922,7 @@
   {
     "code": "TV",
     "iso3": "TUV",
+    "ccn3": "798",
     "name": "Tuvalu",
     "officialName": "Tuvalu",
     "flag": "🇹🇻",
@@ -5779,6 +5959,7 @@
   {
     "code": "UG",
     "iso3": "UGA",
+    "ccn3": "800",
     "name": "Uganda",
     "officialName": "Republic of Uganda",
     "flag": "🇺🇬",
@@ -5811,6 +5992,7 @@
   {
     "code": "UA",
     "iso3": "UKR",
+    "ccn3": "804",
     "name": "Ukraine",
     "officialName": "Ukraine",
     "flag": "🇺🇦",
@@ -5843,6 +6025,7 @@
   {
     "code": "AE",
     "iso3": "ARE",
+    "ccn3": "784",
     "name": "United Arab Emirates",
     "officialName": "United Arab Emirates",
     "flag": "🇦🇪",
@@ -5874,6 +6057,7 @@
   {
     "code": "GB",
     "iso3": "GBR",
+    "ccn3": "826",
     "name": "United Kingdom",
     "officialName": "United Kingdom of Great Britain and Northern Ireland",
     "flag": "🇬🇧",
@@ -5905,6 +6089,7 @@
   {
     "code": "US",
     "iso3": "USA",
+    "ccn3": "840",
     "name": "United States",
     "officialName": "United States of America",
     "flag": "🇺🇸",
@@ -5941,6 +6126,7 @@
   {
     "code": "UY",
     "iso3": "URY",
+    "ccn3": "858",
     "name": "Uruguay",
     "officialName": "Oriental Republic of Uruguay",
     "flag": "🇺🇾",
@@ -5972,6 +6158,7 @@
   {
     "code": "UZ",
     "iso3": "UZB",
+    "ccn3": "860",
     "name": "Uzbekistan",
     "officialName": "Republic of Uzbekistan",
     "flag": "🇺🇿",
@@ -6004,6 +6191,7 @@
   {
     "code": "VU",
     "iso3": "VUT",
+    "ccn3": "548",
     "name": "Vanuatu",
     "officialName": "Republic of Vanuatu",
     "flag": "🇻🇺",
@@ -6037,6 +6225,7 @@
   {
     "code": "VA",
     "iso3": "VAT",
+    "ccn3": "336",
     "name": "Vatican City",
     "officialName": "Vatican City State",
     "flag": "🇻🇦",
@@ -6069,6 +6258,7 @@
   {
     "code": "VE",
     "iso3": "VEN",
+    "ccn3": "862",
     "name": "Venezuela",
     "officialName": "Bolivarian Republic of Venezuela",
     "flag": "🇻🇪",
@@ -6100,6 +6290,7 @@
   {
     "code": "VN",
     "iso3": "VNM",
+    "ccn3": "704",
     "name": "Vietnam",
     "officialName": "Socialist Republic of Vietnam",
     "flag": "🇻🇳",
@@ -6131,6 +6322,7 @@
   {
     "code": "YE",
     "iso3": "YEM",
+    "ccn3": "887",
     "name": "Yemen",
     "officialName": "Republic of Yemen",
     "flag": "🇾🇪",
@@ -6162,6 +6354,7 @@
   {
     "code": "ZM",
     "iso3": "ZMB",
+    "ccn3": "894",
     "name": "Zambia",
     "officialName": "Republic of Zambia",
     "flag": "🇿🇲",
@@ -6193,6 +6386,7 @@
   {
     "code": "ZW",
     "iso3": "ZWE",
+    "ccn3": "716",
     "name": "Zimbabwe",
     "officialName": "Republic of Zimbabwe",
     "flag": "🇿🇼",

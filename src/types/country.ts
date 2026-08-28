@@ -3,11 +3,19 @@
 // Extracted from page.tsx, which held every interface, every component and the
 // whole data-loading effect in one 3,286-line client file.
 
+/** One observation in a metric's time series. */
+export interface SeriesPoint {
+  year: number;
+  value: number;
+}
+
 export interface DataWithSource {
   value: number | null;
   year: string | null;
   source: string;
   sourceOrganization: string;
+  /** Every year in the fetched window, oldest first. Feeds sparklines and trends. */
+  series?: SeriesPoint[];
   /**
    * Whether the upstream request succeeded. Without this, "this country has no
    * observation" and "the request failed" both collapse into a bare N/A.
@@ -20,6 +28,7 @@ export interface PartialReading {
   value: number | null;
   source: string | null;
   sourceDetail: string | null;
+  series?: SeriesPoint[];
   year?: string | null;
   status?: 'ok' | 'no-data' | 'failed';
 }
@@ -29,6 +38,8 @@ export interface MetricReading {
   value: number | null;
   source: string | null;
   sourceDetail: string | null;
+  /** Time series for this metric, empty when the source provides only a snapshot. */
+  series: SeriesPoint[];
   /** Observation year, so a figure from a decade ago is not read as current. */
   year: string | null;
   status: 'ok' | 'no-data' | 'failed';

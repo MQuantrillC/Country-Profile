@@ -13,25 +13,31 @@ export interface RankingMetric {
   higherIsBetter: boolean;
   /** World Bank series code. Absent for metrics derived from another metric. */
   indicator?: string;
+  /**
+   * The comparison page's title for the same measure, where one exists. Lets a
+   * metric row find all-country values for its distribution strip.
+   */
+  comparisonTitle?: string;
   /** Computed from another metric's value rather than fetched. */
   derivedFrom?: { metric: string; transform: 'complementPercent' };
 }
 
 export const rankingMetrics: RankingMetric[] = [
   // Economy
-  { id: 'gdp', title: 'GDP', category: 'Economy', unit: 'USD', description: 'Gross Domestic Product', higherIsBetter: true, indicator: 'NY.GDP.MKTP.CD' },
-  { id: 'gdpPerCapita', title: 'GDP Per Capita', category: 'Economy', unit: 'USD', description: 'GDP per person', higherIsBetter: true, indicator: 'NY.GDP.PCAP.CD' },
-  { id: 'gniPerCapita', title: 'GNI Per Capita', category: 'Economy', unit: 'USD', description: 'Gross National Income per person', higherIsBetter: true, indicator: 'NY.GNP.PCAP.CD' },
-  { id: 'tradeGDP', title: 'Trade as % of GDP', category: 'Economy', unit: '%', description: 'Trade as percentage of GDP', higherIsBetter: true, indicator: 'NE.TRD.GNFS.ZS' },
-  { id: 'unemploymentRate', title: 'Unemployment Rate', category: 'Economy', unit: '%', description: 'Unemployment as % of labor force', higherIsBetter: false, indicator: 'SL.UEM.TOTL.ZS' },
+  { id: 'gdp', comparisonTitle: 'GDP', title: 'GDP', category: 'Economy', unit: 'USD', description: 'Gross Domestic Product', higherIsBetter: true, indicator: 'NY.GDP.MKTP.CD' },
+  { id: 'gdpPerCapita', comparisonTitle: 'GDP Per Capita', title: 'GDP Per Capita', category: 'Economy', unit: 'USD', description: 'GDP per person', higherIsBetter: true, indicator: 'NY.GDP.PCAP.CD' },
+  { id: 'gniPerCapita', comparisonTitle: 'GNI Per Capita', title: 'GNI Per Capita', category: 'Economy', unit: 'USD', description: 'Gross National Income per person', higherIsBetter: true, indicator: 'NY.GNP.PCAP.CD' },
+  { id: 'tradeGDP', comparisonTitle: 'Trade as % of GDP', title: 'Trade as % of GDP', category: 'Economy', unit: '%', description: 'Trade as percentage of GDP', higherIsBetter: true, indicator: 'NE.TRD.GNFS.ZS' },
+  { id: 'unemploymentRate', comparisonTitle: 'Unemployment Rate', title: 'Unemployment Rate', category: 'Economy', unit: '%', description: 'Unemployment as % of labor force', higherIsBetter: false, indicator: 'SL.UEM.TOTL.ZS' },
 
   // Demographics
-  { id: 'population', title: 'Population', category: 'Demographics', unit: 'people', description: 'Total population', higherIsBetter: true, indicator: 'SP.POP.TOTL' },
-  { id: 'lifeExpectancy', title: 'Life Expectancy', category: 'Demographics', unit: 'years', description: 'Life expectancy at birth', higherIsBetter: true, indicator: 'SP.DYN.LE00.IN' },
-  { id: 'fertilityRate', title: 'Fertility Rate', category: 'Demographics', unit: 'births/woman', description: 'Births per woman', higherIsBetter: true, indicator: 'SP.DYN.TFRT.IN' },
-  { id: 'urbanPopPct', title: 'Urban Population %', category: 'Demographics', unit: '%', description: 'Urban population percentage', higherIsBetter: true, indicator: 'SP.URB.TOTL.IN.ZS' },
+  { id: 'population', comparisonTitle: 'Total Population', title: 'Population', category: 'Demographics', unit: 'people', description: 'Total population', higherIsBetter: true, indicator: 'SP.POP.TOTL' },
+  { id: 'lifeExpectancy', comparisonTitle: 'Life Expectancy', title: 'Life Expectancy', category: 'Demographics', unit: 'years', description: 'Life expectancy at birth', higherIsBetter: true, indicator: 'SP.DYN.LE00.IN' },
+  { id: 'fertilityRate', comparisonTitle: 'Fertility Rate (births per woman)', title: 'Fertility Rate', category: 'Demographics', unit: 'births/woman', description: 'Births per woman', higherIsBetter: true, indicator: 'SP.DYN.TFRT.IN' },
+  { id: 'urbanPopPct', comparisonTitle: 'Urban Population %', title: 'Urban Population %', category: 'Demographics', unit: '%', description: 'Urban population percentage', higherIsBetter: true, indicator: 'SP.URB.TOTL.IN.ZS' },
   {
     id: 'ruralPopPct',
+    comparisonTitle: 'Rural Population %',
     title: 'Rural Population %',
     category: 'Demographics',
     unit: '%',
@@ -41,15 +47,15 @@ export const rankingMetrics: RankingMetric[] = [
   },
 
   // Education & technology
-  { id: 'educationSpendPctGDP', title: 'Education Spending % of GDP', category: 'Education', unit: '%', description: 'Education expenditure as % of GDP', higherIsBetter: true, indicator: 'SE.XPD.TOTL.GD.ZS' },
-  { id: 'internetUsers', title: 'Internet Users %', category: 'Technology', unit: '%', description: 'Internet users as % of population', higherIsBetter: true, indicator: 'IT.NET.USER.ZS' },
+  { id: 'educationSpendPctGDP', comparisonTitle: 'Education Spending % of GDP', title: 'Education Spending % of GDP', category: 'Education', unit: '%', description: 'Education expenditure as % of GDP', higherIsBetter: true, indicator: 'SE.XPD.TOTL.GD.ZS' },
+  { id: 'internetUsers', comparisonTitle: 'Internet Users %', title: 'Internet Users %', category: 'Technology', unit: '%', description: 'Internet users as % of population', higherIsBetter: true, indicator: 'IT.NET.USER.ZS' },
 
   // Environment
-  { id: 'forestPct', title: 'Forest Coverage %', category: 'Environment', unit: '%', description: 'Forest area as % of land', higherIsBetter: true, indicator: 'AG.LND.FRST.ZS' },
-  { id: 'agriculturalLandPct', title: 'Agricultural Land %', category: 'Environment', unit: '%', description: 'Agricultural land as % of total', higherIsBetter: true, indicator: 'AG.LND.AGRI.ZS' },
+  { id: 'forestPct', comparisonTitle: 'Forest Coverage %', title: 'Forest Coverage %', category: 'Environment', unit: '%', description: 'Forest area as % of land', higherIsBetter: true, indicator: 'AG.LND.FRST.ZS' },
+  { id: 'agriculturalLandPct', comparisonTitle: 'Agricultural Land %', title: 'Agricultural Land %', category: 'Environment', unit: '%', description: 'Agricultural land as % of total', higherIsBetter: true, indicator: 'AG.LND.AGRI.ZS' },
 
   // Safety
-  { id: 'homicideRate', title: 'Homicide Rate', category: 'Safety', unit: 'per 100k', description: 'Intentional homicides per 100,000', higherIsBetter: false, indicator: 'VC.IHR.PSRC.P5' },
+  { id: 'homicideRate', comparisonTitle: 'Homicide Rate (per 100,000)', title: 'Homicide Rate', category: 'Safety', unit: 'per 100k', description: 'Intentional homicides per 100,000', higherIsBetter: false, indicator: 'VC.IHR.PSRC.P5' },
 ];
 
 /** One country's value for one metric. Country name and flag come from the client's own table. */

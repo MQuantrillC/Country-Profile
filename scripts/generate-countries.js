@@ -97,6 +97,8 @@ async function main() {
       return {
         code: c.cca2,
         iso3: c.cca3,
+        // ISO 3166-1 numeric (M49), which is how world-atlas keys its boundaries.
+        ccn3: c.ccn3 ?? null,
         name: c.name.common,
         officialName: c.name.official ?? c.name.common,
         flag: c.flag,
@@ -132,6 +134,8 @@ async function main() {
     code: c.code,
     // Needed client-side to resolve World Bank rows, which are keyed by ISO3.
     iso3: c.iso3,
+    // Joins a country to its map outline in the choropleth.
+    ccn3: c.ccn3,
     name: c.name,
     flag: c.flag,
     coverage: c.coverage,

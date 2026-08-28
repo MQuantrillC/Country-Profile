@@ -12,6 +12,8 @@ import { CountryPicker, MAX_COMPARISON } from '../components/CountryPicker';
 import { useCountryData } from '../hooks/useCountryData';
 import { MetricSection } from '../components/MetricSection';
 import { CollapsibleInfoSection } from '../components/CollapsibleInfoSection';
+import { PopulationPyramid } from '../components/charts/PopulationPyramid';
+import { parseAgeBands } from '../lib/factbookParsers';
 import { sections, sectionMetrics, sourceColors, getSourceColor } from '../lib/metricCatalog';
 
 const DEFAULT_SELECTION = ['US'];
@@ -812,6 +814,15 @@ export default function HomePage() {
                       {/* Demographics */ }
                       {(factbook?.malePopulation || factbook?.femalePopulation || factbook?.ethnicGroups || factbook?.religions) && (
                         <CollapsibleInfoSection title="Demographics" isExpanded={infoSectionsExpanded.demographics} onToggle={() => toggleInfoSection('demographics')}>
+                          {(() => {
+                            const bands = parseAgeBands(factbook?.ageStructure);
+                            return bands.length > 0 ? (
+                              <div className="mb-6 max-w-md">
+                                <h5 className="mb-2 font-semibold text-gray-900 dark:text-white">Age structure</h5>
+                                <PopulationPyramid bands={bands} countryName={selectedCountry?.name ?? ''} />
+                              </div>
+                            ) : null;
+                          })()}
                           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {factbook?.malePopulation && (
                               <div className="space-y-2">

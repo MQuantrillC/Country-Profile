@@ -21,6 +21,8 @@ export interface Country {
   code: string;
   /** ISO 3166-1 alpha-3, used by the climate and crime datasets. */
   iso3: string;
+  /** ISO 3166-1 numeric (M49); joins the country to its map boundary. */
+  ccn3: string | null;
   name: string;
   officialName: string;
   flag: string;

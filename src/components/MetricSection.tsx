@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { ChevronDown, LineChart as LineChartIcon } from 'lucide-react';
 import { Sparkline } from './charts/Sparkline';
 import { MetricDetail } from './MetricDetail';
+import { rankingIdFor } from '../lib/rankingMetrics';
 import { MetricTooltip } from './MetricTooltip';
 import type { Country } from '../utils/countries';
 import type { CountryStats, DataWithSource, MetricReading, PartialReading } from '../types/country';
@@ -337,6 +338,12 @@ export const MetricSection = ({
                     const maxValue = metricMaxValues[metric];
                     
                     const isOpen = expandedMetric === metric;
+                    // The panel holds a trend and a distribution. Metrics whose
+                    // source publishes a single snapshot and that no ranking
+                    // covers would open an empty panel, so they get no button.
+                    const hasDetail =
+                      rankingIdFor(metric) !== null ||
+                      countries.some((c) => getMetricValue(metric, c).series.length > 1);
 
                     return (
                       <React.Fragment key={metric}>
@@ -350,15 +357,17 @@ export const MetricSection = ({
                             <div className="flex items-center space-x-2">
                               <span className="text-sm sm:text-base mr-2 opacity-70">{getMetricIcon(metric)}</span>
                               <span className="text-sm sm:text-base font-medium text-gray-900 dark:text-white">{metric}</span>
-                              <button
-                                type="button"
-                                onClick={() => setExpandedMetric(isOpen ? null : metric)}
-                                aria-expanded={isOpen}
-                                aria-label={`${isOpen ? 'Hide' : 'Show'} trend and distribution for ${metric}`}
-                                className="inline-flex min-h-8 min-w-8 items-center justify-center rounded p-1 text-gray-400 transition-colors hover:text-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:text-gray-500 dark:hover:text-blue-400"
-                              >
-                                <LineChartIcon size={14} />
-                              </button>
+                              {hasDetail && (
+                                <button
+                                  type="button"
+                                  onClick={() => setExpandedMetric(isOpen ? null : metric)}
+                                  aria-expanded={isOpen}
+                                  aria-label={`${isOpen ? 'Hide' : 'Show'} trend and distribution for ${metric}`}
+                                  className="inline-flex min-h-8 min-w-8 items-center justify-center rounded p-1 text-gray-400 transition-colors hover:text-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:text-gray-500 dark:hover:text-blue-400"
+                                >
+                                  <LineChartIcon size={14} />
+                                </button>
+                              )}
                               <MetricTooltip
                                 label={metric}
                                 text={getMetricTooltip(metric)}
@@ -418,7 +427,7 @@ export const MetricSection = ({
                         }) }
                       </tr>
 
-                      {isOpen && (
+                      {isOpen && hasDetail && (
                         <tr>
                           <td colSpan={countries.length + 1} className="bg-gray-50 px-4 py-5 dark:bg-gray-900/40 sm:px-6">
                             <MetricDetail

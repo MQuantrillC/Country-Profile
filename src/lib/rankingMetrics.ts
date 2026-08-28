@@ -22,6 +22,16 @@ export interface RankingMetric {
   derivedFrom?: { metric: string; transform: 'complementPercent' };
 }
 
+/**
+ * The rankings id covering a comparison metric, if any.
+ *
+ * Used both by the panel, to decide whether it can draw a distribution, and by the
+ * metric row, to decide whether the panel is worth offering at all.
+ */
+export function rankingIdFor(comparisonTitle: string): string | null {
+  return rankingMetrics.find((m) => m.comparisonTitle === comparisonTitle)?.id ?? null;
+}
+
 export const rankingMetrics: RankingMetric[] = [
   // Economy
   { id: 'gdp', comparisonTitle: 'GDP', title: 'GDP', category: 'Economy', unit: 'USD', description: 'Gross Domestic Product', higherIsBetter: true, indicator: 'NY.GDP.MKTP.CD' },

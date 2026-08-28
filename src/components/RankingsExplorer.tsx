@@ -69,7 +69,16 @@ export function RankingsExplorer({ view, payload, metric, formatValue }: Ranking
 
   return (
     <div className="p-4 sm:p-6">
-      <div className="mb-4 flex flex-wrap gap-3">
+      {/* The chart says what it is before it asks the reader to change it. */}
+      <h3 className="text-base font-semibold text-gray-900 dark:text-white">
+        {xMetric.title} vs {yMetric.title}
+      </h3>
+      <p className="mb-3 text-sm text-gray-500 dark:text-gray-400">
+        Every country reporting both measures. Highlighted points are the current top ten
+        for {metric.title}.
+      </p>
+
+      <div className="mb-3 flex flex-wrap gap-3">
         {[
           { label: 'Horizontal', value: xMetricId, onChange: setXMetricId },
           { label: 'Vertical', value: yMetricId, onChange: setYMetricId },
@@ -97,11 +106,10 @@ export function RankingsExplorer({ view, payload, metric, formatValue }: Ranking
         yLabel={yMetric.title}
         formatX={format(xMetric)}
         formatY={format(yMetric)}
+        xUnit={xMetric.unit}
+        yUnit={yMetric.unit}
         logX={LOG_SCALE_METRICS.has(xMetric.id)}
       />
-      <p className="mt-1 text-[11px] text-gray-400 dark:text-gray-500">
-        Highlighted points are the current top ten for {metric.title}.
-      </p>
     </div>
   );
 }

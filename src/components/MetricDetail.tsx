@@ -10,7 +10,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import type { Country } from '../utils/countries';
 import type { MetricReading } from '../types/country';
-import { rankingMetrics, type RankingsPayload } from '../lib/rankingMetrics';
+import { rankingIdFor, type RankingsPayload } from '../lib/rankingMetrics';
 import { TrendChart, type TrendSeries } from './charts/TrendChart';
 import { DistributionStrip, type StripMark } from './charts/DistributionStrip';
 
@@ -41,10 +41,7 @@ export function MetricDetail({
   const [rankingsState, setRankingsState] = useState<'idle' | 'loading' | 'done'>('idle');
 
   // Only metrics that the rankings endpoint covers can show a distribution.
-  const rankingId = useMemo(
-    () => rankingMetrics.find((m) => m.comparisonTitle === metric)?.id ?? null,
-    [metric]
-  );
+  const rankingId = useMemo(() => rankingIdFor(metric), [metric]);
 
   useEffect(() => {
     if (!rankingId) return;
@@ -94,18 +91,16 @@ export function MetricDetail({
 
   return (
     <div className="space-y-6">
-      <section>
-        <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
-          {metric} over time
-        </h4>
-        {hasTrend ? (
+      {/* Sources that publish one snapshot get no trend section at all, and the
+          row hides the chart button entirely when that leaves nothing to show. */}
+      {hasTrend && (
+        <section>
+          <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+            {metric} over time
+          </h4>
           <TrendChart series={trends} format={formatValue} />
-        ) : (
-          <p className="py-4 text-sm text-gray-500 dark:text-gray-400">
-            This source publishes a single snapshot rather than a time series.
-          </p>
-        )}
-      </section>
+        </section>
+      )}
 
       {rankingId && (
         <section>

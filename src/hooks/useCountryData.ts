@@ -165,41 +165,11 @@ export function useCountryData(
             if (factbookData?.militaryExpenditure) {
             }
 
-            // Add fallback climate data if API fails
-            let finalClimateData = climateData;
-            if (!climateData) {
-              const basicClimateData: Record<string, { averageTemperature: number; hotDays30: number; hotDays35: number; coldDays: number }> = {
-                'US': { averageTemperature: 12.9, hotDays30: 45, hotDays35: 15, coldDays: 85 },
-                'CN': { averageTemperature: 8.9, hotDays30: 40, hotDays35: 12, coldDays: 120 },
-                'JP': { averageTemperature: 15.4, hotDays30: 55, hotDays35: 20, coldDays: 45 },
-                'DE': { averageTemperature: 9.6, hotDays30: 15, hotDays35: 3, coldDays: 65 },
-                'IN': { averageTemperature: 25.0, hotDays30: 180, hotDays35: 120, coldDays: 0 },
-                'GB': { averageTemperature: 9.8, hotDays30: 8, hotDays35: 1, coldDays: 55 },
-                'FR': { averageTemperature: 12.0, hotDays30: 25, hotDays35: 8, coldDays: 45 },
-                'IT': { averageTemperature: 13.9, hotDays30: 45, hotDays35: 18, coldDays: 25 },
-                'BR': { averageTemperature: 25.5, hotDays30: 200, hotDays35: 85, coldDays: 0 },
-                'CA': { averageTemperature: -5.2, hotDays30: 25, hotDays35: 5, coldDays: 180 },
-                'RU': { averageTemperature: -5.1, hotDays30: 20, hotDays35: 3, coldDays: 190 },
-                'KR': { averageTemperature: 12.5, hotDays30: 50, hotDays35: 15, coldDays: 95 },
-                'AU': { averageTemperature: 21.6, hotDays30: 120, hotDays35: 75, coldDays: 5 },
-                'ES': { averageTemperature: 15.2, hotDays30: 60, hotDays35: 25, coldDays: 15 },
-                'MX': { averageTemperature: 21.0, hotDays30: 150, hotDays35: 80, coldDays: 0 },
-                'PE': { averageTemperature: 19.0, hotDays30: 100, hotDays35: 45, coldDays: 0 }
-              };
-              
-              const climate = basicClimateData[country.code];
-              if (climate) {
-                finalClimateData = {
-                  averageTemperature: climate.averageTemperature,
-                  hotDays30: climate.hotDays30,
-                  hotDays35: climate.hotDays35,
-                  coldDays: climate.coldDays,
-                  source: "World Bank Climate Change Knowledge Portal",
-                  year: "1991-2020"
-                };
-              }
-            }
-
+            // The climate route returns nulls when the Portal has no coverage. There
+            // used to be a hardcoded table of approximate temperatures here as a
+            // fallback, disagreeing with a second invented table inside the route
+            // itself; both are gone, so a gap now reads as a gap.
+            const finalClimateData = climateData;
 
                          // Process REST Countries data properly
             let processedRestCountriesData = null;
